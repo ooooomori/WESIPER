@@ -265,6 +265,8 @@ try {
         'avg' => 0, 'obp' => 0, 'slg' => 0, 'ops' => 0,
         'eff_ops' => 0, 'eff_obp' => 0, 'eff_slg' => 0
     ];
+    $cum_ab = 0; $cum_h = 0; $cum_bb = 0; $cum_hbp = 0; $cum_sf = 0; $cum_tb = 0;
+    $cum_eff_ab = 0; $cum_eff_tb = 0; $cum_eff_h = 0; $cum_eff_ob = 0;
 
     $sql = "SELECT 
             s.game_date, 

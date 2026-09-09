@@ -114,7 +114,7 @@ export default function KboCandlestickChart({ kboData }) {
         <header className="candle-quote">
             <div className="candle-player">
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}
-                <div><div className="candle-eyebrow">{latest ? `#${kboData.player_id} · ${metricName}` : "선수별 기록의 흐름"}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
+                <div><div className="candle-eyebrow">{latest ? `#${kboData.player_id} · ${metricName}` : ""}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
             </div>
             <div className={`candle-price ${direction}`}><strong>{format(current)}</strong><span>{change === null ? "기록 조회 후 표시" : `${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span><small>{timeframe === "daily" ? "전 경기" : timeframe === "weekly" ? "전 주" : "전 월"} 대비</small></div>
         </header>
@@ -124,7 +124,7 @@ export default function KboCandlestickChart({ kboData }) {
             <div className="candle-options">{!plus && <button aria-pressed={showMA} className={showMA ? "enabled" : ""} onClick={() => setShowMA(value => !value)}>이동평균</button>}<button disabled={timeframe !== "daily"} aria-pressed={calendarGaps} onClick={() => setCalendarGaps(value => !value)}>{calendarGaps ? "빈 날짜 표시" : "경기일만"}</button><span className="candle-auto">Y축 자동</span></div>
         </div>
         <div className="candle-legend">{plus ? <><span className="mint">● {metricName}</span><span>● {metric === "ops_plus" ? "실질OPS+" : "OPS+"}</span></> : <><span>캔들 · {metricName}</span>{showMA && <><span className="gold">― MA 7</span><span className="purple">― MA 30</span></>}</>}<span className="candle-visible">{rangeInfo?.count || 0}개 표시</span></div>
-        <div className="candle-plot" ref={host} role="img" aria-label={`${metricName} 차트. 좌우로 이동하거나 확대해 기록을 탐색하세요.`} />
+        <div className="candle-plot-wrap"><div className="candle-visible-extrema">{rangeInfo?.high != null && <span className="extrema-high">최고 <b>{format(rangeInfo.high)}</b></span>}{rangeInfo?.low != null && <span className="extrema-low">최저 <b>{format(rangeInfo.low)}</b></span>}</div><div className="candle-plot" ref={host} role="img" aria-label={`${metricName} 차트. 좌우로 이동하거나 확대해 기록을 탐색하세요.`} /></div>
         {!latest && <div className="candle-empty">위에서 선수와 시즌을 조회하면<br />최근 경기부터 차트가 표시됩니다.</div>}
         <div className="candle-navigation">
             <div><button disabled={!latest} onClick={() => move(-1)} aria-label="이전 구간">←</button><button disabled={!latest} onClick={() => move(1)} aria-label="다음 구간">→</button><button disabled={!latest} onClick={() => zoom(1.3)} aria-label="차트 축소">−</button><button disabled={!latest} onClick={() => zoom(0.75)} aria-label="차트 확대">＋</button></div>
