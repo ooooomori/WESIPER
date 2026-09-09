@@ -1,0 +1,170 @@
+@import url("https://cdn.jsdelivr.net/gh/moonspam/NanumBarunGothic@latest/nanumbarungothicsubset.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    background-size: cover !important;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: GhostWhite !important;
+}
+
+nav {
+    background-color: aliceblue;
+}
+
+@font-face {
+    font-family: "KBODiaGothic";
+    src: url("./assets/font/KBO-Dia-Gothic_bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "KBODiaGothic";
+    src: url("./assets/font/KBO-Dia-Gothic_medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "KBODiaGothic";
+    src: url("./assets/font/KBO-Dia-Gothic_light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+}
+
+.font-family-kbo {
+    font-family: "KBODiaGothic";
+}
+
+@font-face {
+    font-family: "PastPhoto2";
+    src: url("./assets/font/pastphoto2.woff2") format("woff2"),
+        url("./assets/font/pastphoto2.woff") format("woff"),
+        url("./assets/font/pastphoto2.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "PastPhoto4";
+    src: url("./assets/font/pastphoto4.woff2") format("woff2"),
+        url("./assets/font/pastphoto4.woff") format("woff"),
+        url("./assets/font/pastphoto4.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "NanumSquareNeo";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
+        format("woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "NanumSquareNeo";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
+        format("woff2");
+    font-weight: 700;
+}
+
+@media (min-width: 600px) {
+    #content-wrapper {
+        padding-top: 80px;
+    }
+
+    .wesiper-img {
+        height: 250px;
+    }
+
+    .wesiper-img:hover {
+        height: 300px;
+    }
+}
+
+@media (max-width: 600px) {
+    #content-wrapper {
+        padding-top: 65px;
+    }
+    .wesiper-img {
+        height: 100px;
+    }
+    .wesiper-img:hover {
+        height: 120px;
+    }
+}
+
+#content-wrapper {
+    text-align: center;
+}
+
+.font-family-NaBaGo {
+    font-family: "NanumBarunGothic" !important;
+}
+
+.font-family-NaSqNe {
+    font-family: "NanumSquareNeo" !important;
+}
+
+.font-family-NaSq {
+    font-family: "NanumSquare" !important;
+}
+
+.font-family-PaPho2 {
+    font-family: "PastPhoto2" !important;
+}
+
+.font-family-PaPho4 {
+    font-family: "PastPhoto4" !important;
+}
+
+.font-family-Rocket {
+    font-family: "Rocket" !important;
+}
+
+.wesiper-img {
+    cursor: pointer;
+    transition: height 0.3s ease;
+}
+
+.dot-hr {
+    border-top: 1px dashed #8c8c8c;
+    border-bottom: 1px dashed #fff;
+}
+
+.callout {
+    --bs-link-color-rgb: var(--bd-callout-link);
+    --bs-code-color: var(--bd-callout-code-color);
+    padding: 1rem;
+    margin-top: 1em;
+    color: var(--bd-callout-color, inherit);
+    background-color: var(--bd-callout-bg, var(--bs-gray-100));
+    border-left: 0.25rem solid var(--bd-callout-border, var(--bs-gray-300));
+}
+
+.callout-warning {
+    --bd-callout-color: var(--bs-warning-text-emphasis);
+    --bd-callout-bg: var(--bs-warning-bg-subtle);
+    --bd-callout-border: var(--bs-warning-border-subtle);
+}
+
+.callout-info {
+    --bd-callout-color: var(--bs-info-text-emphasis);
+    --bd-callout-bg: var(--bs-info-bg-subtle);
+    --bd-callout-border: var(--bs-info-border-subtle);
+}
+
+.fs-sm {
+    font-size: 0.9rem;
+}

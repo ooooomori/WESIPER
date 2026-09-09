@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="kr">
+    <!--
+    Made by Tulowitzki
+    데이터 출처: 스포키 기록실
+    이미지 출처: KBO 홈페이지
+  -->
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta property="og:image" content="../image/wesiper.png" />
+        <title>WESIPER - 웨시퍼</title>
+        <script
+            src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"
+            integrity="sha384-l+xbElFSnPZ2rOaPrU//2FF5B4LB8FiX5q4fXYTlfcG4PGpMkE1vcL7kNXI6Cci0"
+            crossorigin="anonymous"
+        ></script>
+        <!-- Google tag (gtag.js) -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-1S3CLM8DPF"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-1S3CLM8DPF");
+        </script>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"
+        ></script>
+
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="apple-touch-icon" href="/logo192.png" />
+        <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+        <link rel="manifest" href="/manifest.json" />
+        <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    --></head>
+    <body>
+        <noscript
+            >KBODLE: 크보들, KBO BINGO 등 한국프로야구를 주제로 한 다양한 웹
+            미니게임을 즐겨보세요!</noscript
+        >
+        <div id="root"></div>
+        <script type="module" src="/src/index.jsx"></script>
+    </body>
+</html>

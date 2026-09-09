@@ -1,0 +1,46 @@
+# 비밀정보
+.env
+.env.*
+!.env.example
+*.pem
+*.ppk
+*.key
+*.p12
+*.pfx
+*credentials*.json
+*-db.php
+crawler.env
+
+# DB와 백업
+*.sql
+*.sql.gz
+*.tar
+*.tar.gz
+*backup*
+*.before-env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# 로그
+*.log
+
+# OS/Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 의존성과 빌드 결과
+node_modules/
+frontend/dist/
+frontend/build/
+coverage/
+
+# 운영 서버에서 내려받은 원본 스냅샷
+/webroot/
+
+# 인증서 발급용 일회성 파일
+**/.well-known/acme-challenge/

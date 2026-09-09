@@ -1,0 +1,11 @@
+#progress div {
+    background-color: #4ade90 !important;
+}
+
+.button-none {
+    background-color: transparent;
+    background-image: none;
+    text-transform: none;
+    border: 0;
+}
+

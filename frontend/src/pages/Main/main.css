@@ -1,0 +1,54 @@
+.main-btn {
+    width: 250px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 0.5rem;
+    height: 50px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+    font-size: 20px;
+    border-radius: 50px;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.main-btn:hover {
+    background-position: 100% 0;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.main-btn:nth-child(2) {
+    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+}
+
+.main-btn:nth-child(4) {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+}
+
+.main-btn:nth-child(3) {
+    background-image: linear-gradient(to right, #25aae1, #4481eb, #04befe, #3f86ed);
+    box-shadow: 0 4px 15px 0 rgba(65, 132, 234, 0.75);
+}
+
+em {
+    font: inherit;
+}
+
+.win {
+    color: #b96060;
+}
+
+.lose {
+    color: #4a7da1;
+}
+
+.same {
+    padding: 0px 5px 0px 5px;
+}
