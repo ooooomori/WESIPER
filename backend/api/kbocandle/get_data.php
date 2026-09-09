@@ -259,6 +259,13 @@ try {
         ];
     }
 
+    // 기간 조회는 선택한 시작일을 0으로 삼는다. 따라서 첫 날짜의 캔들은
+    // 시즌 누적 타율이 아니라 해당 조회 기간의 첫 경기 성적을 보여준다.
+    $prev_close = [
+        'avg' => 0, 'obp' => 0, 'slg' => 0, 'ops' => 0,
+        'eff_ops' => 0, 'eff_obp' => 0, 'eff_slg' => 0
+    ];
+
     $sql = "SELECT 
             s.game_date, 
             s.player_name, 

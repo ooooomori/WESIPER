@@ -48,7 +48,7 @@ const mockKboData = {
 export default function Kbocandle() {
     const [kboData, setKboData] = React.useState({});
     return (
-        <div className="max-w-xl mx-auto p-4">
+        <div className="max-w-5xl mx-auto px-2 py-4 sm:px-4">
             <PlayerSearchUI setKboData={setKboData} />
             <KboCandlestickChart kboData={kboData} />
             <div className="text-xs sm:text-base py-4 sm:py-6 sr-hide-screenshot px-4 text-center font-family-NaSqNe">
