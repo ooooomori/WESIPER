@@ -25,6 +25,11 @@ export default function KboCandlestickChart({ kboData }) {
     const active = selected || latest;
     const format = value => Number.isFinite(value) ? value.toFixed(plus ? 1 : 3) : "—";
     const metricName = METRICS.find(([id]) => id === metric)?.[1];
+    const seasonLabels = { regular: "정규시즌", preseason: "시범경기", postseason: "포스트시즌" };
+    const formatDate = value => value ? value.replace(/-/g, ". ").replace(/\.\s(\d{2})$/, ". $1") : "";
+    const periodLabel = kboData?.date_preset && kboData.date_preset !== "whole"
+        ? `${formatDate(kboData.start_date)} ~ ${formatDate(kboData.end_date)}`
+        : `${kboData?.year || ""} ${seasonLabels[kboData?.season] || ""}`;
     const current = latest?.[plus ? metric : "close"];
     const previous = bars.at(-2)?.[plus ? metric : "close"];
     const change = Number.isFinite(current) && Number.isFinite(previous) ? current - previous : null;
@@ -34,7 +39,7 @@ export default function KboCandlestickChart({ kboData }) {
         if (!host.current || !bars.length) { setRangeInfo(null); setSelected(null); return; }
         const chart = createChart(host.current, {
             autoSize: true,
-            layout: { background: { type: ColorType.Solid, color: dark ? "#101722" : "#ffffff" }, textColor: dark ? "#8593a8" : "#687386", fontFamily: "Arial, sans-serif", fontSize: 11, attributionLogo: true },
+            layout: { background: { type: ColorType.Solid, color: dark ? "#101722" : "#ffffff" }, textColor: dark ? "#8593a8" : "#687386", fontFamily: "NanumSquareNeo, Arial, sans-serif", fontSize: 11, attributionLogo: true },
             grid: { vertLines: { color: dark ? "#1b2533" : "#e7ebf1" }, horzLines: { color: dark ? "#1f2a38" : "#e7ebf1" } },
             rightPriceScale: { autoScale: true, borderColor: "#283344", scaleMargins: { top: 0.13, bottom: 0.12 } },
             timeScale: { borderColor: "#283344", rightOffset: 3, barSpacing: 10, minBarSpacing: 3, fixLeftEdge: true, fixRightEdge: true },
@@ -109,8 +114,8 @@ export default function KboCandlestickChart({ kboData }) {
         scale.setVisibleLogicalRange({ from: range.from + step, to: range.to + step });
     };
 
-    return <section className={`candle-terminal ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 기록 차트">
-        <div className="candle-topline"><span><i /> KBO CANDLE <b>선수 기록 차트</b></span><span>{kboData?.year || "SEASON"}</span><button className="theme-toggle" onClick={() => setDark(value => !value)}>{dark ? "☼ 라이트" : "☾ 다크"}</button></div>
+    return <section className={`candle-terminal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 기록 차트">
+        <div className="candle-topline"><span><i /> KBO CANDLE <b>선수 기록 차트</b></span><span>{periodLabel || "SEASON"}</span><button className="theme-toggle" onClick={() => setDark(value => !value)}>{dark ? "☼ 라이트" : "☾ 다크"}</button></div>
         <header className="candle-quote">
             <div className="candle-player">
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}

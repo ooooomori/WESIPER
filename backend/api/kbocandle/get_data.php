@@ -7,6 +7,7 @@ $year       = $_GET['year'] ?? '';
 $player_id  = $_GET['player_id'] ?? '';
 $start_date = $_GET['start_date'] ?? '';
 $end_date   = $_GET['end_date'] ?? '';
+$date_preset = $_GET['date_preset'] ?? 'whole';
 $img        = $_GET['img'] ?? '';
 
 // 타석 결과 텍스트를 요청한 규격으로 강제 변환하는 전용 함수 신설
@@ -490,6 +491,10 @@ try {
         'name'      => $player_name,
         'player_id' => $player_id,
         'year'      => $year,
+        'season'    => $season,
+        'start_date'=> $start_date,
+        'end_date'  => $end_date,
+        'date_preset' => $date_preset,
         'img'       => $img,
         'data'      => $result_output
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

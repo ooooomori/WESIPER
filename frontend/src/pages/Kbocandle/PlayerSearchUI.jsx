@@ -93,6 +93,7 @@ export default function PlayerSearchUI({ setKboData }) {
                     player_id: searchPlayer.PlayerId,
                     start_date: startDate,
                     end_date: endDate,
+                    date_preset: datePreset,
                     img: searchPlayer.Img,
                 },
             });
