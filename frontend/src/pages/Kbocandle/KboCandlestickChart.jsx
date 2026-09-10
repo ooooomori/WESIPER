@@ -168,7 +168,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     };
 
     return <section className={`candle-terminal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 기록 차트">
-        <div className="candle-topline"><span><i /> KBO CANDLE <b>선수 기록 차트</b></span><span>{periodLabel || "SEASON"}</span></div>
+        <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span> <b>선수 기록 차트</b></span><span>{periodLabel || "SEASON"}</span></div>
         <header className="candle-quote">
             <div className="candle-player">
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}

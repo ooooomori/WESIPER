@@ -3,7 +3,7 @@ import axios from "axios";
 import { Spinner } from "flowbite-react";
 import PlayerList from "./PlayerList";
 
-const Searchbar = ({ setSearchPlayer }) => {
+const Searchbar = ({ setSearchPlayer, clearOnSelect = false }) => {
     const [searchList, setSearchList] = useState([]);
     const [debounceTimer, setDebounceTimer] = useState(null);
     const [inputValue, setInputValue] = useState("");
@@ -83,6 +83,7 @@ const Searchbar = ({ setSearchPlayer }) => {
     // 선수 선택 시 실행될 깔끔한 콜백
     const handleSelect = (player) => {
         setSearchList([]);
+        if (clearOnSelect) setInputValue("");
         if (setSearchPlayer) {
             setSearchPlayer(player);
         }

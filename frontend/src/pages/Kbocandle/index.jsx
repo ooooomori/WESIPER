@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import KboCandlestickChart from "./KboCandlestickChart.jsx";
+import KboComparisonChart from "./KboComparisonChart.jsx";
 import PlayerSearchUI from "./PlayerSearchUI.jsx";
 
 // PHP 백엔드가 던져줄 실제 응답 포맷을 그대로 구현한 모의 데이터
@@ -47,11 +48,30 @@ const mockKboData = {
 
 export default function Kbocandle() {
     const [kboData, setKboData] = React.useState({});
+    const [comparisonData, setComparisonData] = React.useState([]);
+    const [comparisonMode, setComparisonMode] = React.useState(false);
     const [dark, setDark] = React.useState(true);
     return (
         <div className="max-w-5xl mx-auto px-2 py-4 sm:px-4">
-            <PlayerSearchUI setKboData={setKboData} />
-            <KboCandlestickChart kboData={kboData} dark={dark} setDark={setDark} />
+            <PlayerSearchUI
+                setKboData={setKboData}
+                comparisonMode={comparisonMode}
+                setComparisonData={setComparisonData}
+            />
+            {comparisonMode
+                ? <KboComparisonChart comparisonData={comparisonData} dark={dark} setDark={setDark} />
+                : <KboCandlestickChart kboData={kboData} dark={dark} setDark={setDark} />}
+            <div className="candle-mode-switch-wrap sr-hide-screenshot">
+                <button
+                    type="button"
+                    className={`candle-mode-switch ${comparisonMode ? "active" : ""}`}
+                    aria-pressed={comparisonMode}
+                    onClick={() => setComparisonMode((value) => !value)}
+                >
+                    <span>{comparisonMode ? "개별 선수 보기" : "선수 비교하기"}</span>
+                    <small>{comparisonMode ? "한 선수의 캔들 차트로 돌아갑니다" : "여러 선수의 기록을 한 차트에서 확인합니다"}</small>
+                </button>
+            </div>
             <div className="text-xs sm:text-base py-4 sm:py-6 sr-hide-screenshot px-4 text-center font-family-NaSqNe">
                     <span>
                         2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.

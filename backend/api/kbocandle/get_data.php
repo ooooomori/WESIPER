@@ -270,10 +270,14 @@ try {
     ];
     $cum_ab = 0; $cum_h = 0; $cum_bb = 0; $cum_hbp = 0; $cum_sf = 0; $cum_tb = 0;
     $cum_eff_ab = 0; $cum_eff_tb = 0; $cum_eff_h = 0; $cum_eff_ob = 0;
-    $period_hr = 0; $period_sb = 0; $period_so = 0;
+    $period_pa = 0; $period_1b = 0; $period_2b = 0; $period_3b = 0;
+    $period_hr = 0; $period_sb = 0; $period_cs = 0; $period_so = 0;
+    $period_game_ids = [];
+    $last_ops_plus = 0; $last_eff_ops_plus = 0;
 
     $sql = "SELECT 
             s.game_date, 
+            s.game_id,
             s.player_name, 
             s.pa_result, 
             s.sb, 
@@ -344,13 +348,16 @@ try {
         foreach ($day_rows as $row) {
             // 도루는 타석 결과가 비어 있는 별도 행으로 저장될 수도 있다.
             $sb = (int)($row['sb'] ?? 0);
+            $cs = (int)($row['cs'] ?? 0);
             $period_sb += $sb;
+            $period_cs += $cs;
+            if (!empty($row['game_id'])) $period_game_ids[(string)$row['game_id']] = true;
 
             $parsed = parseKboResultPHP($row['pa_result']);
             if (!$parsed) continue;
 
-            $cs = (int)($row['cs'] ?? 0);
             $pa_txt = trim($row['pa_result']);
+            $period_pa++;
             
             $daily_pa_results[] = formatPaResult($pa_txt, $sb, $cs);
 
@@ -386,6 +393,10 @@ try {
             $sf = (strpos($pa_txt, '희비') !== false || strpos($pa_txt, '희플') !== false) ? 1 : 0;
             $is_hr = (mb_substr($pa_txt, -1, 1, 'UTF-8') === '홈') ? 1 : 0;
             $is_so = (strpos($pa_txt, '삼진') !== false) ? 1 : 0;
+            $last_char = mb_substr($pa_txt, -1, 1, 'UTF-8');
+            $period_1b += ($last_char === '안') ? 1 : 0;
+            $period_2b += ($last_char === '2') ? 1 : 0;
+            $period_3b += ($last_char === '3') ? 1 : 0;
 
             $cum_ab  += $parsed['ab'];
             $cum_h   += $parsed['h'];
@@ -454,6 +465,8 @@ try {
         if ($league_eff_obp > 0 && $league_eff_slg > 0) {
             $eff_ops_plus = 100 * (($close['eff_obp'] / $league_eff_obp) + ($close['eff_slg'] / $league_eff_slg) - 1);
         }
+        $last_ops_plus = $ops_plus;
+        $last_eff_ops_plus = $eff_ops_plus;
 
         $result_output[] = [
             'date' => $date,
@@ -500,13 +513,26 @@ try {
     $period_obp = ($period_obp_den > 0) ? (($cum_h + $cum_bb + $cum_hbp) / $period_obp_den) : 0;
     $period_slg = ($cum_ab > 0) ? ($cum_tb / $cum_ab) : 0;
     $period_stats = [
+        'games' => count($period_game_ids) ?: count($rows_by_date),
+        'plate_appearances' => $period_pa,
         'avg' => round($period_avg, 3),
         'obp' => round($period_obp, 3),
         'slg' => round($period_slg, 3),
         'ops' => round($period_obp + $period_slg, 3),
+        'eff_ops' => round((float)($prev_close['eff_ops'] ?? 0), 3),
+        'ops_plus' => round($last_ops_plus, 1),
+        'eff_ops_plus' => round($last_eff_ops_plus, 1),
         'hits' => $cum_h,
+        'singles' => $period_1b,
+        'doubles' => $period_2b,
+        'triples' => $period_3b,
         'home_runs' => $period_hr,
+        'walks' => $cum_bb,
         'stolen_bases' => $period_sb,
+        'caught_stealing' => $period_cs,
+        'stolen_base_percentage' => (($period_sb + $period_cs) > 0)
+            ? round($period_sb / ($period_sb + $period_cs), 3)
+            : null,
         'bb_per_k' => ($period_so > 0) ? round($cum_bb / $period_so, 3) : null,
     ];
 

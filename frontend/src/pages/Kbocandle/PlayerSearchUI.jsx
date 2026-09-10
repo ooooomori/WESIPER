@@ -43,15 +43,17 @@ const SEASON_DATES = {
     },
 };
 
-export default function PlayerSearchUI({ setKboData }) {
+export default function PlayerSearchUI({ setKboData, comparisonMode = false, setComparisonData }) {
     const [seasonDates, setSeasonDates] = useState(null);
     const [searchPlayer, setSearchPlayer] = useState(null); // 선택된 선수 객체 (id 등 포함 가정)
+    const [comparisonPlayers, setComparisonPlayers] = useState([]);
     const [year, setYear] = useState("2026");
     const [gameType, setGameType] = useState("regular");
     const [datePreset, setDatePreset] = useState("whole");
     const [startDate, setStartDate] = useState("2026-03-28"); // 시작일 상태 추가
     const [endDate, setEndDate] = useState("2026-12-31"); // 종료일 상태 추가
     const [showAdvanced, setShowAdvanced] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const fetchSchedule = async () => {
@@ -71,6 +73,12 @@ export default function PlayerSearchUI({ setKboData }) {
         fetchSchedule();
     }, []);
 
+    useEffect(() => {
+        if (!comparisonMode || !searchPlayer?.PlayerId) return;
+        setComparisonPlayers((players) => players.some((player) => player.PlayerId === searchPlayer.PlayerId)
+            ? players : [searchPlayer, ...players]);
+    }, [comparisonMode, searchPlayer]);
+
     const getFormattedDate = (d) => {
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
     };
@@ -78,36 +86,47 @@ export default function PlayerSearchUI({ setKboData }) {
     const handleSearch = async (e) => {
         e.preventDefault();
 
-        // 선수가 선택되지 않았거나 ID가 없다면 방어
-        if (!searchPlayer || !searchPlayer.PlayerId) {
-            alert("선수를 먼저 선택해주세요.");
+        const targets = comparisonMode ? comparisonPlayers : [searchPlayer].filter(Boolean);
+        if (targets.length < (comparisonMode ? 2 : 1)) {
+            alert(comparisonMode ? "비교할 선수를 2명 이상 선택해주세요." : "선수를 먼저 선택해주세요.");
             return;
         }
 
+        setIsLoading(true);
         try {
-            // 💡 4가지 필수 파라미터를 담아 GET 요청 전송
-            const response = await axios.get("/api/kbocandle/get_data.php", {
+            const responses = await Promise.all(targets.map((player) => axios.get("/api/kbocandle/get_data.php", {
                 params: {
-                    season: gameType,
-                    year: year,
-                    player_id: searchPlayer.PlayerId,
-                    start_date: startDate,
-                    end_date: endDate,
-                    date_preset: datePreset,
-                    img: searchPlayer.Img,
+                    season: gameType, year, player_id: player.PlayerId,
+                    start_date: startDate, end_date: endDate,
+                    date_preset: datePreset, img: player.Img,
                 },
-            });
+            })));
+            const results = responses.map((response, index) => ({
+                ...response.data,
+                player: targets[index],
+            })).filter((result) => result.success);
 
-            console.log("데이터 조회 성공:", response.data);
-
-            // 상위 컴포넌트로 데이터 전달이 필요할 경우 호출 (선택 사항)
-            if (setKboData) {
-                setKboData(response.data);
+            if (comparisonMode) {
+                setComparisonData?.(results);
+                if (results.length < 2) alert("비교 가능한 기록이 있는 선수가 2명 미만입니다.");
+            } else if (setKboData) {
+                setKboData(results[0] || responses[0].data);
             }
         } catch (error) {
             console.error("데이터 조회 실패:", error);
             alert("데이터를 불러오는 중 오류가 발생했습니다.");
+        } finally {
+            setIsLoading(false);
         }
+    };
+
+    const handlePlayerSelect = (player) => {
+        if (!comparisonMode) {
+            setSearchPlayer(player);
+            return;
+        }
+        setComparisonPlayers((players) => players.some((item) => item.PlayerId === player.PlayerId)
+            ? players : [...players, player]);
     };
 
     return (
@@ -116,12 +135,13 @@ export default function PlayerSearchUI({ setKboData }) {
                 <div className="flex flex-col items-start gap-2">
                     {/* 상단: 검색바 + 검색버튼 가로 배치 */}
                     <div className="candle-search-main flex items-center justify-between gap-2 w-full">
-                        <Searchbar setSearchPlayer={setSearchPlayer} />
+                        <Searchbar setSearchPlayer={handlePlayerSelect} clearOnSelect={comparisonMode} />
                         <button
                             type="submit"
                             className="candle-search-submit"
+                            disabled={isLoading}
                         >
-                            조회하기
+                            {isLoading ? "조회 중" : comparisonMode ? "비교하기" : "조회하기"}
                         </button>
                     </div>
 
@@ -129,7 +149,7 @@ export default function PlayerSearchUI({ setKboData }) {
                     <div className="candle-search-subline flex items-center justify-between gap-4 w-full">
                         {/* 왼쪽 영역: searchPlayer가 있을 때만 공간을 차지하며 내부에서 유연하게 배치 */}
                         <div className="flex items-center min-w-0">
-                            {searchPlayer && (
+                            {!comparisonMode && searchPlayer && (
                                 <div className="candle-selected-player flex items-center align-middle min-w-0">
                                     <div className="candle-selected-label text-sm font-bold mb-0 whitespace-nowrap mr-2 shrink-0">
                                         조회할 선수:
@@ -137,6 +157,21 @@ export default function PlayerSearchUI({ setKboData }) {
                                     <div className="min-w-0">
                                         <PlayerList player={searchPlayer} />
                                     </div>
+                                </div>
+                            )}
+                            {comparisonMode && (
+                                <div className="candle-compare-selection-list">
+                                    <span className="candle-selected-label">비교할 선수:</span>
+                                    {comparisonPlayers.length ? comparisonPlayers.map((player) => (
+                                        <div className="candle-compare-selection" key={player.PlayerId}>
+                                            <PlayerList player={player} />
+                                            <button
+                                                type="button"
+                                                aria-label={`${player.Name} 비교에서 제외`}
+                                                onClick={() => setComparisonPlayers((players) => players.filter((item) => item.PlayerId !== player.PlayerId))}
+                                            >×</button>
+                                        </div>
+                                    )) : <span className="candle-compare-selection-empty">검색 결과에서 선수를 추가해주세요.</span>}
                                 </div>
                             )}
                         </div>

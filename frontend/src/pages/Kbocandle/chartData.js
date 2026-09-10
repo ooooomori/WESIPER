@@ -3,6 +3,12 @@ export const METRICS = [
     ["ops", "OPS"], ["eff_ops", "실질OPS"], ["ops_plus", "OPS+"],
 ];
 
+export const COMPARISON_METRICS = [
+    ["avg", "타율"], ["obp", "출루율"], ["slg", "장타율"],
+    ["ops", "OPS"], ["eff_ops", "실질OPS"], ["ops_plus", "OPS+"],
+    ["eff_ops_plus", "실질OPS+"],
+];
+
 export function metricValue(row, metric, key = "close") {
     const source = row?.[metric];
     const value = typeof source === "object" && source !== null ? source[key] : source;
