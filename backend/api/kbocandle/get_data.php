@@ -130,7 +130,8 @@ try {
                           FROM (
                               SELECT game_date 
                               FROM kbo_season_records 
-                              WHERE player_id = :player_id AND game_date <= :end_date 
+                              WHERE player_id = :player_id
+                                AND game_date BETWEEN :season_start AND :end_date
                               GROUP BY game_date, game_id 
                               ORDER BY game_date DESC, game_id DESC 
                               LIMIT :limit
@@ -141,6 +142,7 @@ try {
         $fd_stmt = $pdo->prepare($find_date_sql);
         
         $fd_stmt->bindValue(':player_id', $player_id, PDO::PARAM_STR);
+        $fd_stmt->bindValue(':season_start', $season_start_bound, PDO::PARAM_STR);
         $fd_stmt->bindValue(':end_date', $end_date, PDO::PARAM_STR);
         $fd_stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $fd_stmt->execute();
@@ -268,6 +270,7 @@ try {
     ];
     $cum_ab = 0; $cum_h = 0; $cum_bb = 0; $cum_hbp = 0; $cum_sf = 0; $cum_tb = 0;
     $cum_eff_ab = 0; $cum_eff_tb = 0; $cum_eff_h = 0; $cum_eff_ob = 0;
+    $period_hr = 0; $period_sb = 0; $period_so = 0;
 
     $sql = "SELECT 
             s.game_date, 
@@ -339,10 +342,13 @@ try {
         $l_eff_tb = (int)($first_row['cum_eff_tb'] ?? 0) - $base_l_eff_tb;
 
         foreach ($day_rows as $row) {
+            // 도루는 타석 결과가 비어 있는 별도 행으로 저장될 수도 있다.
+            $sb = (int)($row['sb'] ?? 0);
+            $period_sb += $sb;
+
             $parsed = parseKboResultPHP($row['pa_result']);
             if (!$parsed) continue;
 
-            $sb = (int)($row['sb'] ?? 0);
             $cs = (int)($row['cs'] ?? 0);
             $pa_txt = trim($row['pa_result']);
             
@@ -378,6 +384,8 @@ try {
             $bb = (in_array($pa_txt, ['4구', '볼넷', '고4'], true) || strpos($pa_txt, '볼넷') !== false) ? 1 : 0;
             $hbp = (strpos($pa_txt, '사구') !== false) ? 1 : 0;
             $sf = (strpos($pa_txt, '희비') !== false || strpos($pa_txt, '희플') !== false) ? 1 : 0;
+            $is_hr = (mb_substr($pa_txt, -1, 1, 'UTF-8') === '홈') ? 1 : 0;
+            $is_so = (strpos($pa_txt, '삼진') !== false) ? 1 : 0;
 
             $cum_ab  += $parsed['ab'];
             $cum_h   += $parsed['h'];
@@ -385,6 +393,8 @@ try {
             $cum_bb  += $bb;
             $cum_hbp += $hbp;
             $cum_sf  += $sf;
+            $period_hr += $is_hr;
+            $period_so += $is_so;
             
             $cum_eff_ab += $eff_ab;
             $cum_eff_tb += $eff_tb;
@@ -485,6 +495,21 @@ try {
         $prev_close = $close;
     }
 
+    $period_obp_den = $cum_ab + $cum_bb + $cum_hbp + $cum_sf;
+    $period_avg = ($cum_ab > 0) ? ($cum_h / $cum_ab) : 0;
+    $period_obp = ($period_obp_den > 0) ? (($cum_h + $cum_bb + $cum_hbp) / $period_obp_den) : 0;
+    $period_slg = ($cum_ab > 0) ? ($cum_tb / $cum_ab) : 0;
+    $period_stats = [
+        'avg' => round($period_avg, 3),
+        'obp' => round($period_obp, 3),
+        'slg' => round($period_slg, 3),
+        'ops' => round($period_obp + $period_slg, 3),
+        'hits' => $cum_h,
+        'home_runs' => $period_hr,
+        'stolen_bases' => $period_sb,
+        'bb_per_k' => ($period_so > 0) ? round($cum_bb / $period_so, 3) : null,
+    ];
+
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'success'   => true,
@@ -496,6 +521,7 @@ try {
         'end_date'  => $end_date,
         'date_preset' => $date_preset,
         'img'       => $img,
+        'period_stats' => $period_stats,
         'data'      => $result_output
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 

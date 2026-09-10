@@ -5,7 +5,7 @@ const PlayerList = ({ player }) => {
     return (
         player && (
             <div className="flex items-center gap-3">
-                <div className="w-9 h-9 shrink-0 rounded-full bg-gray-100 overflow-hidden border border-gray-200 flex items-center justify-center">
+                <div className="candle-player-thumb w-9 h-9 shrink-0 rounded-full overflow-hidden border flex items-center justify-center">
                     <PlayerImg p_no={player.PlayerId} p_img={player.Img} />
                 </div>
                 <div className="flex flex-col text-start">

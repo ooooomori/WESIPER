@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, InputGroup, Card, Collapse } from "react-bootstrap";
+import { Form, Card, Collapse } from "react-bootstrap";
 import axios from "axios"; // 💡 axios 추가
 import Searchbar from "./Search";
 import PlayerList from "./PlayerList";
@@ -111,27 +111,27 @@ export default function PlayerSearchUI({ setKboData }) {
     };
 
     return (
-        <Card className="font-family-NaSqNe mt-2">
-            <Form onSubmit={handleSearch}>
-                <div className="flex flex-col items-start gap-2 mb-4">
+        <Card className="candle-search-panel font-family-NaSqNe mt-2 theme-light">
+            <Form onSubmit={handleSearch} className="candle-search-form">
+                <div className="flex flex-col items-start gap-2">
                     {/* 상단: 검색바 + 검색버튼 가로 배치 */}
-                    <div className="flex items-center justify-between gap-2 w-full mb-2">
+                    <div className="candle-search-main flex items-center justify-between gap-2 w-full">
                         <Searchbar setSearchPlayer={setSearchPlayer} />
                         <button
                             type="submit"
-                            className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-xl text-sm px-4 py-2.5 text-center leading-5 shrink-0 h-12"
+                            className="candle-search-submit"
                         >
                             조회하기
                         </button>
                     </div>
 
                     {/* 하단: 상세 설정 버튼 좌측 정렬 */}
-                    <div className="flex items-center justify-between gap-4 w-full">
+                    <div className="candle-search-subline flex items-center justify-between gap-4 w-full">
                         {/* 왼쪽 영역: searchPlayer가 있을 때만 공간을 차지하며 내부에서 유연하게 배치 */}
                         <div className="flex items-center min-w-0">
                             {searchPlayer && (
-                                <div className="flex items-center align-middle min-w-0">
-                                    <div className="text-sm font-bold text-gray-700 mb-0 whitespace-nowrap mr-2 shrink-0">
+                                <div className="candle-selected-player flex items-center align-middle min-w-0">
+                                    <div className="candle-selected-label text-sm font-bold mb-0 whitespace-nowrap mr-2 shrink-0">
                                         조회할 선수:
                                     </div>
                                     <div className="min-w-0">
@@ -145,7 +145,7 @@ export default function PlayerSearchUI({ setKboData }) {
                         <button
                             type="button"
                             onClick={() => setShowAdvanced(!showAdvanced)}
-                            className="text-sm font-bold text-gray-500 hover:text-blue-600 flex items-center gap-1 bg-transparent border-0 transition-colors shrink-0 whitespace-nowrap ml-auto"
+                            className="candle-advanced-toggle text-sm font-bold flex items-center gap-1 shrink-0 whitespace-nowrap ml-auto"
                             aria-controls="advanced-options"
                             aria-expanded={showAdvanced}
                         >
@@ -156,7 +156,7 @@ export default function PlayerSearchUI({ setKboData }) {
                 {/* 중단: 상세 설정 (펼치기/접기 영역) */}
                 <Collapse in={showAdvanced}>
                     <div id="advanced-options">
-                        <div className="bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <div className="candle-advanced-panel">
                             <Form.Group className="flex items-center gap-3 mb-4">
                                 <Form.Label className="text-sm font-bold text-gray-700 mb-0 whitespace-nowrap">
                                     연도 선택
@@ -174,7 +174,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                         setStartDate(defaultRange[0] || "");
                                         setEndDate(defaultRange[1] || "");
                                     }}
-                                    className="bg-gray-50 border-gray-200 shadow-none focus:ring-2 focus:ring-blue-500 rounded-lg font-medium w-auto cursor-pointer"
+                                    className="candle-select font-medium w-auto cursor-pointer"
                                 >
                                     {seasonDates &&
                                         Object.keys(seasonDates)
@@ -192,7 +192,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                 <Form.Label className="text-sm font-bold text-gray-700 mb-2 block">
                                     시즌 종류
                                 </Form.Label>
-                                <div className="flex gap-4">
+                                <div className="candle-radio-group flex gap-4">
                                     {[
                                         { id: "preseason", label: "시범경기" },
                                         { id: "regular", label: "정규시즌" },
@@ -232,7 +232,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                                     );
                                                 }}
                                                 // 비활성화 시 투명도를 낮추고 마우스 커서를 차단해 시각적으로도 완전히 죽여버린다.
-                                                className={`font-medium ${!hasSchedule ? "opacity-40 cursor-not-allowed" : gameType === item.id ? "text-gray-900" : "text-gray-600"}`}
+                                                className="candle-radio font-medium"
                                             />
                                         );
                                     })}
@@ -245,7 +245,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                     조회 기간
                                 </Form.Label>
 
-                                <div className="flex flex-wrap gap-4 mb-3">
+                                <div className="candle-radio-group flex flex-wrap gap-4 mb-3">
                                     {[
                                         { id: "whole", label: "전체 시즌" },
                                         { id: "7", label: "최근 7경기" },
@@ -283,13 +283,13 @@ export default function PlayerSearchUI({ setKboData }) {
                                                 }
                                                 // custom일 경우: 값 변경 없이 라디오 시각적 포커스만 이동
                                             }}
-                                            className={`text-sm cursor-pointer ${datePreset === preset.id ? "font-bold text-blue-600" : "text-gray-600"}`}
+                                            className="candle-radio text-sm cursor-pointer"
                                         />
                                     ))}
                                 </div>
 
                                 {/* 기존 직접 지정 셀렉트 영역 */}
-                                <div className="flex items-center gap-1 md:gap-2">
+                                <div className="candle-date-range flex items-center gap-1 md:gap-2">
                                     {/* 시작일 선택 */}
                                     <div className="flex items-center gap-1 w-full">
                                         <Form.Select
@@ -318,7 +318,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                                     `${currentYear}-${newMonth}-${currentDay}`,
                                                 );
                                             }}
-                                            className="bg-white border-gray-200 rounded-lg w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5 shadow-none"
+                                            className="candle-select w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5"
                                         >
                                             <option value="" disabled>
                                                 월
@@ -354,7 +354,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                                     `${currentYear}-${currentMonth}-${e.target.value}`,
                                                 );
                                             }}
-                                            className="bg-white border-gray-200 rounded-lg w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5 shadow-none"
+                                            className="candle-select w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5"
                                         >
                                             <option value="" disabled>
                                                 일
@@ -387,7 +387,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                         </Form.Select>
                                     </div>
 
-                                    <span className="text-gray-400 font-extrabold text-xs sm:text-base px-1">
+                                    <span className="candle-date-separator font-extrabold text-xs sm:text-base px-1">
                                         ~
                                     </span>
 
@@ -419,7 +419,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                                     `${currentYear}-${newMonth}-${currentDay}`,
                                                 );
                                             }}
-                                            className="bg-white border-gray-200 rounded-lg w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5 shadow-none"
+                                            className="candle-select w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5"
                                         >
                                             <option value="" disabled>
                                                 월
@@ -455,7 +455,7 @@ export default function PlayerSearchUI({ setKboData }) {
                                                     `${currentYear}-${currentMonth}-${e.target.value}`,
                                                 );
                                             }}
-                                            className="bg-white border-gray-200 rounded-lg w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5 shadow-none"
+                                            className="candle-select w-full !text-[11px] sm:!text-sm !py-1 sm:!py-2 !px-1 sm:!px-2 !pr-5"
                                         >
                                             <option value="" disabled>
                                                 일

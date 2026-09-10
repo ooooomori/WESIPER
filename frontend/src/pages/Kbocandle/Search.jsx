@@ -9,7 +9,28 @@ const Searchbar = ({ setSearchPlayer }) => {
     const [inputValue, setInputValue] = useState("");
     const [isSearching, setIsSearching] = useState(false);
 
+    const searchAreaRef = useRef(null);
     const cancelTokenRef = useRef(null);
+
+    useEffect(() => {
+        const closeSearchList = (event) => {
+            if (searchAreaRef.current?.contains(event.target)) return;
+
+            clearTimeout(debounceTimer);
+            cancelTokenRef.current?.cancel();
+            cancelTokenRef.current = null;
+            setSearchList([]);
+            setIsSearching(false);
+        };
+
+        document.addEventListener("pointerdown", closeSearchList);
+        document.addEventListener("focusin", closeSearchList);
+
+        return () => {
+            document.removeEventListener("pointerdown", closeSearchList);
+            document.removeEventListener("focusin", closeSearchList);
+        };
+    }, [debounceTimer]);
 
     const onSearch = (event) => {
         const keyword = event.target.value;
@@ -68,14 +89,17 @@ const Searchbar = ({ setSearchPlayer }) => {
     };
 
     return (
-        <div className="relative w-full max-w-md font-family-NaSqNe">
-            <div className="relative bg-white border border-gray-300 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all">
-                <i className="bi bi-search pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        <div
+            ref={searchAreaRef}
+            className="candle-player-search relative w-full max-w-md font-family-NaSqNe"
+        >
+            <div className="candle-player-search-box relative">
+                <i className="bi bi-search candle-search-icon pointer-events-none absolute left-4 top-1/2 -translate-y-1/2"></i>
 
                 <input
                     id="input-player-search"
                     type="text"
-                    className="h-12 w-full border-0 bg-transparent pl-11 pr-12 text-gray-900 placeholder:text-gray-400 focus:ring-0 text-base rounded-lg"
+                    className="candle-player-search-input h-12 w-full border-0 bg-transparent pl-11 pr-12 focus:ring-0 text-base"
                     autoComplete="off"
                     spellCheck="false"
                     placeholder="선수명 입력"
@@ -93,12 +117,12 @@ const Searchbar = ({ setSearchPlayer }) => {
             </div>
 
             {searchList.length > 0 && (
-                <div className="absolute left-0 right-0 top-full mt-2 z-50 bg-white rounded-xl shadow-xl ring-1 ring-black ring-opacity-5 overflow-hidden">
-                    <ul className="max-h-72 overflow-y-auto py-1 text-sm text-gray-800">
+                <div className="candle-search-results absolute left-0 right-0 top-full mt-2 z-50 overflow-hidden">
+                    <ul className="max-h-72 overflow-y-auto py-1 text-sm">
                         {searchList.map((player, index) => (
                             <li
                                 key={index}
-                                className="cursor-pointer select-none px-4 py-2.5 flex items-center justify-between hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
+                                className="cursor-pointer select-none px-4 py-2.5 flex items-center justify-between transition-colors"
                                 onClick={() => handleSelect(player)}
                             >
                                 <PlayerList player={player} />

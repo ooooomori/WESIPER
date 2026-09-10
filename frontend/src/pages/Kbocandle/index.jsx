@@ -47,10 +47,11 @@ const mockKboData = {
 
 export default function Kbocandle() {
     const [kboData, setKboData] = React.useState({});
+    const [dark, setDark] = React.useState(true);
     return (
         <div className="max-w-5xl mx-auto px-2 py-4 sm:px-4">
             <PlayerSearchUI setKboData={setKboData} />
-            <KboCandlestickChart kboData={kboData} />
+            <KboCandlestickChart kboData={kboData} dark={dark} setDark={setDark} />
             <div className="text-xs sm:text-base py-4 sm:py-6 sr-hide-screenshot px-4 text-center font-family-NaSqNe">
                     <span>
                         2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.
