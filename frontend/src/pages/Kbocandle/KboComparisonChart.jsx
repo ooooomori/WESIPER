@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ColorType, CrosshairMode, createChart, LineSeries } from "lightweight-charts";
 import PlayerImg from "./PlayerImg";
+import MetricHelp from "./MetricHelp";
 import { COMPARISON_METRICS, metricValue } from "./chartData";
 
 const PLAYER_COLORS = ["#20c9a6", "#ff6577", "#4f8cff", "#f3bc5f", "#b595ff", "#ff8f4c", "#42c6dd", "#e66ac4"];
@@ -72,7 +73,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const first = records[0];
     const periodLabel = first ? (first.date_preset && first.date_preset !== "whole"
         ? `${first.start_date} ~ ${first.end_date}`
-        : `${first.year} ${SEASON_LABELS[first.season] || ""}`) : "비교할 선수를 선택해주세요";
+        : `${first.year} ${SEASON_LABELS[first.season] || ""}`) : "";
     const comparisonTitle = first?.date_preset === "custom"
         ? "조회 기간 성적 비교"
         : first?.date_preset && first.date_preset !== "whole"
@@ -170,7 +171,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
         <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span> <b>선수 비교 차트</b></span><span>{periodLabel}</span></div>
         <header className="compare-header">
             <div><h2>{leaderLabel}</h2></div>
-            <strong>{metricName}</strong>
+            <div className="compare-metric-title"><strong>{metricName}</strong><MetricHelp metric={metric} /></div>
         </header>
         <nav className="candle-metrics compare-metrics" aria-label="비교 기록 지표">{COMPARISON_METRICS.map(([id, name]) => <button key={id} aria-pressed={metric === id} className={metric === id ? "active" : ""} onClick={() => setMetric(id)}>{name}</button>)}</nav>
         <div className="compare-legend">{records.map((record, index) => {
@@ -180,7 +181,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
         })}<span className="compare-date">{hoverValues?.date || "최근 기록"}</span></div>
         <div className="compare-plot-wrap">
             <div className="candle-plot compare-plot" ref={host} role="img" aria-label={`${metricName} 선수 비교 실선 차트`} />
-            {records.length < 2 && <div className="compare-empty">위에서 2명 이상의 선수를 추가하고 비교하기를 눌러주세요.</div>}
+            {records.length < 2 && <div className="compare-empty">선수를 2명 이상 선택하고 비교하기를 눌러보세요!</div>}
         </div>
         <div className="candle-navigation">
             <div><button disabled={records.length < 2} onClick={() => move(-1)} aria-label="이전 구간">←</button><button disabled={records.length < 2} onClick={() => move(1)} aria-label="다음 구간">→</button><button disabled={records.length < 2} onClick={() => zoom(1.3)} aria-label="차트 축소">−</button><button disabled={records.length < 2} onClick={() => zoom(0.75)} aria-label="차트 확대">＋</button></div>

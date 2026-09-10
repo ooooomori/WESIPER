@@ -68,8 +68,10 @@ export default function Kbocandle() {
                     aria-pressed={comparisonMode}
                     onClick={() => setComparisonMode((value) => !value)}
                 >
-                    <span>{comparisonMode ? "개별 선수 보기" : "선수 비교하기"}</span>
-                    <small>{comparisonMode ? "한 선수의 캔들 차트로 돌아갑니다" : "여러 선수의 기록을 한 차트에서 확인합니다"}</small>
+                    <span className="candle-mode-switch-label">
+                        <i className={`bi ${comparisonMode ? "bi-person-fill" : "bi-people-fill"}`} aria-hidden="true" />
+                        {comparisonMode ? "개별 선수 보기" : "선수 비교하기"}
+                    </span>
                 </button>
             </div>
             <div className="text-xs sm:text-base py-4 sm:py-6 sr-hide-screenshot px-4 text-center font-family-NaSqNe">

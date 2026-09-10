@@ -7,6 +7,44 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom';
 
+const enableFreshBuildCheck = () => {
+    if (import.meta.env.DEV) return;
+
+    const loadedBundle = document.querySelector('script[type="module"][src]')?.getAttribute('src');
+    let checking = false;
+
+    const refreshIfUpdated = async () => {
+        if (checking || document.visibilityState === 'hidden') return;
+        checking = true;
+
+        try {
+            const response = await fetch(window.location.href, {
+                cache: 'no-store',
+                headers: { 'Cache-Control': 'no-cache' },
+            });
+            if (!response.ok) return;
+
+            const html = await response.text();
+            const latestDocument = new DOMParser().parseFromString(html, 'text/html');
+            const latestBundle = latestDocument.querySelector('script[type="module"][src]')?.getAttribute('src');
+
+            if (loadedBundle && latestBundle && loadedBundle !== latestBundle) {
+                window.location.reload();
+            }
+        } catch {
+            // 오프라인이거나 일시적인 통신 오류라면 현재 화면을 그대로 유지한다.
+        } finally {
+            checking = false;
+        }
+    };
+
+    window.addEventListener('pageshow', refreshIfUpdated);
+    window.addEventListener('focus', refreshIfUpdated);
+    document.addEventListener('visibilitychange', refreshIfUpdated);
+};
+
+enableFreshBuildCheck();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <>

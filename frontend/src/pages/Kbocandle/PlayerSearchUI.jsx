@@ -171,7 +171,7 @@ export default function PlayerSearchUI({ setKboData, comparisonMode = false, set
                                                 onClick={() => setComparisonPlayers((players) => players.filter((item) => item.PlayerId !== player.PlayerId))}
                                             >×</button>
                                         </div>
-                                    )) : <span className="candle-compare-selection-empty">검색 결과에서 선수를 추가해주세요.</span>}
+                                    )) : null}
                                 </div>
                             )}
                         </div>

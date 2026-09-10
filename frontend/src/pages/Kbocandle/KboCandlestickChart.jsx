@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createChart, CandlestickSeries, LineSeries, ColorType, CrosshairMode } from "lightweight-charts";
 import PlayerImg from "./PlayerImg";
+import MetricHelp from "./MetricHelp";
 import { METRICS, buildBars, metricValue, withCalendarGaps } from "./chartData";
 import "./candle.css";
 
@@ -172,7 +173,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
         <header className="candle-quote">
             <div className="candle-player">
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}
-                <div><div className="candle-eyebrow">{latest ? `#${kboData.player_id} · ${metricName}` : ""}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
+                <div><div className="candle-eyebrow">{latest && <><span>{`#${kboData.player_id} · ${metricName}`}</span><MetricHelp metric={metric} /></>}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
             </div>
             <div className={`candle-price ${direction}`}><strong>{format(current)}</strong><span>{change === null ? "기록 조회 후 표시" : `${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span><small>{timeframe === "daily" ? "전 경기" : timeframe === "weekly" ? "전 주" : "전 월"} 대비</small></div>
         </header>
@@ -183,21 +184,23 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
         </div>
         <div className="candle-legend">{plus ? <><span className="mint">● {metricName}</span><span>● {metric === "ops_plus" ? "실질OPS+" : "OPS+"}</span></> : <><span>캔들 · {metricName}</span>{showMA && <><span className="gold">― MA 7</span><span className="purple">― MA 30</span></>}</>}<span className="candle-visible">{rangeInfo?.count || 0}개 표시</span></div>
         <div className="candle-plot-wrap"><div className="candle-plot" ref={host} role="img" aria-label={`${metricName} 차트. 좌우로 이동하거나 확대해 기록을 탐색하세요.`} />{extremaLabels.map(label => <div key={label.kind} className={`candle-extrema-label ${label.kind} ${label.side}`} style={{ left: label.x, top: label.y }} aria-hidden="true">{label.side === "right" && <span className="candle-extrema-arrow">←</span>}<span>{label.text}</span>{label.side === "left" && <span className="candle-extrema-arrow">→</span>}</div>)}</div>
-        {!latest && <div className="candle-empty">위에서 선수와 시즌을 조회하면<br />최근 경기부터 차트가 표시됩니다.</div>}
+        {!latest && <div className="candle-empty">{kboData?.success === false
+            ? <>선수 기록이 없습니다.<br />시즌이나 조회 기간을 조정해보세요.</>
+            : <>선수를 선택하고 조회하기를 눌러보세요!</>}</div>}
         <div className="candle-navigation">
             <div><button disabled={!latest} onClick={() => move(-1)} aria-label="이전 구간">←</button><button disabled={!latest} onClick={() => move(1)} aria-label="다음 구간">→</button><button disabled={!latest} onClick={() => zoom(1.3)} aria-label="차트 축소">−</button><button disabled={!latest} onClick={() => zoom(0.75)} aria-label="차트 확대">＋</button></div>
             <button disabled={!latest} className="candle-latest" onClick={() => api.current?.recent()}>최근으로 ↗</button>
         </div>
         <div className="candle-range"><span>{rangeInfo?.start ? `${rangeInfo.start} — ${rangeInfo.end}` : "조회된 기록 없음"}</span><span>구간 최저 <b className="down">{format(rangeInfo?.low)}</b> 최고 <b className="up">{format(rangeInfo?.high)}</b></span></div>
-        <div className="candle-detail">
+        {latest && <div className="candle-detail">
             <div className="candle-detail-heading"><strong>{active?.time || "경기 기록"}{timeframe === "weekly" ? " 주" : timeframe === "monthly" ? " 월" : ""}</strong><span>{selected ? "선택한 기록" : "최근 기록"}</span></div>
             <div className="candle-values">{(plus ? [["OPS+", active?.ops_plus], ["실질OPS+", active?.eff_ops_plus]] : [["시작", active?.open], ["최고", active?.high], ["최저", active?.low], ["마지막", active?.close]]).map(([label, value]) => <div key={label}><span>{label}</span><strong className={label === "최고" ? "up" : label === "최저" ? "down" : ""}>{format(value)}</strong></div>)}</div>
             {timeframe === "daily" && <div className="candle-atbats"><span>타석 결과</span><div>{active?.pa_results?.length ? active.pa_results.map((result, index) => <span className={/^(볼넷|고4|사구|1루타|2루타|3루타|홈런)/.test(result) ? "on-base" : ""} key={index}>{result}</span>) : <span>기록 없음</span>}</div></div>}
-        </div>
-        <div className="candle-period-summary">
+        </div>}
+        {latest && <div className="candle-period-summary">
             <div className="candle-summary-heading"><strong>조회 기간 기록</strong><span>{periodLabel || "기간 미지정"}</span></div>
             <div className="candle-summary-values">{summaryStats.map(([label, value, type]) => <div key={label}><span>{label}</span><strong>{formatSummary(value, type)}</strong></div>)}</div>
-        </div>
-        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>좌우 드래그로 이동 · 휠/핀치로 확대 · 길게 눌러 기록 확인</span>{showMA && !plus && <span>이동평균은 최근 7·30경기 기준입니다.</span>}{plus && <span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span>}<a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
+        </div>}
+        <footer className="candle-footnote"><div className="candle-footnote-copy">{showMA && !plus && <span>이동평균은 최근 7·30경기 기준입니다.</span>}{plus && <span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span>}<a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
     </section>;
 }
