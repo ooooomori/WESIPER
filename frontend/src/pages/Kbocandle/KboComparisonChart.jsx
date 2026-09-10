@@ -37,7 +37,7 @@ const deriveStats = (record) => {
 
 const TABLE_ROWS = [
     ["games", "경기", "count"], ["plate_appearances", "타석", "count"],
-    ["hits", "안타", "count"], ["singles", "1루타", "count"],
+    ["hits", "안타", "count"],
     ["doubles", "2루타", "count"], ["triples", "3루타", "count"],
     ["home_runs", "홈런", "count"], ["walks", "볼넷", "count"],
     ["stolen_bases", "도루", "count"], ["stolen_base_percentage", "도루 성공률", "percent"],
@@ -194,6 +194,6 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
                 <tbody>{TABLE_ROWS.map(([key, label, type], rowIndex) => <tr key={key}><th scope="row">{label}</th>{records.map((record, playerIndex) => <td key={record.player_id}><span className={rankClass(rowIndex, playerIndex)}>{formatValue(stats[playerIndex]?.[key], type)}</span></td>)}</tr>)}</tbody>
             </table></div>
         </div>}
-        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>각 선은 선수의 일자별 Close 값을 연결합니다.</span><span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark((value) => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
+        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark((value) => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
     </section>;
 }

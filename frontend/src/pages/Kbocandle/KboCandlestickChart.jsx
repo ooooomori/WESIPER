@@ -175,7 +175,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}
                 <div><div className="candle-eyebrow">{latest && <><span>{`#${kboData.player_id} · ${metricName}`}</span><MetricHelp metric={metric} /></>}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
             </div>
-            <div className={`candle-price ${direction}`}><strong>{format(current)}</strong><span>{change === null ? "기록 조회 후 표시" : `${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span><small>{timeframe === "daily" ? "전 경기" : timeframe === "weekly" ? "전 주" : "전 월"} 대비</small></div>
+            <div className={`candle-price ${direction}`}><strong>{format(current)}</strong>{change !== null && <span>{`${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span>}<small>{timeframe === "daily" ? "전 경기" : timeframe === "weekly" ? "전 주" : "전 월"} 대비</small></div>
         </header>
         <nav className="candle-metrics" aria-label="기록 지표">{METRICS.map(([id, name]) => <button key={id} aria-pressed={metric === id} className={metric === id ? "active" : ""} onClick={() => setMetric(id)}>{name}</button>)}</nav>
         <div className="candle-toolbar">
@@ -201,6 +201,6 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             <div className="candle-summary-heading"><strong>조회 기간 기록</strong><span>{periodLabel || "기간 미지정"}</span></div>
             <div className="candle-summary-values">{summaryStats.map(([label, value, type]) => <div key={label}><span>{label}</span><strong>{formatSummary(value, type)}</strong></div>)}</div>
         </div>}
-        <footer className="candle-footnote"><div className="candle-footnote-copy">{showMA && !plus && <span>이동평균은 최근 7·30경기 기준입니다.</span>}{plus && <span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span>}<a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
+        <footer className="candle-footnote"><div className="candle-footnote-copy">{plus && <span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span>}<a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
     </section>;
 }
