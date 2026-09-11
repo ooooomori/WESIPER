@@ -64,7 +64,7 @@ export default function Kbocandle() {
             <div className="candle-mode-switch-wrap sr-hide-screenshot">
                 <button
                     type="button"
-                    className={`candle-mode-switch ${comparisonMode ? "active" : ""}`}
+                    className={`candle-mode-switch font-family-NaSqNe ${comparisonMode ? "active" : ""}`}
                     aria-pressed={comparisonMode}
                     onClick={() => setComparisonMode((value) => !value)}
                 >
@@ -74,11 +74,6 @@ export default function Kbocandle() {
                     </span>
                 </button>
             </div>
-            <div className="text-xs sm:text-base py-4 sm:py-6 sr-hide-screenshot px-4 text-center font-family-NaSqNe">
-                    <span>
-                        2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.
-                    </span>
-                </div>
         </div>
     );
 }

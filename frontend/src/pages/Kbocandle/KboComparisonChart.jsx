@@ -189,7 +189,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
         })}<span className="compare-date">{hoverValues?.date || "최근 기록"}</span></div>
         <div className="compare-plot-wrap">
             <div className="candle-plot compare-plot" ref={host} role="img" aria-label={`${metricName} 선수 비교 실선 차트`} />
-            {records.length < 2 && <div className="compare-empty">선수를 2명 이상 선택하고 비교하기를 눌러보세요!</div>}
+            {records.length < 2 && <div className="compare-empty"><i className="bi bi-bar-chart-line-fill" aria-hidden="true" /><span>선수를 2명 이상 선택하고 비교하기를 눌러보세요!</span></div>}
         </div>
         <div className="candle-navigation">
             <div><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => move(-1)} aria-label="이전 구간"><i className="bi bi-chevron-left" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => move(1)} aria-label="다음 구간"><i className="bi bi-chevron-right" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => zoom(1.3)} aria-label="차트 축소"><i className="bi bi-dash-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => zoom(0.75)} aria-label="차트 확대"><i className="bi bi-plus-lg" aria-hidden="true" /></button></div>
@@ -202,6 +202,6 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
                 <tbody>{TABLE_ROWS.map(([key, label, type], rowIndex) => <tr key={key}><th scope="row">{label}</th>{records.map((record, playerIndex) => <td key={record.player_id}><span className={rankClass(rowIndex, playerIndex)}>{formatValue(stats[playerIndex]?.[key], type)}</span></td>)}</tr>)}</tbody>
             </table></div>
         </div>}
-        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark((value) => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
+        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span><span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark((value) => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
     </section>;
 }
