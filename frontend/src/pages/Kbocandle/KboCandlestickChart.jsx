@@ -3,11 +3,13 @@ import { createChart, CandlestickSeries, LineSeries, ColorType, CrosshairMode } 
 import PlayerImg from "./PlayerImg";
 import MetricHelp from "./MetricHelp";
 import { METRICS, buildBars, metricValue, withCalendarGaps } from "./chartData";
+import { downloadChartCardPng, downloadCsv, exportFileStem } from "./chartExport";
 import "./candle.css";
 
 const UP = "#ef4452", DOWN = "#3485f6";
 const timeKey = time => typeof time === "string" ? time : time && typeof time === "object"
     ? `${time.year}-${String(time.month).padStart(2, "0")}-${String(time.day).padStart(2, "0")}` : "";
+const displayPaResult = result => result.replace(/고4/g, "고의사구").replace(/희번/g, "희생번트");
 const derivePeriodStats = data => {
     const rows = Array.isArray(data) ? data : [];
     const latest = rows.at(-1);
@@ -112,20 +114,16 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             const highPoint = markerPoints.filter(point => Number.isFinite(point.high)).reduce((best, point) => !best || point.high > best.high ? point : best, null);
             const lowPoint = markerPoints.filter(point => Number.isFinite(point.low)).reduce((best, point) => !best || point.low < best.low ? point : best, null);
             const width = host.current?.clientWidth || 0;
-            const height = host.current?.clientHeight || 0;
             const makeLabel = (point, kind) => {
                 if (!point) return null;
                 const x = chart.timeScale().timeToCoordinate(point.bar.time);
                 const y = main.priceToCoordinate(point[kind]);
                 if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
-                return { kind, x, y: Math.max(16, Math.min(height - 16, y)), side: x > width - 145 ? "left" : "right",
+                return { kind, x: Math.max(2, Math.min(width - 2, x)), y,
+                    side: x < 80 ? "edge-left" : x > width - 80 ? "edge-right" : "",
                     text: `${kind === "high" ? "최고" : "최저"} ${format(point[kind])} (${point.bar.time.slice(5).replace("-", "/")})` };
             };
             const labels = [makeLabel(highPoint, "high"), makeLabel(lowPoint, "low")].filter(Boolean);
-            if (labels.length === 2 && Math.abs(labels[0].y - labels[1].y) < 24) {
-                labels[0].y = Math.max(16, labels[0].y - 11);
-                labels[1].y = Math.min(height - 16, labels[1].y + 11);
-            }
             setExtremaLabels(labels);
             setRangeInfo({ start: visible[0]?.time, end: visible.at(-1)?.time, count: visible.length,
                 low: values.length ? Math.min(...values) : null, high: values.length ? Math.max(...values) : null });
@@ -135,7 +133,8 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             chart.timeScale().setVisibleLogicalRange({ from: Math.max(-0.5, points.length - count), to: points.length + 2 });
             chart.priceScale("right").applyOptions({ autoScale: true });
         };
-        api.current = { chart, moving, recent };
+        const refreshExtrema = () => lastRange && onRange(lastRange);
+        api.current = { chart, moving, recent, refreshExtrema };
         chart.subscribeCrosshairMove(onCrosshair);
         chart.timeScale().subscribeVisibleLogicalRangeChange(onRange);
         const resizeObserver = new ResizeObserver(() => lastRange && onRange(lastRange));
@@ -167,6 +166,26 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
         const step = (range.to - range.from) * 0.65 * direction;
         scale.setVisibleLogicalRange({ from: range.from + step, to: range.to + step });
     };
+    const exportStem = exportFileStem("KBO_CANDLE", kboData?.name || kboData?.player_id, metricName, timeframe, periodLabel);
+    const fullRangeValues = bars.flatMap(bar => plus ? [bar.ops_plus, bar.eff_ops_plus] : [bar.low, bar.high]).filter(Number.isFinite);
+    const exportRangeText = bars.length ? {
+        dates: `${bars[0].time} — ${bars.at(-1).time}`,
+        summary: `전체 최저 ${format(Math.min(...fullRangeValues))} 최고 ${format(Math.max(...fullRangeValues))}`,
+    } : null;
+    const currentRangeText = rangeInfo?.start ? {
+        dates: `${rangeInfo.start} — ${rangeInfo.end}`,
+        summary: `현재 최저 ${format(rangeInfo.low)} 최고 ${format(rangeInfo.high)}`,
+    } : exportRangeText;
+    const exportCsv = () => {
+        if (!bars.length) return;
+        if (plus) {
+            downloadCsv(`${exportStem}.csv`, ["날짜", "OPS+", "실질OPS+"], bars.map(bar => [bar.time, bar.ops_plus, bar.eff_ops_plus]));
+            return;
+        }
+        const movingAverageHeaders = showMA ? ["MA 7", "MA 30"] : [];
+        downloadCsv(`${exportStem}.csv`, ["날짜", `${metricName} 시작`, `${metricName} 최고`, `${metricName} 최저`, `${metricName} 마감`, ...movingAverageHeaders],
+            bars.map(bar => [bar.time, bar.open, bar.high, bar.low, bar.close, ...(showMA ? [bar.ma7, bar.ma30] : [])]));
+    };
 
     return <section className={`candle-terminal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 기록 차트">
         <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span> <b>선수 기록 차트</b></span><span>{periodLabel || "SEASON"}</span></div>
@@ -183,19 +202,19 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             <div className="candle-options">{!plus && <button aria-pressed={showMA} className={showMA ? "enabled" : ""} onClick={() => setShowMA(value => !value)}>이동평균</button>}<button disabled={timeframe !== "daily"} aria-pressed={calendarGaps} onClick={() => setCalendarGaps(value => !value)}>{calendarGaps ? "빈 날짜 표시" : "경기일만"}</button></div>
         </div>
         <div className="candle-legend">{plus ? <><span className="mint">● {metricName}</span><span>● {metric === "ops_plus" ? "실질OPS+" : "OPS+"}</span></> : <><span>캔들 · {metricName}</span>{showMA && <><span className="gold">― MA 7</span><span className="purple">― MA 30</span></>}</>}<span className="candle-visible">{rangeInfo?.count || 0}개 표시</span></div>
-        <div className="candle-plot-wrap"><div className="candle-plot" ref={host} role="img" aria-label={`${metricName} 차트. 좌우로 이동하거나 확대해 기록을 탐색하세요.`} />{extremaLabels.map(label => <div key={label.kind} className={`candle-extrema-label ${label.kind} ${label.side}`} style={{ left: label.x, top: label.y }} aria-hidden="true">{label.side === "right" && <span className="candle-extrema-arrow">←</span>}<span>{label.text}</span>{label.side === "left" && <span className="candle-extrema-arrow">→</span>}</div>)}</div>
+        <div className="candle-plot-wrap"><div className="candle-plot" ref={host} role="img" aria-label={`${metricName} 차트. 좌우로 이동하거나 확대해 기록을 탐색하세요.`} />{extremaLabels.map(label => <div key={label.kind} className={`candle-extrema-label ${label.kind} ${label.side || ""}`} style={{ left: label.x, top: label.y }} aria-hidden="true">{label.kind === "low" && <span className="candle-extrema-arrow">↑</span>}<span className="candle-extrema-text">{label.text}</span>{label.kind === "high" && <span className="candle-extrema-arrow">↓</span>}</div>)}</div>
         {!latest && <div className="candle-empty">{kboData?.success === false
             ? <>선수 기록이 없습니다.<br />시즌이나 조회 기간을 조정해보세요.</>
             : <>선수를 선택하고 조회하기를 눌러보세요!</>}</div>}
         <div className="candle-navigation">
-            <div><button disabled={!latest} onClick={() => move(-1)} aria-label="이전 구간">←</button><button disabled={!latest} onClick={() => move(1)} aria-label="다음 구간">→</button><button disabled={!latest} onClick={() => zoom(1.3)} aria-label="차트 축소">−</button><button disabled={!latest} onClick={() => zoom(0.75)} aria-label="차트 확대">＋</button></div>
-            <button disabled={!latest} className="candle-latest" onClick={() => api.current?.recent()}>최근으로 ↗</button>
+            <div><button className="candle-nav-icon" disabled={!latest} onClick={() => move(-1)} aria-label="이전 구간"><i className="bi bi-chevron-left" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => move(1)} aria-label="다음 구간"><i className="bi bi-chevron-right" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => zoom(1.3)} aria-label="차트 축소"><i className="bi bi-dash-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => zoom(0.75)} aria-label="차트 확대"><i className="bi bi-plus-lg" aria-hidden="true" /></button></div>
+            <div className="candle-navigation-actions"><details className={`candle-export-menu ${latest ? "" : "disabled"}`}><summary aria-label="차트 저장 메뉴" onClick={event => !latest && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_visible.png`, omitSelectors: [".candle-detail"], rangeText: currentRangeText, afterRestore: () => api.current?.refreshExtrema(), fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_full.png`, omitSelectors: [".candle-detail"], rangeText: exportRangeText, afterRestore: () => api.current?.refreshExtrema(), fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details><button disabled={!latest} className="candle-latest" onClick={() => api.current?.recent()}>최근으로 ↗</button></div>
         </div>
         <div className="candle-range"><span>{rangeInfo?.start ? `${rangeInfo.start} — ${rangeInfo.end}` : "조회된 기록 없음"}</span><span>구간 최저 <b className="down">{format(rangeInfo?.low)}</b> 최고 <b className="up">{format(rangeInfo?.high)}</b></span></div>
         {latest && <div className="candle-detail">
             <div className="candle-detail-heading"><strong>{active?.time || "경기 기록"}{timeframe === "weekly" ? " 주" : timeframe === "monthly" ? " 월" : ""}</strong><span>{selected ? "선택한 기록" : "최근 기록"}</span></div>
             <div className="candle-values">{(plus ? [["OPS+", active?.ops_plus], ["실질OPS+", active?.eff_ops_plus]] : [["시작", active?.open], ["최고", active?.high], ["최저", active?.low], ["마지막", active?.close]]).map(([label, value]) => <div key={label}><span>{label}</span><strong className={label === "최고" ? "up" : label === "최저" ? "down" : ""}>{format(value)}</strong></div>)}</div>
-            {timeframe === "daily" && <div className="candle-atbats"><span>타석 결과</span><div>{active?.pa_results?.length ? active.pa_results.map((result, index) => <span className={/^(볼넷|고4|사구|1루타|2루타|3루타|홈런)/.test(result) ? "on-base" : ""} key={index}>{result}</span>) : <span>기록 없음</span>}</div></div>}
+            {timeframe === "daily" && <div className="candle-atbats"><span>타석 결과</span><div>{active?.pa_results?.length ? active.pa_results.map((result, index) => <span className={/^(볼넷|고4|사구|1루타|2루타|3루타|홈런)/.test(result) ? "on-base" : ""} key={index}>{displayPaResult(result)}</span>) : <span>기록 없음</span>}</div></div>}
         </div>}
         {latest && <div className="candle-period-summary">
             <div className="candle-summary-heading"><strong>조회 기간 기록</strong><span>{periodLabel || "기간 미지정"}</span></div>

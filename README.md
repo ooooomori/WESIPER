@@ -25,7 +25,7 @@ Browser
        └─ /api 요청
             └─ PHP API
                  ├─ MySQL
-                 └─ KBO·네이버 스포츠·Statiz 데이터
+                 └─ KBO·네이버 스포츠 데이터
 
 Python crawler ── 수집 및 집계 ──> MySQL
 ```

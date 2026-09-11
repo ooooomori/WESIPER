@@ -3,6 +3,7 @@ import { ColorType, CrosshairMode, createChart, LineSeries } from "lightweight-c
 import PlayerImg from "./PlayerImg";
 import MetricHelp from "./MetricHelp";
 import { COMPARISON_METRICS, metricValue } from "./chartData";
+import { downloadChartCardPng, downloadCsv, exportFileStem } from "./chartExport";
 
 const PLAYER_COLORS = ["#20c9a6", "#ff6577", "#4f8cff", "#f3bc5f", "#b595ff", "#ff8f4c", "#42c6dd", "#e66ac4"];
 const SEASON_LABELS = { regular: "정규시즌", preseason: "시범경기", postseason: "포스트시즌" };
@@ -21,7 +22,6 @@ const deriveStats = (record) => {
         games: rows.length,
         plate_appearances: appearances.length,
         hits: countMatches(appearances, /^(1루타|2루타|3루타|홈런)/),
-        singles: countMatches(appearances, /^1루타/),
         doubles: countMatches(appearances, /^2루타/),
         triples: countMatches(appearances, /^3루타/),
         home_runs: countMatches(appearances, /^홈런/),
@@ -43,8 +43,8 @@ const TABLE_ROWS = [
     ["stolen_bases", "도루", "count"], ["stolen_base_percentage", "도루 성공률", "percent"],
     ["avg", "타율", "rate"], ["obp", "출루율", "rate"],
     ["slg", "장타율", "rate"], ["ops", "OPS", "rate"],
-    ["eff_ops", "실질 OPS", "rate"], ["ops_plus", "OPS+", "plus"],
-    ["eff_ops_plus", "실질 OPS+", "plus"],
+    ["eff_ops", "실질OPS", "rate"], ["ops_plus", "OPS+", "plus"],
+    ["eff_ops_plus", "실질OPS+", "plus"],
 ];
 
 const formatValue = (value, type) => {
@@ -154,6 +154,14 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
         const step = (range.to - range.from) * 0.65 * direction;
         scale.setVisibleLogicalRange({ from: range.from + step, to: range.to + step });
     };
+    const exportStem = exportFileStem("KBO_CANDLE_선수비교", metricName, periodLabel);
+    const exportCsv = () => {
+        if (records.length < 2) return;
+        const dates = [...new Set(records.flatMap(record => record.data.map(row => row.date)))].sort();
+        const values = records.map(record => new Map(record.data.map(row => [row.date, metricValue(row, metric)])));
+        downloadCsv(`${exportStem}.csv`, ["날짜", ...records.map(record => record.name || record.player?.Name || record.player_id)],
+            dates.map(date => [date, ...values.map(byDate => byDate.get(date) ?? "")]));
+    };
     const rankClass = (rowIndex, playerIndex) => {
         const [key, , , negative] = TABLE_ROWS[rowIndex];
         const values = stats.map((item) => item[key])
@@ -184,8 +192,8 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
             {records.length < 2 && <div className="compare-empty">선수를 2명 이상 선택하고 비교하기를 눌러보세요!</div>}
         </div>
         <div className="candle-navigation">
-            <div><button disabled={records.length < 2} onClick={() => move(-1)} aria-label="이전 구간">←</button><button disabled={records.length < 2} onClick={() => move(1)} aria-label="다음 구간">→</button><button disabled={records.length < 2} onClick={() => zoom(1.3)} aria-label="차트 축소">−</button><button disabled={records.length < 2} onClick={() => zoom(0.75)} aria-label="차트 확대">＋</button></div>
-            <button disabled={records.length < 2} className="candle-latest" onClick={() => chartApi.current?.recent()}>최근으로 ↗</button>
+            <div><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => move(-1)} aria-label="이전 구간"><i className="bi bi-chevron-left" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => move(1)} aria-label="다음 구간"><i className="bi bi-chevron-right" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => zoom(1.3)} aria-label="차트 축소"><i className="bi bi-dash-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => zoom(0.75)} aria-label="차트 확대"><i className="bi bi-plus-lg" aria-hidden="true" /></button></div>
+            <div className="candle-navigation-actions"><details className={`candle-export-menu ${records.length >= 2 ? "" : "disabled"}`}><summary aria-label="비교 차트 저장 메뉴" onClick={event => records.length < 2 && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: chartApi.current?.chart, filename: `${exportStem}_visible.png`, fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: chartApi.current?.chart, filename: `${exportStem}_full.png`, fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details><button disabled={records.length < 2} className="candle-latest" onClick={() => chartApi.current?.recent()}>최근으로 ↗</button></div>
         </div>
         {!!records.length && <div className="compare-table-section">
             <div className="candle-summary-heading"><strong>{comparisonTitle}</strong><span>{periodLabel}</span></div>
