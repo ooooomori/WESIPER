@@ -14,11 +14,13 @@ const enableFreshBuildCheck = () => {
     let checking = false;
 
     const refreshIfUpdated = async () => {
-        if (checking || document.visibilityState === 'hidden') return;
+        if (checking) return;
         checking = true;
 
         try {
-            const response = await fetch(window.location.href, {
+            const checkUrl = new URL(window.location.href);
+            checkUrl.searchParams.set('__build_check', Date.now().toString());
+            const response = await fetch(checkUrl.toString(), {
                 cache: 'no-store',
                 headers: { 'Cache-Control': 'no-cache' },
             });
@@ -41,6 +43,8 @@ const enableFreshBuildCheck = () => {
     window.addEventListener('pageshow', refreshIfUpdated);
     window.addEventListener('focus', refreshIfUpdated);
     document.addEventListener('visibilitychange', refreshIfUpdated);
+    window.setTimeout(refreshIfUpdated, 0);
+    window.setInterval(refreshIfUpdated, 60_000);
 };
 
 enableFreshBuildCheck();
