@@ -52,9 +52,10 @@ const HelpModal = ({ show, setShow }) => {
     };
 
     return <Modal show={show} onHide={handleClose} onKeyDown={handleKeyDown} centered dialogClassName="bingo-help-dialog" contentClassName="bingo-help-modal font-family-NaSqNe" aria-labelledby="bingo-help-title">
-        <button className="bingo-help-close" onClick={handleClose} aria-label="도움말 닫기">×</button>
+        <Modal.Header style={{ border: "none" }} closeButton>
+            <span className="font-family-kbo text-xl font-bold" id="bingo-help-title">KBO BINGO</span>
+        </Modal.Header>
         <Modal.Body className="bingo-help-body">
-            <div className="bingo-help-brand" id="bingo-help-title"><span className="font-family-kbo">KBO BINGO</span><span className="bingo-help-brand-suffix">도움말</span></div>
             <div className="bingo-help-viewport" onTouchStart={(event) => { touchStart.current = event.touches[0].clientX; }} onTouchEnd={handleTouchEnd}>
                 <div className="bingo-help-track" style={{ transform: `translateX(-${page * 100}%)` }}>
                     {slides.map((slide, index) => <section className="bingo-help-slide" key={slide.title} aria-hidden={page !== index}>

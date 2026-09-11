@@ -23,25 +23,28 @@ const PlayerImg = (props) => {
                 return "kt";
         }
     };
+    const fallbackImage = new URL(
+        `../../../assets/images/player/${teamCode(props.team ?? "SSG")}_${
+            props.pos === "선발" || props.pos === "구원" ? "p" : "b"
+        }_${props.hand?.[0] === "우" ? "r" : "l"}.jpg`,
+        import.meta.url,
+    ).href;
+
     return (
         <img
             key={props.name}
             src={
-                "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2026/" +
-                props.img +
-                ".jpg"
+                props.img
+                    ? "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2026/" +
+                      props.img +
+                      ".jpg"
+                    : fallbackImage
             }
             className={props.className}
-            alt={props.name}
+            alt={props.name || "선수 이미지 준비 중"}
             onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = require(
-                    `../../../assets/images/player/${teamCode(
-                        props.team ?? "SSG",
-                    )}_${
-                        props.pos === "선발" || props.pos === "구원" ? "p" : "b"
-                    }_${props.hand?.[0] === "우" ? "r" : "l"}.jpg`,
-                );
+                e.target.src = fallbackImage;
             }}
         ></img>
     );
