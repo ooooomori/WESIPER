@@ -54,8 +54,8 @@
                 "batting" => ['avg_0.300_season', 'avg_0.300_total', 'obp_0.400_season', 'obp_0.400_total','slg_0.500_season', 'slg_0.500_total', 'ops_0.800_season', 'ops_0.900_season', 'ops_0.800_total', 'pa_446_season', 'h_150_season','h_1000_total', 'h_1500_total', '2b_30_season', '3b_5_season', 'hr_20_season', 'hr_150_total', 'rbi_80_season', 'rbi_800_total', 'sb_20_season', 'sb_150_total'],
                 "pitching" => ['win_10_season', 'win_15_season', 'win_100_total', 'sv_20_season', 'hld_10_season', 'sv_100_total', 'sv_50_total','ip_144_season', 'so_100_season', 'so_150_season', 'so_800_total', 'era_3.00_season', 'era_3.00_total'],
             ],
-            "award" => ["gg", "mvp"],
-            "profile" => ["one_club", "draft_1r", "is_WBC", "is_WBC"], //active_2025 삭제 (260320)
+            "award" => ["gg"],
+            "profile" => ["one_club", "draft_1r", "is_WBC", "is_MLB"], //active_2025 삭제 (260320)
             "pos" => ["c", "1b", "2b", "3b", "ss", "lf", "rf", "cf", "of"],
         ];
 
@@ -75,6 +75,8 @@
                 if($subCategory === "batting") $category = 'pos';
                 else $category = 'team';
                 //$category = 'team';
+            } else if ($rand <= 80) {
+                $category = 'award';
             } else if ($rand <= 90) {
                 $category = 'stat';
             } else {

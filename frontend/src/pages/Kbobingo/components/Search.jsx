@@ -185,9 +185,10 @@ const SearchResultDiv = (props) => {
             } else if (e[0] === "award" || e[0] === "stat") {
                 if (e[1].endsWith("season") || e[0] === "award") {
                     if (cond.some((other) => other[0] === "team")) {
-                        return player.Season[
-                            cond.find((other) => other[0] === "team")[1]
-                        ][e[1]];
+                        const teamCode = cond.find(
+                            (other) => other[0] === "team"
+                        )[1];
+                        return Boolean(player.Season?.[teamCode]?.[e[1]]);
                     } else {
                         return Object.values(player.Season).some(
                             (obj) => obj[e[1]]

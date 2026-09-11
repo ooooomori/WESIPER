@@ -340,7 +340,7 @@ const GridCond = (props) => {
                         bigo = "정규시즌 + KS";
                         break;
                     case "gg":
-                        text = "KBO 골든글러브";
+                        text = <span className="text-black">KBO 골든글러브</span>;
                         break;
                     case "draft_1r":
                         text = "1차 · 1라운드 지명";
@@ -361,6 +361,16 @@ const GridCond = (props) => {
                             />
                         );
                         bigo = "WBC 대표팀";
+                        break;
+                    case "is_MLB":
+                        text = (
+                            <img
+                                src={resolveLogoUrl("mlb")}
+                                alt="MLB"
+                                className="w-12 sm:w-16 md:w-20 h-8 sm:h-12 md:h-16 object-contain block mx-auto"
+                            />
+                        );
+                        bigo = "MLB 1경기 이상";
                         break;
                 }
                 setGridCond(
