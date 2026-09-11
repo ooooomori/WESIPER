@@ -4,12 +4,12 @@ export default function MetricHelp({ metric }) {
     if (metric !== "eff_ops") return null;
 
     return <span className="candle-metric-help">
-        <button
-            type="button"
+        <span
             className="candle-help-icon"
             aria-label="실질 OPS 계산 설명"
             aria-describedby="eff-ops-tooltip"
-        >?</button>
+            role="img"
+        >?</span>
         <span className="candle-help-tooltip" id="eff-ops-tooltip" role="tooltip">
             <strong>실질 OPS란?</strong>
             <span><b>실질 OPS = 실질 출루율 + 실질 장타율</b></span>

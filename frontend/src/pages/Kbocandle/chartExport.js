@@ -28,12 +28,34 @@ export function downloadCsv(filename, headers, rows) {
 
 const nextPaint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
+const trimTransparentCanvas = (canvas) => {
+    const context = canvas.getContext("2d");
+    if (!context) return canvas;
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    let lastVisibleRow = -1;
+    for (let row = canvas.height - 1; row >= 0 && lastVisibleRow < 0; row -= 1) {
+        for (let column = 0; column < canvas.width; column += 1) {
+            if (pixels[(row * canvas.width + column) * 4 + 3] > 0) {
+                lastVisibleRow = row;
+                break;
+            }
+        }
+    }
+    if (lastVisibleRow < 0 || lastVisibleRow >= canvas.height - 1) return canvas;
+    const trimmed = document.createElement("canvas");
+    trimmed.width = canvas.width;
+    trimmed.height = lastVisibleRow + 1;
+    trimmed.getContext("2d")?.drawImage(canvas, 0, 0);
+    return trimmed;
+};
+
 export async function downloadChartCardPng({ element, chart, filename, omitSelectors = [], minWidth = 960, rangeText = null, afterRestore = null, fitContent = true }) {
     if (!element || !chart) return;
 
     const plot = element.querySelector(".candle-plot");
     const tableWidth = element.querySelector(".compare-table-wrap")?.scrollWidth || 0;
-    const exportWidth = Math.max(minWidth, element.clientWidth, Math.min(1800, tableWidth + 64));
+    const baseExportWidth = Math.max(element.clientWidth, Math.min(1800, tableWidth + 64));
+    const exportWidth = Math.max(720, Math.round(baseExportWidth * 0.8));
     const plotHeight = plot?.clientHeight || 480;
     const visibleRange = chart.timeScale().getVisibleLogicalRange();
     let chartImage;
@@ -55,9 +77,18 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
     const clone = element.cloneNode(true);
     clone.classList.add("candle-export-clone");
     clone.style.width = `${exportWidth}px`;
+    clone.style.height = "auto";
+    clone.style.minHeight = "0";
+    clone.style.overflow = "visible";
     clone.style.maxWidth = "none";
     clone.style.margin = "0";
-    clone.querySelectorAll([".candle-export-menu", ...omitSelectors].join(",")).forEach(node => node.remove());
+    clone.querySelectorAll([
+        ".candle-export-menu",
+        ".candle-navigation",
+        ".candle-metrics",
+        ".theme-toggle",
+        ...omitSelectors,
+    ].join(",")).forEach(node => node.remove());
     clone.querySelectorAll(".candle-extrema-label, .candle-help-tooltip").forEach(node => node.remove());
     if (rangeText) {
         const rangeParts = clone.querySelectorAll(".candle-range > span");
@@ -128,6 +159,10 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         });
     }
 
+    // The comparison footer sits directly at the capture boundary; leave a small
+    // breathing room so the TradingView copyright line is never clipped.
+    if (comparisonTable) clone.style.paddingBottom = "12px";
+
     const stage = document.createElement("div");
     stage.className = "candle-export-stage";
     stage.style.position = "fixed";
@@ -137,7 +172,34 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
     stage.appendChild(clone);
     document.body.appendChild(stage);
     const renderStyle = document.createElement("style");
-    renderStyle.textContent = ".candle-export-stage img, body > div:last-child img { display: inline-block !important; }";
+    renderStyle.textContent = `
+        .candle-export-stage img, body > div:last-child img { display: inline-block !important; }
+        .candle-export-clone .candle-topline { font-size: 14px !important; }
+        .candle-export-clone .candle-topline b { font-size: 13px !important; }
+        .candle-export-clone .candle-eyebrow { font-size: 14px !important; }
+        .candle-export-clone .candle-player h2 { font-size: 30px !important; }
+        .candle-export-clone .candle-price strong { font-size: 42px !important; }
+        .candle-export-clone .candle-price span { font-size: 15px !important; }
+        .candle-export-clone .candle-price small { font-size: 13px !important; }
+        .candle-export-clone .candle-metrics button { font-size: 16px !important; }
+        .candle-export-clone .candle-legend, .candle-export-clone .candle-range { font-size: 13px !important; }
+        .candle-export-clone .candle-range b { font-size: 14px !important; }
+        .candle-export-clone .candle-navigation button { font-size: 16px !important; }
+        .candle-export-clone .candle-detail-heading, .candle-export-clone .candle-summary-heading { font-size: 15px !important; }
+        .candle-export-clone .candle-detail-heading span, .candle-export-clone .candle-summary-heading span { font-size: 13px !important; }
+        .candle-export-clone .candle-values span, .candle-export-clone .candle-summary-values span { font-size: 13px !important; }
+        .candle-export-clone .candle-values strong, .candle-export-clone .candle-summary-values strong { font-size: 21px !important; }
+        .candle-export-clone .candle-atbats { font-size: 13px !important; }
+        .candle-export-clone .candle-atbats > div > span { font-size: 13px !important; }
+        .candle-export-clone .candle-footnote { font-size: 13px !important; }
+        .candle-export-clone .compare-header h2 { font-size: 33px !important; }
+        .candle-export-clone .compare-metric-title { font-size: 27px !important; }
+        .candle-export-clone .compare-legend { font-size: 13px !important; }
+        .candle-export-clone .compare-legend > div > strong { font-size: 15px !important; }
+        .candle-export-clone .compare-table { font-size: 15px !important; }
+        .candle-export-clone .compare-table th, .candle-export-clone .compare-table td { font-size: 15px !important; }
+        .candle-export-clone .compare-rank-guide { font-size: 13px !important; }
+    `;
     document.head.appendChild(renderStyle);
 
     try {
@@ -147,7 +209,10 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
                 image.addEventListener("load", resolve, { once: true });
                 image.addEventListener("error", resolve, { once: true });
             })));
-        const canvas = await html2canvas(clone, {
+        await nextPaint();
+        const captureWidth = Math.ceil(clone.getBoundingClientRect().width);
+        const captureHeight = Math.ceil(clone.getBoundingClientRect().height) + (comparisonTable ? 64 : 0);
+        const renderedCanvas = await html2canvas(clone, {
             backgroundColor: null,
             logging: false,
             onclone: (clonedDocument) => {
@@ -157,10 +222,11 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
             },
             scale: 2,
             useCORS: true,
-            width: clone.scrollWidth,
-            height: clone.scrollHeight,
+            width: captureWidth,
+            height: captureHeight,
             windowWidth: exportWidth,
         });
+        const canvas = trimTransparentCanvas(renderedCanvas);
         clickDownload(canvas.toDataURL("image/png"), filename);
     } finally {
         renderStyle.remove();
