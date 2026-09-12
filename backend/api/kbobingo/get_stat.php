@@ -1,5 +1,6 @@
 <?php
 include_once "common.php";
+require_once "recalculate_scores.php";
 
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -26,7 +27,9 @@ $statTable = "kbobingo_stat";
 // 점수 저장 또는 갱신
 $query = "INSERT INTO $statTable (`user_id`, `grid_index`, `score`, `completed`, `picks`)
           VALUES (?, ?, ?, ?, ?)
-          ON DUPLICATE KEY UPDATE score = VALUES(score), completed = VALUES(completed),
+          ON DUPLICATE KEY UPDATE score = IF(picks IS NULL OR picks = '' OR
+              (VALUES(picks) IS NOT NULL AND picks <> VALUES(picks)), VALUES(score), score),
+          completed = VALUES(completed),
           picks = COALESCE(VALUES(picks), picks)";
 
 $stmt = $con->prepare($query);
@@ -44,16 +47,18 @@ if (!$stmt->execute()) {
 
 $stmt->close();
 
+refreshBingoScores($con, $gridId);
+
 // 등수 및 백분율 계산
 $sql = "
     SELECT 
         total_records,
-        ranked.rank,
+        ranked.rank, ranked.score,
         COALESCE(n.nickname, SUBSTR(ranked.user_id, 1, 8)) AS nickname
     FROM 
         (SELECT COUNT(*) AS total_records FROM $statTable WHERE grid_index = ?) AS total,
         (
-            SELECT user_id, RANK() OVER (ORDER BY score DESC) AS rank
+            SELECT user_id, score, RANK() OVER (ORDER BY score DESC) AS rank
             FROM $statTable
             WHERE grid_index = ?
         ) AS ranked
@@ -88,6 +93,7 @@ if ($result->num_rows > 0) {
         "percentage" => $percentage,
         "total" => $total,
         "rank" => $rank,
+        "score" => (int)$row['score'],
         "nickname" => $row['nickname'],
         "top" => []
     ];

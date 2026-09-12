@@ -100,6 +100,7 @@ const ResultModal = (props) => {
                                 top: result.top,
                                 is_public: result.is_public,
                                 board_id: result.board_id,
+                                score: result.score,
                             });
                         }
                     })
@@ -234,7 +235,7 @@ const ResultModal = (props) => {
                 <div className="flex flex-col justify-center items-center mt-3">
                     <span>내 점수</span>
                     <div className="text-center text-4xl sm:py-1 font-semibold">
-                        <span>{score}</span>
+                        <span>{stat.score ?? score}</span>
                     </div>
                     <span className="text-sm mt-3">
                         상위{" "}
@@ -289,7 +290,7 @@ const ResultModal = (props) => {
                     {stat.rank && (
                         <LeaderboardTable
                             status={stat}
-                            score={score}
+                            score={stat.score ?? score}
                             uuid={uuid}
                             gridIndex={game.grid.index}
                             onVisibilityChange={changeVisibility}
