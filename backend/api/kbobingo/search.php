@@ -1,5 +1,6 @@
 <?php
 include_once 'common.php';
+require_once 'player_cache.php';
 ini_set('display_errors', 1);
     function getPosition($posNo) {
         switch($posNo) {
@@ -616,7 +617,7 @@ function searchKBOField($p_no, $p_season) {
 function fetchKBOWithOption($playerId, $type) {
 
     $url = "https://www.koreabaseball.com/Record/Player/{$type}Detail/Total.aspx?playerId={$playerId}";
-    $cookie = "/tmp/kbo_cookie.txt";
+    $cookie = sys_get_temp_dir() . "/kbo_cookie_" . (int)$playerId . ".txt";
 
     /****************************************
      * 1) GET 요청 (VIEWSTATE 추출)
@@ -624,6 +625,8 @@ function fetchKBOWithOption($playerId, $type) {
     $ch = curl_init();
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT => 15,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_HEADER => false,
         CURLOPT_SSL_VERIFYPEER => false,
@@ -673,6 +676,8 @@ function fetchKBOWithOption($playerId, $type) {
     curl_setopt_array($ch, [
         CURLOPT_URL => $url,
         CURLOPT_POST => true,
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT => 15,
         CURLOPT_POSTFIELDS => http_build_query($postFields),
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_SSL_VERIFYPEER => false,
@@ -702,7 +707,7 @@ function fetchKBOWithOption($playerId, $type) {
         $url_p = "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=".$p_no;
         // HTML 가져오기
         $html = fetchKBOWithOption($p_no, "Hitter");
-        if (!$html) {
+        if (!is_string($html) || $html === '') {
             return ['error' => 'Failed to fetch page'];
         }
 
@@ -822,7 +827,7 @@ if((int)$stat >=1000) $playerTotal['h_1000_total'] = true;
 
         // HTML 가져오기
         $html = fetchKBOWithOption($p_no, "Pitcher");
-        if (!$html) {
+        if (!is_string($html) || $html === '') {
             return ['error' => 'Failed to fetch page'];
         }
 
@@ -956,7 +961,9 @@ if((int)$stat >=1000) $playerTotal['h_1000_total'] = true;
                 if(count($searchResult['list']) >= 10) break;
             }
             */
-            $kbodata = searchKBO($row['p_no'], $row['p_pos'], $row['p_img']);
+            $kbodata = cachedBingoPlayer($con, $row['p_no'], function () use ($row) {
+                return searchKBO($row['p_no'], $row['p_pos'], $row['p_img']);
+            });
             if(!empty($kbodata) && !isset($kbodata['error'])) {
                 $goldGloveTeams = preg_split(
                     '/\s*,\s*/',
