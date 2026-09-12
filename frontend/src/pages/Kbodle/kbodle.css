@@ -363,7 +363,6 @@
 
 .search-container.has-random-start input {
     padding-right: 96px;
-    font-size: clamp(12px, 3.4vw, 16px);
 }
 
 .random-start-btn {
