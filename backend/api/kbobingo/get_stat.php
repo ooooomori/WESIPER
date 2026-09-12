@@ -9,6 +9,12 @@ $score = $data['score'];
 $completed = $data['completed'];
 $userId = $data['uuid'];
 $picks = null;
+if (array_key_exists('picks', $data) && (!is_array($data['picks']) ||
+    array_keys($data['picks']) !== range(0, 8))) {
+    http_response_code(400);
+    echo json_encode(['code' => 400, 'error' => '잘못된 빙고판 데이터']);
+    exit;
+}
 if (isset($data['picks']) && is_array($data['picks']) && count($data['picks']) === 9) {
     $normalizedPicks = [];
     foreach ($data['picks'] as $pick) {
@@ -20,6 +26,23 @@ if (isset($data['picks']) && is_array($data['picks']) && count($data['picks']) =
         $normalizedPicks[] = $pick === null ? null : (int)$pick;
     }
     $picks = json_encode($normalizedPicks);
+    $check = $con->prepare('SELECT p_no, row_no, col_no FROM kbobingo_pick WHERE grid_index = ? AND picked > 0');
+    $check->bind_param('i', $gridId);
+    $check->execute();
+    $known = [];
+    $counts = $check->get_result();
+    while ($entry = $counts->fetch_assoc()) {
+        $known[(int)$entry['row_no'] * 3 + (int)$entry['col_no']][(int)$entry['p_no']] = true;
+    }
+    $check->close();
+    foreach ($normalizedPicks as $cell => $player) {
+        if ($player !== null && !isset($known[$cell][$player])) {
+            http_response_code(422);
+            echo json_encode(['code' => 422, 'error' => '이 빙고판과 일치하지 않는 선택 기록입니다.']);
+            exit;
+        }
+    }
+    $completed = count(array_filter($normalizedPicks, function ($pick) { return $pick !== null; }));
 }
 
 $statTable = "kbobingo_stat";

@@ -630,9 +630,14 @@ function Kbobingo() {
             .then((response) => {
                 const result = response.data;
                 if (result.code === 200) {
+                    result.date = result.date ?? result.grid?.date;
+                    if (!/^\d{4}-\d{2}-\d{2}$/.test(result.date ?? "")) {
+                        throw new Error("빙고판 날짜가 올바르지 않습니다.");
+                    }
                     setDate(result.date);
 
-                    if (newStatus[result.date] === undefined) {
+                    if (newStatus[result.date] === undefined ||
+                        Number(newStatus[result.date]?.grid?.index) !== Number(result.grid.index)) {
                         newStatus[result.date] = {};
                         newStatus[result.date].correctAnswer = [
                             [null, null, null],

@@ -129,6 +129,7 @@
                 "index" => $index,
                 "date" => Date('Y-m-d'),
                 ),
+            "date" => Date('Y-m-d'),
             "code" => 200
         );
 
