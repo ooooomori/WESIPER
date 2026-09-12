@@ -136,10 +136,13 @@ const Search = (props) => {
     const [searchList, setSearchList] = useState([]);
     const [debounceTimer, setDebounceTimer] = useState(null);
     const [inputValue, setInputValue] = useState("");
+    const [randomLoading, setRandomLoading] = useState(false);
+    const randomPending = useRef(false);
 
     const cancelTokenRef = useRef(null);
 
     const onSearch = (event) => {
+        if (randomPending.current || props.mode.startsWith("finished")) return;
         const keyword = event.target.value.trim();
         props.setMode("search");
         clearTimeout(debounceTimer);
@@ -160,6 +163,44 @@ const Search = (props) => {
             setSearchList([]);
         }
     };
+
+    const selectPlayer = (player, firstOnly = false) => {
+        props.setStatus((previous) => {
+            if (previous.game.isFinished || (firstOnly && previous.game.count !== 0)) return previous;
+            const board = [...previous.game.board];
+            board[previous.game.count] = player;
+            return { ...previous, game: { ...previous.game, board, count: previous.game.count + 1 } };
+        });
+        setInputValue("");
+        setSearchList([]);
+        props.setMode("main");
+    };
+
+    const randomStart = async () => {
+        if (randomPending.current || props.status.game.count !== 0) return;
+        randomPending.current = true;
+        setRandomLoading(true);
+        clearTimeout(debounceTimer);
+        cancelTokenRef.current?.cancel();
+        setSearchList([]);
+        props.setMode("main");
+        try {
+            const { data } = await axios.post("/api/kbodle/get_random_player.php", {
+                answer_id: props.status.game.answer.SporkId,
+            });
+            if (!data.success || !data.player || String(data.player.SporkId) === String(props.status.game.answer.SporkId)) {
+                throw new Error("랜덤 선수를 불러오지 못했어요. 다시 시도해주세요.");
+            }
+            selectPlayer(data.player, true);
+        } catch (error) {
+            alert("랜덤 선수를 불러오지 못했어요. 다시 시도해주세요.");
+        } finally {
+            randomPending.current = false;
+            setRandomLoading(false);
+        }
+    };
+
+    const canRandomStart = props.status.game.count === 0 && !props.status.game.isFinished && props.kbodleMode !== "make-kbodle";
 
     const playerSearch = (keyword) => {
         axios
@@ -194,14 +235,15 @@ const Search = (props) => {
             id="search-bar"
             style={props.mode.startsWith("search") ? { zIndex: "1050" } : {}}
         >
-            <div className="search-container">
+            <div className={`search-container${canRandomStart ? " has-random-start" : ""}`}>
                 <i className="bi bi-search"></i>
                 <input
                     id="input-player-search"
                     type="text"
-                    className="form-control"
+                    className="form-control font-family-NaSqNe"
                     autoComplete="off"
                     spellCheck="false"
+                    disabled={randomLoading}
                     placeholder={placeholder}
                     onKeyUp={onSearch}
                     value={inputValue}
@@ -213,6 +255,11 @@ const Search = (props) => {
                         props.kbodleMode != "make-kbodle"
                     }
                 ></input>
+                {canRandomStart && (
+                    <button type="button" className="random-start-btn font-family-NaSqNe" onClick={randomStart} disabled={randomLoading}>
+                        {randomLoading ? "뽑는 중…" : "랜덤 시작"}
+                    </button>
+                )}
             </div>
             {props.mode === "search-ing" && <ResultSpinner />}
             {searchList && props.mode === "search" && (
@@ -224,6 +271,7 @@ const Search = (props) => {
                     mode={props.mode}
                     setMode={props.setMode}
                     setInputValue={setInputValue}
+                    onSelectPlayer={selectPlayer}
                 />
             )}
         </div>
@@ -232,12 +280,7 @@ const Search = (props) => {
 
 const SearchResult = (props) => {
     const selectPlayer = (index) => {
-        const newStatus = { ...props.status };
-        newStatus.game.board[newStatus.game.count++] = props.lists[index];
-
-        props.setStatus(newStatus);
-        props.setInputValue("");
-        props.setMode("main");
+        props.onSelectPlayer(props.lists[index]);
     };
 
     const lis = [];
