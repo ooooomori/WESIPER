@@ -55,6 +55,8 @@ const ResultModal = (props) => {
         rank: null,
         total: null,
     });
+    const [visibilityBusy, setVisibilityBusy] = useState(false);
+    const [visibilityError, setVisibilityError] = useState("");
 
     const game = props?.status?.[props.date];
     const bingoUrl = "https://wesiper.xyz/bingo/";
@@ -72,9 +74,9 @@ const ResultModal = (props) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        const controller = new AbortController();
         const sendRequest = async () => {
             if (uuid !== null && game && game.chance === 0) {
-                const controller = new AbortController();
                 await axios
                     .post(
                         "/api/kbobingo/get_stat.php",
@@ -83,6 +85,7 @@ const ResultModal = (props) => {
                             uuid: uuid,
                             score: score,
                             completed: completed,
+                            picks: game.correctAnswer.flat().map((cell) => cell?.p_no ?? null),
                         },
                         { signal: controller.signal },
                     )
@@ -95,23 +98,41 @@ const ResultModal = (props) => {
                                 total: result.total,
                                 nickname: result.nickname,
                                 top: result.top,
+                                is_public: result.is_public,
+                                board_id: result.board_id,
                             });
                         }
                     })
                     .catch((error) => {
+                        if (axios.isCancel(error)) return;
                         console.error(
                             "KBO BINGO 유저 기록 받아오기 실패:",
                             error,
                         );
                     });
-                return () => {
-                    controller.abort();
-                };
             }
         };
 
         sendRequest();
-    }, [score, completed]);
+        return () => controller.abort();
+    }, [score, completed, game?.grid.index, game?.chance, uuid]);
+
+    const changeVisibility = async (isPublic) => {
+        setVisibilityBusy(true);
+        setVisibilityError("");
+        try {
+            const { data } = await axios.post("/api/kbobingo/set_board_visibility.php", {
+                uuid, index: game.grid.index, is_public: isPublic,
+            });
+            if (data.code !== 200) throw new Error(data.error);
+            setStat((previous) => ({ ...previous, is_public: data.is_public,
+                top: previous.top.map((entry) => entry.user_id === uuid
+                    ? { ...entry, is_public: data.is_public } : entry),
+            }));
+        } catch {
+            setVisibilityError("공개 설정을 저장하지 못했습니다. 다시 시도해주세요.");
+        } finally { setVisibilityBusy(false); }
+    };
 
     const handleShare = (event, type) => {
         let shareText = `#크보빙고 ${game?.grid.index} ${score}점 (${completed}/9)\n`;
@@ -270,8 +291,12 @@ const ResultModal = (props) => {
                             status={stat}
                             score={score}
                             uuid={uuid}
+                            gridIndex={game.grid.index}
+                            onVisibilityChange={changeVisibility}
+                            visibilityBusy={visibilityBusy}
                         />
                     )}
+                    {visibilityError && <p role="alert" className="mt-2 text-sm text-red-600">{visibilityError}</p>}
                     <Button
                         variant="outline-primary"
                         className="mt-8"

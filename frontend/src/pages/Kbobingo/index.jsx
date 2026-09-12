@@ -333,7 +333,7 @@ const GridCond = (props) => {
                 let bigo = "";
                 switch (str[1]) {
                     case "as":
-                        text = "KBO 올스타";
+                        text = <span className="text-black">KBO 올스타</span>;
                         break;
                     case "mvp":
                         text = "KBO MVP";

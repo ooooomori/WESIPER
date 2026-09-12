@@ -3,7 +3,7 @@ import PlayerImg from "../PlayerImg.jsx";
 import axios from "axios";
 
 const MostGrid = (props) => {
-    const { status, date } = props;
+    const { status, date, players } = props;
 
     const items = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -37,11 +37,12 @@ const MostGrid = (props) => {
                                 <GridItem
                                     key={e}
                                     no={e}
+                                    directPlayer={players ? players[e] ?? {} : undefined}
                                     gridIndex={status[date]?.grid.index}
                                     item={
-                                        status[date]?.correctAnswer[
+                                        status[date]?.correctAnswer?.[
                                             Math.floor(e / 3)
-                                        ][e % 3] ?? -1
+                                        ]?.[e % 3] ?? -1
                                     }
                                 />
                             ))}
@@ -54,7 +55,7 @@ const MostGrid = (props) => {
 };
 
 const GridItem = (props) => {
-    const { gridIndex, no, item } = props;
+    const { gridIndex, no, item, directPlayer } = props;
 
     const [rate, setRate] = useState(null);
     const [pImg, setpImg] = useState("ssg_b_l");
@@ -63,6 +64,13 @@ const GridItem = (props) => {
     const [bgColor, setBgColor] = useState("bg-white");
 
     useEffect(() => {
+        if (directPlayer !== undefined) {
+            setpImg(directPlayer.img ?? "ssg_b_l");
+            setpName(directPlayer.name ?? null);
+            setpNo(directPlayer.no ?? null);
+            setRate(null);
+            return;
+        }
         if (gridIndex) {
             // setBgColor("bg-[#4ade90]");
             const controller = new AbortController();
@@ -94,7 +102,7 @@ const GridItem = (props) => {
                 controller.abort();
             };
         }
-    }, [gridIndex]);
+    }, [gridIndex, directPlayer]);
 
     const applyBorder = () => {
         switch (no) {
@@ -138,9 +146,9 @@ const GridItem = (props) => {
                         window.location.href = `https://www.koreabaseball.com/Record/Player/${pageType}/Total.aspx?playerId=${pNo}`;
                     }}
                 >
-                    <div className="absolute top-0 right-0 text-white text-[0.6rem] md:text-xs bg-zinc-800 opacity-95 pl-1.5 pr-1 sm:pr-1.5 py-0.5 rounded-bl-lg">
+                    {rate !== null && <div className="absolute top-0 right-0 text-white text-[0.6rem] md:text-xs bg-zinc-800 opacity-95 pl-1.5 pr-1 sm:pr-1.5 py-0.5 rounded-bl-lg">
                         {rate}%
-                    </div>
+                    </div>}
                     <PlayerImg p_no={pNo} p_img={pImg} />
                     <div className="absolute left-0 right-0 bottom-0 bg-zinc-800 opacity-95 text-xs sm:text-xs md:text-sm py-px line-clamp-1 text-white text-center">
                         {pName}
@@ -176,7 +184,7 @@ const GridCond = (props) => {
                 let bigo = "";
                 switch (str[1]) {
                     case "as":
-                        text = "KBO 올스타";
+                        text = <span className="text-black">KBO 올스타</span>;
                         break;
                     case "mvp":
                         text = "KBO MVP";

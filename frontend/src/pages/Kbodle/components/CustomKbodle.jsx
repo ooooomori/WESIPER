@@ -17,12 +17,13 @@ const SearchAnswer = (props) => {
 
     const onSearch = (event) => {
         props.setMode("search");
-        const keyword = event.target.value;
+        const keyword = event.target.value.trim();
 
         clearTimeout(debounceTimer);
+        cancelTokenRef.current?.cancel();
 
-        // 입력이 1글자 이상인 경우에만 검색을 시작
-        if (keyword.length > 1) {
+        // 두 글자 이상 또는 외자 이름 '홀'만 검색
+        if (keyword.length >= 2 || keyword === "홀") {
             props.setMode("search-ing");
             // 디바운싱을 적용하여 일정 시간 후에 검색을 실행
             const newDebounceTimer = setTimeout(() => {

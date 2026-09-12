@@ -33,10 +33,11 @@ const Searchbar = ({ setSearchPlayer, clearOnSelect = false }) => {
     }, [debounceTimer]);
 
     const onSearch = (event) => {
-        const keyword = event.target.value;
+        const keyword = event.target.value.trim();
         clearTimeout(debounceTimer);
+        cancelTokenRef.current?.cancel();
 
-        if (keyword.length >= 1) {
+        if (keyword.length >= 2 || keyword === "홀") {
             const newDebounceTimer = setTimeout(() => {
                 setIsSearching(true);
                 setSearchList([]);

@@ -12,10 +12,11 @@ const Search = (props) => {
     const cancelTokenRef = useRef(null);
 
     const onSearch = (event) => {
-        const keyword = event.target.value;
+        const keyword = event.target.value.trim();
         clearTimeout(debounceTimer);
-        // 입력이 1글자 이상인 경우에만 검색을 시작
-        if (keyword.length >= 1) {
+        cancelTokenRef.current?.cancel();
+        // 두 글자 이상 또는 외자 이름 '홀'만 검색
+        if (keyword.length >= 2 || keyword === "홀") {
             // 디바운싱을 적용하여 일정 시간 후에 검색을 실행
             const newDebounceTimer = setTimeout(() => {
                 props.setMode("searching");

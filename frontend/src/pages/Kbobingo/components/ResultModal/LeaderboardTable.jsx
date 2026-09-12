@@ -1,87 +1,75 @@
+import { useEffect, useState } from "react";
 import { Table } from "flowbite-react";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import axios from "axios";
 import NicknameChanger from "./NicknameChanger.jsx";
+import MostGrid from "./MostGrid.jsx";
 
-const LeaderboardTable = ({ status, score, uuid }) => {
-    return (
-        <div className="overflow-x-auto w-full mt-3.5">
-            <Table hoverable className="text-center">
-                <Table.Head>
-                    <Table.HeadCell className="px-0">순위</Table.HeadCell>
-                    <Table.HeadCell className="px-0">닉네임</Table.HeadCell>
-                    <Table.HeadCell className="px-0">점수</Table.HeadCell>
-                    <Table.HeadCell className="px-0">보기</Table.HeadCell>
-                </Table.Head>
-                <Table.Body className="divide-y">
-                    {status &&
-                        status?.top.map((user, idx) => (
-                            <Table.Row key={idx} className="bg-white">
-                                <Table.Cell
-                                    className={`px-0 py-2 ${
-                                        user.user_id === uuid ? "font-bold" : ""
-                                    }`}
-                                >
-                                    {user.rank === 1
-                                        ? "🥇"
-                                        : user.rank === 2
-                                          ? "🥈"
-                                          : user.rank === 3
-                                            ? "🥉"
-                                            : user.rank}
-                                </Table.Cell>
-                                <Table.Cell
-                                    className={`px-0 py-2 ${
-                                        user.user_id === uuid ? "font-bold" : ""
-                                    }`}
-                                >
-                                    {user.nickname}
-                                </Table.Cell>
-                                <Table.Cell
-                                    className={`px-0 py-2 ${
-                                        user.user_id === uuid ? "font-bold" : ""
-                                    }`}
-                                >
-                                    {user.score}
-                                </Table.Cell>
-                                <Table.Cell className="px-0 py-2">
-                                    {user.user_id === uuid ? (
-                                        <div className="inline-block rounded-full bg-green-400 text-white py-0.5 px-2">
-                                            MY
-                                        </div>
-                                    ) : (
-                                        "준비 중"
-                                    )}
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
-                    {status?.rank > 5 && (
-                        <Table.Row key={6} className="bg-gray-100">
-                            <Table.Cell className="px-0 py-2 font-bold">
-                                {status?.rank === 1
-                                    ? "🥇"
-                                    : status?.rank === 2
-                                      ? "🥈"
-                                      : status?.rank === 3
-                                        ? "🥉"
-                                        : status?.rank}
-                            </Table.Cell>
-                            <Table.Cell className="px-0 py-2 font-bold">
-                                {status?.nickname}
-                            </Table.Cell>
-                            <Table.Cell className="px-0 py-2 font-bold">
-                                {score}
-                            </Table.Cell>
-                            <Table.Cell className="px-0 py-2">
-                                <div className="inline-block rounded-full bg-green-400 text-white py-0.5 px-2">
-                                    MY
-                                </div>
-                            </Table.Cell>
-                        </Table.Row>
-                    )}
-                </Table.Body>
-            </Table>
-            <NicknameChanger uuid={uuid} currentNickname={status?.nickname} />
+const LeaderboardTable = ({ status, score, uuid, gridIndex, onVisibilityChange, visibilityBusy }) => {
+    const [selected, setSelected] = useState(null);
+    const [board, setBoard] = useState(null);
+    const [error, setError] = useState("");
+    useEffect(() => {
+        setBoard(null);
+        setError("");
+        if (!selected) return;
+        const controller = new AbortController();
+        axios.post("/api/kbobingo/get_user_board.php", {
+            index: gridIndex, board_id: selected.board_id,
+        }, { signal: controller.signal }).then(({ data }) => {
+            if (data.code !== 200) throw new Error(data.error);
+            setBoard(data);
+        }).catch((err) => {
+            if (!axios.isCancel(err)) setError("공개된 빙고판을 불러오지 못했습니다.");
+        });
+        return () => controller.abort();
+    }, [selected, gridIndex]);
+
+    const entries = [...(status?.top ?? [])];
+    if (status?.rank > 5) entries.push({
+        user_id: uuid, nickname: status.nickname, rank: status.rank, score,
+        is_public: status.is_public, has_board: true,
+        board_id: status.board_id,
+    });
+    return <div className="overflow-x-auto w-full mt-3.5">
+        <Table hoverable className="text-center">
+            <Table.Head>{["순위", "닉네임", "점수", "보기"].map((label) => <Table.HeadCell key={label} className="px-0">{label}</Table.HeadCell>)}</Table.Head>
+            <Table.Body className="divide-y">
+                {entries.map((user) => <Table.Row key={user.board_id} className={user.user_id === uuid ? "bg-gray-100 font-bold" : "bg-white"}>
+                    <Table.Cell className="px-0 py-2">{user.rank === 1 ? "🥇" : user.rank === 2 ? "🥈" : user.rank === 3 ? "🥉" : user.rank}</Table.Cell>
+                    <Table.Cell className="px-0 py-2">{user.nickname}</Table.Cell>
+                    <Table.Cell className="px-0 py-2">{user.score}</Table.Cell>
+                    <Table.Cell className="px-0 py-2">
+                        {user.user_id === uuid ? <div className="inline-block rounded-full bg-green-400 text-white py-0.5 px-2">MY</div> : <button type="button" onClick={() => { setBoard(null); setError(""); setSelected(user); }} disabled={!user.is_public || !user.has_board}
+                            aria-label={user.nickname + "님의 빙고판 보기"}
+                            title={!user.is_public ? "비공개 빙고판" : !user.has_board ? "저장된 빙고판 없음" : "빙고판 보기"}
+                            className="inline-flex align-middle items-center justify-center rounded-lg px-2 py-0.5 text-blue-600 hover:bg-blue-50 disabled:text-gray-300 disabled:cursor-not-allowed disabled:hover:bg-transparent">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg>
+                        </button>}
+                    </Table.Cell>
+                </Table.Row>)}
+            </Table.Body>
+        </Table>
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-4">
+            <Form.Check type="switch" id="bingo-board-public" label="내 빙고판 공개"
+                checked={status?.is_public ?? true} disabled={visibilityBusy}
+                className="mx-2 text-gray-500 mb-0" style={{ fontSize: "14px" }}
+                onChange={(event) => onVisibilityChange(event.target.checked)} />
+            <NicknameChanger uuid={uuid} currentNickname={status?.nickname} className="text-center" />
         </div>
-    );
+        <Modal show={selected !== null} onHide={() => setSelected(null)} centered className="font-family-NaSqNe">
+            <Modal.Header style={{ border: "none" }} closeButton>
+                <span className="font-family-kbo text-xl font-bold">KBO BINGO</span>
+            </Modal.Header>
+            <Modal.Body>
+                <p className="text-center font-bold">{selected?.nickname}님의 빙고판</p>
+                {error ? <p role="alert" className="text-center text-sm text-red-600">{error}</p>
+                    : board ? <MostGrid status={{ shared: { grid: board.grid } }} date="shared" players={board.players} />
+                    : <p role="status" className="text-center text-sm text-gray-500">빙고판을 불러오는 중…</p>}
+            </Modal.Body>
+        </Modal>
+    </div>;
 };
 
 export default LeaderboardTable;

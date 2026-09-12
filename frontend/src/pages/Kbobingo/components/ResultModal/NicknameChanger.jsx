@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Button } from "react-bootstrap";
 
-const NicknameChanger = ({ uuid, currentNickname }) => {
+const NicknameChanger = ({ uuid, currentNickname, className = "text-center mt-1" }) => {
     const handleClick = () => {
         const nickname = prompt(
             "새 닉네임을 입력하세요.",
@@ -34,7 +34,7 @@ const NicknameChanger = ({ uuid, currentNickname }) => {
     };
 
     return (
-        <div className="text-center mt-1">
+        <div className={className}>
             <Button
                 variant="outline-secondary"
                 size="sm"

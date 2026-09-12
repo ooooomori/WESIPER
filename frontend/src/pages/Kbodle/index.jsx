@@ -9,11 +9,14 @@ import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { PlayerImg, PlayerName } from "./components/Player.jsx";
-import Realistic from "react-canvas-confetti/dist/presets/realistic";
+import RealisticModule from "react-canvas-confetti/dist/presets/realistic";
 import CustomKbodle from "./components/CustomKbodle.jsx";
 import ResultSpinner from "./components/ResultSpinner.jsx";
 import { useSearchParams } from "react-router-dom";
 import { Base64 } from "js-base64";
+
+// CommonJS 프리셋이 빌드 환경에 따라 { default: Component }로 반환될 수 있다.
+const Realistic = RealisticModule.default ?? RealisticModule;
 
 const HeaderBtn = ({
     custom,
@@ -137,11 +140,12 @@ const Search = (props) => {
     const cancelTokenRef = useRef(null);
 
     const onSearch = (event) => {
-        const keyword = event.target.value;
+        const keyword = event.target.value.trim();
         props.setMode("search");
         clearTimeout(debounceTimer);
-        // 입력이 1글자 이상인 경우에만 검색을 시작
-        if (keyword.length > 1) {
+        cancelTokenRef.current?.cancel();
+        // 두 글자 이상 또는 외자 이름 '홀'만 검색
+        if (keyword.length >= 2 || keyword === "홀") {
             props.setMode("search-ing");
             // 디바운싱을 적용하여 일정 시간 후에 검색을 실행
             const newDebounceTimer = setTimeout(() => {

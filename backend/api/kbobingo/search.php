@@ -930,7 +930,7 @@ if((int)$stat >=1000) $playerTotal['h_1000_total'] = true;
     $searchName = $data["keyword"];
     
     // SQL 인젝션 방지를 위해 prepared statement 사용
-    $sql = "SELECT `p_no`, `p_name`, `p_img`, `p_pos`, `is_WBC`, `is_GG`, `is_MLB`
+    $sql = "SELECT `p_no`, `p_name`, `p_img`, `p_pos`, `is_WBC`, `is_GG`, `is_MLB`, `is_AS`
             FROM $playerlist 
             WHERE (`p_name` LIKE ? OR `p_oldname` LIKE ?)
             ORDER BY LENGTH(p_name) ASC, `p_name` ASC LIMIT 15";
@@ -968,6 +968,19 @@ if((int)$stat >=1000) $playerTotal['h_1000_total'] = true;
                 foreach($goldGloveTeams as $teamCode) {
                     if(isset($kbodata['Season'][$teamCode]) && is_array($kbodata['Season'][$teamCode])) {
                         $kbodata['Season'][$teamCode]['gg'] = true;
+                    }
+                }
+
+                $allStarTeams = preg_split(
+                    '/\s*,\s*/',
+                    strtolower(trim((string)$row['is_AS'])),
+                    -1,
+                    PREG_SPLIT_NO_EMPTY
+                );
+
+                foreach($allStarTeams as $teamCode) {
+                    if(isset($kbodata['Season'][$teamCode]) && is_array($kbodata['Season'][$teamCode])) {
+                        $kbodata['Season'][$teamCode]['as'] = true;
                     }
                 }
 
