@@ -64,11 +64,12 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key).filter(key => !["doubles", "triples"].includes(key)));
     const [showRanks, setShowRanks] = useState(true);
     const [showBest, setShowBest] = useState(true);
-    const [showWorst, setShowWorst] = useState(false);
+    const [showWorstOverride, setShowWorst] = useState(null);
     const settingsDialog = useRef(null);
     const host = useRef(null);
     const chartApi = useRef(null);
     const records = useMemo(() => (Array.isArray(comparisonData) ? comparisonData : []).filter((item) => item?.success && item.data?.length), [comparisonData]);
+    const showWorst = showWorstOverride ?? (records.length > 2);
     const stats = useMemo(() => records.map((record) => {
         const merged = { ...deriveStats(record), ...(record.period_stats || {}) };
         const attempts = Number(merged.stolen_bases || 0) + Number(merged.caught_stealing || 0);
