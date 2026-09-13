@@ -62,3 +62,6 @@
 .candle-eyebrow .candle-metric-help .candle-help-tooltip{top:calc(100% + 8px);bottom:auto}
 .candle-player-id-link{color:inherit;text-decoration:none}.candle-player-id-link:hover{text-decoration:underline;text-underline-offset:2px}
 @media(max-width:600px){.candle-quote{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center}.candle-player{min-width:0}.candle-player>div:last-child{min-width:0;overflow:visible}.candle-eyebrow{display:flex;align-items:center;min-width:0}.candle-eyebrow>span:first-child{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.candle-price{min-width:0}.candle-price-main{gap:5px}.candle-price .candle-price-main .candle-price-rank{margin-right:0;white-space:nowrap}}
+.candle-terminal .candle-navigation .candle-export-menu summary{background:transparent;border-color:#31534f;color:#5ee0c0}
+.candle-terminal .candle-navigation .candle-export-menu summary:hover,.candle-terminal .candle-navigation .candle-export-menu[open] summary{background:#5ee0c016;border-color:#31534f;color:#5ee0c0}
+.candle-terminal.theme-light .candle-navigation .candle-export-menu summary{border-color:#75baa9;color:#087d68}

@@ -176,6 +176,7 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
     const renderStyle = document.createElement("style");
     renderStyle.textContent = `
         .candle-export-stage img, body > div:last-child img { display: inline-block !important; }
+        .candle-export-clone .candle-quote-team::before { content: none !important; }
         .candle-export-clone .candle-topline { font-size: 14px !important; }
         .candle-export-clone .candle-topline b { font-size: 13px !important; }
         .candle-export-clone .candle-eyebrow { font-size: 14px !important; }
@@ -211,7 +212,43 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
                 image.addEventListener("load", resolve, { once: true });
                 image.addEventListener("error", resolve, { once: true });
             })));
+        // html2canvas stretches <img> content instead of applying object-fit.
+        // A cover-sized background preserves the same centered avatar crop.
+        clone.querySelectorAll(".candle-avatar img, .compare-legend-avatar img, .compare-player-avatar img").forEach(image => {
+            const avatar = document.createElement("div");
+            avatar.className = "candle-export-avatar-image";
+            Object.assign(avatar.style, {
+                width: "100%", height: "100%",
+                backgroundImage: `url(${JSON.stringify(image.currentSrc || image.src)})`,
+                backgroundSize: "cover", backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+            });
+            image.replaceWith(avatar);
+        });
         await nextPaint();
+        // Render the watermark as a real, explicitly sized layer. html2canvas's
+        // generated ::before node does not reliably fill an inset-sized header.
+        const sourceQuote = element.querySelector(".candle-quote-team");
+        const clonedQuote = clone.querySelector(".candle-quote-team");
+        if (sourceQuote && clonedQuote) {
+            const watermarkStyle = getComputedStyle(sourceQuote, "::before");
+            const bounds = clonedQuote.getBoundingClientRect();
+            const watermark = document.createElement("div");
+            watermark.className = "candle-export-team-watermark";
+            watermark.setAttribute("aria-hidden", "true");
+            Object.assign(watermark.style, {
+                position: "absolute", left: "0", top: "0",
+                width: `${bounds.width}px`, height: `${bounds.height}px`,
+                zIndex: "0", pointerEvents: "none",
+                backgroundImage: watermarkStyle.backgroundImage,
+                backgroundSize: watermarkStyle.backgroundSize,
+                backgroundPosition: watermarkStyle.backgroundPosition,
+                backgroundRepeat: watermarkStyle.backgroundRepeat,
+                opacity: watermarkStyle.opacity,
+            });
+            clonedQuote.prepend(watermark);
+            await nextPaint();
+        }
         const captureWidth = Math.ceil(clone.getBoundingClientRect().width);
         const captureHeight = Math.ceil(clone.getBoundingClientRect().height) + (comparisonTable ? 64 : 0);
         const renderedCanvas = await html2canvas(clone, {
@@ -221,6 +258,19 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
                 clonedDocument.querySelectorAll("img").forEach(image => {
                     image.style.setProperty("display", "inline-block", "important");
                 });
+                clonedDocument.querySelectorAll(".candle-export-avatar-image").forEach(avatar => {
+                    avatar.style.width = `${avatar.parentElement.clientWidth}px`;
+                    avatar.style.height = `${avatar.parentElement.clientHeight}px`;
+                });
+                const q = clonedDocument.querySelector('.candle-export-clone .candle-quote-team');
+                const layer = q?.querySelector('.candle-export-team-watermark');
+                if (layer) {
+                    // windowWidth can switch responsive padding after cloning.
+                    // Size the layer against this final capture layout.
+                    const bounds = q.getBoundingClientRect();
+                    layer.style.width = `${bounds.width}px`;
+                    layer.style.height = `${bounds.height}px`;
+                }
             },
             scale: 2,
             useCORS: true,
