@@ -61,10 +61,10 @@ const formatValue = (value, type) => {
 export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const [metric, setMetric] = useState("ops");
     const [hoverValues, setHoverValues] = useState(null);
-    const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key));
+    const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key).filter(key => !["doubles", "triples"].includes(key)));
     const [showRanks, setShowRanks] = useState(true);
     const [showBest, setShowBest] = useState(true);
-    const [showWorst, setShowWorst] = useState(true);
+    const [showWorst, setShowWorst] = useState(false);
     const settingsDialog = useRef(null);
     const host = useRef(null);
     const chartApi = useRef(null);
@@ -178,7 +178,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
         if (!Number.isFinite(current) || values.length < 2 || Math.max(...values) === Math.min(...values)) return "";
         const best = negative ? Math.min(...values) : Math.max(...values);
         const worst = negative ? Math.max(...values) : Math.min(...values);
-        return current === best && showBest ? "compare-best" : current === worst && records.length > 2 && showWorst ? "compare-worst" : "";
+        return current === best && showBest ? "compare-best" : current === worst && showWorst ? "compare-worst" : "";
     };
 
     return <section className={`candle-terminal candle-comparison font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 비교 차트">
