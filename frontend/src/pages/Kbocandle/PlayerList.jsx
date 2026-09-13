@@ -8,8 +8,8 @@ const PlayerList = ({ player }) => {
                 <div className="candle-player-thumb w-9 h-9 shrink-0 rounded-full overflow-hidden border flex items-center justify-center">
                     <PlayerImg p_no={player.PlayerId} p_img={player.Img} />
                 </div>
-                <div className="flex flex-col text-start">
-                    <div className="flex items-center gap-2">
+                <div className="candle-player-info flex flex-col text-start">
+                    <div className="candle-player-name-row flex items-center gap-2">
                         <span className="text-base font-bold text-gray-900">
                             {player.Name}
                         </span>
@@ -17,7 +17,7 @@ const PlayerList = ({ player }) => {
                             {player.Team}
                         </span>
                     </div>
-                    <div className="text-xs text-gray-400">{player.Pos}</div>
+                    <div className="candle-player-position text-xs text-gray-400">{player.Pos}</div>
                 </div>
             </div>
         )

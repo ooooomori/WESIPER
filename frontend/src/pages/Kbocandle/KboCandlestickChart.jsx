@@ -82,6 +82,11 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     const rankMedal = rank => ["🥇", "🥈", "🥉"][rank - 1];
     const rankBadgeClass = rank => `candle-rank-top-five ${rank <= 3 ? `candle-rank-medal-${rank}` : "candle-rank-finalist"}`;
     const teamCode = kboData?.rankings?.period?.team_code || kboData?.rankings?.season?.team_code;
+    const playerPosition = kboData?.player?.Pos || "";
+    const isMobileDevice = typeof window !== "undefined" && (window.matchMedia?.("(max-width: 767px)").matches || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent));
+    const kboPlayerUrl = isMobileDevice
+        ? `https://m.koreabaseball.com/Kbo/Player/${playerPosition.includes("투") ? "Pitcher" : "Hitter"}.aspx?playerId=${kboData?.player_id || ""}`
+        : `https://www.koreabaseball.com/Record/Player/${playerPosition.includes("투") ? "PitcherDetail" : "HitterDetail"}/Total.aspx?playerId=${kboData?.player_id || ""}`;
     const teamLogoName = teamLogoNames[teamCode];
     const teamLogo = teamLogoName ? defaultTeamLogoFiles[`../../assets/images/logos/${teamLogoName}-logo.svg`] : null;
     const chartTeamLogo = teamLogoName ? smallTeamLogoFiles[`../../assets/images/s-logos/${teamLogoName}-small-logo.svg`] : null;
@@ -214,7 +219,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
         <header className={`candle-quote ${teamLogo ? "candle-quote-team" : ""}`} style={teamLogo ? { "--candle-team-logo": `url("${teamLogo}")`, "--candle-team-tint": `${teamColors[teamLogoName]}${dark ? "3d" : "1f"}` } : undefined}>
             <div className="candle-player">
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}
-                <div><div className="candle-eyebrow">{latest && <><span>{`#${kboData.player_id} · ${metricName}`}</span><MetricHelp metric={metric} /></>}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
+                <div><div className="candle-eyebrow">{latest && <><span><a className="candle-player-id-link" href={kboPlayerUrl} target="_blank" rel="noreferrer">{`#${kboData.player_id}`}</a>{` · ${metricName}`}</span><MetricHelp metric={metric} /></>}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
             </div>
             <div className={`candle-price ${direction}`}>
                 <div className="candle-price-main">{seasonRankText && <small className={`candle-price-rank ${seasonRank <= 5 ? rankBadgeClass(seasonRank) : ""}`}>{seasonTopThree && rankMedal(seasonRank)}{seasonRankText}</small>}<strong>{format(current)}</strong></div>
