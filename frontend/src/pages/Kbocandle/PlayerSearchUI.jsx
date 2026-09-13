@@ -99,6 +99,7 @@ export default function PlayerSearchUI({ setKboData, comparisonMode = false, set
                     season: gameType, year, player_id: player.PlayerId,
                     start_date: startDate, end_date: endDate,
                     date_preset: datePreset, img: player.Img,
+                    include_rankings: 1,
                 },
             })));
             const results = responses.map((response, index) => ({
@@ -267,7 +268,7 @@ export default function PlayerSearchUI({ setKboData, comparisonMode = false, set
                                                     );
                                                 }}
                                                 // 비활성화 시 투명도를 낮추고 마우스 커서를 차단해 시각적으로도 완전히 죽여버린다.
-                                                className="candle-radio font-medium"
+                                                className="candle-radio text-sm font-medium"
                                             />
                                         );
                                     })}

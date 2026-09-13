@@ -1,6 +1,8 @@
 import os
 import requests
 import time
+import tempfile
+from pathlib import Path
 from datetime import datetime, timedelta
 import re
 import pymysql
@@ -13,6 +15,19 @@ DB_CONFIG = {
     "database": os.environ["DB_NAME"],
     "charset": "utf8mb4",
 }
+
+def publish_ranking_revision():
+    """Invalidate shared ranking caches only after all database work succeeds."""
+    path = Path(os.environ.get('WESIPER_CANDLE_REVISION_FILE', '/tmp/wesiper-candle-data-revision'))
+    with tempfile.NamedTemporaryFile(mode='w', dir=path.parent, prefix='candle-revision-', delete=False) as marker:
+        marker.write(str(time.time_ns()))
+        temporary_path = marker.name
+    try:
+        os.chmod(temporary_path, 0o644)
+        os.replace(temporary_path, path)
+    finally:
+        if os.path.exists(temporary_path):
+            os.unlink(temporary_path)
 
 def fetch_yesterdays_kbo_game_ids():
     team_codes = ['SS', 'HT', 'NC', 'KT', 'LG', 'SK', 'OB', 'WO', 'LT', 'HH']
@@ -143,6 +158,7 @@ def load_to_mysql(dataset):
     except Exception as e:
         print(f"데이터베이스 접근 중 치명적 에러 발생: {e}")
         if 'conn' in locals() and conn.open: conn.rollback()
+        raise
     finally:
         if 'conn' in locals() and conn.open: conn.close()
 
@@ -266,6 +282,7 @@ def aggregate_league_eff_stats(target_year):
     except Exception as e:
         print(f"리그 데이터 집계 중 치명적 에러 발생: {e}")
         if 'conn' in locals() and conn.open: conn.rollback()
+        raise
     finally:
         if 'conn' in locals() and conn.open: conn.close()
 
@@ -289,5 +306,6 @@ if __name__ == "__main__":
     if final_dataset:
         current_year = datetime.strptime(target_date, '%Y-%m-%d').year
         aggregate_league_eff_stats(current_year)
+        publish_ranking_revision()
     else:
         print("새롭게 적재된 데이터가 없어 리그 집계는 스킵합니다.")

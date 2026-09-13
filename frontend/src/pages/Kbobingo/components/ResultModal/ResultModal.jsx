@@ -293,6 +293,7 @@ const ResultModal = (props) => {
                             score={stat.score ?? score}
                             uuid={uuid}
                             gridIndex={game.grid.index}
+                            grid={game.grid}
                             onVisibilityChange={changeVisibility}
                             visibilityBusy={visibilityBusy}
                         />

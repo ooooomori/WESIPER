@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Form } from "react-bootstrap";
 import { ColorType, CrosshairMode, createChart, LineSeries } from "lightweight-charts";
 import PlayerImg from "./PlayerImg";
 import MetricHelp from "./MetricHelp";
@@ -60,6 +61,11 @@ const formatValue = (value, type) => {
 export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const [metric, setMetric] = useState("ops");
     const [hoverValues, setHoverValues] = useState(null);
+    const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key));
+    const [showRanks, setShowRanks] = useState(true);
+    const [showBest, setShowBest] = useState(true);
+    const [showWorst, setShowWorst] = useState(true);
+    const settingsDialog = useRef(null);
     const host = useRef(null);
     const chartApi = useRef(null);
     const records = useMemo(() => (Array.isArray(comparisonData) ? comparisonData : []).filter((item) => item?.success && item.data?.length), [comparisonData]);
@@ -172,7 +178,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
         if (!Number.isFinite(current) || values.length < 2 || Math.max(...values) === Math.min(...values)) return "";
         const best = negative ? Math.min(...values) : Math.max(...values);
         const worst = negative ? Math.max(...values) : Math.min(...values);
-        return current === best ? "compare-best" : current === worst ? "compare-worst" : "";
+        return current === best && showBest ? "compare-best" : current === worst && records.length > 2 && showWorst ? "compare-worst" : "";
     };
 
     return <section className={`candle-terminal candle-comparison font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 비교 차트">
@@ -196,10 +202,23 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
             <div className="candle-navigation-actions"><details className={`candle-export-menu ${records.length >= 2 ? "" : "disabled"}`}><summary aria-label="비교 차트 저장 메뉴" onClick={event => records.length < 2 && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: chartApi.current?.chart, filename: `${exportStem}_visible.png`, fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: chartApi.current?.chart, filename: `${exportStem}_full.png`, fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details><button disabled={records.length < 2} className="candle-latest" onClick={() => chartApi.current?.recent()}>최근으로 ↗</button></div>
         </div>
         {!!records.length && <div className="compare-table-section">
-            <div className="candle-summary-heading"><strong>{comparisonTitle}</strong><span>{periodLabel}</span></div>
+            <div className="candle-summary-heading"><div className="compare-table-title"><strong>{comparisonTitle}</strong><button className="compare-settings-icon" aria-label="표에 표시할 기록 설정" aria-haspopup="dialog" onClick={() => settingsDialog.current?.showModal()}><i className="bi bi-gear" aria-hidden="true" /></button></div><span>{periodLabel}</span></div>
+            <dialog ref={settingsDialog} className="compare-record-settings" aria-labelledby="compare-settings-title" onClick={event => { if (event.target === event.currentTarget) event.currentTarget.close(); }}>
+                <div className="compare-settings-heading"><h3 id="compare-settings-title">표시할 기록</h3><button className="compare-settings-icon" aria-label="기록 설정 닫기" onClick={() => settingsDialog.current?.close()}><i className="bi bi-x-lg" aria-hidden="true" /></button></div>
+                <div className="compare-settings-options">{TABLE_ROWS.map(([key, label]) => <Form.Check key={key} id={`compare-setting-${key}`} type="checkbox" label={label} checked={visibleStats.includes(key)} disabled={visibleStats.length === 1 && visibleStats.includes(key)} onChange={event => setVisibleStats(previous => event.target.checked ? [...previous, key] : previous.filter(item => item !== key))} />)}</div>
+                <div className="compare-settings-display">
+                    <Form.Check id="compare-setting-ranks" type="checkbox" label="순위 표시" checked={showRanks} onChange={event => setShowRanks(event.target.checked)} />
+                    <Form.Check id="compare-setting-best" type="checkbox" label="최고 기록 강조" checked={showBest} onChange={event => setShowBest(event.target.checked)} />
+                    <Form.Check id="compare-setting-worst" type="checkbox" label="최저 기록 강조" checked={showWorst} onChange={event => setShowWorst(event.target.checked)} />
+                </div>
+                <button className="compare-settings-done" onClick={() => settingsDialog.current?.close()}>완료</button>
+            </dialog>
             <div className="compare-table-wrap"><table className="compare-table">
                 <thead><tr><th scope="col">기록</th>{records.map((record, index) => <th scope="col" key={record.player_id}><div className="compare-player-head"><div className="compare-player-avatar"><PlayerImg p_no={record.player_id} p_img={record.img || record.player?.Img || ""} /></div><span>{record.name || record.player?.Name}</span><i style={{ background: PLAYER_COLORS[index % PLAYER_COLORS.length] }} /></div></th>)}</tr></thead>
-                <tbody>{TABLE_ROWS.map(([key, label, type], rowIndex) => <tr key={key}><th scope="row">{label}</th>{records.map((record, playerIndex) => <td key={record.player_id}><span className={rankClass(rowIndex, playerIndex)}>{formatValue(stats[playerIndex]?.[key], type)}</span></td>)}</tr>)}</tbody>
+                <tbody>{TABLE_ROWS.map(([key, label, type], rowIndex) => visibleStats.includes(key) ? <tr key={key}><th scope="row">{label}</th>{records.map((record, playerIndex) => {
+                    const rank = record.rankings?.period?.ranks?.[key];
+                    return <td key={record.player_id}><span className="compare-cell-record"><span className={rankClass(rowIndex, playerIndex)}>{formatValue(stats[playerIndex]?.[key], type)}</span>{showRanks && rank && rank <= 5 ? <small className={`candle-stat-rank ${rank <= 3 ? `compare-rank-medal-${rank}` : ""}`}>{rank}위</small> : null}</span></td>;
+                })}</tr> : null)}</tbody>
             </table></div>
         </div>}
         <footer className="candle-footnote"><div className="candle-footnote-copy"><span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span><span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark((value) => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>

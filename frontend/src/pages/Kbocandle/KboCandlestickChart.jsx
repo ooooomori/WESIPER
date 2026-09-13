@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { createChart, CandlestickSeries, LineSeries, ColorType, CrosshairMode } from "lightweight-charts";
+import { createChart, createImageWatermark, CandlestickSeries, LineSeries, ColorType, CrosshairMode } from "lightweight-charts";
 import PlayerImg from "./PlayerImg";
 import MetricHelp from "./MetricHelp";
 import { METRICS, buildBars, metricValue, withCalendarGaps } from "./chartData";
@@ -7,6 +7,10 @@ import { downloadChartCardPng, downloadCsv, exportFileStem } from "./chartExport
 import "./candle.css";
 
 const UP = "#ef4452", DOWN = "#3485f6";
+const defaultTeamLogoFiles = import.meta.glob("../../assets/images/logos/*-logo.svg", { eager: true, query: "?url", import: "default" });
+const smallTeamLogoFiles = import.meta.glob("../../assets/images/s-logos/*-small-logo.svg", { eager: true, query: "?url", import: "default" });
+const teamLogoNames = { OB: "doo", HH: "han", LG: "lg", HT: "kia", SS: "sam", LT: "lot", SK: "ssg", NC: "nc", KT: "kt", WO: "kiw", NX: "kiw" };
+const teamColors = { doo: "#2c2e44", han: "#ff703a", lg: "#e03461", kia: "#ea0029", sam: "#3572bc", lot: "#343d71", ssg: "#f94d4d", nc: "#274c82", kt: "#555555", kiw: "#ad2d5e" };
 const timeKey = time => typeof time === "string" ? time : time && typeof time === "object"
     ? `${time.year}-${String(time.month).padStart(2, "0")}-${String(time.day).padStart(2, "0")}` : "";
 const displayPaResult = result => result.replace(/고4/g, "고의사구").replace(/희번/g, "희생번트");
@@ -48,6 +52,11 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     const format = value => Number.isFinite(value) ? value.toFixed(plus ? 1 : 3) : "—";
     const metricName = METRICS.find(([id]) => id === metric)?.[1];
     const seasonLabels = { regular: "정규시즌", preseason: "시범경기", postseason: "포스트시즌" };
+    const summaryTitle = kboData?.date_preset === "custom"
+        ? "조회 기간 성적"
+        : /^\d+$/.test(kboData?.date_preset || "")
+            ? `최근 ${kboData.date_preset}경기 성적`
+            : `${seasonLabels[kboData?.season] || "시즌"} 성적`;
     const formatDate = value => value ? value.replace(/-/g, ". ").replace(/\.\s(\d{2})$/, ". $1") : "";
     const periodLabel = kboData?.date_preset && kboData.date_preset !== "whole"
         ? `${formatDate(kboData.start_date)} ~ ${formatDate(kboData.end_date)}`
@@ -66,6 +75,18 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     const previous = bars.at(-2)?.[plus ? metric : "close"];
     const change = Number.isFinite(current) && Number.isFinite(previous) ? current - previous : null;
     const direction = change > 0 ? "up" : change < 0 ? "down" : "neutral";
+    const isWholeSeason = !kboData?.date_preset || kboData.date_preset === "whole";
+    const seasonRanking = kboData?.rankings?.[isWholeSeason ? "season" : "period"];
+    const seasonRank = seasonRanking?.ranks?.[metric];
+    const seasonTopThree = seasonRanking?.qualified && seasonRank >= 1 && seasonRank <= 3;
+    const rankMedal = rank => ["🥇", "🥈", "🥉"][rank - 1];
+    const rankBadgeClass = rank => `candle-rank-top-five ${rank <= 3 ? `candle-rank-medal-${rank}` : "candle-rank-finalist"}`;
+    const teamCode = kboData?.rankings?.period?.team_code || kboData?.rankings?.season?.team_code;
+    const teamLogoName = teamLogoNames[teamCode];
+    const teamLogo = teamLogoName ? defaultTeamLogoFiles[`../../assets/images/logos/${teamLogoName}-logo.svg`] : null;
+    const chartTeamLogo = teamLogoName ? smallTeamLogoFiles[`../../assets/images/s-logos/${teamLogoName}-small-logo.svg`] : null;
+    const seasonRankText = seasonRanking?.qualified && seasonRank ? `${isWholeSeason ? "시즌" : "조회 기간"} ${seasonRank}위` : "";
+    const summaryRankKeys = { "타율": "avg", "출루율": "obp", "장타율": "slg", "OPS": "ops", "안타": "hits", "홈런": "home_runs", "도루": "stolen_bases", "BB/K": "bb_per_k" };
 
     useEffect(() => {
         if (!host.current || !bars.length) { setRangeInfo(null); setSelected(null); setExtremaLabels([]); return; }
@@ -101,6 +122,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             series.setData(calendar(bars.map(bar => Number.isFinite(bar[key]) ? { time: bar.time, value: bar[key] } : { time: bar.time })));
             return series;
         });
+        if (chartTeamLogo) createImageWatermark(chart.panes()[0], chartTeamLogo, { maxWidth: 240, maxHeight: 200, padding: 32, alpha: dark ? 0.1 : 0.08 });
         const points = calendar(bars);
         const byTime = new Map(bars.map(bar => [bar.time, bar]));
         const onCrosshair = event => setSelected(byTime.get(timeKey(event.time)) || null);
@@ -148,7 +170,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             api.current = null;
             chart.remove();
         };
-    }, [bars, plus, metric, timeframe, calendarGaps, dark]);
+    }, [bars, plus, metric, timeframe, calendarGaps, dark, chartTeamLogo]);
 
     useEffect(() => { api.current?.moving.forEach(series => series.applyOptions({ visible: showMA })); }, [showMA, bars, calendarGaps]);
 
@@ -189,12 +211,15 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
 
     return <section className={`candle-terminal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 기록 차트">
         <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span> <b>선수 기록 차트</b></span><span>{periodLabel || "SEASON"}</span></div>
-        <header className="candle-quote">
+        <header className={`candle-quote ${teamLogo ? "candle-quote-team" : ""}`} style={teamLogo ? { "--candle-team-logo": `url("${teamLogo}")`, "--candle-team-tint": `${teamColors[teamLogoName]}${dark ? "3d" : "1f"}` } : undefined}>
             <div className="candle-player">
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}
                 <div><div className="candle-eyebrow">{latest && <><span>{`#${kboData.player_id} · ${metricName}`}</span><MetricHelp metric={metric} /></>}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
             </div>
-            <div className={`candle-price ${direction}`}><strong>{format(current)}</strong>{change !== null && <span>{`${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span>}<small>{timeframe === "daily" ? "전 경기" : timeframe === "weekly" ? "전 주" : "전 월"} 대비</small></div>
+            <div className={`candle-price ${direction}`}>
+                <div className="candle-price-main">{seasonRankText && <small className={`candle-price-rank ${seasonRank <= 5 ? rankBadgeClass(seasonRank) : ""}`}>{seasonTopThree && rankMedal(seasonRank)}{seasonRankText}</small>}<strong>{format(current)}</strong></div>
+                {change !== null && <span className="candle-price-change">{`${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span>}
+            </div>
         </header>
         <nav className="candle-metrics" aria-label="기록 지표">{METRICS.map(([id, name]) => <button key={id} aria-pressed={metric === id} className={metric === id ? "active" : ""} onClick={() => setMetric(id)}>{name}</button>)}</nav>
         <div className="candle-toolbar">
@@ -217,8 +242,11 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             {timeframe === "daily" && <div className="candle-atbats"><span>타석 결과</span><div>{active?.pa_results?.length ? active.pa_results.map((result, index) => <span className={/^(볼넷|고4|사구|1루타|2루타|3루타|홈런)/.test(result) ? "on-base" : ""} key={index}>{displayPaResult(result)}</span>) : <span>기록 없음</span>}</div></div>}
         </div>}
         {latest && <div className="candle-period-summary">
-            <div className="candle-summary-heading"><strong>조회 기간 기록</strong><span>{periodLabel || "기간 미지정"}</span></div>
-            <div className="candle-summary-values">{summaryStats.map(([label, value, type]) => <div key={label}><span>{label}</span><strong>{formatSummary(value, type)}</strong></div>)}</div>
+            <div className="candle-summary-heading"><strong>{summaryTitle}</strong><span>{periodLabel || "기간 미지정"}</span></div>
+            <div className="candle-summary-values">{summaryStats.map(([label, value, type]) => {
+                const rank = kboData?.rankings?.period?.ranks?.[summaryRankKeys[label]];
+                return <div key={label}><span className="candle-summary-stat-label">{label}</span><strong>{formatSummary(value, type)}{rank && rank <= 20 ? <small className={`candle-stat-rank ${rank <= 5 ? rankBadgeClass(rank) : ""}`}>{rank <= 3 && rankMedal(rank)}{rank}위</small> : null}</strong></div>;
+            })}</div>
         </div>}
         <footer className="candle-footnote"><div className="candle-footnote-copy">{plus && <span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span>}<span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
     </section>;

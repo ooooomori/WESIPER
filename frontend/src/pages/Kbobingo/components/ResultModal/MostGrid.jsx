@@ -3,7 +3,7 @@ import PlayerImg from "../PlayerImg.jsx";
 import axios from "axios";
 
 const MostGrid = (props) => {
-    const { status, date, players } = props;
+    const { status, date, players, loading = false } = props;
 
     const items = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -37,6 +37,7 @@ const MostGrid = (props) => {
                                 <GridItem
                                     key={e}
                                     no={e}
+                                    loading={loading}
                                     directPlayer={players ? players[e] ?? {} : undefined}
                                     gridIndex={status[date]?.grid.index}
                                     item={
@@ -55,7 +56,7 @@ const MostGrid = (props) => {
 };
 
 const GridItem = (props) => {
-    const { gridIndex, no, item, directPlayer } = props;
+    const { gridIndex, no, item, directPlayer, loading } = props;
 
     const [rate, setRate] = useState(null);
     const [pImg, setpImg] = useState("ssg_b_l");
@@ -131,11 +132,12 @@ const GridItem = (props) => {
         <div
             className={
                 bgColor +
-                " border-zinc-300 cursor-pointer flex items-center justify-center w-20 sm:w-28 h-20 sm:h-28 transition-colors duration-75 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:z-10  " +
+                " relative border-zinc-300 cursor-pointer flex items-center justify-center w-20 sm:w-28 h-20 sm:h-28 transition-colors duration-75 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:z-10  " +
                 applyBorder()
             }
         >
-            {pName && (
+            {loading && <div aria-hidden="true" className="absolute inset-0 animate-pulse bg-gray-200" />}
+            {!loading && pName && (
                 <div
                     className="relative overflow flex justify-center items-center w-full h-full"
                     onClick={() => {

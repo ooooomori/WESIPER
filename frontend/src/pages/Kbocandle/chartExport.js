@@ -87,6 +87,8 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         ".candle-navigation",
         ".candle-metrics",
         ".theme-toggle",
+        ".compare-settings-icon",
+        ".compare-record-settings",
         ...omitSelectors,
     ].join(",")).forEach(node => node.remove());
     clone.querySelectorAll(".candle-extrema-label, .candle-help-tooltip").forEach(node => node.remove());

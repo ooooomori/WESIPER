@@ -536,6 +536,16 @@ try {
         'bb_per_k' => ($period_so > 0) ? round($cum_bb / $period_so, 3) : null,
     ];
 
+    $rankings = null;
+    if (($_GET['include_rankings'] ?? '') === '1') {
+        try {
+            require_once __DIR__ . '/rankings.php';
+            $seasonEnd = min($schedule[$year][$season][1] ?? $end_date, date('Y-m-d'));
+            $rankings = candleRankings($pdo, $season_start_bound, $seasonEnd, $start_date, $end_date, (string)$player_id);
+        } catch (Throwable $rankingError) {
+            error_log('Candle ranking failed: ' . $rankingError->getMessage());
+        }
+    }
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
         'success'   => true,
@@ -548,6 +558,7 @@ try {
         'date_preset' => $date_preset,
         'img'       => $img,
         'period_stats' => $period_stats,
+        'rankings' => $rankings,
         'data'      => $result_output
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 

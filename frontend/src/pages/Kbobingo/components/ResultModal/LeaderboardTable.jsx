@@ -6,7 +6,7 @@ import axios from "axios";
 import NicknameChanger from "./NicknameChanger.jsx";
 import MostGrid from "./MostGrid.jsx";
 
-const LeaderboardTable = ({ status, score, uuid, gridIndex, onVisibilityChange, visibilityBusy }) => {
+const LeaderboardTable = ({ status, score, uuid, gridIndex, grid, onVisibilityChange, visibilityBusy }) => {
     const [selected, setSelected] = useState(null);
     const [board, setBoard] = useState(null);
     const [error, setError] = useState("");
@@ -61,8 +61,7 @@ const LeaderboardTable = ({ status, score, uuid, gridIndex, onVisibilityChange, 
                                     <div className="px-3 pb-4">
                                         {selected?.board_id === user.board_id && (error
                                             ? <p role="alert" className="text-center text-sm text-red-600">{error}</p>
-                                            : board ? <MostGrid status={{ shared: { grid: board.grid } }} date="shared" players={board.players} />
-                                            : <p role="status" className="text-center text-sm text-gray-500">빙고판을 불러오는 중…</p>)}
+                                            : <MostGrid status={{ shared: { grid: board?.grid ?? grid } }} date="shared" players={board?.players ?? []} loading={!board} />)}
                                     </div>
                                 </div>
                             </Collapse>
