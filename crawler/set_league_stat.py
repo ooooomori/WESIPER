@@ -46,6 +46,8 @@ def aggregate_league_eff_stats(target_year):
                     PRIMARY KEY (year, game_date)
                 )
             """)
+            cursor.execute('SHOW COLUMNS FROM kbo_league_records')
+            available_columns = {row['Field'] for row in cursor.fetchall()}
             
             # 2. 해당 시즌 전 구단 타석 데이터 시간순 싹쓸이
             sql = """
@@ -136,13 +138,24 @@ def aggregate_league_eff_stats(target_year):
                         %s, %s, %s
                     )
                 """
-                cursor.execute(insert_sql, (
+                insert_values = (
                     target_year, d,
                     cum_ab, cum_h, cum_ob, cum_sf, cum_tb,
                     cum_eff_ab, cum_eff_tb, cum_eff_h, cum_eff_ob,
                     round(league_obp, 4), round(league_slg, 4), round(league_ops, 4),
                     round(league_eff_obp, 4), round(league_eff_slg, 4), round(league_eff_ops, 4)
-                ))
+                )
+                # Production stores cumulative totals only; derived rate columns
+                # are optional. Keep the existing schema without ALTER TABLE.
+                columns = [
+                    'year', 'game_date', 'cum_ab', 'cum_h', 'cum_ob', 'cum_sf', 'cum_tb',
+                    'cum_eff_ab', 'cum_eff_tb', 'cum_eff_h', 'cum_eff_ob',
+                    'league_obp', 'league_slg', 'league_ops',
+                    'league_eff_obp', 'league_eff_slg', 'league_eff_ops',
+                ]
+                selected = [(column, value) for column, value in zip(columns, insert_values) if column in available_columns]
+                insert_sql = 'REPLACE INTO kbo_league_records (' + ','.join(column for column, _ in selected) + ') VALUES (' + ','.join(['%s'] * len(selected)) + ')'
+                cursor.execute(insert_sql, tuple(value for _, value in selected))
             
             conn.commit()
             print(f"✅ {target_year}시즌 리그 일자별 유효 스탯(eff_ops) 적재 완료.")
