@@ -145,7 +145,10 @@ const GridItem = (props) => {
                         const pageType = isBatter
                             ? "HitterDetail"
                             : "PitcherDetail";
-                        window.location.href = `https://www.koreabaseball.com/Record/Player/${pageType}/Total.aspx?playerId=${pNo}`;
+                        const isMobile = window.matchMedia?.("(max-width: 767px)").matches || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+                        window.location.href = isMobile
+                            ? `https://m.koreabaseball.com/Kbo/Player/${isBatter ? "Hitter" : "Pitcher"}.aspx?playerId=${pNo}`
+                            : `https://www.koreabaseball.com/Record/Player/${pageType}/Total.aspx?playerId=${pNo}`;
                     }}
                 >
                     {rate !== null && <div className="absolute top-0 right-0 text-white text-[0.6rem] md:text-xs bg-zinc-800 opacity-95 pl-1.5 pr-1 sm:pr-1.5 py-0.5 rounded-bl-lg">
