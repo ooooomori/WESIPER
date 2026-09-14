@@ -8,6 +8,11 @@ import { downloadChartCardPng, downloadCsv, exportFileStem } from "./chartExport
 
 const PLAYER_COLORS = ["#20c9a6", "#ff6577", "#4f8cff", "#f3bc5f", "#b595ff", "#ff8f4c", "#42c6dd", "#e66ac4"];
 const SEASON_LABELS = { regular: "정규시즌", preseason: "시범경기", postseason: "포스트시즌" };
+const teamLogoFiles = import.meta.glob("../../assets/images/logos/*-logo.svg", { eager: true, query: "?url", import: "default" });
+const teamLogoNames = { OB: "doo", HH: "han", LG: "lg", HT: "kia", SS: "sam", LT: "lot", SK: "ssg", NC: "nc", KT: "kt", WO: "kiw", NX: "kiw" };
+const smallTeamLogoFiles = import.meta.glob("../../assets/images/s-logos/*-small-logo.svg", { eager: true, query: "?url", import: "default" });
+const teamColors = { doo: "#2c2e44", han: "#ff703a", lg: "#e03461", kia: "#ea0029", sam: "#3572bc", lot: "#343d71", ssg: "#f94d4d", nc: "#274c82", kt: "#555555", kiw: "#ad2d5e" };
+const recordTeamName = record => teamLogoNames[record?.rankings?.period?.team_code || record?.rankings?.season?.team_code];
 
 const countMatches = (results, pattern) => results.filter((result) => pattern.test(result)).length;
 const countTagged = (results, pattern) => results.reduce((total, result) => {
@@ -61,7 +66,7 @@ const formatValue = (value, type) => {
 export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const [metric, setMetric] = useState("ops");
     const [hoverValues, setHoverValues] = useState(null);
-    const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key).filter(key => !["doubles", "triples"].includes(key)));
+    const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key).filter(key => !["doubles", "triples", "stolen_base_percentage"].includes(key)));
     const [showRanks, setShowRanks] = useState(true);
     const [showBest, setShowBest] = useState(true);
     const [showWorstOverride, setShowWorst] = useState(null);
@@ -78,6 +83,12 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const isPlus = metric.endsWith("_plus");
     const metricName = COMPARISON_METRICS.find(([id]) => id === metric)?.[1] || "OPS";
     const first = records[0];
+    const leader = records.reduce((best, record) => {
+        const value = metricValue(record.data.at(-1), metric);
+        return Number.isFinite(value) && (!best || value > metricValue(best.data.at(-1), metric)) ? record : best;
+    }, null);
+    const quoteTeamCode = leader?.rankings?.period?.team_code || leader?.rankings?.season?.team_code;
+    const quoteTeamLogo = teamLogoFiles[`../../assets/images/logos/${teamLogoNames[quoteTeamCode]}-logo.svg`];
     const periodLabel = first ? (first.date_preset && first.date_preset !== "whole"
         ? `${first.start_date} ~ ${first.end_date}`
         : `${first.year} ${SEASON_LABELS[first.season] || ""}`) : "";
@@ -184,7 +195,8 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
 
     return <section className={`candle-terminal candle-comparison font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 비교 차트">
         <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span> <b>선수 비교 차트</b></span><span>{periodLabel}</span></div>
-        <header className="compare-header">
+        <header className="compare-header candle-quote compare-team-quote" style={quoteTeamLogo ? { backgroundColor: dark ? "#101722" : "#ffffff", backgroundImage: `linear-gradient(${teamColors[recordTeamName(leader)]}${dark ? "3d" : "1f"}, ${teamColors[recordTeamName(leader)]}${dark ? "3d" : "1f"})` } : undefined}>
+            <div className="compare-team-watermarks" aria-hidden="true"><span style={{ backgroundImage: quoteTeamLogo ? `url(${JSON.stringify(quoteTeamLogo)})` : "none" }} /></div>
             <div><h2>{leaderLabel}</h2></div>
             <div className="compare-metric-title"><strong>{metricName}</strong><MetricHelp metric={metric} /></div>
         </header>
@@ -214,8 +226,9 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
                 </div>
                 <button className="compare-settings-done" onClick={() => settingsDialog.current?.close()}>완료</button>
             </dialog>
-            <div className="compare-table-wrap"><table className="compare-table">
-                <thead><tr><th scope="col">기록</th>{records.map((record, index) => <th scope="col" key={record.player_id}><div className="compare-player-head"><div className="compare-player-avatar"><PlayerImg p_no={record.player_id} p_img={record.img || record.player?.Img || ""} /></div><span>{record.name || record.player?.Name}</span><i style={{ background: PLAYER_COLORS[index % PLAYER_COLORS.length] }} /></div></th>)}</tr></thead>
+            <div className="compare-table-wrap"><table className="compare-table" style={{ minWidth: `${90 + records.length * 96}px` }}>
+                <colgroup><col className="compare-stat-column" />{records.map(record => <col key={record.player_id} />)}</colgroup>
+                <thead><tr><th scope="col">기록</th>{records.map((record, index) => <th scope="col" key={record.player_id} className="compare-player-cell" style={{ "--compare-team-small-logo": `url(${JSON.stringify(smallTeamLogoFiles[`../../assets/images/s-logos/${recordTeamName(record)}-small-logo.svg`] || "")})` }}><div className="compare-player-head"><div className="compare-player-avatar"><PlayerImg p_no={record.player_id} p_img={record.img || record.player?.Img || ""} /></div><span>{record.name || record.player?.Name}</span><i style={{ background: PLAYER_COLORS[index % PLAYER_COLORS.length] }} /></div></th>)}</tr></thead>
                 <tbody>{TABLE_ROWS.map(([key, label, type], rowIndex) => visibleStats.includes(key) ? <tr key={key}><th scope="row">{label}</th>{records.map((record, playerIndex) => {
                     const rank = record.rankings?.period?.ranks?.[key];
                     return <td key={record.player_id}><span className="compare-cell-record"><span className={rankClass(rowIndex, playerIndex)}>{formatValue(stats[playerIndex]?.[key], type)}</span>{showRanks && rank && rank <= 5 ? <small className={`candle-stat-rank ${rank <= 3 ? `compare-rank-medal-${rank}` : ""}`}>{rank}위</small> : null}</span></td>;

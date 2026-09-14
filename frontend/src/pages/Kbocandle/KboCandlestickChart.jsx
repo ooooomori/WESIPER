@@ -140,7 +140,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             const markerPoints = visible.map(bar => ({ bar, high: plus ? bar[metric] : bar.high, low: plus ? bar[metric] : bar.low }));
             const highPoint = markerPoints.filter(point => Number.isFinite(point.high)).reduce((best, point) => !best || point.high > best.high ? point : best, null);
             const lowPoint = markerPoints.filter(point => Number.isFinite(point.low)).reduce((best, point) => !best || point.low < best.low ? point : best, null);
-            const width = chart.options().width;
+            const width = chart.timeScale().width();
             const makeLabel = (point, kind) => {
                 if (!point) return null;
                 const x = chart.timeScale().timeToCoordinate(point.bar.time);
@@ -162,17 +162,24 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             chart.priceScale("right").applyOptions({ autoScale: true });
         };
         const refreshExtrema = () => lastRange && onRange(lastRange);
+        let extremaFrame;
+        const scheduleExtrema = range => {
+            if (range) lastRange = range;
+            cancelAnimationFrame(extremaFrame);
+            extremaFrame = requestAnimationFrame(refreshExtrema);
+        };
         api.current = { chart, moving, recent, refreshExtrema, exportMarkers: () => onRange(chart.timeScale().getVisibleLogicalRange()) || [] };
         chart.subscribeCrosshairMove(onCrosshair);
-        chart.timeScale().subscribeVisibleLogicalRangeChange(onRange);
-        const resizeObserver = new ResizeObserver(() => lastRange && onRange(lastRange));
+        chart.timeScale().subscribeVisibleLogicalRangeChange(scheduleExtrema);
+        const resizeObserver = new ResizeObserver(() => scheduleExtrema());
         resizeObserver.observe(host.current);
         setSelected(null);
         recent();
         return () => {
+            cancelAnimationFrame(extremaFrame);
             resizeObserver.disconnect();
             chart.unsubscribeCrosshairMove(onCrosshair);
-            chart.timeScale().unsubscribeVisibleLogicalRangeChange(onRange);
+            chart.timeScale().unsubscribeVisibleLogicalRangeChange(scheduleExtrema);
             api.current = null;
             chart.remove();
         };

@@ -234,6 +234,7 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
     renderStyle.textContent = `
         .candle-export-stage img, body > div:last-child img { display: inline-block !important; }
         .candle-export-clone .candle-quote-team::before { content: none !important; }
+        .candle-export-clone .compare-player-cell::before { content: none !important; }
         .candle-export-clone .candle-topline { font-size: 14px !important; }
         .candle-export-clone .candle-topline b { font-size: 13px !important; }
         .candle-export-clone .candle-eyebrow { font-size: 14px !important; }
@@ -283,6 +284,17 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
             image.replaceWith(avatar);
         });
         await nextPaint();
+        const cellWatermarks = await Promise.all([...element.querySelectorAll(".compare-player-cell")].map(async cell => {
+            const style = getComputedStyle(cell, "::before");
+            const image = await loadBackgroundImage(style.backgroundImage);
+            const matrix = new DOMMatrix(style.transform);
+            return { image, width: parseFloat(style.width), height: parseFloat(style.height),
+                right: parseFloat(style.right), offsetY: parseFloat(style.top) - cell.getBoundingClientRect().height / 2,
+                angle: Math.atan2(matrix.b, matrix.a), opacity: Number(style.opacity) };
+        }));
+        const comparisonQuoteLayer = element.querySelector(".compare-team-watermarks > span");
+        const comparisonQuoteImage = comparisonQuoteLayer
+            ? await loadBackgroundImage(getComputedStyle(comparisonQuoteLayer).backgroundImage) : null;
         // Render the watermark as a real, explicitly sized layer. html2canvas's
         // generated ::before node does not reliably fill an inset-sized header.
         const sourceQuote = element.querySelector(".candle-quote-team");
@@ -314,6 +326,36 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
             backgroundColor: null,
             logging: false,
             onclone: (clonedDocument) => {
+                const comparisonLayer = clonedDocument.querySelector(".candle-export-clone .compare-team-watermarks > span");
+                if (comparisonLayer && comparisonQuoteImage) {
+                    const bounds = comparisonLayer.getBoundingClientRect();
+                    const image = centeredCoverImage(comparisonQuoteImage, bounds.width, bounds.height);
+                    comparisonLayer.style.backgroundImage = `url(${JSON.stringify(image)})`;
+                    comparisonLayer.style.backgroundSize = "100% 100%";
+                    comparisonLayer.style.backgroundPosition = "0px 0px";
+                    comparisonLayer.style.backgroundRepeat = "no-repeat";
+                }
+                clonedDocument.querySelectorAll(".candle-export-clone .compare-player-cell").forEach((cell, index) => {
+                    const logo = cellWatermarks[index];
+                    if (!logo?.image) return;
+                    const bounds = cell.getBoundingClientRect();
+                    const canvas = document.createElement("canvas");
+                    canvas.width = Math.ceil(bounds.width * 4);
+                    canvas.height = Math.ceil(bounds.height * 4);
+                    const context = canvas.getContext("2d");
+                    context.scale(4, 4);
+                    context.globalAlpha = logo.opacity;
+                    context.translate(bounds.width - logo.right - logo.width / 2, bounds.height / 2 + logo.offsetY);
+                    context.rotate(logo.angle);
+                    const scale = Math.min(logo.width / logo.image.naturalWidth, logo.height / logo.image.naturalHeight);
+                    const width = logo.image.naturalWidth * scale;
+                    const height = logo.image.naturalHeight * scale;
+                    context.drawImage(logo.image, -width / 2, -height / 2, width, height);
+                    cell.style.backgroundImage = `url(${JSON.stringify(canvas.toDataURL("image/png"))})`;
+                    cell.style.backgroundSize = "100% 100%";
+                    cell.style.backgroundPosition = "0px 0px";
+                    cell.style.backgroundRepeat = "no-repeat";
+                });
                 clonedDocument.querySelectorAll("img").forEach(image => {
                     image.style.setProperty("display", "inline-block", "important");
                 });
