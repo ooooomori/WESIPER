@@ -226,8 +226,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
                 </div>
                 <button className="compare-settings-done" onClick={() => settingsDialog.current?.close()}>완료</button>
             </dialog>
-            <div className="compare-table-wrap"><table className="compare-table" style={{ minWidth: `${90 + records.length * 96}px` }}>
-                <colgroup><col className="compare-stat-column" />{records.map(record => <col key={record.player_id} />)}</colgroup>
+            <div className="compare-table-wrap"><table className="compare-table">
                 <thead><tr><th scope="col">기록</th>{records.map((record, index) => <th scope="col" key={record.player_id} className="compare-player-cell" style={{ "--compare-team-small-logo": `url(${JSON.stringify(smallTeamLogoFiles[`../../assets/images/s-logos/${recordTeamName(record)}-small-logo.svg`] || "")})` }}><div className="compare-player-head"><div className="compare-player-avatar"><PlayerImg p_no={record.player_id} p_img={record.img || record.player?.Img || ""} /></div><span>{record.name || record.player?.Name}</span><i style={{ background: PLAYER_COLORS[index % PLAYER_COLORS.length] }} /></div></th>)}</tr></thead>
                 <tbody>{TABLE_ROWS.map(([key, label, type], rowIndex) => visibleStats.includes(key) ? <tr key={key}><th scope="row">{label}</th>{records.map((record, playerIndex) => {
                     const rank = record.rankings?.period?.ranks?.[key];
