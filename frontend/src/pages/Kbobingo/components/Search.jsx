@@ -92,7 +92,7 @@ const Search = (props) => {
         }
     }, [props.mode]);
     return (
-        fadeClass && (
+        fadeClass && props.mode.startsWith("search") && (
             <>
                 <div
                     className={`fixed inset-0 bg-gray-900 bg-opacity-40 transition-opacity ease-in duration-200 ${fadeClass}`}

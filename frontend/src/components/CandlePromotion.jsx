@@ -25,10 +25,12 @@ export default function CandlePromotion() {
 
     return (
         <div role="region" aria-label="KBO CANDLE 안내"
-            className="font-family-NaSqNe bg-slate-800 text-white px-4 py-2.5 relative flex items-center justify-center text-center border-b border-slate-700 md:px-6">
+            className="font-family-NaSqNe bg-slate-800 text-white px-4 py-2.5 relative flex items-center justify-center text-center border-b border-slate-700 md:px-6 overflow-hidden min-w-0 max-w-full">
             <div ref={containerRef} className="relative text-xs md:text-sm text-white font-medium leading-relaxed mr-6 min-w-0 w-full flex items-center justify-center gap-1">
-                <span ref={measureRef} aria-hidden="true" className="absolute invisible whitespace-nowrap pointer-events-none flex items-center gap-1" style={{ width: "max-content" }}>
-                    <span>📢</span><span>{message}</span><span className="ml-1 inline-block px-1.5 py-0.5 font-family-kbo font-bold">KBO CANDLE</span>
+                <span aria-hidden="true" className="absolute w-0 h-0 overflow-hidden pointer-events-none">
+                    <span ref={measureRef} className="invisible whitespace-nowrap flex items-center gap-1" style={{ width: "max-content" }}>
+                        <span>📢</span><span>{message}</span><span className="ml-1 inline-block px-1.5 py-0.5 font-family-kbo font-bold">KBO CANDLE</span>
+                    </span>
                 </span>
                 <span aria-hidden="true" className="shrink-0">📢</span>{" "}
                 {scrolling ? <span className="candle-marquee min-w-0 flex-1 overflow-hidden" aria-label={message}>
