@@ -1,10 +1,15 @@
 """Print season boundaries from cached game metadata without DB writes."""
 import json
+import argparse
 from collections import defaultdict
 from pathlib import Path
 
-root = Path('/home/bitnami/wesiper/backfill-2014-2017')
-for year in range(2014, 2018):
+parser = argparse.ArgumentParser()
+parser.add_argument('--start-year', type=int, default=2014)
+parser.add_argument('--end-year', type=int, default=2017)
+args = parser.parse_args()
+root = Path(f'/home/bitnami/wesiper/backfill-{args.start_year}-{args.end_year}')
+for year in range(args.start_year, args.end_year + 1):
     schedule = json.loads((root / f'schedule-{year}.json').read_text())
     groups = defaultdict(list)
     for gid, day in schedule.items():

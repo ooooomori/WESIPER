@@ -1,15 +1,20 @@
 """Read-only verification of completed historical backfill."""
 import json
-from collections import Counter
+import argparse
 from pathlib import Path
 from backfill_seasons import connect, UNPLAYED_GAMES
 
-root = Path('/home/bitnami/wesiper/backfill-2014-2017')
-empty = json.loads((root / 'empty-records.json').read_text(encoding='utf-8'))
+parser = argparse.ArgumentParser()
+parser.add_argument('--start-year', type=int, default=2014)
+parser.add_argument('--end-year', type=int, default=2017)
+args = parser.parse_args()
+root = Path(f'/home/bitnami/wesiper/backfill-{args.start_year}-{args.end_year}')
+empty_path = root / 'empty-records.json'
+empty = json.loads(empty_path.read_text(encoding='utf-8')) if empty_path.exists() else {}
 conn = connect()
 try:
     with conn.cursor() as cur:
-        for year in range(2014, 2018):
+        for year in range(args.start_year, args.end_year + 1):
             imported = json.loads((root / f'imported-{year}.json').read_text(encoding='utf-8'))
             schedule = json.loads((root / f'schedule-{year}.json').read_text(encoding='utf-8'))
             cur.execute('SELECT game_id, COUNT(*) FROM kbo_season_records WHERE game_date >= %s AND game_date < %s GROUP BY game_id', (f'{year}-01-01',f'{year+1}-01-01'))

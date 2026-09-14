@@ -10,6 +10,13 @@ $end_date   = $_GET['end_date'] ?? '';
 $date_preset = $_GET['date_preset'] ?? 'whole';
 $img        = $_GET['img'] ?? '';
 
+if ($season === 'preseason' && in_array((string)$year, ['2008', '2009', '2010', '2012'], true)) {
+    http_response_code(400);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['success' => false, 'error' => '해당 연도는 시범경기 조회를 지원하지 않습니다.'], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 // 타석 결과 텍스트를 요청한 규격으로 강제 변환하는 전용 함수 신설
 function formatPaResult($pa_txt, $sb, $cs) {
     $clean = trim($pa_txt);

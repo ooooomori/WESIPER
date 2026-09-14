@@ -44,6 +44,7 @@ const SEASON_DATES = {
 };
 
 export default function PlayerSearchUI({ setKboData, comparisonMode = false, setComparisonData }) {
+    const preseasonUnavailable = (selectedYear) => ["2008", "2009", "2010", "2012"].includes(String(selectedYear));
     const [seasonDates, setSeasonDates] = useState(null);
     const [searchPlayer, setSearchPlayer] = useState(null); // 선택된 선수 객체 (id 등 포함 가정)
     const [comparisonPlayers, setComparisonPlayers] = useState([]);
@@ -202,11 +203,9 @@ export default function PlayerSearchUI({ setKboData, comparisonMode = false, set
                                     onChange={(e) => {
                                         const selectedYear = e.target.value;
                                         setYear(selectedYear);
-
-                                        // 💡 연도 변경 시 현재 선택된 시즌(gameType)의 기본 날짜로 조회 기간 자동 업데이트
-                                        const defaultRange = SEASON_DATES[
-                                            selectedYear
-                                        ]?.[gameType] || ["", ""];
+                                        const selectedType = gameType === "preseason" && preseasonUnavailable(selectedYear) ? "regular" : gameType;
+                                        setGameType(selectedType);
+                                        const defaultRange = seasonDates?.[selectedYear]?.[selectedType] || ["", ""];
                                         setStartDate(defaultRange[0] || "");
                                         setEndDate(defaultRange[1] || "");
                                     }}
@@ -250,7 +249,7 @@ export default function PlayerSearchUI({ setKboData, comparisonMode = false, set
                                                 label={item.label}
                                                 value={item.id}
                                                 checked={gameType === item.id}
-                                                disabled={!hasSchedule} // 데이터가 없으면 즉시 비활성화
+                                                disabled={!hasSchedule || (item.id === "preseason" && preseasonUnavailable(year))}
                                                 onChange={(e) => {
                                                     const selectedType =
                                                         e.target.value;

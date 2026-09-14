@@ -140,7 +140,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             const markerPoints = visible.map(bar => ({ bar, high: plus ? bar[metric] : bar.high, low: plus ? bar[metric] : bar.low }));
             const highPoint = markerPoints.filter(point => Number.isFinite(point.high)).reduce((best, point) => !best || point.high > best.high ? point : best, null);
             const lowPoint = markerPoints.filter(point => Number.isFinite(point.low)).reduce((best, point) => !best || point.low < best.low ? point : best, null);
-            const width = host.current?.clientWidth || 0;
+            const width = chart.options().width;
             const makeLabel = (point, kind) => {
                 if (!point) return null;
                 const x = chart.timeScale().timeToCoordinate(point.bar.time);
@@ -154,6 +154,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             setExtremaLabels(labels);
             setRangeInfo({ start: visible[0]?.time, end: visible.at(-1)?.time, count: visible.length,
                 low: values.length ? Math.min(...values) : null, high: values.length ? Math.max(...values) : null });
+            return labels;
         };
         const recent = () => {
             const count = host.current.clientWidth < 600 ? 36 : 60;
@@ -161,7 +162,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             chart.priceScale("right").applyOptions({ autoScale: true });
         };
         const refreshExtrema = () => lastRange && onRange(lastRange);
-        api.current = { chart, moving, recent, refreshExtrema };
+        api.current = { chart, moving, recent, refreshExtrema, exportMarkers: () => onRange(chart.timeScale().getVisibleLogicalRange()) || [] };
         chart.subscribeCrosshairMove(onCrosshair);
         chart.timeScale().subscribeVisibleLogicalRangeChange(onRange);
         const resizeObserver = new ResizeObserver(() => lastRange && onRange(lastRange));
@@ -238,7 +239,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             : <>선수를 선택하고 조회하기를 눌러보세요!</>}</span></div>}
         <div className="candle-navigation">
 <div><button className="candle-nav-icon" disabled={!latest} onClick={() => move(-1)} aria-label="이전 구간"><i className="bi bi-chevron-left" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => move(1)} aria-label="다음 구간"><i className="bi bi-chevron-right" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => zoom(1.3)} aria-label="차트 축소"><i className="bi bi-dash-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => zoom(0.75)} aria-label="차트 확대"><i className="bi bi-plus-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => api.current?.recent()} aria-label="차트 초기화" title="초기화"><i className="bi bi-arrow-counterclockwise" aria-hidden="true" /></button></div>
-            <div className="candle-navigation-actions"><details className={`candle-export-menu ${latest ? "" : "disabled"}`}><summary aria-label="차트 저장 메뉴" onClick={event => !latest && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_visible.png`, omitSelectors: [".candle-detail"], rangeText: currentRangeText, afterRestore: () => api.current?.refreshExtrema(), fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_full.png`, omitSelectors: [".candle-detail"], rangeText: exportRangeText, afterRestore: () => api.current?.refreshExtrema(), fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details></div>
+            <div className="candle-navigation-actions"><details className={`candle-export-menu ${latest ? "" : "disabled"}`}><summary aria-label="차트 저장 메뉴" onClick={event => !latest && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_visible.png`, omitSelectors: [".candle-detail"], rangeText: currentRangeText, getMarkers: () => api.current?.exportMarkers() || [], afterRestore: () => api.current?.refreshExtrema(), fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_full.png`, omitSelectors: [".candle-detail"], rangeText: exportRangeText, getMarkers: () => api.current?.exportMarkers() || [], afterRestore: () => api.current?.refreshExtrema(), fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details></div>
         </div>
         <div className="candle-range"><span>{rangeInfo?.start ? `${rangeInfo.start} — ${rangeInfo.end}` : "조회된 기록 없음"}</span><span>구간 최저 <b className="down">{format(rangeInfo?.low)}</b> 최고 <b className="up">{format(rangeInfo?.high)}</b></span></div>
         {latest && <div className="candle-detail">

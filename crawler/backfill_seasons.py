@@ -75,11 +75,13 @@ def main():
     args = argparse.ArgumentParser()
     args.add_argument('--start-year', type=int, default=2014)
     args.add_argument('--end-year', type=int, default=2017)
-    args.add_argument('--root', type=Path, default=Path('/home/bitnami/wesiper/backfill-2014-2017'))
+    args.add_argument('--root', type=Path)
     args.add_argument('--probe', action='store_true')
     opt = args.parse_args()
-    if not 2014 <= opt.start_year <= opt.end_year <= 2017:
-        raise ValueError('Only the requested 2014–2017 range is allowed')
+    if not 2008 <= opt.start_year <= opt.end_year <= 2017:
+        raise ValueError('Only historical 2008–2017 seasons are allowed')
+    if opt.root is None:
+        opt.root = Path(f'/home/bitnami/wesiper/backfill-{opt.start_year}-{opt.end_year}')
     opt.root.mkdir(parents=True, exist_ok=True)
     lock = (opt.root / 'run.lock').open('w')
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)

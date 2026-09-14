@@ -28,6 +28,29 @@ export function downloadCsv(filename, headers, rows) {
 
 const nextPaint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
 
+const loadBackgroundImage = async background => {
+    const match = /^url\(["']?(.*?)["']?\)$/.exec(background);
+    if (!match) return null;
+    const image = new Image();
+    image.crossOrigin = "anonymous";
+    image.src = match[1];
+    await image.decode();
+    return image;
+};
+
+const centeredCoverImage = (image, width, height) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.ceil(width * 2);
+    canvas.height = Math.ceil(height * 2);
+    const scale = Math.max(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight);
+    const drawnWidth = image.naturalWidth * scale;
+    const drawnHeight = image.naturalHeight * scale;
+    canvas.getContext("2d").drawImage(image,
+        (canvas.width - drawnWidth) / 2, (canvas.height - drawnHeight) / 2,
+        drawnWidth, drawnHeight);
+    return canvas.toDataURL("image/png");
+};
+
 const trimTransparentCanvas = (canvas) => {
     const context = canvas.getContext("2d");
     if (!context) return canvas;
@@ -49,7 +72,7 @@ const trimTransparentCanvas = (canvas) => {
     return trimmed;
 };
 
-export async function downloadChartCardPng({ element, chart, filename, omitSelectors = [], minWidth = 960, rangeText = null, afterRestore = null, fitContent = true }) {
+export async function downloadChartCardPng({ element, chart, filename, omitSelectors = [], minWidth = 960, rangeText = null, afterRestore = null, fitContent = true, getMarkers = null }) {
     if (!element || !chart) return;
 
     const plot = element.querySelector(".candle-plot");
@@ -65,7 +88,41 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         if (fitContent) chart.timeScale().fitContent();
         else if (visibleRange) chart.timeScale().setVisibleLogicalRange(visibleRange);
         await nextPaint();
-        chartImage = chart.takeScreenshot(true, false).toDataURL("image/png");
+        const screenshot = chart.takeScreenshot(true, false);
+        const context = screenshot.getContext("2d");
+        const labels = getMarkers?.() || [];
+        if (context && labels.length) {
+            const light = element.classList.contains("theme-light");
+            const fontFamily = getComputedStyle(element).fontFamily;
+            context.save();
+            context.scale(screenshot.width / exportWidth, screenshot.height / plotHeight);
+            context.font = `600 12px ${fontFamily}`;
+            context.textBaseline = "middle";
+            labels.forEach(({ kind, x, y, text }) => {
+                const high = kind === "high";
+                const direction = high ? -1 : 1;
+                const color = high ? (light ? "#cf2437" : "#ff6675") : (light ? "#1769c2" : "#5d9cff");
+                const width = context.measureText(text).width + 10;
+                const left = Math.max(2, Math.min(exportWidth - width - 2, x - width / 2));
+                const centerY = Math.max(11, Math.min(plotHeight - 11, y + direction * 27));
+                context.fillStyle = light ? "#f8fbff" : "#101722";
+                context.fillRect(left, centerY - 10, width, 20);
+                context.fillStyle = color;
+                context.fillText(text, left + 5, centerY);
+                // Keep the arrow tip anchored to the exact candle, even at chart edges.
+                context.strokeStyle = color;
+                context.lineWidth = 1;
+                context.beginPath();
+                context.moveTo(x, y + direction * 3);
+                context.lineTo(x, y + direction * 16);
+                context.moveTo(x - 4, y + direction * 8);
+                context.lineTo(x, y + direction * 3);
+                context.lineTo(x + 4, y + direction * 8);
+                context.stroke();
+            });
+            context.restore();
+        }
+        chartImage = screenshot.toDataURL("image/png");
     } finally {
         chart.applyOptions({ autoSize: true });
         await nextPaint();
@@ -230,8 +287,10 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         // generated ::before node does not reliably fill an inset-sized header.
         const sourceQuote = element.querySelector(".candle-quote-team");
         const clonedQuote = clone.querySelector(".candle-quote-team");
+        let watermarkImage = null;
         if (sourceQuote && clonedQuote) {
             const watermarkStyle = getComputedStyle(sourceQuote, "::before");
+            watermarkImage = await loadBackgroundImage(watermarkStyle.backgroundImage);
             const bounds = clonedQuote.getBoundingClientRect();
             const watermark = document.createElement("div");
             watermark.className = "candle-export-team-watermark";
@@ -270,9 +329,18 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
                     const bounds = q.getBoundingClientRect();
                     layer.style.width = `${bounds.width}px`;
                     layer.style.height = `${bounds.height}px`;
+                    if (watermarkImage) {
+                        // Rasterize the centered cover crop against the FINAL
+                        // bounds, avoiding html2canvas's SVG/background offsets.
+                        const image = centeredCoverImage(watermarkImage, bounds.width, bounds.height);
+                        layer.style.backgroundImage = `url(${JSON.stringify(image)})`;
+                        layer.style.backgroundSize = "100% 100%";
+                        layer.style.backgroundPosition = "0px 0px";
+                        layer.style.backgroundRepeat = "no-repeat";
+                    }
                 }
             },
-            scale: 2,
+            scale: 4,
             useCORS: true,
             width: captureWidth,
             height: captureHeight,
