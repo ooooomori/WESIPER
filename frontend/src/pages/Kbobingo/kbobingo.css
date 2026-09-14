@@ -9,6 +9,26 @@
     border: 0;
 }
 
+@media (max-width: 400px) {
+    .bingo-player-cell {
+        width: min(88px, calc((100vw - 88px) / 3));
+        height: min(88px, calc((100vw - 88px) / 3));
+    }
+    .bingo-condition-row {
+        height: min(88px, calc((100vw - 88px) / 3));
+    }
+    .bingo-most-cell {
+        width: min(80px, calc((100vw - 124px) / 3));
+        height: min(80px, calc((100vw - 124px) / 3));
+    }
+    .bingo-most-condition-row {
+        height: min(80px, calc((100vw - 124px) / 3));
+    }
+    .bingo-most-condition-col {
+        width: min(64px, calc((100vw - 124px) / 3));
+    }
+}
+
 /* KBO BINGO help carousel */
 .bingo-help-dialog{max-width:560px}.bingo-help-modal{overflow:hidden;border:0;border-radius:28px;background:#fff;box-shadow:0 26px 80px rgba(8,27,61,.24)}.bingo-help-body{position:relative;padding:28px 0 22px!important;color:#17233b}.bingo-help-close{position:absolute;z-index:3;top:18px;right:20px;display:grid;width:34px;height:34px;place-items:center;border:0;border-radius:50%;background:#f0f4f9;color:#6b778c;font:300 26px/1 Arial,sans-serif;transition:.2s}.bingo-help-close:hover{background:#e5ebf3;color:#17233b;transform:rotate(6deg)}.bingo-help-close:focus-visible,.bingo-help-nav:focus-visible,.bingo-help-progress button:focus-visible{outline:3px solid rgba(30,107,255,.28);outline-offset:2px}.bingo-help-brand{display:flex;align-items:center;gap:8px;padding:0 32px 22px;color:#174ca3;font-size:15px;font-weight:800;letter-spacing:-.02em}.bingo-help-brand-suffix{color:#7b8798;font-size:12px;font-weight:600}
 .bingo-help-viewport{overflow:hidden;touch-action:pan-y}.bingo-help-track{display:flex;align-items:stretch;transition:transform .4s cubic-bezier(.22,.8,.24,1)}.bingo-help-slide{flex:0 0 100%;min-width:0;padding:0 42px}.bingo-help-hero{display:flex;align-items:center;gap:17px}.bingo-help-icon{display:grid;flex:0 0 58px;width:58px;height:58px;place-items:center;border-radius:19px;background:linear-gradient(145deg,#eaf3ff,#f7faff);font-size:28px;box-shadow:inset 0 0 0 1px #dce9f9}.bingo-help-eyebrow{display:block;margin-bottom:4px;color:#3071ce;font:800 10px/1.2 Arial,sans-serif;letter-spacing:.13em}.bingo-help-hero h2{margin:0;color:#13213a;font-size:23px;font-weight:800;line-height:1.25;letter-spacing:-.04em}.bingo-help-description{min-height:43px;margin:18px 0 17px;color:#66748a;font-size:14px;line-height:1.6;word-break:keep-all}

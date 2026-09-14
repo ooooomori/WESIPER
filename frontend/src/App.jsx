@@ -1,6 +1,7 @@
 import "./App.css";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Nav from "./components/Nav.jsx";
+import CandlePromotion from "./components/CandlePromotion.jsx";
 import Main from "./pages/Main";
 import Kbodle from "./pages/Kbodle";
 import Kbobingo from "./pages/Kbobingo";
@@ -10,6 +11,7 @@ function App() {
     return (
         <div>
             <Nav />
+            <CandlePromotion />
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/kbodle" element={<Kbodle />} />

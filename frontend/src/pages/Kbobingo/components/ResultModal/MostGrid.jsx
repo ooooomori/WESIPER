@@ -132,7 +132,7 @@ const GridItem = (props) => {
         <div
             className={
                 bgColor +
-                " relative border-zinc-300 cursor-pointer flex items-center justify-center w-20 sm:w-28 h-20 sm:h-28 transition-colors duration-75 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:z-10  " +
+                " bingo-most-cell relative border-zinc-300 cursor-pointer flex items-center justify-center w-20 sm:w-28 h-20 sm:h-28 transition-colors duration-75 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:z-10  " +
                 applyBorder()
             }
         >
@@ -356,7 +356,7 @@ const GridCond = (props) => {
                 (type === "col"
                     ? "h-16 sm:h-20 w-16 sm:w-20"
                     : "-ml-2 w-16 sm:w-24 h-20 sm:h-28") +
-                " flex items-center justify-center"
+                ` bingo-most-condition bingo-most-condition-${type} flex items-center justify-center`
             }
         >
             {gridCond}

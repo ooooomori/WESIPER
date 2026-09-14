@@ -135,7 +135,7 @@ const Grid = (props) => {
                                 )) /
                             9
                         }
-                        className="!h-2 sm:!h-3 w-80 sm:w-[30rem]"
+                        className="!h-2 sm:!h-3 w-80 sm:w-[30rem] max-w-[calc(100vw-2rem)]"
                     />
                 </div>
 
@@ -271,7 +271,7 @@ const GridItem = (props) => {
         <div
             className={
                 bgColor +
-                " cursor-pointer flex items-center justify-center w-[5.5rem] sm:w-24 md:w-36 h-[5.5rem] sm:h-24 md:h-36 transition-colors duration-75 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:z-10  " +
+                " bingo-player-cell cursor-pointer flex items-center justify-center w-[5.5rem] sm:w-24 md:w-36 h-[5.5rem] sm:h-24 md:h-36 transition-colors duration-75 overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:z-10  " +
                 applyBorder()
             }
         >
@@ -501,7 +501,7 @@ const GridCond = (props) => {
                 (type === "col"
                     ? "h-16 sm:h-20 md:h-28"
                     : "h-[5.5rem] sm:h-24 md:h-36") +
-                " flex items-center justify-center w-20 sm:w-24 md:w-36"
+                ` bingo-condition bingo-condition-${type} flex items-center justify-center w-20 sm:w-24 md:w-36`
             }
         >
             {gridCond}

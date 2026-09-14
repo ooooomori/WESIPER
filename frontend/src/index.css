@@ -168,3 +168,25 @@ nav {
 .fs-sm {
     font-size: 0.9rem;
 }
+
+.candle-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: candle-marquee-scroll 16s linear infinite;
+}
+.candle-marquee-track > span {
+    flex-shrink: 0;
+    padding-right: 3rem;
+    white-space: nowrap;
+}
+.candle-marquee:hover .candle-marquee-track {
+    animation-play-state: paused;
+}
+@keyframes candle-marquee-scroll {
+    to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .candle-marquee-track { animation: none; width: auto; }
+    .candle-marquee-track > span { white-space: normal; padding-right: 0; }
+    .candle-marquee-track > span + span { display: none; }
+}

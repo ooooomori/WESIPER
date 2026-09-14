@@ -29,7 +29,7 @@ const Nav = () => {
                 
                 <Link to="/">
                     <Navbar.Brand as="div">
-                        <img src={wesiperLogo} className="h-8 sm:h-10" alt="WESIPER" />
+                        <img src={wesiperLogo} className="h-8 sm:h-10 max-w-[calc(100vw-6rem)] object-contain" alt="WESIPER" />
                     </Navbar.Brand>
                 </Link>
                 <Navbar.Toggle />
