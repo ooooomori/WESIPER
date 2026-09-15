@@ -80,6 +80,7 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
     const baseExportWidth = Math.max(element.clientWidth, Math.min(1800, tableWidth + 64));
     const exportWidth = Math.max(720, Math.round(baseExportWidth * 0.8));
     const plotHeight = plot?.clientHeight || 480;
+    const screenPlotWidth = plot?.clientWidth || exportWidth;
     const visibleRange = chart.timeScale().getVisibleLogicalRange();
     let chartImage;
 
@@ -124,9 +125,14 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         }
         chartImage = screenshot.toDataURL("image/png");
     } finally {
-        chart.applyOptions({ autoSize: true });
+        // Switching autoSize back on does not itself notify Lightweight Charts
+        // that the canvas was temporarily resized for export. Restore the real
+        // on-screen dimensions first, then hand sizing back to ResizeObserver.
+        chart.applyOptions({ autoSize: false, width: screenPlotWidth, height: plotHeight });
         await nextPaint();
         if (visibleRange) chart.timeScale().setVisibleLogicalRange(visibleRange);
+        await nextPaint();
+        chart.applyOptions({ autoSize: true });
         await nextPaint();
         afterRestore?.();
     }
@@ -152,7 +158,7 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
     if (rangeText) {
         const rangeParts = clone.querySelectorAll(".candle-range > span");
         if (rangeParts[0]) rangeParts[0].textContent = rangeText.dates;
-        if (rangeParts[1]) rangeParts[1].textContent = rangeText.summary;
+        if (rangeParts[1]) rangeParts[1].remove();
     }
 
     const clonedPlot = clone.querySelector(".candle-plot");
@@ -344,6 +350,11 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
                     canvas.height = Math.ceil(bounds.height * 4);
                     const context = canvas.getContext("2d");
                     context.scale(4, 4);
+                    const tint = cell.style.getPropertyValue("--compare-team-tint").trim();
+                    if (tint) {
+                        context.fillStyle = tint;
+                        context.fillRect(0, 0, bounds.width, bounds.height);
+                    }
                     context.globalAlpha = logo.opacity;
                     context.translate(bounds.width - logo.right - logo.width / 2, bounds.height / 2 + logo.offsetY);
                     context.rotate(logo.angle);

@@ -63,14 +63,18 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
         : `${kboData?.year || ""} ${seasonLabels[kboData?.season] || ""}`;
     const periodStats = useMemo(() => kboData?.success
         ? (kboData.period_stats || derivePeriodStats(kboData.data)) : null, [kboData]);
+    const isRecentGames = /^\d+$/.test(kboData?.date_preset || "");
+    const recentPeriodLabel = isRecentGames
+        ? `${kboData.start_date?.replaceAll("-", ".")} ~ ${kboData.end_date?.replaceAll("-", ".")}` : "";
     const summaryStats = [
         ["타율", periodStats?.avg, "rate"], ["출루율", periodStats?.obp, "rate"],
         ["장타율", periodStats?.slg, "rate"], ["OPS", periodStats?.ops, "rate"],
+        ["OPS+", periodStats?.ops_plus, "plus"], ["타석", periodStats?.plate_appearances, "count"],
         ["안타", periodStats?.hits, "count"], ["홈런", periodStats?.home_runs, "count"],
         ["도루", periodStats?.stolen_bases, "count"], ["BB/K", periodStats?.bb_per_k, "rate"],
     ];
     const formatSummary = (value, type) => value === null || value === undefined || !Number.isFinite(Number(value))
-        ? "—" : type === "count" ? Number(value).toLocaleString("ko-KR") : Number(value).toFixed(3);
+        ? "—" : type === "count" ? Number(value).toLocaleString("ko-KR") : Number(value).toFixed(type === "plus" ? 1 : 3);
     const current = latest?.[plus ? metric : "close"];
     const previous = bars.at(-2)?.[plus ? metric : "close"];
     const change = Number.isFinite(current) && Number.isFinite(previous) ? current - previous : null;
@@ -91,7 +95,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     const teamLogo = teamLogoName ? defaultTeamLogoFiles[`../../assets/images/logos/${teamLogoName}-logo.svg`] : null;
     const chartTeamLogo = teamLogoName ? smallTeamLogoFiles[`../../assets/images/s-logos/${teamLogoName}-small-logo.svg`] : null;
     const seasonRankText = seasonRanking?.qualified && seasonRank ? `${isWholeSeason ? "시즌" : "조회 기간"} ${seasonRank}위` : "";
-    const summaryRankKeys = { "타율": "avg", "출루율": "obp", "장타율": "slg", "OPS": "ops", "안타": "hits", "홈런": "home_runs", "도루": "stolen_bases", "BB/K": "bb_per_k" };
+    const summaryRankKeys = { "타율": "avg", "출루율": "obp", "장타율": "slg", "OPS": "ops", "OPS+": "ops_plus", "타석": "plate_appearances", "안타": "hits", "홈런": "home_runs", "도루": "stolen_bases", "BB/K": "bb_per_k" };
 
     useEffect(() => {
         if (!host.current || !bars.length) { setRangeInfo(null); setSelected(null); setExtremaLabels([]); return; }
@@ -255,7 +259,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             {timeframe === "daily" && <div className="candle-atbats"><span>타석 결과</span><div>{active?.pa_results?.length ? active.pa_results.map((result, index) => <span className={/^(볼넷|고4|사구|1루타|2루타|3루타|홈런)/.test(result) ? "on-base" : ""} key={index}>{displayPaResult(result)}</span>) : <span>기록 없음</span>}</div></div>}
         </div>}
         {latest && <div className="candle-period-summary">
-            <div className="candle-summary-heading"><strong>{summaryTitle}</strong><span>{periodLabel || "기간 미지정"}</span></div>
+            <div className="candle-summary-heading"><strong>{isRecentGames ? summaryTitle : periodLabel ? `${periodLabel} 성적` : "기간 미지정 성적"}</strong>{isRecentGames && <span>{recentPeriodLabel}</span>}</div>
             <div className="candle-summary-values">{summaryStats.map(([label, value, type]) => {
                 const rank = kboData?.rankings?.period?.ranks?.[summaryRankKeys[label]];
                 return <div key={label}><span className="candle-summary-stat-label">{label}</span><strong>{formatSummary(value, type)}{rank && rank <= 20 ? <small className={`candle-stat-rank ${rank <= 5 ? rankBadgeClass(rank) : ""}`}>{rank <= 3 && rankMedal(rank)}{rank}위</small> : null}</strong></div>;
