@@ -20,7 +20,11 @@ try {
                 COALESCE((SELECT pd.team FROM player_data pd WHERE pd.playerId = p.p_no LIMIT 1), '은퇴') AS current_status
             FROM kbo_playerlist_20250613 p
             WHERE p.p_name LIKE :name1 OR p.p_oldname LIKE :name2
-            ORDER BY p.p_name ASC
+            ORDER BY p.p_name ASC,
+                     CASE
+                         WHEN p.p_img REGEXP '^[0-9]{4}_' THEN CAST(SUBSTRING_INDEX(p.p_img, '_', 1) AS UNSIGNED)
+                         ELSE 0
+                     END DESC
             LIMIT 30";
 
     $stmt = $pdo->prepare($sql);

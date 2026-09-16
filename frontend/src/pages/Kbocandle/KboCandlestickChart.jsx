@@ -20,6 +20,11 @@ const derivePeriodStats = data => {
     const plateAppearances = rows.flatMap(row => Array.isArray(row.pa_results) ? row.pa_results : []);
     const walks = plateAppearances.filter(result => /^(볼넷|고4)/.test(result)).length;
     const strikeouts = plateAppearances.filter(result => /삼진/.test(result)).length;
+    const hits = plateAppearances.filter(result => /^(1루타|2루타|3루타|홈런)/.test(result)).length;
+    const homeRuns = plateAppearances.filter(result => /^홈런/.test(result)).length;
+    const sacrificeFlies = plateAppearances.filter(result => /^(희비|희플)/.test(result)).length;
+    const atBats = plateAppearances.filter(result => !/^(볼넷|고4|고의사구|사구|희번|희생번트|희비|희플)/.test(result)).length;
+    const babipDenominator = atBats - strikeouts - homeRuns + sacrificeFlies;
     const stolenBases = plateAppearances.reduce((total, result) => {
         const matches = [...result.matchAll(/(\d*)도루(?!자)/g)];
         return total + matches.reduce((sum, match) => sum + (match[1] ? Number(match[1]) : 1), 0);
@@ -27,10 +32,11 @@ const derivePeriodStats = data => {
     return {
         avg: metricValue(latest, "avg"), obp: metricValue(latest, "obp"),
         slg: metricValue(latest, "slg"), ops: metricValue(latest, "ops"),
-        hits: plateAppearances.filter(result => /^(1루타|2루타|3루타|홈런)/.test(result)).length,
-        home_runs: plateAppearances.filter(result => /^홈런/.test(result)).length,
+        hits,
+        home_runs: homeRuns,
         stolen_bases: stolenBases,
         bb_per_k: strikeouts ? walks / strikeouts : null,
+        babip: babipDenominator > 0 ? (hits - homeRuns) / babipDenominator : null,
     };
 };
 
@@ -62,16 +68,16 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
         ? `${formatDate(kboData.start_date)} ~ ${formatDate(kboData.end_date)}`
         : `${kboData?.year || ""} ${seasonLabels[kboData?.season] || ""}`;
     const periodStats = useMemo(() => kboData?.success
-        ? (kboData.period_stats || derivePeriodStats(kboData.data)) : null, [kboData]);
+        ? { ...derivePeriodStats(kboData.data), ...(kboData.period_stats || {}) } : null, [kboData]);
     const isRecentGames = /^\d+$/.test(kboData?.date_preset || "");
     const recentPeriodLabel = isRecentGames
         ? `${kboData.start_date?.replaceAll("-", ".")} ~ ${kboData.end_date?.replaceAll("-", ".")}` : "";
     const summaryStats = [
         ["타율", periodStats?.avg, "rate"], ["출루율", periodStats?.obp, "rate"],
         ["장타율", periodStats?.slg, "rate"], ["OPS", periodStats?.ops, "rate"],
-        ["OPS+", periodStats?.ops_plus, "plus"], ["타석", periodStats?.plate_appearances, "count"],
-        ["안타", periodStats?.hits, "count"], ["홈런", periodStats?.home_runs, "count"],
-        ["도루", periodStats?.stolen_bases, "count"], ["BB/K", periodStats?.bb_per_k, "rate"],
+        ["OPS+", periodStats?.ops_plus, "plus"], ["안타", periodStats?.hits, "count"],
+        ["홈런", periodStats?.home_runs, "count"], ["도루", periodStats?.stolen_bases, "count"],
+        ["BB/K", periodStats?.bb_per_k, "rate"], ["BABIP", periodStats?.babip, "rate"],
     ];
     const formatSummary = (value, type) => value === null || value === undefined || !Number.isFinite(Number(value))
         ? "—" : type === "count" ? Number(value).toLocaleString("ko-KR") : Number(value).toFixed(type === "plus" ? 1 : 3);
@@ -95,7 +101,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     const teamLogo = teamLogoName ? defaultTeamLogoFiles[`../../assets/images/logos/${teamLogoName}-logo.svg`] : null;
     const chartTeamLogo = teamLogoName ? smallTeamLogoFiles[`../../assets/images/s-logos/${teamLogoName}-small-logo.svg`] : null;
     const seasonRankText = seasonRanking?.qualified && seasonRank ? `${isWholeSeason ? "시즌" : "조회 기간"} ${seasonRank}위` : "";
-    const summaryRankKeys = { "타율": "avg", "출루율": "obp", "장타율": "slg", "OPS": "ops", "OPS+": "ops_plus", "타석": "plate_appearances", "안타": "hits", "홈런": "home_runs", "도루": "stolen_bases", "BB/K": "bb_per_k" };
+    const summaryRankKeys = { "타율": "avg", "출루율": "obp", "장타율": "slg", "OPS": "ops", "OPS+": "ops_plus", "안타": "hits", "홈런": "home_runs", "도루": "stolen_bases", "BB/K": "bb_per_k", "BABIP": "babip" };
 
     useEffect(() => {
         if (!host.current || !bars.length) { setRangeInfo(null); setSelected(null); setExtremaLabels([]); return; }
@@ -264,6 +270,6 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
                 return <div key={label}><span className="candle-summary-stat-label">{label}</span><strong className={rank && rank <= 5 ? "candle-summary-top-five" : ""}>{formatSummary(value, type)}{rank && rank <= 20 ? <small className={`candle-stat-rank ${rank <= 5 ? rankBadgeClass(rank) : ""}`}>{rank <= 3 && rankMedal(rank)}{rank}위</small> : null}</strong></div>;
             })}</div>
         </div>}
-        <footer className="candle-footnote"><div className="candle-footnote-copy">{plus && <span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span>}<span>기록별 순위는 상위 20위까지 노출됩니다.</span><span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
+        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>기록별 순위는 상위 20위까지 노출됩니다.</span><span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
     </section>;
 }

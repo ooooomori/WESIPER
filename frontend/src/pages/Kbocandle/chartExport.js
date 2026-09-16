@@ -72,6 +72,53 @@ const trimTransparentCanvas = (canvas) => {
     return trimmed;
 };
 
+const frameRoundedCanvas = (canvas, radiusCss, borderColor, scale) => {
+    const framed = document.createElement("canvas");
+    framed.width = canvas.width;
+    framed.height = canvas.height;
+    const context = framed.getContext("2d");
+    if (!context) return canvas;
+
+    const lineWidth = Math.max(1, scale);
+    const inset = lineWidth / 2;
+    const radius = Math.max(lineWidth, radiusCss * scale);
+    const left = inset;
+    const top = inset;
+    const right = framed.width - inset;
+    const bottom = framed.height - inset;
+    const roundedRectPath = (x, y, width, height, r) => {
+        const x2 = x + width;
+        const y2 = y + height;
+        context.beginPath();
+        context.moveTo(x + r, y);
+        context.lineTo(x2 - r, y);
+        context.arcTo(x2, y, x2, y + r, r);
+        context.lineTo(x2, y2 - r);
+        context.arcTo(x2, y2, x2 - r, y2, r);
+        context.lineTo(x + r, y2);
+        context.arcTo(x, y2, x, y2 - r, r);
+        context.lineTo(x, y + r);
+        context.arcTo(x, y, x + r, y, r);
+        context.closePath();
+    };
+
+    roundedRectPath(0, 0, framed.width, framed.height, radius);
+    context.save();
+    context.clip();
+    context.drawImage(canvas, 0, 0);
+    context.restore();
+    const strokeRadius = Math.max(0, radius - inset);
+    context.beginPath();
+    context.moveTo(left, bottom - strokeRadius);
+    context.arcTo(left, bottom, left + strokeRadius, bottom, strokeRadius);
+    context.lineTo(right - strokeRadius, bottom);
+    context.arcTo(right, bottom, right, bottom - strokeRadius, strokeRadius);
+    context.lineWidth = lineWidth;
+    context.strokeStyle = borderColor;
+    context.stroke();
+    return framed;
+};
+
 export async function downloadChartCardPng({ element, chart, filename, omitSelectors = [], minWidth = 960, rangeText = null, afterRestore = null, fitContent = true, getMarkers = null }) {
     if (!element || !chart) return;
 
@@ -82,6 +129,9 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
     const plotHeight = plot?.clientHeight || 480;
     const screenPlotWidth = plot?.clientWidth || exportWidth;
     const visibleRange = chart.timeScale().getVisibleLogicalRange();
+    const terminalStyle = getComputedStyle(element);
+    const terminalRadius = Number.parseFloat(terminalStyle.borderBottomLeftRadius) || 16;
+    const terminalBorderColor = terminalStyle.borderBottomColor || "#293445";
     let chartImage;
 
     try {
@@ -149,6 +199,7 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         ".candle-export-menu",
         ".candle-navigation",
         ".candle-metrics",
+        ".candle-footnote",
         ".theme-toggle",
         ".compare-settings-icon",
         ".compare-record-settings",
@@ -224,16 +275,15 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         });
     }
 
-    // The comparison footer sits directly at the capture boundary; leave a small
-    // breathing room so the TradingView copyright line is never clipped.
-    if (comparisonTable) clone.style.paddingBottom = "12px";
-
     const stage = document.createElement("div");
     stage.className = "candle-export-stage";
     stage.style.position = "fixed";
     stage.style.left = "-100000px";
     stage.style.top = "0";
     stage.style.width = `${exportWidth}px`;
+    stage.style.paddingBottom = comparisonTable ? "64px" : "16px";
+    stage.style.background = "transparent";
+    clone.style.boxShadow = "none";
     stage.appendChild(clone);
     document.body.appendChild(stage);
     const renderStyle = document.createElement("style");
@@ -253,6 +303,7 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         .candle-export-clone .candle-range b { font-size: 14px !important; }
         .candle-export-clone .candle-navigation button { font-size: 16px !important; }
         .candle-export-clone .candle-detail-heading, .candle-export-clone .candle-summary-heading { font-size: 15px !important; }
+        .candle-export-clone .candle-period-summary, .candle-export-clone .compare-table-section { margin-top: 16px !important; }
         .candle-export-clone .candle-detail-heading span, .candle-export-clone .candle-summary-heading span { font-size: 13px !important; }
         .candle-export-clone .candle-values span, .candle-export-clone .candle-summary-values span { font-size: 13px !important; }
         .candle-export-clone .candle-values strong, .candle-export-clone .candle-summary-values strong { font-size: 21px !important; }
@@ -327,8 +378,8 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
             await nextPaint();
         }
         const captureWidth = Math.ceil(clone.getBoundingClientRect().width);
-        const captureHeight = Math.ceil(clone.getBoundingClientRect().height) + (comparisonTable ? 64 : 0);
-        const renderedCanvas = await html2canvas(clone, {
+        const captureHeight = Math.ceil(stage.getBoundingClientRect().height);
+        const renderedCanvas = await html2canvas(stage, {
             backgroundColor: null,
             logging: false,
             onclone: (clonedDocument) => {
@@ -400,7 +451,8 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
             windowWidth: exportWidth,
         });
         const canvas = trimTransparentCanvas(renderedCanvas);
-        clickDownload(canvas.toDataURL("image/png"), filename);
+        const framedCanvas = frameRoundedCanvas(canvas, terminalRadius, terminalBorderColor, canvas.width / captureWidth);
+        clickDownload(framedCanvas.toDataURL("image/png"), filename);
     } finally {
         renderStyle.remove();
         stage.remove();

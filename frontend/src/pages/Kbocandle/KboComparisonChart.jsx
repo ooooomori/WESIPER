@@ -24,20 +24,29 @@ const deriveStats = (record) => {
     const rows = Array.isArray(record?.data) ? record.data : [];
     const latest = rows.at(-1);
     const appearances = rows.flatMap((row) => Array.isArray(row.pa_results) ? row.pa_results : []);
+    const hits = countMatches(appearances, /^(1루타|2루타|3루타|홈런)/);
+    const homeRuns = countMatches(appearances, /^홈런/);
+    const walks = countMatches(appearances, /^(볼넷|고4|고의사구)/);
+    const strikeouts = countMatches(appearances, /삼진/);
+    const sacrificeFlies = countMatches(appearances, /^(희비|희플)/);
+    const atBats = appearances.filter(result => !/^(볼넷|고4|고의사구|사구|희번|희생번트|희비|희플)/.test(result)).length;
+    const babipDenominator = atBats - strikeouts - homeRuns + sacrificeFlies;
     return {
         games: rows.length,
         plate_appearances: appearances.length,
-        hits: countMatches(appearances, /^(1루타|2루타|3루타|홈런)/),
+        hits,
         doubles: countMatches(appearances, /^2루타/),
         triples: countMatches(appearances, /^3루타/),
-        home_runs: countMatches(appearances, /^홈런/),
-        walks: countMatches(appearances, /^(볼넷|고4)/),
+        home_runs: homeRuns,
+        walks,
         stolen_bases: countTagged(appearances, /(\d*)도루(?!자)/g),
         caught_stealing: countTagged(appearances, /(\d*)도루자/g),
         avg: metricValue(latest, "avg"), obp: metricValue(latest, "obp"),
         slg: metricValue(latest, "slg"), ops: metricValue(latest, "ops"),
         eff_ops: metricValue(latest, "eff_ops"), ops_plus: metricValue(latest, "ops_plus"),
         eff_ops_plus: metricValue(latest, "eff_ops_plus"),
+        bb_per_k: strikeouts ? walks / strikeouts : null,
+        babip: babipDenominator > 0 ? (hits - homeRuns) / babipDenominator : null,
     };
 };
 
@@ -51,6 +60,7 @@ const TABLE_ROWS = [
     ["slg", "장타율", "rate"], ["ops", "OPS", "rate"],
     ["eff_ops", "실질OPS", "rate"], ["ops_plus", "OPS+", "plus"],
     ["eff_ops_plus", "실질OPS+", "plus"],
+    ["bb_per_k", "BB/K", "rate"], ["babip", "BABIP", "rate"],
 ];
 
 const formatValue = (value, type) => {
@@ -66,7 +76,7 @@ const formatValue = (value, type) => {
 export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const [metric, setMetric] = useState("ops");
     const [hoverValues, setHoverValues] = useState(null);
-    const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key).filter(key => !["doubles", "triples", "stolen_base_percentage"].includes(key)));
+    const [visibleStats, setVisibleStats] = useState(() => TABLE_ROWS.map(([key]) => key).filter(key => !["doubles", "triples", "stolen_base_percentage", "bb_per_k"].includes(key)));
     const [showRanks, setShowRanks] = useState(true);
     const [showBest, setShowBest] = useState(true);
     const [showWorstOverride, setShowWorst] = useState(null);
@@ -241,6 +251,6 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
                 })}</tr> : null)}</tbody>
             </table></div>
         </div>}
-        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>OPS+ 계열은 리그 평균 대비 지표이며 파크 팩터는 반영하지 않습니다.</span><span>기록별 순위는 상위 5위까지 노출됩니다.</span><span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark((value) => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
+        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>기록별 순위는 상위 5위까지 노출됩니다.</span><span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark((value) => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
     </section>;
 }

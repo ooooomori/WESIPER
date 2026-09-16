@@ -3,7 +3,7 @@
 function candleRankings(PDO $pdo, string $seasonStart, string $seasonEnd, string $start, string $end, string $playerId): array {
     $revisionPath = getenv('WESIPER_CANDLE_REVISION_FILE') ?: '/tmp/wesiper-candle-data-revision';
     $revision = is_readable($revisionPath) ? trim(file_get_contents($revisionPath)) : 'initial';
-    $key = hash('sha256', 'v4|' . implode('|', [$seasonStart, $seasonEnd, $start, $end]));
+    $key = hash('sha256', 'v5|' . implode('|', [$seasonStart, $seasonEnd, $start, $end]));
     $path = sys_get_temp_dir() . '/wesiper-candle-ranks-' . $key . '.json';
     $lock = fopen($path . '.lock', 'c');
     if (!$lock || !flock($lock, LOCK_EX)) throw new RuntimeException('Ranking cache lock failed');
@@ -85,11 +85,13 @@ function candleRankings(PDO $pdo, string $seasonStart, string $seasonEnd, string
                 $s['eff_ops']=$eobp+$eslg; $s['ops_plus']=$lobp>0 && $lslg>0 ? 100*($s['obp']/$lobp+$s['slg']/$lslg-1) : null;
                 $s['eff_ops_plus']=$leobp>0 && $leslg>0 ? 100*($eobp/$leobp+$eslg/$leslg-1) : null;
                 $s['bb_per_k']=$s['so'] ? $s['bb']/$s['so'] : null;
+                $babipDen=$s['ab']-$s['so']-$s['home_runs']+$s['sf'];
+                $s['babip']=$babipDen>0 ? ($s['hits']-$s['home_runs'])/$babipDen : null;
                 $s['plate_appearances']=$s['pa']; $s['walks']=$s['bb']; $s['games']=count($s['games']);
                 $s['stolen_base_percentage']=$s['stolen_bases']+$s['cs']>0 ? $s['stolen_bases']/($s['stolen_bases']+$s['cs']) : null;
             } unset($s);
             $countMetrics=['games','plate_appearances','hits','doubles','triples','home_runs','walks','stolen_bases'];
-            $metrics=array_merge(['avg','obp','slg','ops','eff_ops','ops_plus','eff_ops_plus','bb_per_k','stolen_base_percentage'],$countMetrics);
+            $metrics=array_merge(['avg','obp','slg','ops','eff_ops','ops_plus','eff_ops_plus','bb_per_k','babip','stolen_base_percentage'],$countMetrics);
             foreach ($players as $id => $s) {
                 $ranks=[];
                 foreach ($metrics as $metric) {

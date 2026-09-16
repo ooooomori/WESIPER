@@ -519,6 +519,8 @@ try {
     $period_avg = ($cum_ab > 0) ? ($cum_h / $cum_ab) : 0;
     $period_obp = ($period_obp_den > 0) ? (($cum_h + $cum_bb + $cum_hbp) / $period_obp_den) : 0;
     $period_slg = ($cum_ab > 0) ? ($cum_tb / $cum_ab) : 0;
+    $period_babip_den = $cum_ab - $period_so - $period_hr + $cum_sf;
+    $period_babip = ($period_babip_den > 0) ? (($cum_h - $period_hr) / $period_babip_den) : null;
     $period_stats = [
         'games' => count($period_game_ids) ?: count($rows_by_date),
         'plate_appearances' => $period_pa,
@@ -541,6 +543,7 @@ try {
             ? round($period_sb / ($period_sb + $period_cs), 3)
             : null,
         'bb_per_k' => ($period_so > 0) ? round($cum_bb / $period_so, 3) : null,
+        'babip' => ($period_babip !== null) ? round($period_babip, 3) : null,
     ];
 
     $rankings = null;
