@@ -3,7 +3,7 @@
 function candleRankings(PDO $pdo, string $seasonStart, string $seasonEnd, string $start, string $end, string $playerId): array {
     $revisionPath = getenv('WESIPER_CANDLE_REVISION_FILE') ?: '/tmp/wesiper-candle-data-revision';
     $revision = is_readable($revisionPath) ? trim(file_get_contents($revisionPath)) : 'initial';
-    $key = hash('sha256', 'v5|' . implode('|', [$seasonStart, $seasonEnd, $start, $end]));
+    $key = hash('sha256', 'v6|' . implode('|', [$seasonStart, $seasonEnd, $start, $end]));
     $path = sys_get_temp_dir() . '/wesiper-candle-ranks-' . $key . '.json';
     $lock = fopen($path . '.lock', 'c');
     if (!$lock || !flock($lock, LOCK_EX)) throw new RuntimeException('Ranking cache lock failed');

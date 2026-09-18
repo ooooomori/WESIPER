@@ -377,8 +377,27 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
             clonedQuote.prepend(watermark);
             await nextPaint();
         }
-        const captureWidth = Math.ceil(clone.getBoundingClientRect().width);
-        const captureHeight = Math.ceil(stage.getBoundingClientRect().height);
+        // html2canvas lays the detached copy out once more in its own document.
+        // Its Korean font metrics can make the summary rows a little taller than
+        // the browser-side measurement (most noticeably when no medal badge is
+        // present). Give that final layout room instead of cropping it to the
+        // first getBoundingClientRect() result. Transparent slack is removed by
+        // trimTransparentCanvas after rendering.
+        await nextPaint();
+        const captureWidth = Math.ceil(Math.max(
+            clone.scrollWidth,
+            clone.offsetWidth,
+            clone.getBoundingClientRect().width,
+        ));
+        const measuredHeight = Math.ceil(Math.max(
+            clone.scrollHeight,
+            clone.offsetHeight,
+            clone.getBoundingClientRect().height,
+            stage.scrollHeight,
+            stage.offsetHeight,
+            stage.getBoundingClientRect().height,
+        ));
+        const captureHeight = measuredHeight + 32;
         const renderedCanvas = await html2canvas(stage, {
             backgroundColor: null,
             logging: false,

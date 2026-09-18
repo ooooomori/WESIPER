@@ -66,6 +66,12 @@ function parseKboResultPHP($pa) {
     if (in_array($clean, ['4구', '사구', '고4', '볼넷'], true) || strpos($clean, '사사구') !== false) {
         return ['ab' => 0, 'h' => 0, 'tb' => 0, 'obp' => 1];
     }
+    if (strpos($clean, '타방') !== false) {
+        return ['ab' => 0, 'h' => 0, 'tb' => 0, 'obp' => 0];
+    }
+    if ($clean === '야선' || mb_substr($clean, -2, 2, 'UTF-8') === '희선') {
+        return ['ab' => 1, 'h' => 0, 'tb' => 0, 'obp' => 0];
+    }
     if (strpos($clean, '희비') !== false || strpos($clean, '희플') !== false) {
         return ['ab' => 0, 'h' => 0, 'tb' => 0, 'obp' => 0];
     }

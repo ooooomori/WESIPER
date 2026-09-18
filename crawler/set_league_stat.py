@@ -9,6 +9,10 @@ def parse_kbo_result(pa_txt):
     
     if clean in ['4구', '사구', '고4', '볼넷'] or '사사구' in clean or '볼넷' in clean:
         return {'ab': 0, 'h': 0, 'tb': 0, 'obp': 1}
+    if '타방' in clean:
+        return {'ab': 0, 'h': 0, 'tb': 0, 'obp': 0}
+    if clean == '야선' or clean.endswith('희선'):
+        return {'ab': 1, 'h': 0, 'tb': 0, 'obp': 0}
     if '희비' in clean or '희플' in clean:
         return {'ab': 0, 'h': 0, 'tb': 0, 'obp': 0}
     if '희번' in clean or '희타' in clean or '희실' in clean:

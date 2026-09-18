@@ -22,7 +22,11 @@ function formatPaResult($pa_txt, $sb, $cs) {
     $clean = trim($pa_txt);
     $base = $clean;
     
-    if (strpos($clean, '고4') !== false) {
+    if (strpos($clean, '타방') !== false) {
+        $base = '타격방해';
+    } else if ($clean === '야선' || mb_substr($clean, -2, 2, 'UTF-8') === '희선') {
+        $base = '야수선택';
+    } else if (strpos($clean, '고4') !== false) {
         $base = '고4';
     } else if (in_array($clean, ['4구', '볼넷'], true) || strpos($clean, '볼넷') !== false) {
         $base = '볼넷';
@@ -64,6 +68,12 @@ function parseKboResultPHP($pa) {
 
     if (in_array($clean, ['4구', '사구', '고4', '볼넷'], true) || strpos($clean, '사사구') !== false) {
         return ['ab' => 0, 'h' => 0, 'tb' => 0, 'obp' => 1];
+    }
+    if (strpos($clean, '타방') !== false) {
+        return ['ab' => 0, 'h' => 0, 'tb' => 0, 'obp' => 0];
+    }
+    if ($clean === '야선' || mb_substr($clean, -2, 2, 'UTF-8') === '희선') {
+        return ['ab' => 1, 'h' => 0, 'tb' => 0, 'obp' => 0];
     }
     if (strpos($clean, '희비') !== false || strpos($clean, '희플') !== false) {
         return ['ab' => 0, 'h' => 0, 'tb' => 0, 'obp' => 0];

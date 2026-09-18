@@ -29,7 +29,7 @@ const deriveStats = (record) => {
     const walks = countMatches(appearances, /^(볼넷|고4|고의사구)/);
     const strikeouts = countMatches(appearances, /삼진/);
     const sacrificeFlies = countMatches(appearances, /^(희비|희플)/);
-    const atBats = appearances.filter(result => !/^(볼넷|고4|고의사구|사구|희번|희생번트|희비|희플)/.test(result)).length;
+    const atBats = appearances.filter(result => !/^(볼넷|고4|고의사구|사구|타격방해|희번|희생번트|희비|희플)/.test(result)).length;
     const babipDenominator = atBats - strikeouts - homeRuns + sacrificeFlies;
     return {
         games: rows.length,
