@@ -40,7 +40,7 @@ export function buildBars(data, metric, timeframe) {
             return values.some(value => value === null) ? null : values.reduce((a, b) => a + b, 0) / count;
         };
         const next = { time, ...ohlc, ops_plus: metricValue(row, "ops_plus"),
-            eff_ops_plus: metricValue(row, "eff_ops_plus"), ma7: average(7), ma30: average(30),
+            eff_ops_plus: metricValue(row, "eff_ops_plus"), ma7: average(7), ma15: average(15), ma30: average(30),
             pa_results: Array.isArray(row.pa_results) ? row.pa_results : [] };
         const previous = grouped.get(time);
         if (previous) {

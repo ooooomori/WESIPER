@@ -101,6 +101,7 @@ export default function PlayerSearchUI({ setKboData, comparisonMode = false, set
                     start_date: startDate, end_date: endDate,
                     date_preset: datePreset, img: player.Img,
                     include_rankings: 1,
+                    include_breakdown: comparisonMode ? 0 : 1,
                 },
             })));
             const results = responses.map((response, index) => ({

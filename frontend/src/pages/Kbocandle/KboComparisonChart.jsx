@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Modal } from "react-bootstrap";
 import { ColorType, CrosshairMode, createChart, LineSeries } from "lightweight-charts";
 import PlayerImg from "./PlayerImg";
 import MetricHelp from "./MetricHelp";
@@ -80,7 +80,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     const [showRanks, setShowRanks] = useState(true);
     const [showBest, setShowBest] = useState(true);
     const [showWorstOverride, setShowWorst] = useState(null);
-    const settingsDialog = useRef(null);
+    const [settingsOpen, setSettingsOpen] = useState(false);
     const host = useRef(null);
     const chartApi = useRef(null);
     const records = useMemo(() => (Array.isArray(comparisonData) ? comparisonData : []).filter((item) => item?.success && item.data?.length), [comparisonData]);
@@ -211,7 +211,7 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
     };
 
     return <section className={`candle-terminal candle-comparison font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 비교 차트">
-        <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span> <b>선수 비교 차트</b></span><span>{periodLabel}</span></div>
+        <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span></span><span>{periodLabel}</span></div>
         <header className="compare-header candle-quote compare-team-quote" style={quoteTeamLogo ? { backgroundColor: dark ? "#101722" : "#ffffff", backgroundImage: `linear-gradient(${teamColors[recordTeamName(leader)]}${dark ? "3d" : "1f"}, ${teamColors[recordTeamName(leader)]}${dark ? "3d" : "1f"})` } : undefined}>
             <div className="compare-team-watermarks" aria-hidden="true"><span style={{ backgroundImage: quoteTeamLogo ? `url(${JSON.stringify(quoteTeamLogo)})` : "none" }} /></div>
             <div><h2>{leaderLabel}</h2></div>
@@ -225,24 +225,26 @@ export default function KboComparisonChart({ comparisonData, dark, setDark }) {
         })}<span className="compare-date">{hoverValues?.date || "최근 기록"}</span></div>
         <div className="compare-plot-wrap">
             <div className="candle-plot compare-plot" ref={host} role="img" aria-label={`${metricName} 선수 비교 실선 차트`} />
-            {records.length < 2 && <div className="compare-empty"><i className="bi bi-bar-chart-line-fill" aria-hidden="true" /><span>선수를 2명 이상 선택하고 비교하기를 눌러보세요!</span></div>}
+            {records.length < 2 && <div className="compare-empty"><i className="bi bi-graph-up-arrow" aria-hidden="true" /><span>선수를 2명 이상 선택하고 비교하기를 눌러보세요!</span></div>}
         </div>
         <div className="candle-navigation">
             <div><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => move(-1)} aria-label="이전 구간"><i className="bi bi-chevron-left" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => move(1)} aria-label="다음 구간"><i className="bi bi-chevron-right" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => zoom(1.3)} aria-label="차트 축소"><i className="bi bi-dash-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => zoom(0.75)} aria-label="차트 확대"><i className="bi bi-plus-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={records.length < 2} onClick={() => chartApi.current?.recent()} aria-label="차트 초기화" title="초기화"><i className="bi bi-arrow-counterclockwise" aria-hidden="true" /></button></div>
             <div className="candle-navigation-actions"><details className={`candle-export-menu ${records.length >= 2 ? "" : "disabled"}`}><summary aria-label="비교 차트 저장 메뉴" onClick={event => records.length < 2 && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: chartApi.current?.chart, filename: `${exportStem}_visible.png`, fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={records.length < 2} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: chartApi.current?.chart, filename: `${exportStem}_full.png`, fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details></div>
         </div>
         {!!records.length && <div className="compare-table-section">
-            <div className="candle-summary-heading"><div className="compare-table-title"><strong>{comparisonTitle}</strong><button className="compare-settings-icon" aria-label="표에 표시할 기록 설정" aria-haspopup="dialog" onClick={() => settingsDialog.current?.showModal()}><i className="bi bi-gear" aria-hidden="true" /></button></div><span>{periodLabel}</span></div>
-            <dialog ref={settingsDialog} className="compare-record-settings" aria-labelledby="compare-settings-title" onClick={event => { if (event.target === event.currentTarget) event.currentTarget.close(); }}>
-                <div className="compare-settings-heading"><h3 id="compare-settings-title">표시할 기록</h3><button className="compare-settings-icon" aria-label="기록 설정 닫기" onClick={() => settingsDialog.current?.close()}><i className="bi bi-x-lg" aria-hidden="true" /></button></div>
+            <div className="candle-summary-heading"><div className="compare-table-title"><strong>{comparisonTitle}</strong><button className="compare-settings-icon" aria-label="표에 표시할 기록 설정" aria-haspopup="dialog" onClick={() => setSettingsOpen(true)}><i className="bi bi-gear" aria-hidden="true" /></button></div><span>{periodLabel}</span></div>
+            <Modal show={settingsOpen} onHide={() => setSettingsOpen(false)} centered className={`candle-settings-modal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} contentClassName="compare-record-settings">
+                <Modal.Header closeButton><Modal.Title id="compare-settings-title">표시할 기록</Modal.Title></Modal.Header>
+                <Modal.Body>
                 <div className="compare-settings-options">{TABLE_ROWS.map(([key, label]) => <Form.Check key={key} id={`compare-setting-${key}`} type="checkbox" label={label} checked={visibleStats.includes(key)} disabled={visibleStats.length === 1 && visibleStats.includes(key)} onChange={event => setVisibleStats(previous => event.target.checked ? [...previous, key] : previous.filter(item => item !== key))} />)}</div>
                 <div className="compare-settings-display">
                     <Form.Check id="compare-setting-ranks" type="checkbox" label="순위 표시" checked={showRanks} onChange={event => setShowRanks(event.target.checked)} />
                     <Form.Check id="compare-setting-best" type="checkbox" label="최고 기록 강조" checked={showBest} onChange={event => setShowBest(event.target.checked)} />
                     <Form.Check id="compare-setting-worst" type="checkbox" label="최저 기록 강조" checked={showWorst} onChange={event => setShowWorst(event.target.checked)} />
                 </div>
-                <button className="compare-settings-done" onClick={() => settingsDialog.current?.close()}>완료</button>
-            </dialog>
+                </Modal.Body>
+                <Modal.Footer><button className="compare-settings-done" onClick={() => setSettingsOpen(false)}>완료</button></Modal.Footer>
+            </Modal>
             <div className="compare-table-wrap"><table className="compare-table">
                 <thead><tr><th scope="col">기록</th>{records.map((record, index) => <th scope="col" key={record.player_id} className="compare-player-cell" style={{ "--compare-team-small-logo": `url(${JSON.stringify(smallTeamLogoFiles[`../../assets/images/s-logos/${recordTeamName(record)}-small-logo.svg`] || "")})`, "--compare-team-tint": `${teamColors[recordTeamName(record)] || "#000000"}${dark ? "29" : "17"}` }}><div className="compare-player-head"><div className="compare-player-avatar"><PlayerImg p_no={record.player_id} p_img={record.img || record.player?.Img || ""} /></div><span>{record.name || record.player?.Name}</span><i style={{ background: PLAYER_COLORS[index % PLAYER_COLORS.length] }} /></div></th>)}</tr></thead>
                 <tbody>{TABLE_ROWS.map(([key, label, type], rowIndex) => visibleStats.includes(key) ? <tr key={key}><th scope="row">{label}</th>{records.map((record, playerIndex) => {

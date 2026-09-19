@@ -556,6 +556,19 @@ try {
         'babip' => ($period_babip !== null) ? round($period_babip, 3) : null,
     ];
 
+    $breakdown = null;
+    if ($season === 'regular' && ($_GET['include_breakdown'] ?? '') === '1') {
+        require_once __DIR__ . '/breakdown.php';
+        $regularStart = $schedule[$year]['regular'][0] ?? '';
+        $regularEnd = min($schedule[$year]['regular'][1] ?? date('Y-m-d'), date('Y-m-d'));
+        if ($regularStart !== '') {
+            $breakdown = candleSeasonBreakdown($pdo, (string)$player_id, (string)$year, $regularStart, $regularEnd, [
+                'ab' => $base_l_ab, 'h' => $base_l_h, 'ob' => $base_l_ob,
+                'sf' => $base_l_sf, 'tb' => $base_l_tb,
+            ]);
+        }
+    }
+
     $rankings = null;
     if (($_GET['include_rankings'] ?? '') === '1') {
         try {
@@ -578,6 +591,7 @@ try {
         'date_preset' => $date_preset,
         'img'       => $img,
         'period_stats' => $period_stats,
+        'breakdown' => $breakdown,
         'rankings' => $rankings,
         'data'      => $result_output
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

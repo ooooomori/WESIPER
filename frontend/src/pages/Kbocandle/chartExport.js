@@ -206,6 +206,14 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         ...omitSelectors,
     ].join(",")).forEach(node => node.remove());
     clone.querySelectorAll(".candle-extrema-label, .candle-help-tooltip").forEach(node => node.remove());
+    const breakdownSelect = clone.querySelector(".candle-breakdown-heading select");
+    if (breakdownSelect) {
+        const sourceSelect = element.querySelector(".candle-breakdown-heading select");
+        const label = document.createElement("span");
+        label.className = "candle-breakdown-export-value";
+        label.textContent = sourceSelect?.selectedOptions[0]?.textContent || breakdownSelect.selectedOptions[0]?.textContent || "기간별";
+        breakdownSelect.replaceWith(label);
+    }
     if (rangeText) {
         const rangeParts = clone.querySelectorAll(".candle-range > span");
         if (rangeParts[0]) rangeParts[0].textContent = rangeText.dates;
@@ -303,6 +311,9 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         .candle-export-clone .candle-range b { font-size: 14px !important; }
         .candle-export-clone .candle-navigation button { font-size: 16px !important; }
         .candle-export-clone .candle-detail-heading, .candle-export-clone .candle-summary-heading { font-size: 15px !important; }
+        .candle-export-clone .candle-breakdown-heading { font-size: 15px !important; }
+        .candle-export-clone .candle-breakdown-export-value { display: inline-flex; align-items: center; box-sizing: border-box; min-width: 84px; height: 28px; padding: 0 28px 0 9px; border: 1px solid #354358; border-radius: 7px; background: #202e40; color: #e7edf6; font-size: 11px; line-height: normal; white-space: nowrap; }
+        .candle-export-clone.theme-light .candle-breakdown-export-value { border-color: #b8c8d8; background: #f8fbff; color: #102033; }
         .candle-export-clone .candle-period-summary, .candle-export-clone .compare-table-section { margin-top: 16px !important; }
         .candle-export-clone .candle-detail-heading span, .candle-export-clone .candle-summary-heading span { font-size: 13px !important; }
         .candle-export-clone .candle-values span, .candle-export-clone .candle-summary-values span { font-size: 13px !important; }
