@@ -1,15 +1,18 @@
 <?php
 
 function candleBreakdownStats(array $events, ?array $league): array {
-    $ab = $h = $tb = $bb = $hbp = $sf = $hr = $sb = $so = 0;
+    $pa = $ab = $h = $tb = $bb = $hbp = $sf = $hr = $sb = $so = 0;
+    $gameIds = [];
     $eff_ab = $eff_h = $eff_tb = $eff_ob = 0;
 
     foreach ($events as $event) {
+        $gameIds[(string)($event['game_id'] ?: $event['game_date'])] = true;
         $steals = (int)($event['sb'] ?? 0);
         $caught = (int)($event['cs'] ?? 0);
         $sb += $steals;
         $parsed = parseKboResultPHP($event['pa_result'] ?? '');
         if (!$parsed) continue;
+        $pa++;
 
         $text = trim($event['pa_result']);
         $walk = (int)(in_array($text, ['4구', '볼넷', '고4'], true) || strpos($text, '볼넷') !== false);
@@ -58,6 +61,7 @@ function candleBreakdownStats(array $events, ?array $league): array {
         ? 100 * ($obp / $league['obp'] + $slg / $league['slg'] - 1) : null;
 
     return [
+        'games' => count($gameIds), 'plate_appearances' => $pa,
         'avg' => $avg === null ? null : round($avg, 3),
         'obp' => $obp === null ? null : round($obp, 3),
         'slg' => $slg === null ? null : round($slg, 3),
@@ -127,7 +131,7 @@ function candleSeasonBreakdown(PDO $pdo, string $playerId, string $year, string 
     }
     $inningRows = [];
     for ($inning = 1; $inning <= 10; $inning++) {
-        $inningRows[] = $summarize((string)$inning, $inning === 10 ? '10+회' : "{$inning}회", $innings[$inning] ?? []);
+        $inningRows[] = $summarize((string)$inning, $inning === 10 ? '연장' : "{$inning}회", $innings[$inning] ?? []);
     }
     return ['period' => $period, 'month' => $monthRows, 'inning' => $inningRows];
 }
