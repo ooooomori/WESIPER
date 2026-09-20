@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { createChart, createImageWatermark, BarSeries, CandlestickSeries, LineSeries, ColorType, CrosshairMode } from "lightweight-charts";
 import PlayerImg from "./PlayerImg";
 import MetricHelp from "./MetricHelp";
+import PredictionCard from "./PredictionCard";
 import CandleBreakdownTable from "./CandleBreakdownTable";
 import { METRICS, buildBars, metricValue, withCalendarGaps } from "./chartData";
 import { downloadChartCardPng, downloadCsv, exportFileStem } from "./chartExport";
@@ -296,6 +297,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             })}</div>
         </div>}
         {latest && kboData?.season === "regular" && <CandleBreakdownTable key={`${kboData.player_id}-${kboData.year}`} year={kboData.year} breakdown={kboData.breakdown} />}
+        {latest && <PredictionCard data={kboData} />}
         <Modal show={chartSettingsOpen} onHide={() => setChartSettingsOpen(false)} centered className={`candle-settings-modal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} contentClassName="candle-settings-modal-content">
             <Modal.Header closeButton><Modal.Title>차트 설정</Modal.Title></Modal.Header>
             <Modal.Body>

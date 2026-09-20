@@ -53,7 +53,7 @@ def fetch_yesterdays_kbo_game_ids():
             data = response.json()
 
             if data.get('code') != 200 or not data.get('success'):
-                continue
+                raise RuntimeError('Incomplete schedule response; prediction publication stopped')
 
             for day_data in data['result'].get('dates', []):
                 game_date = day_data.get('ymd', '')
@@ -67,6 +67,7 @@ def fetch_yesterdays_kbo_game_ids():
                         unique_game_ids.add(game_id)
         except Exception as e:
             print(f"[{team}] API 교신 오류: {e}")
+            raise
         time.sleep(0.5)
 
     sorted_game_ids = sorted(list(unique_game_ids))
@@ -295,6 +296,14 @@ if __name__ == "__main__":
     yesterday_games, target_date = fetch_yesterdays_kbo_game_ids()
     fetched_results = fetch_baseball_records(yesterday_games)
 
+    complete = len(fetched_results) == len(yesterday_games) and all(
+        match['raw_data'].get('success') and
+        all(match['raw_data'].get('result', {}).get('recordData', {}).get('battersBoxscore', {}).get(side)
+            for side in ('away', 'home'))
+        for match in fetched_results)
+    if not complete:
+        raise RuntimeError('Incomplete game responses; ingestion and predictions stopped before writes')
+
     final_dataset = []
     for match in fetched_results:
         parsed_records = extract_baseball_data(match["raw_data"], match['game_id'])
@@ -313,3 +322,15 @@ if __name__ == "__main__":
         publish_ranking_revision()
     else:
         print("새롭게 적재된 데이터가 없어 리그 집계는 스킵합니다.")
+
+    # The existing 02:00 crawl publishes predictions after its DB update.
+    # On off-days, refresh the stored result without fetching extra data.
+    if target_date.startswith('2026-'):
+        import subprocess
+        import sys
+        from prediction_data import schedule_path
+        from prediction_model import regular_bounds
+        season_start, season_end = regular_bounds(schedule_path().read_text(encoding='utf-8'))[2026]
+        if season_start <= target_date <= season_end:
+            subprocess.run([sys.executable, str(Path(__file__).with_name('predict_next_game.py')),
+                            '--init-schema', '--write-db', '--through', target_date], check=True)

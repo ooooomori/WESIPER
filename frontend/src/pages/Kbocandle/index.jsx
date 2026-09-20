@@ -51,8 +51,23 @@ export default function Kbocandle() {
     const [comparisonData, setComparisonData] = React.useState([]);
     const [comparisonMode, setComparisonMode] = React.useState(false);
     const [dark, setDark] = React.useState(true);
+    const localPredictionPreview = import.meta.env.DEV;
+
+    React.useEffect(() => {
+        if (!localPredictionPreview) return;
+        let active = true;
+        fetch("/.prediction-preview/fixture.json")
+            .then((response) => {
+                if (!response.ok) throw new Error("Local prediction fixture unavailable");
+                return response.json();
+            })
+            .then((fixture) => { if (active) setKboData(fixture); })
+            .catch((error) => console.error("로컬 예측 미리보기를 불러오지 못했습니다:", error));
+        return () => { active = false; };
+    }, [localPredictionPreview]);
     return (
         <div className="max-w-5xl mx-auto px-2 py-4 sm:px-4">
+            {localPredictionPreview && <p className="candle-local-preview-note">로컬 예측 미리보기 · 2026-09-16 기록 스냅샷 · 검색하면 해당 선수의 실제 API 응답으로 전환됩니다.</p>}
             <PlayerSearchUI
                 setKboData={setKboData}
                 comparisonMode={comparisonMode}

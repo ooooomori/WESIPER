@@ -92,6 +92,8 @@ function parseKboResultPHP($pa) {
 }
 
 $schedule = getKBOSchedule();
+require_once __DIR__ . '/predictions.php';
+$prediction_eligible = candlePredictionEligible($year, $season, $date_preset, $start_date, $end_date, $schedule);
 
 if (empty($start_date) && empty($end_date)) {
     if (isset($schedule[$year][$season]) && !empty($schedule[$year][$season][0])) {
@@ -340,6 +342,7 @@ try {
     }
 
     $result_output = [];
+    $last_pa_date = '';
 
     foreach ($rows_by_date as $date => $day_rows) {
         $open  = $prev_close;
@@ -370,6 +373,7 @@ try {
             $period_cs += $cs;
             if (!empty($row['game_id'])) $period_game_ids[(string)$row['game_id']] = true;
 
+            $last_pa_date = $date;
             $parsed = parseKboResultPHP($row['pa_result']);
             if (!$parsed) continue;
 
@@ -569,6 +573,10 @@ try {
         }
     }
 
+    $prediction = $prediction_eligible ? candlePrediction($pdo, (string)$player_id,
+        ['ab'=>$cum_ab, 'h'=>$cum_h, 'bb'=>$cum_bb, 'hbp'=>$cum_hbp, 'sf'=>$cum_sf, 'tb'=>$cum_tb],
+        $last_pa_date) : null;
+
     $rankings = null;
     if (($_GET['include_rankings'] ?? '') === '1') {
         try {
@@ -592,6 +600,8 @@ try {
         'img'       => $img,
         'period_stats' => $period_stats,
         'breakdown' => $breakdown,
+        'prediction_eligible' => $prediction_eligible,
+        'prediction' => $prediction,
         'rankings' => $rankings,
         'data'      => $result_output
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

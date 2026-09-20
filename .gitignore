@@ -44,6 +44,8 @@ coverage/
 
 # 운영 서버에서 내려받은 원본 스냅샷
 /webroot/
+/.prediction-artifacts/
+/frontend/.prediction-preview/
 
 # 인증서 발급용 일회성 파일
 **/.well-known/acme-challenge/
