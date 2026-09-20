@@ -80,7 +80,7 @@ export default function PredictionCard({ data, dark = true }) {
                 <div className="candle-prediction-grid">{rows.map(row => <div className="candle-prediction-row" key={row.metric}>
                     <span className="candle-prediction-metric">{row.metric}</span><span className="up">↑ {row.up}%</span><span className="neutral">― {row.flat}%</span><span className="down">↓ {row.down}%</span>
                 </div>)}</div>
-                <div className="candle-prediction-events"><div className="candle-prediction-hit"><span className="candle-prediction-card-accent" aria-hidden="true" /><span>안타 칠 확률</span><span className="candle-prediction-event-value">{events.hit}%</span></div><div className="candle-prediction-home-run"><span className="candle-prediction-card-accent" aria-hidden="true" /><span>홈런 칠 확률</span><span className="candle-prediction-event-value">{events.homeRun}%</span></div><p className="candle-prediction-caption"><span>{prediction.as_of_date} 경기까지 반영한 예측값입니다.</span><button type="button" className="candle-prediction-rank-button" onClick={() => { setRankMetric("hit"); setRankingsOpen(true); }}><i className="bi bi-bar-chart-line-fill" aria-hidden="true" />순위 보기</button></p></div>
+                <div className="candle-prediction-events"><div className="candle-prediction-hit"><span className="candle-prediction-card-accent" aria-hidden="true" /><span className="candle-prediction-event-label">안타 칠 확률<button type="button" className="candle-help-icon candle-prediction-event-help" aria-label="안타 확률 설명" aria-describedby="candle-hit-probability-help">?<span id="candle-hit-probability-help" className="candle-prediction-event-tooltip" role="tooltip">다음 경기 출전 시 안타를 1개 이상 기록할 확률의 예측값입니다.</span></button></span><span className="candle-prediction-event-value">{events.hit}%</span></div><div className="candle-prediction-home-run"><span className="candle-prediction-card-accent" aria-hidden="true" /><span className="candle-prediction-event-label">홈런 칠 확률<button type="button" className="candle-help-icon candle-prediction-event-help" aria-label="홈런 확률 설명" aria-describedby="candle-home-run-probability-help">?<span id="candle-home-run-probability-help" className="candle-prediction-event-tooltip" role="tooltip">다음 경기 출전 시 홈런을 1개 이상 기록할 확률의 예측값입니다.</span></button></span><span className="candle-prediction-event-value">{events.homeRun}%</span></div><p className="candle-prediction-caption"><span>{prediction.as_of_date} 경기까지 반영한 예측값입니다.</span><button type="button" className="candle-prediction-rank-button" onClick={() => { setRankMetric("hit"); setRankingsOpen(true); }}><i className="bi bi-bar-chart-line-fill" aria-hidden="true" />순위 보기</button></p></div>
             </div>
         </> : <p className="candle-prediction-status" role="status">{messages[prediction?.status] || messages.unavailable}</p>}
         <Modal show={rankingsOpen} onHide={() => setRankingsOpen(false)} centered className={`candle-prediction-rank-modal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`}>
@@ -91,10 +91,9 @@ export default function PredictionCard({ data, dark = true }) {
                     <Nav.Item><Nav.Link eventKey="home_run">홈런 칠 확률</Nav.Link></Nav.Item>
                 </Nav>
                 {rankingsPreview && <p className="candle-prediction-rank-status" role="note">배포 전 UI 미리보기용 예시 데이터입니다. 실제 순위가 아닙니다.</p>}
-                <p className="candle-prediction-rank-description">다음 경기에 출전해 {rankMetric === "hit" ? "안타를" : "홈런을"} 1개 이상 기록할 확률을 나타냅니다.</p>
                 {rankingError ? <p className="candle-prediction-rank-status" role="alert">{rankingError}</p>
                     : !validRankings(rankings) ? <p className="candle-prediction-rank-status" role="status">순위를 불러오는 중입니다.</p>
-                    : <div className="candle-prediction-rank-scroll"><table className="candle-prediction-rank-table">
+                    : <><div className="candle-prediction-rank-scroll"><table className="candle-prediction-rank-table">
                         <thead><tr><th scope="col">순위</th><th scope="col">선수</th><th scope="col">{rankMetric === "hit" ? "타율" : "홈런"}</th><th scope="col">예상 확률</th></tr></thead>
                         <tbody>{rankings[rankMetric].map(row => <tr key={row.player_id} className={String(row.player_id) === playerId ? "is-current" : ""}>
                             <td>{rankMedals[row.rank] || `${row.rank}위`}</td>
@@ -102,7 +101,7 @@ export default function PredictionCard({ data, dark = true }) {
                             <td>{rankMetric === "hit" ? (row.avg != null && Number.isFinite(Number(row.avg)) ? Number(row.avg).toFixed(3) : "—") : (row.home_runs != null && Number.isFinite(Number(row.home_runs)) ? row.home_runs : "—")}</td>
                             <td>{(row.probability * 100).toFixed(1)}%</td>
                         </tr>)}</tbody>
-                    </table></div>}
+                    </table></div></>}
             </Modal.Body>
         </Modal>
     </section>;

@@ -225,8 +225,20 @@
 .candle-prediction-rank-player{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:0;vertical-align:middle;line-height:1.2}
 .candle-prediction-rank-avatar{display:block;flex:none;width:24px;height:24px;border:1px solid #718198;border-radius:50%;overflow:hidden;background:#e3e9f1}
 .candle-prediction-rank-avatar img{display:block;width:100%!important;height:100%!important;object-fit:cover}
-.candle-prediction-rank-description{margin:0 0 10px;color:#91a0b5;font-size:12px;line-height:1.5}
 .candle-prediction-rank-team{flex:none;background:#27364a;color:#aebbd0;font-size:11px;line-height:1.2}
-.candle-prediction-rank-modal.theme-light .candle-prediction-rank-description{color:#60738a}
 .candle-prediction-rank-modal.theme-light .candle-prediction-rank-team{background:#edf3f8;color:#52647a}
 @media(max-width:600px){.candle-prediction-rank-table,.candle-prediction-rank-tabs .nav-link{font-size:12px}}
+@media(max-width:600px){.candle-prediction-rank-scroll{max-height:none;overflow-y:visible}}
+.candle-prediction-events>div.candle-prediction-hit,.candle-prediction-events>div.candle-prediction-home-run{overflow:visible}
+.candle-prediction-events>div.candle-prediction-hit:hover,.candle-prediction-events>div.candle-prediction-home-run:hover,.candle-prediction-events>div:focus-within{z-index:5}
+.candle-prediction-events>div>.candle-prediction-card-accent{top:1px;left:1px;height:calc(100% - 2px);border-radius:6px 0 0 6px}
+.candle-prediction-event-label{display:inline;white-space:nowrap}
+.candle-terminal button.candle-prediction-event-help{display:inline;width:auto;height:auto;min-height:0;margin-left:4px;padding:0;border:0;border-radius:0;background:transparent;color:inherit;font-size:.65em;font-weight:800;line-height:1;vertical-align:super;cursor:help}
+.candle-terminal button.candle-prediction-event-help:hover,.candle-terminal button.candle-prediction-event-help:focus-visible{background:transparent;color:#5ee0c0;outline:none}
+.theme-light.candle-terminal button.candle-prediction-event-help:hover,.theme-light.candle-terminal button.candle-prediction-event-help:focus-visible{color:#087762}
+.candle-prediction-event-tooltip{position:absolute;bottom:calc(100% + 8px);z-index:30;display:none;box-sizing:border-box;width:min(260px,calc(100vw - 48px));padding:9px 11px;border:1px solid #3d4a5d;border-radius:8px;background:#111a27;color:#e7edf6;font-size:11px;font-weight:400;line-height:1.5;text-align:left;white-space:normal;box-shadow:0 12px 28px #0008;pointer-events:none}
+.candle-prediction-hit .candle-prediction-event-tooltip{left:0}
+.candle-prediction-home-run .candle-prediction-event-tooltip{right:0}
+.candle-prediction-event-help:hover .candle-prediction-event-tooltip,.candle-prediction-event-help:focus .candle-prediction-event-tooltip{display:block}
+.theme-light .candle-prediction-event-tooltip{border-color:#b9c7d6;background:#fff;color:#30455d;box-shadow:0 12px 28px #29425f36}
+.candle-breakdown-table tbody tr:last-child th:first-child{border-bottom-left-radius:9px}
