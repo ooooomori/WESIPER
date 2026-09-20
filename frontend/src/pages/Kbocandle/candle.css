@@ -149,8 +149,8 @@
 .theme-light .candle-prediction-body .candle-prediction-events{border-left-color:#d4deea}
 @media(max-width:600px){.candle-prediction-body{grid-template-columns:1fr;gap:14px}.candle-prediction-body .candle-prediction-events{padding:14px 0 0;border-left:0;border-top:1px solid #354355}.theme-light .candle-prediction-body .candle-prediction-events{border-top-color:#d4deea}}
 .candle-prediction-events>div{position:relative;min-height:40px;align-items:center;padding:9px 10px 9px 15px;border:1px solid #354355;border-radius:8px;background:#202e40;overflow:hidden}
-.candle-prediction-events>div::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:#5ee0c0}
-.candle-prediction-events>.candle-prediction-home-run::before{background:#f3bc5f}
+.candle-prediction-events>div>.candle-prediction-card-accent{position:absolute;top:0;left:0;display:block;width:4px;height:100%;background:#35d5c0;pointer-events:none}
+.candle-prediction-events>.candle-prediction-home-run>.candle-prediction-card-accent{background:#a78bfa}
 .theme-light .candle-prediction-events>div{border-color:#d4deea;background:#f4f8fc}
 .candle-prediction-row .candle-prediction-metric{font-weight:400;text-align:left}
 .candle-prediction-events>div>span{color:#fff;font-size:11px}
@@ -159,8 +159,12 @@
 .theme-light .candle-prediction-events strong{color:#7be7cb}
 .candle-prediction-caption{margin-bottom:0}
 .candle-prediction-heading{position:relative}
-.candle-prediction-heading>.candle-prediction-help{padding:0;border:0;border-radius:0;background:transparent}
-.candle-prediction-help .candle-help-tooltip{left:0;transform:none;z-index:30}
+.candle-prediction-heading>.candle-prediction-help{display:inline-grid;place-items:center;width:15px;height:15px;padding:0;border:1px solid #91a0b5;border-radius:50%;background:transparent;color:#91a0b5;font-size:10px;font-weight:700;line-height:1;cursor:help;flex:none}
+.candle-prediction-heading>.candle-prediction-help:hover,.candle-prediction-heading>.candle-prediction-help:focus-visible{border-color:#5ee0c0;color:#5ee0c0;outline:none}
+.candle-prediction-tooltip{position:absolute;top:calc(100% + 8px);left:0;z-index:30;display:none;box-sizing:border-box;width:min(320px,calc(100vw - 40px));padding:10px 12px;border:1px solid #3d4a5d;border-radius:8px;background:#111a27;color:#e7edf6;font-size:11px;font-weight:400;line-height:1.5;text-align:left;white-space:normal;box-shadow:0 12px 28px #0008}
+.candle-prediction-help:hover .candle-prediction-tooltip,.candle-prediction-help:focus .candle-prediction-tooltip{display:block}
+.theme-light .candle-prediction-heading>.candle-prediction-help{border-color:#60738a;color:#60738a}
+.theme-light .candle-prediction-tooltip{border-color:#b9c7d6;background:#fff;color:#30455d;box-shadow:0 12px 28px #29425f36}
 .candle-prediction-body .candle-prediction-events{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .candle-prediction-events>div{box-sizing:border-box;min-height:66px;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
 .candle-prediction-events>div>span{font-size:12px}
@@ -168,3 +172,14 @@
 @media(max-width:600px){.candle-prediction-events>div{min-height:54px;padding:6px 8px;gap:4px}}
 .candle-prediction-events .candle-prediction-caption{grid-column:1/-1;margin:2px 0 0}
 .candle-local-preview-note{margin:4px 0 12px;padding:9px 12px;border:1px solid #9dd4c5;border-radius:8px;background:#eaf9f4;color:#246b58;font-size:12px;line-height:1.5}
+.candle-period-summary,.candle-breakdown-section,.candle-prediction{margin-bottom:20px}
+@media(min-width:601px){.candle-prediction-body .candle-prediction-events{grid-template-rows:auto 1fr;align-content:stretch}.candle-prediction-events .candle-prediction-caption{align-self:end}}
+.theme-light .candle-prediction-events>.candle-prediction-hit{border-color:#9bded3;background:#e9faf6}
+.theme-light .candle-prediction-events>.candle-prediction-home-run{border-color:#cdbcf4;background:#f4effd}
+.theme-light .candle-prediction-events>div>span{color:#30455d}
+.theme-light .candle-prediction-events>.candle-prediction-hit>strong{color:#087d70}
+.theme-light .candle-prediction-events>.candle-prediction-home-run>strong{color:#7350af}
+@media(max-width:480px){.candle-period-summary,.candle-breakdown-section,.candle-prediction{margin-bottom:16px}}
+.candle-prediction-events>div>.candle-prediction-event-value{color:#5ee0c0;font-size:16px;font-weight:400}
+.theme-light .candle-prediction-events>.candle-prediction-hit>.candle-prediction-event-value{color:#087d70}
+.theme-light .candle-prediction-events>.candle-prediction-home-run>.candle-prediction-event-value{color:#7350af}

@@ -455,6 +455,10 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
                     avatar.style.width = `${avatar.parentElement.clientWidth}px`;
                     avatar.style.height = `${avatar.parentElement.clientHeight}px`;
                 });
+                clonedDocument.querySelectorAll(".candle-export-clone .candle-prediction-events > div").forEach(card => {
+                    const accent = card.querySelector(".candle-prediction-card-accent");
+                    if (accent) accent.style.height = `${card.getBoundingClientRect().height}px`;
+                });
                 const q = clonedDocument.querySelector('.candle-export-clone .candle-quote-team');
                 const layer = q?.querySelector('.candle-export-team-watermark');
                 if (layer) {

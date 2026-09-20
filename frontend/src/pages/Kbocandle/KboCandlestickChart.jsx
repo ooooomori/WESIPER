@@ -159,6 +159,8 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             series.setData(calendar(bars.map(bar => Number.isFinite(bar[key]) ? { time: bar.time, value: bar[key] } : { time: bar.time })));
             return series;
         });
+        // Keep the candles (or selected close line) above all moving averages.
+        if (moving.length) main.setSeriesOrder(moving.length);
         if (chartTeamLogo) createImageWatermark(chart.panes()[0], chartTeamLogo, { maxWidth: 240, maxHeight: 200, padding: 32, alpha: dark ? 0.1 : 0.08 });
         const points = calendar(bars);
         const byTime = new Map(bars.map(bar => [bar.time, bar]));
