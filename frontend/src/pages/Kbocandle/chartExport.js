@@ -203,6 +203,7 @@ export async function downloadChartCardPng({ element, chart, filename, omitSelec
         ".theme-toggle",
         ".compare-settings-icon",
         ".compare-record-settings",
+        ".candle-prediction-rank-button",
         ...omitSelectors,
     ].join(",")).forEach(node => node.remove());
     clone.querySelectorAll(".candle-extrema-label, .candle-help-tooltip").forEach(node => node.remove());

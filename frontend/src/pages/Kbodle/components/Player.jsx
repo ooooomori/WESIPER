@@ -35,9 +35,7 @@ const PlayerImg = (props) => {
             key={props.name}
             src={
                 props.img
-                    ? "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2026/" +
-                      props.img +
-                      ".jpg"
+                    ? `${import.meta.env.BASE_URL}assets/images/player/kbo/${props.img}.jpg`
                     : fallbackImage
             }
             className={props.className}

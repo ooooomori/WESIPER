@@ -299,7 +299,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             })}</div>
         </div>}
         {latest && kboData?.season === "regular" && <CandleBreakdownTable key={`${kboData.player_id}-${kboData.year}`} year={kboData.year} breakdown={kboData.breakdown} />}
-        {latest && <PredictionCard data={kboData} />}
+        {latest && <PredictionCard data={kboData} dark={dark} />}
         <Modal show={chartSettingsOpen} onHide={() => setChartSettingsOpen(false)} centered className={`candle-settings-modal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} contentClassName="candle-settings-modal-content">
             <Modal.Header closeButton><Modal.Title>차트 설정</Modal.Title></Modal.Header>
             <Modal.Body>

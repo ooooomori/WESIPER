@@ -344,7 +344,7 @@ const WPAtop = ({ players }) => {
                 >
                     <div className="flex items-center rounded-full border w-6 h-6 overflow-clip">
                         <img
-                            src={`https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/2025/${x.P_ID}.jpg`}
+                            src={`${import.meta.env.BASE_URL}assets/images/player/kbo/${x.P_ID}.jpg`}
                             className="w-full mt-1 scale-150"
                         />
                     </div>

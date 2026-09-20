@@ -183,3 +183,50 @@
 .candle-prediction-events>div>.candle-prediction-event-value{color:#5ee0c0;font-size:16px;font-weight:400}
 .theme-light .candle-prediction-events>.candle-prediction-hit>.candle-prediction-event-value{color:#087d70}
 .theme-light .candle-prediction-events>.candle-prediction-home-run>.candle-prediction-event-value{color:#7350af}
+.candle-prediction-events .candle-prediction-caption{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.candle-terminal .candle-prediction-rank-button{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;flex:none;min-height:25px;padding:2px 7px;border:1px solid #437769;border-radius:6px;background:transparent;color:#5ee0c0;font:inherit;font-size:11px;cursor:pointer;white-space:nowrap}
+.candle-terminal .candle-prediction-rank-button:hover,.candle-terminal .candle-prediction-rank-button:focus-visible{background:#5ee0c01c;outline:none}
+.theme-light.candle-terminal .candle-prediction-rank-button{border-color:#75baa9;color:#087d68}
+.candle-terminal:not(.candle-comparison) .candle-quote-team{z-index:2}
+.candle-breakdown-section{padding-bottom:0}
+.candle-breakdown-scroll{scrollbar-width:none;-ms-overflow-style:none}
+.candle-breakdown-scroll::-webkit-scrollbar{display:none}
+.candle-prediction-rank-modal .modal-dialog{width:min(480px,calc(100vw - 24px));max-width:none;margin-right:auto;margin-left:auto}
+.candle-prediction-rank-modal .modal-content{border:1px solid #354358;border-radius:12px;background:#182433;color:#e7edf6;font-family:NanumSquareNeo,Arial,sans-serif}
+.candle-prediction-rank-modal .modal-header{padding:14px 16px;border-bottom:0}
+.candle-prediction-rank-modal .modal-title{font-size:15px;font-weight:700}
+.candle-prediction-rank-modal .btn-close{filter:invert(1);opacity:.75}
+.candle-prediction-rank-modal .modal-body{padding:0 16px 16px}
+.candle-prediction-rank-tabs{margin-bottom:12px;border-bottom-color:#354358}
+.candle-prediction-rank-tabs .nav-link{padding:8px 10px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;color:#91a0b5;font-size:14px}
+.candle-prediction-rank-tabs .nav-link.active{border-color:#5ee0c0;background:transparent;color:#5ee0c0}
+.candle-prediction-rank-scroll{max-height:60vh;overflow:auto}
+.candle-prediction-rank-table{width:100%;border-collapse:collapse;white-space:nowrap;font-size:14px;font-variant-numeric:tabular-nums}
+.candle-prediction-rank-table th,.candle-prediction-rank-table td{padding:8px 5px;border-bottom:1px solid #2d3b4d;text-align:left}
+.candle-prediction-rank-table th{color:#91a0b5;font-weight:500}
+.candle-prediction-rank-table th,.candle-prediction-rank-table td{text-align:center}
+.candle-prediction-rank-table tbody tr:last-child td{border-bottom:0}
+.candle-prediction-rank-table tbody tr.is-current{background:#5ee0c013;color:#74e9ce}
+.candle-prediction-team-badge{display:inline-block;min-width:34px;padding:2px 5px;border:1px solid #52647a;border-radius:5px;background:#243447;color:#dbe5f2;text-align:center;font-size:10px}
+.candle-prediction-rank-status{margin:14px 0 2px;color:#91a0b5;font-size:12px}
+.candle-prediction-rank-modal.theme-light .modal-content{border-color:#bdcad9;background:#fff;color:#102033}
+.candle-prediction-rank-modal.theme-light .btn-close{filter:none}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-tabs{border-bottom-color:#d5dee8}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-tabs .nav-link{color:#52647a}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-tabs .nav-link.active{border-color:#0b9b80;color:#087d68}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-table th,.candle-prediction-rank-modal.theme-light .candle-prediction-rank-table td{border-bottom-color:#dbe4ee}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-table th,.candle-prediction-rank-modal.theme-light .candle-prediction-rank-status{color:#60738a}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-table tbody tr.is-current{background:#e9faf6;color:#087d68}
+.candle-prediction-rank-modal.theme-light .candle-prediction-team-badge{border-color:#b8c8d8;background:#edf3f8;color:#354960}
+.candle-prediction-rank-tabs{display:flex;flex-wrap:nowrap;justify-content:flex-start;width:100%}
+.candle-prediction-rank-tabs .nav-item{flex:0 0 auto;min-width:0}
+.candle-prediction-rank-tabs .nav-link{width:auto;padding-inline:12px;text-align:center;white-space:nowrap}
+.candle-prediction-rank-table th:first-child,.candle-prediction-rank-table td:first-child{width:42px;text-align:center}
+.candle-prediction-rank-player{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:0;vertical-align:middle;line-height:1.2}
+.candle-prediction-rank-avatar{display:block;flex:none;width:24px;height:24px;border:1px solid #718198;border-radius:50%;overflow:hidden;background:#e3e9f1}
+.candle-prediction-rank-avatar img{display:block;width:100%!important;height:100%!important;object-fit:cover}
+.candle-prediction-rank-description{margin:0 0 10px;color:#91a0b5;font-size:12px;line-height:1.5}
+.candle-prediction-rank-team{flex:none;background:#27364a;color:#aebbd0;font-size:11px;line-height:1.2}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-description{color:#60738a}
+.candle-prediction-rank-modal.theme-light .candle-prediction-rank-team{background:#edf3f8;color:#52647a}
+@media(max-width:600px){.candle-prediction-rank-table,.candle-prediction-rank-tabs .nav-link{font-size:12px}}

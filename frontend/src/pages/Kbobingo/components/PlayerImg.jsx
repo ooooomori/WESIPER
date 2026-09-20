@@ -10,20 +10,18 @@ const PlayerImg = (props) => {
     const { p_no, p_img } = props;
     const [srcIndex, setSrcIndex] = useState(0);
 
-    // 연도와 이미지명 추출
-    const year = p_img.split("_")[0];
-    const imgName = p_img.split("_").slice(1).join("_");
+    // p_img는 팀별 로컬 이미지 fallback을 찾는 데만 사용합니다.
+    const imgName = p_img ? p_img.split("_").slice(1).join("_") : "";
 
     // 2. 미리 로드된 이미지 객체에서 매칭되는 경로를 찾습니다.
     const localImagePath = `../../../assets/images/player/${imgName}.jpg`;
     const localImage = localImages[localImagePath] || "";
 
-    // 소스 순서대로 시도
+    // 선수 사진은 프로젝트의 public 로컬 이미지에서만 불러옵니다.
     const sources = [
-        `https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/${year}/${p_no}.jpg`,
         `${import.meta.env.BASE_URL}assets/images/player/kbo/${p_no}.jpg`,
         localImage,
-    ];
+    ].filter(Boolean);
 
     const handleError = () => {
         setSrcIndex((prev) => (prev < sources.length - 1 ? prev + 1 : prev));

@@ -14,7 +14,6 @@ const PlayerImg = (props) => {
         setSrcIndex(0);
     }, [p_no, p_img]);
 
-    const year = p_img ? p_img.split("_")[0] : "";
     const imgName = p_img ? p_img.split("_").slice(1).join("_") : "ssg_b_r";
 
     // glob에 선언된 /src 절대 경로와 정확히 일치시킵니다.
@@ -22,7 +21,6 @@ const PlayerImg = (props) => {
     const localImage = localImages[localImagePath] || "";
 
     const sources = [
-        p_img ? `https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/person/middle/${year}/${p_no}.jpg` : "",
         `${import.meta.env.BASE_URL}assets/images/player/kbo/${p_no}.jpg`,
         localImage,
     ].filter(Boolean);
