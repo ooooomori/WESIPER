@@ -8,6 +8,12 @@ import { PlayerImg, PlayerName } from "./Player.jsx";
 import axios from "axios";
 import { Base64 } from "js-base64";
 
+const teamLogos = import.meta.glob("../../../assets/images/logos/*-logo.svg", {
+    eager: true,
+    query: "?url",
+    import: "default",
+});
+
 const SearchAnswer = (props) => {
     const [searchList, setSearchList] = useState([]);
     const [debounceTimer, setDebounceTimer] = useState(null);
@@ -328,14 +334,7 @@ const MakeKbodle = (props) => {
                                 <div className="modal-player-text font-family-kbo">
                                     <div className="mb-2">
                                         <img
-                                            src={
-                                                answer.Team &&
-                                                require(
-                                                    `../../../assets/images/logos/${teamCode(
-                                                        answer.Team,
-                                                    )}-logo.svg`,
-                                                )
-                                            }
+                                            src={teamLogos[`../../../assets/images/logos/${teamCode(answer.Team)}-logo.svg`]}
                                             alt={answer.Team}
                                             className="h-6 inline mr-1"
                                         ></img>

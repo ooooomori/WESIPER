@@ -5,6 +5,17 @@ import Calendar from "./components/Calendar.tsx";
 import { ThemeProvider, Collapse } from "react-bootstrap";
 import "./gameday.css";
 
+const teamLogos = import.meta.glob("../../assets/images/logos/*-logo.svg", {
+    eager: true,
+    query: "?url",
+    import: "default",
+});
+const baseImages = import.meta.glob("../../assets/images/gameday/ground_base*.png", {
+    eager: true,
+    query: "?url",
+    import: "default",
+});
+
 const ListSide = ({ x, type }) => {
     const [awayStatus, setAwayStatus] = useState(null);
     const [homeStatus, setHomeStatus] = useState(null);
@@ -161,13 +172,7 @@ const ListSide = ({ x, type }) => {
         <div className="flex flex-col justify-center items-center w-20">
             <div className="h-12 sm:h-14">
                 <img
-                    src={require(
-                        `../..//assets/images/logos/${
-                            type === "away"
-                                ? teamCode(x.AWAY_NM)
-                                : teamCode(x.HOME_NM)
-                        }-logo.svg`,
-                    )}
+                    src={teamLogos[`../../assets/images/logos/${teamCode(type === "away" ? x.AWAY_NM : x.HOME_NM)}-logo.svg`]}
                     className="h-12 w-12 sm:h-14 sm:w-14"
                     alt={type}
                 />
@@ -254,9 +259,7 @@ const ListCenter = ({ x }) => {
                         <div className="flex flex-col justify-center items-center gap-1">
                             <div className="h-5 sm:h-6 mt-1">
                                 <img
-                                    src={require(
-                                        `../../assets/images/gameday/${base}.png`,
-                                    )}
+                                    src={baseImages[`../../assets/images/gameday/${base}.png`]}
                                     alt="base"
                                     className="h-full"
                                 />
