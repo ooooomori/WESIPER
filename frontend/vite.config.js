@@ -1,17 +1,13 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import { createGamesCache } from './dev/todayGamesCache.mjs';
 
-function localTodayGamesApi() {
-    const fetchLeague = async (leagueId, seriesIds) => {
+function localTodayGamesApi(todayGamesTarget) {
+    const fetchLeague = createGamesCache(async (leagueId, seriesIds, day) => {
         const body = new URLSearchParams({
             leId: leagueId,
             srId: seriesIds,
-            date: new Intl.DateTimeFormat("en-CA", {
-                timeZone: "Asia/Seoul",
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-            }).format(new Date()).replaceAll("-", ""),
+            date: day,
         });
         const response = await fetch("https://www.koreabaseball.com/ws/Main.asmx/GetKboGameList", {
             method: "POST",
@@ -22,10 +18,11 @@ function localTodayGamesApi() {
                 "X-Requested-With": "XMLHttpRequest",
             },
             body,
+            signal: AbortSignal.timeout(15000),
         });
         if (!response.ok) throw new Error(`KBO API HTTP ${response.status}`);
-        return (await response.json()).game || [];
-    };
+        return (await response.json()).game;
+    });
 
     const normalize = (game) => ({
         ...game,
@@ -58,7 +55,9 @@ function localTodayGamesApi() {
                     response.end(JSON.stringify({ success: false, error: '팀 순위를 불러오지 못했습니다.' }));
                 }
             });
-            server.middlewares.use("/api/todayGames.php", async (_request, response) => {
+            server.middlewares.use("/api/todayGames.php", async (_request, response, next) => {
+                // Weather and its secret belong to PHP, never to the Vite process/browser.
+                if (todayGamesTarget || process.env.VITE_API_PROXY_TARGET) return next();
                 try {
                     const [kbo, futures] = await Promise.all([
                         fetchLeague("1", "0,1,3,4,5,7,9"),
@@ -83,14 +82,18 @@ function localTodayGamesApi() {
     };
 }
 
-export default defineConfig({
-    plugins: [react(), localTodayGamesApi()],
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, process.cwd(), 'WESIPER_');
+    const todayGamesTarget = process.env.WESIPER_TODAY_GAMES_PROXY_TARGET || env.WESIPER_TODAY_GAMES_PROXY_TARGET;
+    return {
+    plugins: [react(), localTodayGamesApi(todayGamesTarget)],
 
     server: {
         host: "0.0.0.0",
         port: 5173,
         strictPort: true,
         proxy: {
+            ...(todayGamesTarget ? { '/api/todayGames.php': { target: todayGamesTarget, changeOrigin: true } } : {}),
             "/api": {
                 target:
                     process.env.VITE_API_PROXY_TARGET ||
@@ -99,4 +102,5 @@ export default defineConfig({
             },
         },
     },
+};
 });

@@ -3,6 +3,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json; charset=UTF-8');
+header('Cache-Control: no-store');
+require_once __DIR__ . '/../lib/today-games-cache.php';
+require_once __DIR__ . '/../lib/game-weather.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
@@ -22,9 +25,9 @@ if (!function_exists('curl_init')) {
     respond(array('success' => false, 'error' => '서버에서 cURL을 사용할 수 없습니다.'), 500);
 }
 
-function fetchGames($leagueId, $seriesIds)
+function fetchGames($leagueId, $seriesIds, $day)
 {
-    $postData = array('leId' => $leagueId, 'srId' => $seriesIds, 'date' => date('Ymd'));
+    $postData = array('leId' => $leagueId, 'srId' => $seriesIds, 'date' => $day);
     $ch = curl_init('https://www.koreabaseball.com/ws/Main.asmx/GetKboGameList');
     curl_setopt_array($ch, array(
         CURLOPT_POST => true,
@@ -58,7 +61,7 @@ function fetchGames($leagueId, $seriesIds)
     return $response['game'];
 }
 
-function normalizeGame($game)
+function normalizeGame($game, $weather = null)
 {
     $inning = $game['GAME_INN_NO'] ?? null;
     $status = !empty($inning)
@@ -78,24 +81,40 @@ function normalizeGame($game)
         'away_score' => $game['T_SCORE_CN'] ?? '',
         'home_score' => $game['B_SCORE_CN'] ?? '',
         'stadium' => $game['S_NM'] ?? '',
+        'gameDate' => $game['G_DT'] ?? '',
+        'gameStartTime' => $game['G_TM'] ?? '',
+        'weather' => $weather,
         'status' => $status,
         'isGameFinished' => ($game['GAME_STATE_SC'] ?? null) === '3',
     ));
 }
 
 try {
-    $kboRawGames = fetchGames('1', '0,1,3,4,5,7,9');
-    $futuresRawGames = fetchGames('2', '0,1,9,10,15');
+    $requestTime = time();
+    $kboCache = cachedTodayGames('1:0,1,3,4,5,7,9', fn($day) => fetchGames('1', '0,1,3,4,5,7,9', $day), $requestTime);
+    $futuresCache = cachedTodayGames('2:0,1,9,10,15', fn($day) => fetchGames('2', '0,1,9,10,15', $day), $requestTime);
+    $kboRawGames = $kboCache['games'];
+    $futuresRawGames = $futuresCache['games'];
 } catch (RuntimeException $error) {
     respond(array('success' => false, 'error' => $error->getMessage()), 502);
 }
 
+$weatherProvider = null;
+try { $weatherProvider = new KmaGameWeather(kmaServiceKey()); }
+catch (Throwable $error) { error_log('KMA configuration unavailable'); }
+$normalizeWithWeather = function ($game) use ($weatherProvider) {
+    try { $weather = $weatherProvider ? $weatherProvider->forGame($game) : null; }
+    catch (Throwable $error) { $weather = null; }
+    return normalizeGame($game, $weather);
+};
 $result = array(
     'success' => true,
-    'date' => date('Y-m-d'),
+    'date' => date('Y-m-d', $requestTime),
+    'cache' => array('kbo' => array('stale' => $kboCache['stale'], 'fetchedAt' => $kboCache['fetchedAt']),
+                     'futures' => array('stale' => $futuresCache['stale'], 'fetchedAt' => $futuresCache['fetchedAt'])),
     'isGameExist' => false,
-    'kboGames' => array_map('normalizeGame', $kboRawGames),
-    'futuresGames' => array_map('normalizeGame', $futuresRawGames),
+    'kboGames' => array_map($normalizeWithWeather, $kboRawGames),
+    'futuresGames' => array_map($normalizeWithWeather, $futuresRawGames),
 );
 
 // 기존 메인페이지가 사용하던 SSG 단일 경기 응답도 계속 제공한다.

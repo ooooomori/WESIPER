@@ -4,6 +4,7 @@ import PlayerList from "../Kbocandle/PlayerList";
 import { Spinner } from "flowbite-react";
 import "./home-preview.css";
 import { gameParticipants } from '../../lib/gameParticipants';
+import GameWeather from './GameWeather';
 
 const REFRESH_INTERVAL = 60_000;
 const teamStyles = {
@@ -31,8 +32,9 @@ function GameParticipant({ text, home = false }) {
     const role = text.slice(0, separator);
     const name = text.slice(separator + 1);
     return <span className={`home-preview-game-player${home ? ' is-home' : ''}`}>
-        <span className={`home-preview-player-role ${role === '승' ? 'is-win' : role === '패' ? 'is-loss' : ''}`}>{role}</span>
-        <span>{name}</span>
+        <span className={`home-preview-player-role ${role === '승' ? 'is-win' : role === '패' ? 'is-loss' : role === '선발' ? 'is-starter' : ''}`}>{role}</span>
+        <span className="home-preview-player-divider" aria-hidden="true" />
+        <span className="home-preview-player-name" title={name}>{name}</span>
     </span>;
 }
 
@@ -64,20 +66,6 @@ function SectionTitle({ title, action }) {
 export default function HomePreview() {
     const [league, setLeague] = useState("kbo");
     const [rankingTab, setRankingTab] = useState(0);
-    const [selectedRankingTeam, setSelectedRankingTeam] = useState(null);
-    const rankingTable = useRef(null);
-    useEffect(() => {
-        const clearOutside = (event) => {
-            if (!rankingTable.current?.contains(event.target)) setSelectedRankingTeam(null);
-        };
-        document.addEventListener('pointerdown', clearOutside);
-        document.addEventListener('focusin', clearOutside);
-        return () => {
-            document.removeEventListener('pointerdown', clearOutside);
-            document.removeEventListener('focusin', clearOutside);
-        };
-    }, []);
-    const toggleRankingTeam = (team) => setSelectedRankingTeam((selected) => selected === team ? null : team);
     const [ranking, setRanking] = useState({ state: "loading", rows: [], title: "" });
     useEffect(() => {
         const controller = new AbortController();
@@ -287,7 +275,7 @@ export default function HomePreview() {
                                     <div className="home-preview-team-info"><strong className="home-preview-team-name">{game.away}</strong><GameParticipant text={participants.awayPlayer} /></div>
                                     <div className="home-preview-game-center">
                                         {hasScore ? <strong className="home-preview-score"><b className={Number(game.away_score) > Number(game.home_score) ? "is-leading" : ""}>{game.away_score || 0}</b><span>:</span><b className={Number(game.home_score) > Number(game.away_score) ? "is-leading" : ""}>{game.home_score || 0}</b></strong> : <strong className="home-preview-game-time">{game.status || "경기 예정"}</strong>}
-                                        <span className="home-preview-game-status">{hasScore ? `${game.isGameFinished ? "경기 종료" : game.status} · ` : ""}{game.stadium}</span>
+                                        <span className="home-preview-game-status">{hasScore ? `${game.isGameFinished ? "경기 종료" : game.status} · ` : ""}{game.stadium}{scheduled && !hasScore && !cancelled && <GameWeather weather={game.weather} />}</span>
                                     </div>
                                     <div className="home-preview-team-info home-preview-team-home"><strong className="home-preview-team-name">{game.home}</strong><GameParticipant text={participants.homePlayer} home /></div>
                                     <TeamLogo name={game.home} logo={home.logo} />
@@ -306,13 +294,11 @@ export default function HomePreview() {
                     <>
                         {ranking.state === 'loading' && <div className="home-preview-player-loading"><Spinner aria-label="팀 순위 불러오는 중" /></div>}
                         {ranking.state === 'error' && <p role="status">팀 순위를 불러오지 못했습니다.</p>}
-                        {ranking.state === 'ready' && (ranking.rows.length ? <div className="home-preview-ranking-table-wrap" ref={rankingTable}><table className={`home-preview-ranking-table ${rankingTab === 1 ? 'is-autumn' : ''}`}>
+                        {ranking.state === 'ready' && (ranking.rows.length ? <div className="home-preview-ranking-table-wrap"><table className={`home-preview-ranking-table ${rankingTab === 1 ? 'is-autumn' : ''}`}>
                             <caption className="sr-only">KBO {rankingTab === 0 ? '팀 순위' : '가을야구'} {ranking.title}</caption>
                             <colgroup><col style={{ width: 36 }} /><col style={{ width: 68 }} />{(rankingTab === 0 ? [null, null, null, null, null, 46, 44, 117] : [null, null, null]).map((width, index) => <col key={index} style={width ? { width } : undefined} />)}</colgroup>
                             <thead><tr>{(rankingTab === 0 ? ['순위', '팀', '경기', '승', '패', '무', '승률', '게임차', '연속', '최근 5경기'] : ['순위', '팀', '남은\n경기', '1위\n매직넘버', '가을야구\n매직 · 트래직 넘버']).map((label) => <th scope="col" key={label}>{label}</th>)}</tr></thead>
-                            <tbody>{ranking.rows.map((row) => <tr key={row[1]} className={selectedRankingTeam === row[1] ? 'is-selected' : ''} tabIndex={0} onClick={() => toggleRankingTeam(row[1])} onKeyDown={(event) => {
-                                if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleRankingTeam(row[1]); }
-                            }}>
+                            <tbody>{ranking.rows.map((row) => <tr key={row[1]}>
                                 <td>{row[0]}</td><th scope="row"><div><TeamLogo name={row[1]} logo={getTeamStyle(row[1]).logo} />{row[1]}</div></th>
                                 {rankingTab === 0 ? row.slice(2, 10).map((value, index) => <td key={index}>{index === 7 ? <span className="home-preview-recent-results" aria-label={`최근 5경기 ${value}`}>
                                     {[...value].map((result, i) => <span key={i} className={result === '승' ? 'is-win' : result === '패' ? 'is-loss' : 'is-draw'}>{result}</span>)}
@@ -333,8 +319,18 @@ export default function HomePreview() {
                 <section className="home-preview-section home-preview-games-section" aria-labelledby="preview-mini-title">
                     <SectionTitle title={<span id="preview-mini-title">미니게임</span>} />
                     <div className="home-preview-mini-grid">
-                        <Link className="home-preview-mini-card" to="/kbodle"><span className="home-preview-mini-symbol">A</span><strong>KBODLE</strong><small>선수를 맞혀보세요</small><span className="home-preview-mini-go">→</span></Link>
-                        <Link className="home-preview-mini-card" to="/bingo"><span className="home-preview-mini-symbol home-preview-bingo-symbol">▦</span><strong>KBO BINGO</strong><small>야구 지식으로 빙고!</small><span className="home-preview-mini-go">→</span></Link>
+                        <Link className="home-preview-mini-card home-preview-kbodle-card" to="/kbodle">
+                            <div className="home-preview-mini-art" aria-hidden="true">
+                                <div className="home-preview-kbodle-tiles">{Array.from({ length: 7 }, (_, i) => <span key={i} className={i < 2 ? 'is-match' : i === 4 || i === 5 ? 'is-close' : ''}>?</span>)}</div>
+                            </div>
+                            <strong className="font-family-kbo">KBODLE</strong><small>단서를 조합해 오늘의 선수를 맞혀보세요</small><span className="home-preview-mini-go" aria-hidden="true">↗</span>
+                        </Link>
+                        <Link className="home-preview-mini-card home-preview-bingo-card" to="/bingo">
+                            <div className="home-preview-mini-art" aria-hidden="true">
+                                <div className="home-preview-bingo-board">{Array.from({ length: 9 }, (_, i) => <span key={i} className={i % 4 === 0 ? 'is-filled' : ''}>{i % 4 === 0 ? '✓' : ''}</span>)}</div>
+                            </div>
+                            <strong className="font-family-kbo">KBO BINGO</strong><small>야구 지식으로 아홉 칸을 채워보세요</small><span className="home-preview-mini-go" aria-hidden="true">↗</span>
+                        </Link>
                     </div>
                 </section>
             </div>

@@ -1,0 +1,31 @@
+<?php
+require $argv[1];
+$tz=new DateTimeZone('Asia/Seoul');
+$now=new DateTimeImmutable('2026-09-27 14:10:00',$tz);
+$game=['GAME_STATE_SC'=>'1','G_DT'=>'20260927','G_TM'=>'18:30','S_NM'=>'창원'];
+$items=[];
+foreach (['TMP'=>24,'POP'=>20,'PCP'=>'강수없음','SKY'=>3,'PTY'=>0,'WSD'=>2.1,'REH'=>65] as $category=>$value) $items[]=['fcstDate'=>'20260927','fcstTime'=>'1800','category'=>$category,'fcstValue'=>(string)$value];
+function check($ok,$label) { if (!$ok) throw new RuntimeException($label); echo "PASS $label\n"; }
+$count=0;
+$transport=function($p) use (&$count,$items) { $count++; return ['response'=>['header'=>['resultCode'=>'00'],'body'=>['items'=>['item'=>$items]]]]; };
+$dir=sys_get_temp_dir().'/kma-test-'.bin2hex(random_bytes(6));
+$provider=new KmaGameWeather('test',$dir,$now,$transport);
+$weather=$provider->forGame($game);
+check($weather['forecastTime']==='20260927T1800','18:30 floors to 18:00');
+check($weather['forecastBaseTime']==='20260927T1400','latest published base');
+check($weather['condition']==='구름많음','SKY condition');
+check((new KmaGameWeather('test',$dir,$now,$transport))->forGame($game)==$weather && $count===1,'shared file cache');
+$game['S_NM']='마산'; $provider->forGame($game);
+check($count===1,'same grid deduplicated across stadiums');
+$fallbackCalls=[];
+$fallback=function($p) use (&$fallbackCalls,$items) { $fallbackCalls[]=$p['base_time']; return $p['base_time']==='1400' ? ['response'=>['header'=>['resultCode'=>'03']]] : ['response'=>['header'=>['resultCode'=>'00'],'body'=>['items'=>['item'=>$items]]]]; };
+$result=(new KmaGameWeather('test',$dir.'-fallback',$now,$fallback))->forGame($game);
+check($result['forecastBaseTime']==='20260927T1100' && $fallbackCalls===['1400','1100'],'NO_DATA falls back');
+$base=kmaForecastBases(new DateTimeImmutable('2026-09-27 00:30:00',$tz))[0];
+check($base->format('YmdHi')==='202609262300','previous-day base');
+$items[4]['fcstValue']='1';
+check(kmaParseForecast($items,'마산','20260927','1800',$base)['condition']==='비','PTY overrides SKY');
+check(kmaParseForecast($items,'마산','20260927','1700',$base)===null,'never substitutes current/other hour');
+$game['GAME_STATE_SC']='2'; check($provider->forGame($game)===null,'live game hidden');
+$game['GAME_STATE_SC']='1'; $game['S_NM']='unknown'; check($provider->forGame($game)===null,'unknown stadium isolated');
+check((new KmaGameWeather('',$dir,$now,$transport))->forGame($game)===null,'missing key safe');
