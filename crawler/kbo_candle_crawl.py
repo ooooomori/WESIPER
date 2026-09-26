@@ -334,3 +334,7 @@ if __name__ == "__main__":
         if season_start <= target_date <= season_end:
             subprocess.run([sys.executable, str(Path(__file__).with_name('predict_next_game.py')),
                             '--init-schema', '--write-db', '--through', target_date], check=True)
+
+    # Reuse the discovered game IDs; only official finished games update the scoreboard.
+    from update_kbo_scoreboard import update_scoreboards
+    update_scoreboards(yesterday_games, DB_CONFIG)

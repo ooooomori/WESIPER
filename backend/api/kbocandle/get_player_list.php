@@ -17,6 +17,7 @@ try {
                 p.p_no,
                 p.p_img,
                 p.p_pos,
+                (SELECT pd.backNo FROM player_data pd WHERE pd.playerId = p.p_no LIMIT 1) AS back_no,
                 COALESCE((SELECT pd.team FROM player_data pd WHERE pd.playerId = p.p_no LIMIT 1), '은퇴') AS current_status
             FROM kbo_playerlist_20250613 p
             WHERE p.p_name LIKE :name1 OR p.p_oldname LIKE :name2
@@ -57,6 +58,7 @@ try {
             "Name" => $row['p_name'],
             "Img" => $baseImg,
             "Pos" => $row['p_pos'] ?? '',
+            "BackNo" => $row['back_no'],
             "Team" => $row['current_status'], // 존재하면 팀명, 없으면 '은퇴'
         ];
     }

@@ -1,0 +1,13 @@
+@media (min-width: 800px) {
+    nav.site-navbar {
+        box-sizing: border-box;
+        height: 60px;
+        padding-top: 15px;
+        padding-bottom: 16px;
+    }
+
+    nav.site-navbar > div {
+        height: 28px;
+        flex-wrap: nowrap;
+    }
+}

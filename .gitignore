@@ -14,6 +14,7 @@ crawler.env
 # DB와 백업
 *.sql
 *.sql.gz
+/data/*.sqlite3
 *.tar
 *.tar.gz
 *backup*

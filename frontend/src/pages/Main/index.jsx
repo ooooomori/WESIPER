@@ -10,20 +10,8 @@ function Main() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        /*
-        axios.get("https://api.hangang.life/")
-        .then(response => {
-        const result = response.data;
-        if (result.STATUS === "OK") {
-            setHangang(result.DATAs.DATA.HANGANG["탄천"].TEMP);
-        }
-        })
-        .catch(error => {
-        console.error('한강 수온 탐지 오류:', error);
-        }); */
-
         axios
-            .post("/api/todaySSG.php")
+            .post("/api/todayGames.php")
             .then((response) => {
                 const result = response.data;
                 if (result.success && result.isGameExist) {
