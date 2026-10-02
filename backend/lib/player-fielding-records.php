@@ -67,6 +67,19 @@ function profileAddDesignatedHitterRecords(array $fielding, array $events, array
 }
 
 function profileFieldingRecords(PDO $db, string $pid, array $schedule): array {
+    require_once __DIR__.'/player-rankings.php';
+    // 지명타자 집계가 선수별 수천 행을 읽으므로 크롤러 갱신(revision)마다 한 번만 계산해 파일에 둔다.
+    $dir=sys_get_temp_dir().'/wesiper-profile-fielding-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
+    if(!is_dir($dir))@mkdir($dir,0700,true);
+    $path=$dir.'/v1-'.hash('sha256',$pid.'|'.json_encode($schedule)).'.json';$revision=profileRankingRevision();
+    if(is_file($path)){$cached=json_decode((string)file_get_contents($path),true);if(is_array($cached)&&($cached['revision']??null)===$revision&&is_array($cached['fielding']??null))return $cached['fielding'];}
+    $fielding=profileComputeFieldingRecords($db,$pid,$schedule);
+    $tmp=@tempnam($dir,'fielding-');
+    if($tmp!==false){@file_put_contents($tmp,json_encode(['revision'=>$revision,'fielding'=>$fielding]));@rename($tmp,$path);if(is_file($tmp))@unlink($tmp);}
+    return $fielding;
+}
+
+function profileComputeFieldingRecords(PDO $db, string $pid, array $schedule): array {
     $query=$db->prepare('SELECT p_year,p_team,p_pos,G,GS,IP,FPCT,`CS%` FROM kbo_fielding_2001_2025 WHERE p_no=? ORDER BY p_year,p_team,PK');
     $query->execute([$pid]);
     $fielding=profileFormatFieldingRecords($query->fetchAll(PDO::FETCH_ASSOC));
