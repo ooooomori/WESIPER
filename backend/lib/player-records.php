@@ -21,6 +21,12 @@ function profileBatEvent(array $row): array {
  * 새 결정전이 생기면 game_id(= kbo_schedule.game_code)를 여기에 추가한다.
  */
 const PROFILE_TIEBREAKER_GAMES = ['66661031KTSS02021', '66661001SKKT02024'];
+/*
+ * 지난 시즌 원본 기록(타석·투구·수비) 기준 버전. 올해 경기가 없는 선수의 연도별 기록·수비 기록은
+ * 크롤러 revision과 무관하게 이 값이 같으면 계속 재사용한다.
+ * 지난 시즌 기록을 백필·보정하거나 계산 방식이 바뀌면 이 값을 바꿔 다시 계산하게 한다.
+ */
+const PROFILE_HISTORY_VERSION = '2026-10-03';
 function profileIsTiebreakerGame(?string $id): bool { return $id !== null && in_array($id, PROFILE_TIEBREAKER_GAMES, true); }
 function profileNotTiebreakerSql(string $column = 'game_id'): string {
     return ' AND '.$column.' NOT IN (\''.implode('\',\'', PROFILE_TIEBREAKER_GAMES).'\')';

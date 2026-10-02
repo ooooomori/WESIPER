@@ -71,6 +71,23 @@ function profileYearRecordsSchedule(array $schedule, string $seasonType): array 
     return $schedule;
 }
 
+/*
+ * 연도별 기록 캐시가 유효한지 가리는 입력 지문.
+ * 올해 경기가 있는 선수: 크롤러 revision마다 다시 계산한다(올해 기록·올해 리그 기준값이 매일 바뀐다).
+ * 올해 경기가 없는 선수: 결과가 지난 시즌 원본과 그 시즌들의 리그 기준값에만 의존하므로
+ * 행 수·PK 합·마지막 경기일·선수 정보·PROFILE_HISTORY_VERSION이 같으면 revision이 바뀌어도 재사용한다.
+ * 지문은 (league_level, player_id, game_date, game_id) 인덱스만 읽는다.
+ */
+function profileYearRecordsInputKey(PDO $db, string $pid, bool $pitcher, int $leagueLevel, string $revision): string {
+    [$table,$pk]=$pitcher?['kbo_season_pitch_records','id']:['kbo_season_records','PK'];
+    $q=$db->prepare("SELECT COUNT(*) n,COALESCE(SUM(`$pk`),0) s,MAX(game_date) d FROM `$table` FORCE INDEX (idx_search_league_player_game) WHERE league_level=? AND player_id=?");
+    $q->execute([$leagueLevel,$pid]);$rows=$q->fetch(PDO::FETCH_ASSOC)?:[];
+    $bio=$db->prepare('SELECT mainPos,birth FROM kbo_player_data WHERE player_id=? LIMIT 1');$bio->execute([$pid]);
+    $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
+    $active=isset($rows['d'])&&(int)substr((string)$rows['d'],0,4)>=$currentYear;
+    return hash('sha256',json_encode([PROFILE_HISTORY_VERSION,PROFILE_TIEBREAKER_GAMES,$currentYear,(int)($rows['n']??0),(string)($rows['s']??'0'),$rows['d']??null,$bio->fetch(PDO::FETCH_ASSOC)?:null,$active?$revision:null],JSON_THROW_ON_ERROR));
+}
+
 function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule, string $seasonType='regular'): array {
     if(!in_array($seasonType,['regular','preseason','postseason','futures'],true))throw new InvalidArgumentException('Invalid season');
     $leagueLevel=$seasonType==='futures'?2:1;
@@ -83,15 +100,18 @@ function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule
     try {
         // Shared with ranking caches: only a successful crawler update changes this revision.
         $revision=profileRankingRevision();
+        $inputKey=profileYearRecordsInputKey($db,$pid,$pitcher,$leagueLevel,$revision);
         if(is_file($path)){
             $cached=json_decode((string)file_get_contents($path),true);
-            if(is_array($cached)&&($cached['revision']??null)===$revision&&is_array($cached['records']??null))return $cached['records'];
+            // 이전 형식(revision만 저장)은 같은 revision 동안만 유효하다.
+            $valid=is_array($cached)&&(isset($cached['inputKey'])?$cached['inputKey']===$inputKey:($cached['revision']??null)===$revision);
+            if($valid&&is_array($cached['records']??null))return $cached['records'];
         }
         $records=profileComputeYearRecords($db,$pid,$pitcher,$schedule,$leagueLevel,$seasonType);
         $tmp=tempnam($dir,'years-');
         if($tmp===false)throw new RuntimeException('Year record cache write unavailable');
         try {
-            if(file_put_contents($tmp,json_encode(['revision'=>$revision,'records'=>$records],JSON_THROW_ON_ERROR))===false||!rename($tmp,$path))throw new RuntimeException('Year record cache write failed');
+            if(file_put_contents($tmp,json_encode(['revision'=>$revision,'inputKey'=>$inputKey,'records'=>$records],JSON_THROW_ON_ERROR))===false||!rename($tmp,$path))throw new RuntimeException('Year record cache write failed');
         } finally { if(is_file($tmp))unlink($tmp); }
         return $records;
     } finally { flock($lock,LOCK_UN);fclose($lock); }
