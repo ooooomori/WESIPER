@@ -21,8 +21,17 @@ function Remote([string]$command) {
 }
 try {
     if (!(Test-Path -LiteralPath $KeyPath)) { throw "SSH key not found: $KeyPath" }
-    $node = (Get-Command node -ErrorAction SilentlyContinue).Source
-    if (!$node) { throw 'node.exe not found (Get-Command node)' }
+    # node.exe 찾기: PATH → 실행 중인 node(개발 서버) → Codex 런타임 → 일반 설치 경로
+    $candidates = @(
+        (Get-Command node -ErrorAction SilentlyContinue).Source,
+        (Get-Process node -ErrorAction SilentlyContinue | Where-Object { $_.Path } | Select-Object -First 1 -ExpandProperty Path)
+    ) + @(Get-ChildItem -Path (Join-Path $env:USERPROFILE '.cache\codex-runtimes') -Filter node.exe -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName) + @(
+        (Join-Path $env:ProgramFiles 'nodejs\node.exe'),
+        (Join-Path $env:LOCALAPPDATA 'Programs\nodejs\node.exe'),
+        $(if ($env:NVM_SYMLINK) { Join-Path $env:NVM_SYMLINK 'node.exe' })
+    )
+    $node = $candidates | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -First 1
+    if (!$node) { throw 'node.exe not found (PATH, running node, Codex runtime, Program Files)' }
     Write-Host "== 1. frontend build ($node) =="
     Push-Location (Join-Path $root 'frontend')
     try { & $node 'node_modules/vite/bin/vite.js' build; if ($LASTEXITCODE -ne 0) { throw "vite build failed ($LASTEXITCODE)" } } finally { Pop-Location }
