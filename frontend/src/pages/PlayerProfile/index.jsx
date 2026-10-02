@@ -341,15 +341,14 @@ function CareerModal({ item, kind, onClose }) {
     const years = item.rows.map(row => Number(row.year)).filter(Boolean);
     const span = years.length ? (Math.min(...years) === Math.max(...years) ? `${Math.min(...years)}` : `${Math.min(...years)} – ${Math.max(...years)}`) : null;
     const count = item.name === '우승' ? `V${item.rows.length}` : `${item.rows.length}회`;
-    const medals = national ? item.rows.filter(row => careerResultTone(row.note) !== 'plain').length : 0;
     return <dialog ref={dialog} className={`profile-career-modal${expanded ? ' is-expanded' : ''}`} aria-labelledby="profile-career-title" onClose={onClose} onClick={e => { if (e.target !== e.currentTarget || justDragged.current) return; const box = e.currentTarget.getBoundingClientRect(); if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) close(); }}>
         <header className={`profile-career-modal-head${national && team ? ' is-national' : ''}`} style={headStyle} onPointerDown={dragStart} onPointerMove={dragMove} onPointerUp={dragEnd} onPointerCancel={dragEnd}>
             {national && countryLogo && <img className="profile-career-watermark" src={countryLogo} alt="" aria-hidden="true" />}
             <div className={`profile-career-emblem${combined && countryMark ? ' is-country' : ''}${combined && team?.[4] ? ' is-light-logo' : ''}`}>{image ? <img src={image} alt="" /> : <span aria-hidden="true">{combined ? countryName.slice(0, 2) : item.name.slice(0, 1)}</span>}</div>
             <div className="profile-career-title">
-                <small>{combined ? (multiCountry ? countries.map(c => nationalTeam(c)?.[1] || c).join(' · ') : '국가대표 경력') : national ? `${countryName} 국가대표` : '수상 경력'}</small>
-                <h2 id="profile-career-title">{combined ? (multiCountry ? '국가대표 경력' : `${countryName} 국가대표`) : item.name}</h2>
-                <p><strong>{count}</strong>{span && <span>{span}</span>}{medals > 0 && <span>메달·입상 {medals}회</span>}</p>
+                {!combined && <small>{national ? `${countryName} 국가대표` : '수상 경력'}</small>}
+                <h2 id="profile-career-title">{combined ? (multiCountry ? countries.map(c => nationalTeam(c)?.[1] || c).join(' · ') : `${countryName} 국가대표`) : item.name}</h2>
+                <p><strong>{count}</strong>{span && <span>{span}</span>}</p>
             </div>
             <button type="button" className="profile-career-close" aria-label="닫기" onClick={close}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg></button>
         </header>
@@ -614,7 +613,7 @@ export default function PlayerProfile({ pid }) {
             {tab === 1 && <TitleholderRecords rows={player.Titleholders} />}
             {records && tab === 0 && <section style={retiredTheme ? { '--team-primary': '#002561', '--team-secondary': '#286fcc' } : undefined}><div className="profile-heading"><h2>{records.career ? '통산 주요 기록' : `${records.year} 시즌 주요 기록`}</h2>{futuresCaption && <small className="profile-season-caption">{records.career ? '퓨처스리그' : futuresCaption}</small>}</div><div className={`profile-stats ${`profile-stats-ranked${tab === 0 ? ' profile-stats-overview' : ''}`}`}>{records.stats.map(([label, value]) => {
                 const rank = value != null && Number(value) !== 0 ? ranks[label] : null;
-                return <div key={label} className={rank >= 1 && rank <= 5 ? 'profile-stat-top-five' : undefined}>{tab === 0 ? <><div className="profile-stat-header"><span>{label}</span>{rank != null && <small className={`profile-stat-rank ${rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : rank <= 5 ? 'is-top' : ''}${rank >= 100 ? ' is-long' : ''}`}>{rank}위</small>}</div><strong>{value ?? '—'}</strong></> : <><span>{label}</span><strong>{value ?? '—'}</strong>{<small>{rank != null ? `${rank}위` : ''}</small>}</>}</div>;
+                return <div key={label} className={rank >= 1 && rank <= 5 ? 'profile-stat-top-five' : undefined}>{tab === 0 ? <><div className="profile-stat-header"><span>{label}</span>{rank != null && <small className={`profile-stat-rank ${rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : rank <= 5 ? 'is-top' : ''}${rank >= 100 ? ' is-long' : ''}`}>{rank}위</small>}</div><strong style={{ '--value-chars': String(value ?? '—').length }}>{value ?? '—'}</strong></> : <><span>{label}</span><strong>{value ?? '—'}</strong>{<small>{rank != null ? `${rank}위` : ''}</small>}</>}</div>;
             })}</div></section>}
             {records && tab === 0 && !retired && !numberRetired && <section><div className="profile-heading"><h2>최근 5경기</h2>{records.recent.length > 0 && <span className="profile-recent-form" aria-label="최근 경기 팀 결과">{[...records.recent].reverse().map((game, i) => { const result = recentResult(game); return <i key={i} className={result ? `is-${result.tone}` : ''} title={result?.label} />; })}</span>}{recentCaption && <small className="profile-season-caption">{recentCaption}</small>}</div>{records.recent.length ? <ol className="profile-recent-list">{records.recent.map((game, i) => { const result = recentResult(game); const logo = movementLogo(game.opponent); return <li key={`${game.date}-${i}`}>
                 <span className="profile-recent-date"><b>{game.date.slice(5).replace('-', '.')}</b><small>{recentWeekday(game.date)}</small></span>

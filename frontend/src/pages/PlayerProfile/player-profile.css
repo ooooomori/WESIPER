@@ -655,6 +655,9 @@
 .player-profile .profile-stats-overview .profile-stat-rank.is-silver { background: linear-gradient(135deg, #f1f4f8, #b9c4d2); color: #3e4c5e; }
 .player-profile .profile-stats-overview .profile-stat-rank.is-bronze { background: linear-gradient(135deg, #f6d2b4, #c9844e); color: #5d3214; }
 .player-profile .profile-stats-overview strong { flex: 1; display: flex; align-items: flex-end; justify-content: flex-start; place-items: end start; color: var(--team-primary); font-size: 34px; font-weight: 900; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+/* 이닝처럼 긴 숫자는 카드 폭에 맞춰 글자 크기를 줄인다. */
+.player-profile .profile-stats-overview > div { container-type: inline-size; }
+.player-profile .profile-stats-overview strong { font-size: min(34px, 100cqi / (var(--value-chars, 4) * .6)); }
 .player-profile .profile-stats-overview > .profile-stat-top-five { border-color: color-mix(in srgb, var(--team-primary) 30%, #e8eef6); }
 .player-profile .profile-stats-overview > .profile-stat-top-five::after { width: 100%; left: 0; border-radius: 0; height: 3px; background: linear-gradient(90deg, var(--team-primary), var(--team-secondary)); }
 .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-header span { color: #22364f; }
@@ -666,6 +669,10 @@
     .player-profile .profile-stats-overview .profile-stat-header span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; letter-spacing: -.03em; }
     .player-profile .profile-stats-overview .profile-stat-rank { flex: none; padding: 1px 4px; font-size: 9px; letter-spacing: -.03em; }
     .player-profile .profile-stats-overview strong { font-size: clamp(18px, calc(5.6vw - 1px), 23px); }
+    .player-profile .profile-stats-overview .profile-stat-header { flex-wrap: wrap; row-gap: 3px; }
+    .player-profile .profile-stats-overview .profile-stat-header span { overflow: visible; text-overflow: clip; }
+    .player-profile .profile-stats-overview .profile-stat-rank { margin-left: auto; }
+    .player-profile .profile-stats-overview strong { font-size: min(clamp(18px, calc(5.6vw - 1px), 23px), 100cqi / (var(--value-chars, 4) * .6)); }
 }
 
 /* ===== 국가대표 경력 모달: 국가대표팀 로고/색 ===== */
@@ -1009,3 +1016,21 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
 .profile-year-award { flex: none; }
 @media (max-width: 600px) { .profile-year-award-slot { width: 30px; } }
 .profile-year-records th.profile-year-award-cell { text-align: center; padding-left: 4px; }
+
+/* ===== 수상·국가대표 경력 모달 글자 크기·굵기 정리 ===== */
+.profile-career-title small { font-size: 12px; font-weight: 700; letter-spacing: -.01em; }
+.profile-career-modal .profile-career-title h2 { margin: 3px 0 8px; font-size: 21px; font-weight: 800; letter-spacing: -.03em; line-height: 1.25; }
+.profile-career-title p > * { padding: 3px 9px; font-size: 12px; font-weight: 700; letter-spacing: -.01em; }
+.profile-career-title p strong { font-weight: 800; }
+.profile-career-year { color: #22364f; font-size: 16px; font-weight: 800; letter-spacing: -.01em; }
+.profile-career-year small { margin-top: 2px; font-size: 11px; font-weight: 400; }
+.profile-career-team, .profile-career-tournament { color: #102746; font-size: 15px; font-weight: 700; letter-spacing: -.02em; }
+.profile-career-list .profile-career-chip, .profile-career-list .profile-career-result { font-size: 12px; font-weight: 700; letter-spacing: -.01em; }
+.profile-career-note { font-size: 13px; font-weight: 400; }
+@media (max-width: 600px) {
+    .profile-career-modal .profile-career-title h2 { margin-bottom: 7px; font-size: 19px; }
+    .profile-career-title p > * { font-size: 11.5px; }
+    .profile-career-year { font-size: 15px; }
+    .profile-career-team, .profile-career-tournament { font-size: 14.5px; }
+    .profile-career-list .profile-career-chip, .profile-career-list .profile-career-result { font-size: 11.5px; }
+}
