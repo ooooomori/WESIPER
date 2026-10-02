@@ -6,7 +6,7 @@ require_once __DIR__.'/player-rankings.php';
 function profileLeaguePitchingContexts(PDO $db, array $schedule, int $leagueLevel=1): array {
     $dir=sys_get_temp_dir().'/wesiper-profile-league-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('League context cache unavailable');
-    $path=$dir.'/v2-'.hash('sha256',$leagueLevel.'|'.json_encode($schedule,JSON_THROW_ON_ERROR)).'.json';
+    $path=$dir.'/v3-'.hash('sha256',$leagueLevel.'|'.json_encode($schedule,JSON_THROW_ON_ERROR)).'.json';
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('League context lock unavailable');
     try {
         $revision=profileRankingRevision();
@@ -15,14 +15,14 @@ function profileLeaguePitchingContexts(PDO $db, array $schedule, int $leagueLeve
         $filter='('.implode(' OR ',$bounds).')';$years=[];
         if(!$bounds)return [];
         $allstar=static fn($table)=>$leagueLevel===2?" AND NOT EXISTS (SELECT 1 FROM kbo_schedule s WHERE s.league_level=2 AND s.game_code=CONVERT(LEFT(`$table`.game_id,13) USING utf8mb4) COLLATE utf8mb4_general_ci AND s.is_allstar=1)":'';
-        $query=$db->query('SELECT YEAR(game_date) AS year,inning,er FROM kbo_season_pitch_records WHERE league_level='.$leagueLevel.' AND '.$filter.$allstar('kbo_season_pitch_records'));
+        $query=$db->query('SELECT YEAR(game_date) AS year,inning,er FROM kbo_season_pitch_records WHERE league_level='.$leagueLevel.' AND '.$filter.profileNotTiebreakerSql().$allstar('kbo_season_pitch_records'));
         while($row=$query->fetch(PDO::FETCH_ASSOC)){
             $year=(int)$row['year'];$years[$year]??=['outs'=>0,'er'=>0,'knownEr'=>true,'hr'=>0,'bb'=>0,'hbp'=>0,'so'=>0,'pa'=>0,'ab'=>0,'h'=>0,'sf'=>0,'tb'=>0];
             $years[$year]['outs']+=profileInningOuts($row['inning']);
             if(!isset($row['er']))$years[$year]['knownEr']=false;else $years[$year]['er']+=(int)$row['er'];
         }
         // One aggregate scan for all seasons; cache until the crawler revision changes.
-        $query=$db->query('SELECT YEAR(game_date) AS year,pa_result,COUNT(*) AS count FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND '.$filter.$allstar('kbo_season_records').' GROUP BY YEAR(game_date),pa_result');
+        $query=$db->query('SELECT YEAR(game_date) AS year,pa_result,COUNT(*) AS count FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND '.$filter.profileNotTiebreakerSql().$allstar('kbo_season_records').' GROUP BY YEAR(game_date),pa_result');
         while($row=$query->fetch(PDO::FETCH_ASSOC)){
             $year=(int)$row['year'];if(!isset($years[$year]))continue;$event=profileAdvancedBatEvent($row);
             foreach(['hr','bb','hbp','so','pa','ab','h','sf','tb'] as $key)$years[$year][$key]+=$event[$key]*(int)$row['count'];

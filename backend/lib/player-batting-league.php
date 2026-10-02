@@ -6,7 +6,7 @@ function profileBattingLeagueContexts(PDO $db,array $schedule,string $season='re
     require_once __DIR__.'/player-rankings.php';
     $dir=sys_get_temp_dir().'/wesiper-profile-batting-league-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Batting league cache unavailable');
-    $path=$dir.'/v1-'.hash('sha256',json_encode([$schedule,$season,$level],JSON_THROW_ON_ERROR)).'.json';
+    $path=$dir.'/v2-'.hash('sha256',json_encode([$schedule,$season,$level],JSON_THROW_ON_ERROR)).'.json';
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Batting league cache lock unavailable');
     try {
         $revision=profileRankingRevision();
@@ -22,7 +22,7 @@ function profileBattingLeagueContexts(PDO $db,array $schedule,string $season='re
         // Aggregate each PA exactly once. Never sum cumulative snapshots or team-filtered totals.
         if($missing){
             $allstar=$level===2?" AND NOT EXISTS (SELECT 1 FROM kbo_schedule s WHERE s.league_level=2 AND s.game_code=CONVERT(LEFT(kbo_season_records.game_id,13) USING utf8mb4) COLLATE utf8mb4_general_ci AND s.is_allstar=1)":'';
-            $q=$db->query('SELECT YEAR(game_date) year,pa_result,COUNT(*) n FROM kbo_season_records WHERE league_level='.$level.' AND ('.implode(' OR ',$missing).')'.$allstar.' GROUP BY YEAR(game_date),pa_result');
+            $q=$db->query('SELECT YEAR(game_date) year,pa_result,COUNT(*) n FROM kbo_season_records WHERE league_level='.$level.' AND ('.implode(' OR ',$missing).')'.profileNotTiebreakerSql().$allstar.' GROUP BY YEAR(game_date),pa_result');
             while($r=$q->fetch(PDO::FETCH_ASSOC)){
                 $year=(int)$r['year'];$years[$year]??=array_fill_keys(['cum_ab','cum_h','cum_ob','cum_sf','cum_tb'],0);$e=profileBatEvent($r);$n=(int)$r['n'];
                 foreach(['cum_ab'=>'ab','cum_h'=>'h','cum_sf'=>'sf','cum_tb'=>'tb'] as $k=>$f)$years[$year][$k]+=$e[$f]*$n;

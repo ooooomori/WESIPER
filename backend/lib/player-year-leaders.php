@@ -45,14 +45,14 @@ function profileComputeModernYearLeaders(PDO $db,int $year,array $schedule): arr
     if(!$start||!$end)return ['batter'=>[],'pitcher'=>[]];
     $range=[$start,$end];
     // 팀 경기 수(규정 타석·이닝 기준)
-    $q=$db->prepare('SELECT away_team,home_team FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL');$q->execute($range);
+    $q=$db->prepare('SELECT away_team,home_team FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL'.profileNotTiebreakerSql('game_code').'');$q->execute($range);
     $teamGames=[];while($row=$q->fetch(PDO::FETCH_ASSOC))foreach($row as $team){$team=profileTeam($team);$teamGames[$team]=($teamGames[$team]??0)+1;}
     $league=profileBattingLeagueContexts($db,$schedule)[$year]??null;
     $ld=$league?($league['cum_ab']+$league['cum_ob']+$league['cum_sf']):0;
     $lobp=$ld?($league['cum_h']+$league['cum_ob'])/$ld:0;$lslg=($league['cum_ab']??0)?$league['cum_tb']/$league['cum_ab']:0;
     // 마지막 소속팀(시즌 중 이적은 마지막 팀 경기 수로 규정을 본다. 순위 계산과 같은 방식)
     $lastTeam=static function(string $table)use($db,$range): array {
-        $q=$db->prepare("SELECT player_id,team,MAX(game_date) d FROM `$table` WHERE league_level=1 AND game_date BETWEEN ? AND ? GROUP BY player_id,team");$q->execute($range);
+        $q=$db->prepare("SELECT player_id,team,MAX(game_date) d FROM `$table` WHERE league_level=1 AND game_date BETWEEN ? AND ?".profileNotTiebreakerSql()." GROUP BY player_id,team");$q->execute($range);
         $teams=[];$dates=[];while($r=$q->fetch(PDO::FETCH_ASSOC)){$id=(int)$r['player_id'];if(!isset($dates[$id])||$r['d']>$dates[$id]){$dates[$id]=$r['d'];$teams[$id]=profileTeam($r['team']);}}
         return $teams;
     };
@@ -60,7 +60,7 @@ function profileComputeModernYearLeaders(PDO $db,int $year,array $schedule): arr
     // ---- 타자: 타석 결과·도루·도루자 조합별로 SQL에서 묶어 PHP 부담을 줄인다.
     $sumKeys=['pa','ab','h','doubles','triples','hr','bb','hbp','sf','sh','tb'];
     $bat=[];
-    $q=$db->prepare('SELECT player_id,pa_result,sb,cs,COUNT(*) n,SUM(rbi) rbi,COUNT(rbi) rbi_n,SUM(r) r,COUNT(r) r_n FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ? GROUP BY player_id,pa_result,sb,cs');$q->execute($range);
+    $q=$db->prepare('SELECT player_id,pa_result,sb,cs,COUNT(*) n,SUM(rbi) rbi,COUNT(rbi) rbi_n,SUM(r) r,COUNT(r) r_n FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().' GROUP BY player_id,pa_result,sb,cs');$q->execute($range);
     while($row=$q->fetch(PDO::FETCH_ASSOC)){
         $id=(int)$row['player_id'];$n=(int)$row['n'];
         $bat[$id]??=['sum'=>array_fill_keys([...$sumKeys,'rbi','r','sb','cs'],0),'missing'=>[],'eff'=>[0,0,0,0]];
@@ -74,7 +74,7 @@ function profileComputeModernYearLeaders(PDO $db,int $year,array $schedule): arr
         elseif($on&&$sb>0)$tb+=$sb;elseif(!$on&&$sb>0)$a=0;
         $bat[$id]['eff'][0]+=$a*$n;$bat[$id]['eff'][1]+=$h*$n;$bat[$id]['eff'][2]+=$tb*$n;$bat[$id]['eff'][3]+=$ob*$n;
     }
-    $q=$db->prepare('SELECT player_id,COUNT(DISTINCT game_id) g,COUNT(DISTINCT CASE WHEN is_gs=1 THEN game_id END) gs,SUM(is_gs IS NULL) gs_unknown FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ? GROUP BY player_id');$q->execute($range);
+    $q=$db->prepare('SELECT player_id,COUNT(DISTINCT game_id) g,COUNT(DISTINCT CASE WHEN is_gs=1 THEN game_id END) gs,SUM(is_gs IS NULL) gs_unknown FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().' GROUP BY player_id');$q->execute($range);
     $batGames=[];while($r=$q->fetch(PDO::FETCH_ASSOC))$batGames[(int)$r['player_id']]=$r;
     $batTeams=$lastTeam('kbo_season_records');
     $batStats=[];$batQualified=[];
@@ -94,18 +94,18 @@ function profileComputeModernYearLeaders(PDO $db,int $year,array $schedule): arr
 
     // ---- 투수: 상대한 타석 결과(탈삼진·피안타·볼넷·사구·피홈런)
     $faces=[];
-    $q=$db->prepare('SELECT pitcher_id,pa_result,COUNT(*) n FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ? AND pitcher_id IS NOT NULL GROUP BY pitcher_id,pa_result');$q->execute($range);
+    $q=$db->prepare('SELECT pitcher_id,pa_result,COUNT(*) n FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().' AND pitcher_id IS NOT NULL GROUP BY pitcher_id,pa_result');$q->execute($range);
     while($row=$q->fetch(PDO::FETCH_ASSOC)){
         $id=(int)$row['pitcher_id'];$e=profileAdvancedBatEvent(['pa_result'=>$row['pa_result']]);if(!$e['pa'])continue;
         foreach(['so','h','bb','hbp','hr'] as $key)$faces[$id][$key]=($faces[$id][$key]??0)+$e[$key]*(int)$row['n'];
     }
-    $q=$db->prepare('SELECT pitcher_id,COUNT(DISTINCT game_id) g FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ? AND pitcher_id IS NOT NULL AND pa_result IS NOT NULL AND pa_result<>\'\' GROUP BY pitcher_id');$q->execute($range);
+    $q=$db->prepare('SELECT pitcher_id,COUNT(DISTINCT game_id) g FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().' AND pitcher_id IS NOT NULL AND pa_result IS NOT NULL AND pa_result<>\'\' GROUP BY pitcher_id');$q->execute($range);
     $facedGames=[];while($r=$q->fetch(PDO::FETCH_ASSOC))$facedGames[(int)$r['pitcher_id']]=(int)$r['g'];
     $q=$db->prepare("SELECT player_id,COUNT(DISTINCT game_id) g,SUM(`order`=1) gs,SUM(`order` IS NULL) gs_unknown,SUM(er) er,COUNT(er) er_n,COUNT(*) n,
         SUM(record IN ('승','W','승리')) wins,SUM(record IN ('패','L','패전')) losses,SUM(record IN ('세','S','세이브')) saves,SUM(record IN ('홀','H','홀드')) holds
-        FROM kbo_season_pitch_records WHERE league_level=1 AND game_date BETWEEN ? AND ? GROUP BY player_id");$q->execute($range);
+        FROM kbo_season_pitch_records WHERE league_level=1 AND game_date BETWEEN ? AND ?".profileNotTiebreakerSql()." GROUP BY player_id");$q->execute($range);
     $pitch=[];while($r=$q->fetch(PDO::FETCH_ASSOC))$pitch[(int)$r['player_id']]=$r+['outs'=>0];
-    $q=$db->prepare('SELECT player_id,inning,COUNT(*) n FROM kbo_season_pitch_records WHERE league_level=1 AND game_date BETWEEN ? AND ? GROUP BY player_id,inning');$q->execute($range);
+    $q=$db->prepare('SELECT player_id,inning,COUNT(*) n FROM kbo_season_pitch_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().' GROUP BY player_id,inning');$q->execute($range);
     while($r=$q->fetch(PDO::FETCH_ASSOC)){$id=(int)$r['player_id'];if(isset($pitch[$id]))$pitch[$id]['outs']+=profileInningOuts((string)$r['inning'])*(int)$r['n'];}
     $pitchTeams=$lastTeam('kbo_season_pitch_records');
     $pitchLeague=profileLeaguePitchingContexts($db,$schedule)[$year]??[];
@@ -159,7 +159,7 @@ function profileYearLeaders(PDO $db,int $year,array $schedule): array {
     $dir=sys_get_temp_dir().'/wesiper-profile-year-leaders-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Year leader cache unavailable');
     $historical=$year>=1982&&$year<=2000;
-    $path=$dir.'/v1-'.$year.'-'.hash('sha256',json_encode($historical?null:($schedule[$year]??null))).'.json';
+    $path=$dir.'/v2-'.$year.'-'.hash('sha256',json_encode($historical?null:($schedule[$year]??null))).'.json';
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Year leader cache lock unavailable');
     try{
         // 지난 시즌은 기록이 바뀌지 않으므로 한 번 계산하면 계속 쓰고, 올해만 크롤러 갱신(revision)마다 다시 계산한다.

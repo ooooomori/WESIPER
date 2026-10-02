@@ -35,7 +35,7 @@ function profileBaseRankings(PDO $db, int $year, array $schedule, bool $career =
     if(!is_dir($dir)&&!@mkdir($dir,0700,true)) throw new RuntimeException('Ranking cache unavailable');
     // Career totals must also refresh when historical season boundaries expand.
     $scheduleKey=hash('sha256',json_encode($schedule,JSON_THROW_ON_ERROR));
-    $path=$career?"$dir/v7-career-$scheduleKey.json":"$dir/v3-$year.json";$lock=fopen("$path.lock",'c');
+    $path=$career?"$dir/v8-career-$scheduleKey.json":"$dir/v4-$year.json";$lock=fopen("$path.lock",'c');
     if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Ranking lock unavailable');
     try {
         // The crawler atomically replaces this revision only after its record updates succeed.
@@ -46,10 +46,10 @@ function profileBaseRankings(PDO $db, int $year, array $schedule, bool $career =
         [$start,$end]=$schedule[$rankingYear]['regular'];
         $params=[$start,$end];$filter='game_date BETWEEN ? AND ?';
         if($career){$params=[];$bounds=[];foreach($schedule as $season){[$a,$b]=$season['regular'];if($a&&$b)$bounds[]='(game_date BETWEEN '.$db->quote($a).' AND '.$db->quote($b).')';}$filter='('.implode(' OR ',$bounds).')';}
-        $q=$db->prepare('SELECT away_team,home_team FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL');$q->execute([$start,$end]);
+        $q=$db->prepare('SELECT away_team,home_team FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL'.profileNotTiebreakerSql('game_code').'');$q->execute([$start,$end]);
         $games=[];while($row=$q->fetch(PDO::FETCH_ASSOC))foreach($row as $team){$team=profileTeam($team);$games[$team]=($games[$team]??0)+1;}
         if($career)$db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,false);
-        $q=$db->prepare('SELECT player_id,pitcher_id,game_id,game_date,team,pa_result,sb,cs,rbi,r FROM kbo_season_records WHERE league_level=1 AND '.$filter.' ORDER BY game_date,PK');$q->execute($params);
+        $q=$db->prepare('SELECT player_id,pitcher_id,game_id,game_date,team,pa_result,sb,cs,rbi,r FROM kbo_season_records WHERE league_level=1 AND '.$filter.profileNotTiebreakerSql().' ORDER BY game_date,PK');$q->execute($params);
         $bat=[];$faces=[];$coverage=[];
         while($row=$q->fetch(PDO::FETCH_ASSOC)) {
             $id=$row['player_id'];$e=profileBatEvent($row);
@@ -83,7 +83,7 @@ function profileBaseRankings(PDO $db, int $year, array $schedule, bool $career =
             $g=$games[$b['team']]??0;$qualified[$id]=$career?$ab>=3000:($g>0&&$s['pa']>=floor($g*3.1));
         }
         $result=profileMetricRanks($metrics,$qualified,['타율','OPS','OPS+']);
-        $q=$db->prepare('SELECT * FROM kbo_season_pitch_records WHERE league_level=1 AND '.$filter.' ORDER BY game_date,id');$q->execute($params);$pitch=[];
+        $q=$db->prepare('SELECT * FROM kbo_season_pitch_records WHERE league_level=1 AND '.$filter.profileNotTiebreakerSql().' ORDER BY game_date,id');$q->execute($params);$pitch=[];
         while($row=$q->fetch(PDO::FETCH_ASSOC)) {
             $id=$row['player_id'];if(!isset($pitch[$id]))$pitch[$id]=['team'=>null,'outs'=>0,'er'=>0,'erKnown'=>true,'facedKnown'=>true,'games'=>0,'wins'=>0,'holds'=>0,'saves'=>0];
             $p=&$pitch[$id];$p['team']=profileTeam($row['team']);$p['outs']+=profileInningOuts($row['inning']);$p['er']+=(int)$row['er'];$p['erKnown']=$p['erKnown']&&isset($row['er']);$p['facedKnown']=$p['facedKnown']&&isset($coverage[$id][$row['game_id']]);$p['games']++;
@@ -126,7 +126,7 @@ function profileEraPlusRankings(PDO $db,int $year,array $schedule,bool $career,i
     unset($season);
     $dir=sys_get_temp_dir().'/wesiper-profile-rankings-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('ERA+ cache unavailable');
-    $path=$dir.'/era-plus-v1-'.hash('sha256',json_encode([$career?null:$year,$career,$leagueLevel,$contextSchedule],JSON_THROW_ON_ERROR)).'.json';
+    $path=$dir.'/era-plus-v2-'.hash('sha256',json_encode([$career?null:$year,$career,$leagueLevel,$contextSchedule],JSON_THROW_ON_ERROR)).'.json';
     $read=static function()use($path){if(!is_file($path))return null;$cached=json_decode((string)file_get_contents($path),true);if(!is_array($cached)||time()-(int)($cached['createdAt']??0)>=300)return null;return profileRankingCachedPlayers($cached,profileRankingRevision());};
     if(($cached=$read())!==null)return $cached;
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('ERA+ cache lock unavailable');
@@ -147,9 +147,9 @@ function profileEraPlusRankings(PDO $db,int $year,array $schedule,bool $career,i
             $p['outs']+=(int)$outs;$p['er']+=(int)($row['er']??0);$p['known']=$p['known']&&$outs!==null&&isset($row['er']);
             $p['yearOuts'][$year]=($p['yearOuts'][$year]??0)+(int)$outs;$p['team']=profileTeam($row['team']??$row['team_name']??null);unset($p);
         };
-        $q=$db->prepare('SELECT player_id,game_date,team,inning,er FROM kbo_season_pitch_records r WHERE league_level='.$leagueLevel.' AND '.$filter.' ORDER BY game_date,id');$q->execute($params);while($row=$q->fetch(PDO::FETCH_ASSOC))$collect($row);$q->closeCursor();
+        $q=$db->prepare('SELECT player_id,game_date,team,inning,er FROM kbo_season_pitch_records r WHERE league_level='.$leagueLevel.' AND '.$filter.profileNotTiebreakerSql('r.game_id').' ORDER BY game_date,id');$q->execute($params);while($row=$q->fetch(PDO::FETCH_ASSOC))$collect($row);$q->closeCursor();
         if($leagueLevel===1&&($career||$year<=2000))foreach(profileHistoricalRows($db,'',true,'regular',$career?null:$year) as $row)$collect($row);
-        $q=$db->prepare('SELECT away_team,home_team FROM kbo_schedule WHERE league_level='.$leagueLevel.' AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL'.($leagueLevel===2?' AND (is_allstar IS NULL OR is_allstar=0)':''));$q->execute([$start,$end]);$games=[];while($row=$q->fetch(PDO::FETCH_ASSOC))foreach($row as $team){$team=profileTeam($team);$games[$team]=($games[$team]??0)+1;}
+        $q=$db->prepare('SELECT away_team,home_team FROM kbo_schedule WHERE league_level='.$leagueLevel.' AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL'.profileNotTiebreakerSql('game_code').($leagueLevel===2?' AND (is_allstar IS NULL OR is_allstar=0)':''));$q->execute([$start,$end]);$games=[];while($row=$q->fetch(PDO::FETCH_ASSOC))foreach($row as $team){$team=profileTeam($team);$games[$team]=($games[$team]??0)+1;}
         $metrics=[];$qualified=[];
         foreach($players as $id=>$p){$metrics[$id]=[['ERA+',profileEraPlusValue($p['yearOuts'],$p['known']?$p['er']:null,$leagueYears)]];$g=$games[$p['team']]??0;$qualified[$id]=$career?$p['outs']>=3000:($g>0&&$p['outs']>=$g*3);}
         $result=profileMetricRanks($metrics,$qualified,['ERA+']);

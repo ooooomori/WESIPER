@@ -11,7 +11,7 @@ try {
     $year = (int) (new DateTimeImmutable('now', new DateTimeZone('Asia/Seoul')))->format('Y');
     [$start,$end] = getKBOSchedule()[$year]['regular'] ?? [null,null];
     if (!$start || !$end) throw new RuntimeException('Missing regular season dates');
-    $query = $db->prepare('SELECT * FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL ORDER BY game_date, game_code');
+    $query = $db->prepare('SELECT * FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL AND game_code NOT IN (\'66661031KTSS02021\',\'66661001SKKT02024\') ORDER BY game_date, game_code'); // 순위 결정전(타이브레이커)은 정규시즌 성적에서 제외
     $query->execute([$start,$end]);
     $games=$query->fetchAll(PDO::FETCH_ASSOC);
     foreach($games as &$game) foreach(['away_team','home_team'] as $field) { $game[$field]=match(strtoupper($game[$field])) {'KT'=>'KT','LG'=>'LG','NC'=>'NC','KIA'=>'KIA','SSG'=>'SSG','SK'=>'SSG','HT'=>'KIA','OB'=>'두산','SS'=>'삼성','LT'=>'롯데','HH'=>'한화','WO'=>'키움',default=>$game[$field]}; } unset($game);

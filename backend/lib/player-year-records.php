@@ -73,7 +73,7 @@ function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule
     $dir=sys_get_temp_dir().'/wesiper-profile-year-records-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Year record cache unavailable');
     $key=hash('sha256',$pid.'|'.($pitcher?'pitcher':'batter').'|'.$seasonType.'|'.json_encode($schedule));
-    $path="$dir/v11-$key.json";$lock=fopen("$path.lock",'c');
+    $path="$dir/v12-$key.json";$lock=fopen("$path.lock",'c');
     if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Year record cache lock unavailable');
     try {
         // Shared with ranking caches: only a successful crawler update changes this revision.
@@ -114,7 +114,7 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
     if(!$bounds)return ['rows'=>[],'career'=>null];
     $table=$pitcher?'kbo_season_pitch_records':'kbo_season_records';
     $allstar=$leagueLevel===2?" AND NOT EXISTS (SELECT 1 FROM kbo_schedule s WHERE s.league_level=2 AND s.game_code=CONVERT(LEFT(`$table`.game_id,13) USING utf8mb4) COLLATE utf8mb4_general_ci AND s.is_allstar=1)":'';
-    $q=$db->prepare("SELECT * FROM `$table` WHERE league_level=$leagueLevel AND player_id=? AND (".implode(' OR ',$bounds).")$allstar ORDER BY game_date,game_id");$q->execute([$pid]);$all=$q->fetchAll(PDO::FETCH_ASSOC);
+    $q=$db->prepare("SELECT * FROM `$table` WHERE league_level=$leagueLevel AND player_id=? AND (".implode(' OR ',$bounds).")".profileNotTiebreakerSql()."$allstar ORDER BY game_date,game_id");$q->execute([$pid]);$all=$q->fetchAll(PDO::FETCH_ASSOC);
     if(!$all)return ['rows'=>[],'career'=>null];
     $years=[];foreach($all as $row)$years[(int)substr($row['game_date'],0,4)][]=$row;ksort($years);
     $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');

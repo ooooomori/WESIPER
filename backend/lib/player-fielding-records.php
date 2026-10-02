@@ -72,7 +72,7 @@ function profileFieldingRecords(PDO $db, string $pid, array $schedule): array {
     $fielding=profileFormatFieldingRecords($query->fetchAll(PDO::FETCH_ASSOC));
     $bounds=[];foreach($schedule as $year=>$season){if((int)$year<2001||(int)$year>2025)continue;[$start,$end]=$season['regular'];if($start&&$end)$bounds[]='(game_date BETWEEN '.$db->quote($start).' AND '.$db->quote($end).')';}
     if(!$bounds)return $fielding;
-    $query=$db->prepare("SELECT game_id,game_date,team,pos,is_gs FROM kbo_season_records WHERE league_level=1 AND player_id=? AND (".implode(' OR ',$bounds).") AND (pos LIKE '%지%' OR pos LIKE '%D%') ORDER BY game_date,game_id,PK");
+    $query=$db->prepare("SELECT game_id,game_date,team,pos,is_gs FROM kbo_season_records WHERE league_level=1 AND player_id=? AND (".implode(' OR ',$bounds).")".profileNotTiebreakerSql()." AND (pos LIKE '%지%' OR pos LIKE '%D%') ORDER BY game_date,game_id,PK");
     $query->execute([$pid]);
     return profileAddDesignatedHitterRecords($fielding,$query->fetchAll(PDO::FETCH_ASSOC),$schedule);
 }

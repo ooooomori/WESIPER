@@ -92,7 +92,7 @@ function profileCurrentStreaks(PDO $db, string $pid, array $schedule): ?array {
     if (!$start || !$end || $start > $today->format('Y-m-d')) return null;
     $end = min($end, $today->format('Y-m-d'));
     $stmt = $db->prepare('SELECT game_id,game_date,pa_result,sb,cs FROM kbo_season_records
-        WHERE league_level=1 AND player_id=? AND game_date BETWEEN ? AND ?
+        WHERE league_level=1 AND player_id=? AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().'
         ORDER BY game_date DESC,game_id DESC,PK DESC');
     $stmt->execute([$pid, $start, $end]);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
