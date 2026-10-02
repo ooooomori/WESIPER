@@ -31,7 +31,7 @@ function searchPlayerRecordStats(PDO $db, array $ids, bool $useCache=true): arra
     $cache=[]; $path=null; $createdAt=time();
     if ($useCache && (is_dir($dir)||@mkdir($dir,0700,true))) {
         $scope=$db->query('SELECT DATABASE(),@@hostname')->fetch(PDO::FETCH_NUM);
-        $path=$dir.'/v2-'.hash('sha256',json_encode([$scope,getenv('WESIPER_DB_CONFIG'),$schedule])).'.json';
+        $path=$dir.'/v3-'.hash('sha256',json_encode([$scope,getenv('WESIPER_DB_CONFIG'),$schedule])).'.json';
         $saved=is_file($path)?json_decode((string)@file_get_contents($path),true):null;
         if (is_array($saved) && ($saved['revision']??null)===$revision && ($saved['createdAt']??0)>time()-300 && ($saved['createdAt']??0)<=time()) { $cache=$saved['players']??[]; $createdAt=(int)$saved['createdAt']; }
     }
@@ -52,27 +52,32 @@ function searchPlayerRecordStats(PDO $db, array $ids, bool $useCache=true): arra
         }
         $q=$db->prepare($detail.implode(' UNION ALL ',$parts).') records GROUP BY player_id');
         $q->execute(array_merge($missing,$missing));
-        foreach ($missing as $id) $cache[$id]=['games'=>0,'last_year'=>null,'futures_games'=>0];
+        foreach ($missing as $id) $cache[$id]=['games'=>0,'last_year'=>null,'first_year'=>null,'futures_games'=>0];
         foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $row) $cache[$row['player_id']]['games']=(int)$row['games'];
         // Only indexed player/date columns are needed for the all-league year.
         $parts=[];
         foreach (['kbo_season_records','kbo_season_pitch_records'] as $table) {
-            $parts[]="SELECT player_id,YEAR(MAX(game_date)) last_year FROM `$table` WHERE league_level IN (1,2) AND player_id IN ($marks) GROUP BY player_id";
+            $parts[]="SELECT player_id,YEAR(MIN(game_date)) first_year,YEAR(MAX(game_date)) last_year FROM `$table` WHERE league_level IN (1,2) AND player_id IN ($marks) GROUP BY player_id";
         }
-        $q=$db->prepare('SELECT player_id,MAX(last_year) last_year FROM ('.implode(' UNION ALL ',$parts).') records GROUP BY player_id');
+        $q=$db->prepare('SELECT player_id,MIN(first_year) first_year,MAX(last_year) last_year FROM ('.implode(' UNION ALL ',$parts).') records GROUP BY player_id');
         $q->execute(array_merge($missing,$missing));
-        foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $row) $cache[$row['player_id']]['last_year']=$row['last_year']!==null?(int)$row['last_year']:null;
+        foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $cache[$row['player_id']]['last_year']=$row['last_year']!==null?(int)$row['last_year']:null;
+            $cache[$row['player_id']]['first_year']=$row['first_year']!==null?(int)$row['first_year']:null;
+        }
         $parts=[];
         foreach (['kbo_player_season_batting_totals','kbo_player_season_pitching_totals'] as $table) {
             $parts[]="SELECT player_id,year,CASE WHEN league_level=1 AND row_scope='total' AND series_id=0 AND year BETWEEN 1982 AND 2000 THEN games ELSE 0 END games FROM `$table` WHERE player_id IN ($marks) AND games>0";
         }
         // Annual total rows already include transfers; use the larger batting or
         // pitching total so historical pitchers' batting does not double-count.
-        $q=$db->prepare('SELECT player_id,SUM(games) games,MAX(year) last_year FROM (SELECT player_id,year,MAX(games) games FROM ('.implode(' UNION ALL ',$parts).') totals GROUP BY player_id,year) years GROUP BY player_id');
+        $q=$db->prepare('SELECT player_id,SUM(games) games,MIN(year) first_year,MAX(year) last_year FROM (SELECT player_id,year,MAX(games) games FROM ('.implode(' UNION ALL ',$parts).') totals GROUP BY player_id,year) years GROUP BY player_id');
         $q->execute(array_merge($missing,$missing));
         foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $id=$row['player_id']; $cache[$id]['games']+=(int)$row['games'];
             $cache[$id]['last_year']=max($cache[$id]['last_year']??0,(int)$row['last_year']);
+            // 데뷔 연도: 경기 기록과 연도별 통산 기록 중 더 이른 연도
+            $cache[$id]['first_year']=$cache[$id]['first_year']===null?(int)$row['first_year']:min($cache[$id]['first_year'],(int)$row['first_year']);
         }
         // Futures counts are needed only for players with no first-team games.
         // Keep the covering-index query limited to those matching players.

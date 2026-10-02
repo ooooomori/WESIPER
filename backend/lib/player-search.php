@@ -32,6 +32,7 @@ function searchKboPlayers(PDO $db, string $keyword, bool $useStatsCache=true): a
         $row['first_team_games']=$stats[$row['player_id']]['games']??0;
         $row['futures_games']=$stats[$row['player_id']]['futures_games']??0;
         $row['last_record_year']=$stats[$row['player_id']]['last_year']??null;
+        $row['first_record_year']=$stats[$row['player_id']]['first_year']??null;
         $row['_stable_order']=$index;
     }
     unset($row);

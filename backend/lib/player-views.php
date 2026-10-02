@@ -54,7 +54,10 @@ function popularPlayers(PDO $db, string $today, int $limit = 10, int $days = PLA
     $rows = array_slice($stmt->fetchAll(PDO::FETCH_ASSOC), 0, max(1, min(30, $limit)));
     $retired = array_filter($rows, static fn($row) => (string)$row['is_kbodle'] === '0' && trim((string)$row['stored_team']) === '');
     $lastTeams = $retired && function_exists('searchPlayerLastTeams') ? searchPlayerLastTeams($db, array_column($retired, 'player_id')) : [];
-    return array_map(static function (array $row) use ($lastTeams): array {
+    // 은퇴 연도가 비어 있는 은퇴 선수는 검색 API와 같은 방식(경기 기록·연도별 통산 기록의 마지막 연도)으로 채운다.
+    $needYear = array_filter($rows, static fn($row) => (string)$row['is_kbodle'] === '0');
+    $recordStats = $needYear && function_exists('searchPlayerRecordStats') ? searchPlayerRecordStats($db, array_column($needYear, 'player_id')) : [];
+    return array_map(static function (array $row) use ($lastTeams, $recordStats): array {
         $active = (string)$row['is_kbodle'] !== '0';
         $storedTeam = trim((string)($row['stored_team'] ?? '')) ?: null;
         $formerTeam = $active ? null : ($storedTeam ?? (isset($lastTeams[$row['player_id']]) ? trim((string)$lastTeams[$row['player_id']]) : null));
@@ -68,6 +71,8 @@ function popularPlayers(PDO $db, string $today, int $limit = 10, int $days = PLA
             'FormerTeam' => $formerTeam,
             'Draft' => $row['draft'] ?? null,
             'Retire' => $row['retire'] ?? null,
+            'LastRecordYear' => !$active && empty($row['retire']) ? ($recordStats[$row['player_id']]['last_year'] ?? null) : null,
+            'FirstRecordYear' => !$active ? ($recordStats[$row['player_id']]['first_year'] ?? null) : null,
             'BackNo' => $row['back_no'],
             'IsActive' => $active,
             'IsNumberRetired' => $numberRetired ? 1 : 0,

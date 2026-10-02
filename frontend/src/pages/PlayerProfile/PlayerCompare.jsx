@@ -47,7 +47,7 @@ function PlayerSearch({ onSelect, open, setOpen }) {
     useEffect(() => { if (open) input.current?.focus(); }, [open]);
     useEffect(() => {
         const query = keyword.trim();
-        if (query.length < 2 && query !== '홀') { setResults({ status: 'idle', list: [] }); return; }
+        if (query.length < 2 && !['홀', '필', '얀'].includes(query)) { setResults({ status: 'idle', list: [] }); return; }
         const controller = new AbortController();
         setResults(previous => ({ ...previous, status: 'loading' }));
         const timer = window.setTimeout(() => {
@@ -124,12 +124,15 @@ export default function PlayerCompare({ pid, player, getTeamLogo, getTeamColor }
     return <section className="profile-compare">
         <div className="profile-heading profile-compare-heading">
             <h2>선수 비교</h2>
+            {switches}
+        </div>
+        <div className="profile-compare-actions">
             <button type="button" className="compare-add" disabled={full} aria-expanded={searchOpen} onClick={() => setSearchOpen(value => !value)} title={full ? `최대 ${MAX_PLAYERS}명까지 비교할 수 있어요` : undefined}>
                 <span aria-hidden="true">+</span>{full ? `최대 ${MAX_PLAYERS}명` : '선수 추가'}
             </button>
         </div>
         <PlayerSearch onSelect={add} open={searchOpen && !full} setOpen={setSearchOpen} />
-        <CompareTable entries={entries} mode={mode} kind={kind} switches={switches} onYear={setYear} onRemove={remove} getTeamLogo={getTeamLogo} getTeamColor={getTeamColor} />
+        <CompareTable entries={entries} mode={mode} kind={kind} onYear={setYear} onRemove={remove} getTeamLogo={getTeamLogo} getTeamColor={getTeamColor} />
     </section>;
 }
 
@@ -166,7 +169,7 @@ function CompareTable({ entries, mode, kind, switches, onYear, onRemove, getTeam
         <table className="profile-compare-table" style={{ '--compare-cols': columns.length }}>
             <colgroup><col className="compare-col-label" />{columns.map(({ entry }) => <col key={entry.id} />)}</colgroup>
             <thead><tr>
-                <th scope="col" className="compare-corner">{switches}</th>
+                <th scope="col" className="compare-corner" aria-label="기록 항목" />
                 {columns.map(({ entry, data }, index) => <CompareColumnHead key={entry.id} entry={entry} data={data} kind={kind} mode={mode} onYear={year => onYear(entry.id, year)} onRemove={index === 0 ? null : () => onRemove(entry.id)} getTeamLogo={getTeamLogo} getTeamColor={getTeamColor} />)}
             </tr></thead>
             <tbody>

@@ -47,7 +47,7 @@ foreach ($events as $event) {
   if ($count!==$expected[$year]) throw new RuntimeException('Roster count '.$year);
 }
 if (count($eventYears)!==5 || count($rows)!==114) throw new RuntimeException('Total mismatch');
-$groups=$pdo->query("SELECT type,year,COUNT(*) AS n,COUNT(note) AS noted FROM kbo_player_career WHERE category='national' GROUP BY type,year")->fetchAll(PDO::FETCH_ASSOC);
+$groups=$pdo->query("SELECT type,year,COUNT(*) AS n,COUNT(note) AS noted FROM kbo_player_career WHERE category='national' AND (type<>'WBC' OR country='한국') GROUP BY type,year")->fetchAll(PDO::FETCH_ASSOC);
 $existingNational=0;
 foreach ($groups as $group) {
   $type=$group['type'];$year=(int)$group['year'];
@@ -65,7 +65,7 @@ $pdo->exec("ALTER TABLE kbo_player_career
   DROP CONSTRAINT chk_career_national,
   ADD CONSTRAINT chk_career_note CHECK (
     note IS NULL
-    OR (category='national' AND note IN ('금메달','동메달','우승','준우승','5위','3위','4위','8위','1라운드 탈락'))
+    OR (category='national' AND note IN ('금메달','동메달','우승','준우승','5위','3위','4위','8위','1라운드 탈락','2라운드 탈락','4강','8강'))
     OR (category='award' AND type='올스타' AND note='MVP')
     OR (category='award' AND type='우승' AND note IN ('한국시리즈 MVP','플레이오프 MVP','준플레이오프 MVP','한국시리즈 MVP, 플레이오프 MVP','한국시리즈 MVP, 준플레이오프 MVP','플레이오프 MVP, 준플레이오프 MVP','한국시리즈 MVP, 플레이오프 MVP, 준플레이오프 MVP'))
   ),
@@ -73,8 +73,8 @@ $pdo->exec("ALTER TABLE kbo_player_career
     (category='national' AND type IN ('WBC','프리미어12','APBC','아시안게임','올림픽') AND team IS NULL AND month IS NULL AND pos IS NULL)
     OR (category='award' AND type IN ('골든글러브','MVP','올스타','신인왕','수비상','월간 MVP','한국시리즈 MVP','우승') AND team IS NOT NULL AND year IS NOT NULL)
   )");
-$update=$pdo->prepare("UPDATE kbo_player_career SET note=? WHERE category='national' AND type=? AND year=? AND note IS NULL");
-$insert=$pdo->prepare("INSERT INTO kbo_player_career (player_id,category,type,team,year,month,pos,note) VALUES (?,'national','아시안게임',NULL,?,NULL,NULL,?)");
+$update=$pdo->prepare("UPDATE kbo_player_career SET note=? WHERE category='national' AND type=? AND year=? AND note IS NULL AND (type<>'WBC' OR country='한국')");
+$insert=$pdo->prepare("INSERT INTO kbo_player_career (player_id,category,type,team,country,year,month,pos,note) VALUES (?,'national','아시안게임',NULL,'한국',?,NULL,NULL,?)");
 $updated=0;$pdo->beginTransaction();
 try {
   foreach ($groups as $group) { $update->execute([$results[$group['type']][(int)$group['year']],$group['type'],(int)$group['year']]);$updated+=$update->rowCount(); }

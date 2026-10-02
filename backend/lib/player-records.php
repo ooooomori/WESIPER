@@ -93,9 +93,8 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
     if (!$pitcher) {
         $leagueTotals=['cum_ab'=>0,'cum_h'=>0,'cum_ob'=>0,'cum_sf'=>0,'cum_tb'=>0];
         $years=array_unique(array_map(static fn($row)=>(int)substr($row['game_date'],0,4),$rows));
-        $ls=$db->prepare('SELECT cum_ab,cum_h,cum_ob,cum_sf,cum_tb FROM kbo_league_records WHERE year=? AND game_date BETWEEN ? AND ? ORDER BY game_date DESC LIMIT 1');
-        if($leagueLevel===1)foreach($years as $y) { $ls->execute([$y,...$schedule[$y]['regular']]); $l=$ls->fetch(PDO::FETCH_ASSOC); if($l) foreach($leagueTotals as $key=>$value) $leagueTotals[$key]+=(int)$l[$key]; }
-        if($leagueLevel===2){require_once __DIR__.'/player-year-league.php';$leagueYears=profileLeaguePitchingContexts($db,$leagueSchedule,2);foreach($years as $y)foreach($leagueTotals as $key=>$value)$leagueTotals[$key]+=(int)($leagueYears[$y][$key]??0);}
+        $leagueYears=profileBattingLeagueContexts($db,$schedule,$seasonType,$leagueLevel);
+        $leagueTotals=profileBattingLeagueTotals(array_intersect_key($leagueYears,array_fill_keys($years,true)))??$leagueTotals;
         $ld=$leagueTotals['cum_ab']+$leagueTotals['cum_ob']+$leagueTotals['cum_sf'];
         $league=['obp'=>$ld?($leagueTotals['cum_h']+$leagueTotals['cum_ob'])/$ld:null,'slg'=>$leagueTotals['cum_ab']?$leagueTotals['cum_tb']/$leagueTotals['cum_ab']:null];
         $stats=profileBatStats($rows,$league);

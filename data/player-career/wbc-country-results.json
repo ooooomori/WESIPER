@@ -1,0 +1,386 @@
+[
+    {
+        "year": 2006,
+        "country": "멕시코",
+        "note": "2라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2006-03-01&endDate=2006-03-31",
+        "lastGamePk": 39935,
+        "rows": [
+            1388,
+            1402
+        ]
+    },
+    {
+        "year": 2006,
+        "country": "베네수엘라",
+        "note": "2라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2006-03-01&endDate=2006-03-31",
+        "lastGamePk": 39932,
+        "rows": [
+            1397
+        ]
+    },
+    {
+        "year": 2006,
+        "country": "쿠바",
+        "note": "준우승",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2006-03-01&endDate=2006-03-31",
+        "lastGamePk": 39938,
+        "rows": [
+            1389
+        ]
+    },
+    {
+        "year": 2009,
+        "country": "네덜란드",
+        "note": "2라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2009-03-01&endDate=2009-03-31",
+        "lastGamePk": 251361,
+        "rows": [
+            1597
+        ]
+    },
+    {
+        "year": 2009,
+        "country": "멕시코",
+        "note": "2라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2009-03-01&endDate=2009-03-31",
+        "lastGamePk": 251355,
+        "rows": [
+            1598,
+            1623
+        ]
+    },
+    {
+        "year": 2009,
+        "country": "캐나다",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2009-03-01&endDate=2009-03-31",
+        "lastGamePk": 251344,
+        "rows": [
+            1600,
+            1610
+        ]
+    },
+    {
+        "year": 2009,
+        "country": "쿠바",
+        "note": "2라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2009-03-01&endDate=2009-03-31",
+        "lastGamePk": 251357,
+        "rows": [
+            1599
+        ]
+    },
+    {
+        "year": 2009,
+        "country": "호주",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2009-03-01&endDate=2009-03-31",
+        "lastGamePk": 251339,
+        "rows": [
+            1596,
+            1624
+        ]
+    },
+    {
+        "year": 2013,
+        "country": "네덜란드",
+        "note": "4강",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2013-03-01&endDate=2013-03-31",
+        "lastGamePk": 361289,
+        "rows": [
+            1897
+        ]
+    },
+    {
+        "year": 2013,
+        "country": "멕시코",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2013-03-01&endDate=2013-03-31",
+        "lastGamePk": 361273,
+        "rows": [
+            1895,
+            1924
+        ]
+    },
+    {
+        "year": 2013,
+        "country": "캐나다",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2013-03-01&endDate=2013-03-31",
+        "lastGamePk": 361275,
+        "rows": [
+            1896
+        ]
+    },
+    {
+        "year": 2013,
+        "country": "쿠바",
+        "note": "2라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2013-03-01&endDate=2013-03-31",
+        "lastGamePk": 361280,
+        "rows": [
+            1893,
+            1898
+        ]
+    },
+    {
+        "year": 2013,
+        "country": "푸에르토리코",
+        "note": "준우승",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2013-03-01&endDate=2013-03-31",
+        "lastGamePk": 361290,
+        "rows": [
+            1894
+        ]
+    },
+    {
+        "year": 2013,
+        "country": "호주",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2013-03-01&endDate=2013-03-31",
+        "lastGamePk": 361262,
+        "rows": [
+            1899,
+            1920,
+            1926
+        ]
+    },
+    {
+        "year": 2017,
+        "country": "네덜란드",
+        "note": "4강",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2017-03-01&endDate=2017-03-31",
+        "lastGamePk": 486939,
+        "rows": [
+            2207
+        ]
+    },
+    {
+        "year": 2017,
+        "country": "도미니카공화국",
+        "note": "2라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2017-03-01&endDate=2017-03-31",
+        "lastGamePk": 486937,
+        "rows": [
+            2202,
+            2214
+        ]
+    },
+    {
+        "year": 2017,
+        "country": "일본",
+        "note": "4강",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2017-03-01&endDate=2017-03-31",
+        "lastGamePk": 486940,
+        "rows": [
+            2204,
+            4505
+        ]
+    },
+    {
+        "year": 2017,
+        "country": "중국",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2017-03-01&endDate=2017-03-31",
+        "lastGamePk": 486902,
+        "rows": [
+            2210
+        ]
+    },
+    {
+        "year": 2017,
+        "country": "캐나다",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2017-03-01&endDate=2017-03-31",
+        "lastGamePk": 486916,
+        "rows": [
+            2209,
+            2215
+        ]
+    },
+    {
+        "year": 2017,
+        "country": "콜롬비아",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2017-03-01&endDate=2017-03-31",
+        "lastGamePk": 486915,
+        "rows": [
+            2211,
+            2212,
+            2216
+        ]
+    },
+    {
+        "year": 2017,
+        "country": "호주",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2017-03-01&endDate=2017-03-31",
+        "lastGamePk": 486901,
+        "rows": [
+            2206,
+            2217
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "네덜란드",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719536,
+        "rows": [
+            2642
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "대만",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719534,
+        "rows": [
+            2646
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "미국",
+        "note": "준우승",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719497,
+        "rows": [
+            2638
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "베네수엘라",
+        "note": "8강",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719501,
+        "rows": [
+            2626
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "이스라엘",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719504,
+        "rows": [
+            2624
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "중국",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719525,
+        "rows": [
+            2637
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "캐나다",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719513,
+        "rows": [
+            2636
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "콜롬비아",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719515,
+        "rows": [
+            2647
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "쿠바",
+        "note": "4강",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719498,
+        "rows": [
+            2625
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "파나마",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719535,
+        "rows": [
+            2651
+        ]
+    },
+    {
+        "year": 2023,
+        "country": "호주",
+        "note": "8강",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31",
+        "lastGamePk": 719503,
+        "rows": [
+            2627,
+            2628,
+            2629,
+            2650,
+            4509
+        ]
+    },
+    {
+        "year": 2026,
+        "country": "베네수엘라",
+        "note": "우승",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2026-03-01&endDate=2026-03-31",
+        "lastGamePk": 788094,
+        "rows": [
+            2720
+        ]
+    },
+    {
+        "year": 2026,
+        "country": "캐나다",
+        "note": "8강",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2026-03-01&endDate=2026-03-31",
+        "lastGamePk": 788100,
+        "rows": [
+            2721,
+            2724
+        ]
+    },
+    {
+        "year": 2026,
+        "country": "파나마",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2026-03-01&endDate=2026-03-31",
+        "lastGamePk": 788133,
+        "rows": [
+            2717,
+            2741
+        ]
+    },
+    {
+        "year": 2026,
+        "country": "호주",
+        "note": "1라운드 탈락",
+        "source": "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2026-03-01&endDate=2026-03-31",
+        "lastGamePk": 788112,
+        "rows": [
+            2722,
+            2725,
+            2726,
+            2740,
+            4510
+        ]
+    }
+]

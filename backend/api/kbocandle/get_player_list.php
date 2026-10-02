@@ -20,10 +20,12 @@ try {
         $player_id = $row['player_id'];
         $formerTeam = null;
         $lastRecordYear = null;
+        $firstRecordYear = null;
         if ((string)$row['is_kbodle'] === '0') {
             // Recent first-team/futures records take priority over stored profile teams.
             $formerTeam = $lastTeams[$player_id] ?? (trim((string)($row['stored_team'] ?? '')) ?: null);
             $lastRecordYear = empty($row['retire']) ? $row['last_record_year'] : null;
+            $firstRecordYear = $row['first_record_year'] ?? null;
             if ($formerTeam) $formerTeam = trim($formerTeam);
         }
 
@@ -44,6 +46,7 @@ try {
             "Draft" => $row['draft'] ?? null,
             "Retire" => $row['retire'] ?? null,
             "LastRecordYear" => $lastRecordYear,
+            "FirstRecordYear" => $firstRecordYear,
             "BackNo" => $row['back_no'],
             "IsActive" => (string)$row['is_kbodle'] !== '0',
             "IsNumberRetired" => (int)($row['is_number_retired'] ?? 0),

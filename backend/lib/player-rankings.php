@@ -35,7 +35,7 @@ function profileBaseRankings(PDO $db, int $year, array $schedule, bool $career =
     if(!is_dir($dir)&&!@mkdir($dir,0700,true)) throw new RuntimeException('Ranking cache unavailable');
     // Career totals must also refresh when historical season boundaries expand.
     $scheduleKey=hash('sha256',json_encode($schedule,JSON_THROW_ON_ERROR));
-    $path=$career?"$dir/v6-career-$scheduleKey.json":"$dir/v2-$year.json";$lock=fopen("$path.lock",'c');
+    $path=$career?"$dir/v7-career-$scheduleKey.json":"$dir/v3-$year.json";$lock=fopen("$path.lock",'c');
     if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Ranking lock unavailable');
     try {
         // The crawler atomically replaces this revision only after its record updates succeed.
@@ -70,18 +70,15 @@ function profileBaseRankings(PDO $db, int $year, array $schedule, bool $career =
             foreach(array_keys($bat[$id]['sum']) as $key){if(!isset($s[$key]))$bat[$id]['missing'][$key]=true;else $bat[$id]['sum'][$key]+=$s[$key];}
         }
         // Use the same league baseline as the profile OPS+ calculation.
-        $lq=$db->prepare('SELECT cum_ab,cum_h,cum_ob,cum_sf,cum_tb FROM kbo_league_records WHERE year=? AND game_date BETWEEN ? AND ? ORDER BY game_date DESC LIMIT 1');$lq->execute([$year,$start,$end]);$l=$lq->fetch(PDO::FETCH_ASSOC);
-        $den=$l?($l['cum_ab']+$l['cum_ob']+$l['cum_sf']):0;
+        $leagueYears=profileBattingLeagueContexts($db,$schedule);
+        $l=$leagueYears[$year]??null;$den=$l?($l['cum_ab']+$l['cum_ob']+$l['cum_sf']):0;
         $league=['obp'=>$den?($l['cum_h']+$l['cum_ob'])/$den:null,'slg'=>($l['cum_ab']??0)?$l['cum_tb']/$l['cum_ab']:null];
-        $leagueYears=[];
-        if($career)foreach($schedule as $y=>$season){$lq->execute([$y,...$season['regular']]);$leagueYears[$y]=$lq->fetch(PDO::FETCH_ASSOC);}
         $metrics=[];$qualified=[];
         foreach($bat as $id=>$b) {
             if($career){$totals=['cum_ab'=>0,'cum_h'=>0,'cum_ob'=>0,'cum_sf'=>0,'cum_tb'=>0];foreach(array_keys($b['years']) as $y)if($leagueYears[$y]??null)foreach($totals as $key=>$v)$totals[$key]+=(int)$leagueYears[$y][$key];$ld=$totals['cum_ab']+$totals['cum_ob']+$totals['cum_sf'];$league=['obp'=>$ld?($totals['cum_h']+$totals['cum_ob'])/$ld:null,'slg'=>$totals['cum_ab']?$totals['cum_tb']/$totals['cum_ab']:null];}
             $s=$b['sum'];$ab=$s['ab'];$den=$ab+$s['bb']+$s['hbp']+$s['sf'];$obp=$den&&!isset($b['missing']['sf'])?($s['h']+$s['bb']+$s['hbp'])/$den:null;$slg=$ab?$s['tb']/$ab:null;
             $ops=$obp!==null&&$slg!==null?number_format($obp+$slg,3):null;
             $plus=$obp!==null&&$slg!==null&&$league['obp']&&$league['slg']?round(100*($obp/$league['obp']+$slg/$league['slg']-1)):null;
-            if($career&&array_filter(array_keys($b['years']),static fn($y)=>$y<=2000))$plus=null;
             $metrics[$id]=[['타율',$ab?number_format($s['h']/$ab,3):null],['안타',$s['h']],['홈런',$s['hr']],['타점',isset($b['missing']['rbi'])?null:$s['rbi']],['OPS',$ops],['도루',$s['sb']],['득점',isset($b['missing']['r'])?null:$s['r']],['OPS+',$plus]];
             $g=$games[$b['team']]??0;$qualified[$id]=$career?$ab>=3000:($g>0&&$s['pa']>=floor($g*3.1));
         }

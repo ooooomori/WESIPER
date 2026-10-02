@@ -19,6 +19,8 @@ function profileYearTotals(array $rows, bool $pitcher, array $faced, array $leag
         foreach(['r','er'] as $key)$s[$key]=profileSum($rows,$key);
         foreach(['so','h','hr','bb','hbp'] as $key)$s[$key]=$known?profileSum($events,$key):null;
         foreach(['wins'=>['승','W','승리'],'losses'=>['패','L','패전'],'saves'=>['세','S','세이브'],'holds'=>['홀','H','홀드']] as $key=>$labels)$s[$key]=count(array_filter($rows,static fn($r)=>in_array($r['record'],$labels,true)));
+        // 승률 = 승 / (승+패). 승패가 없으면 비운다.
+        $s['winPct']=$s['wins']+$s['losses']>0?number_format($s['wins']/($s['wins']+$s['losses']),3,'.',''):null;
         $s['innings']=profileInningText($outs);
         $s['era']=$outs&&$s['er']!==null?number_format($s['er']*27/$outs,2):null;
         $s['whip']=$outs&&$known?number_format(($s['h']+$s['bb'])*3/$outs,2):null;
@@ -34,6 +36,7 @@ function profileYearTotals(array $rows, bool $pitcher, array $faced, array $leag
     $ld=($league['cum_ab']??0)+($league['cum_ob']??0)+($league['cum_sf']??0);
     $lobp=$ld?($league['cum_h']+$league['cum_ob'])/$ld:0;$lslg=($league['cum_ab']??0)?$league['cum_tb']/$league['cum_ab']:0;
     $s['opsPlus']=$obp!==null&&$slg!==null&&$lobp&&$lslg?round(100*($obp/$lobp+$slg/$lslg-1)):null;
+    $s['opsLeagueYears']=$league['battingYears']??[];
     // Same effective OPS adjustment as kbocandle: steals add bases,
     // caught stealing removes the preceding hit/on-base credit.
     $eab=$eh=$etb=$eob=0;
@@ -70,7 +73,7 @@ function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule
     $dir=sys_get_temp_dir().'/wesiper-profile-year-records-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Year record cache unavailable');
     $key=hash('sha256',$pid.'|'.($pitcher?'pitcher':'batter').'|'.$seasonType.'|'.json_encode($schedule));
-    $path="$dir/v8-$key.json";$lock=fopen("$path.lock",'c');
+    $path="$dir/v11-$key.json";$lock=fopen("$path.lock",'c');
     if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Year record cache lock unavailable');
     try {
         // Shared with ranking caches: only a successful crawler update changes this revision.
@@ -96,7 +99,15 @@ function profileComputeYearRecords(PDO $db, string $pid, bool $pitcher, array $s
     if(!$historical['rows'])return $modern;
     $rows=array_merge($historical['rows'],$modern['rows']);usort($rows,static fn($a,$b)=>$a['year']<=>$b['year']);
     $career=profileMergeSeasonStats(array_values(array_filter([$historical['career'],$modern['career']],static fn($s)=>$s!==null)),$pitcher);$career['position']=$modern['career']['position']??null;
-    return ['rows'=>$rows,'career'=>$career,'historicalSeasonTotalsIncluded'=>true];
+    // 팀별 통산: 시즌 합계(1982~2000)와 경기 기록(2001~) 중 같은 팀 이름끼리 합친다.
+    $byTeam=[];
+    foreach([$historical['careerTeams']??[],$modern['careerTeams']??[]] as $list)foreach($list as $item){
+        $team=$item['team'];$byTeam[$team]??=['team'=>$team,'firstYear'=>$item['firstYear'],'lastYear'=>$item['lastYear'],'parts'=>[]];
+        $byTeam[$team]['firstYear']=min($byTeam[$team]['firstYear'],$item['firstYear']);$byTeam[$team]['lastYear']=max($byTeam[$team]['lastYear'],$item['lastYear']);$byTeam[$team]['parts'][]=$item['stats'];
+    }
+    $careerTeams=[];foreach($byTeam as $item){$stats=count($item['parts'])===1?$item['parts'][0]:profileMergeSeasonStats($item['parts'],$pitcher);$careerTeams[]=['team'=>$item['team'],'firstYear'=>$item['firstYear'],'lastYear'=>$item['lastYear'],'stats'=>$stats];}
+    usort($careerTeams,static fn($a,$b)=>$a['firstYear']<=>$b['firstYear']);
+    return ['rows'=>$rows,'career'=>$career,'careerTeams'=>$careerTeams,'historicalSeasonTotalsIncluded'=>true];
 }
 function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule, int $leagueLevel=1, string $seasonType='regular'): array {
     $bounds=[];foreach($schedule as $season){[$a,$b]=$season['regular'];if($a&&$b)$bounds[]='(game_date BETWEEN '.$db->quote($a).' AND '.$db->quote($b).')';}
@@ -119,9 +130,10 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
     if($pitcher){$ids=array_values(array_unique(array_column($all,'game_id')));$q=$db->prepare('SELECT game_id,pa_result,sb,cs,run_out,rbi,r FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND pitcher_id=? AND game_id IN ('.implode(',',array_fill(0,count($ids),'?')).')');$q->execute([$pid,...$ids]);while($e=$q->fetch(PDO::FETCH_ASSOC))$faced[$e['game_id']][]=profileAdvancedBatEvent($e);$pitchContext=profilePitcherGameContexts($db,$all,$leagueLevel);$leaguePitch=profileLeaguePitchingContexts($db,$schedule,$leagueLevel);}
     if(!$pitcher&&$seasonType!=='regular')$leaguePitch=profileLeaguePitchingContexts($db,$schedule,$leagueLevel);
     $out=[];$leagueAll=['cum_ab'=>0,'cum_h'=>0,'cum_ob'=>0,'cum_sf'=>0,'cum_tb'=>0];
-    $lq=$db->prepare('SELECT cum_ab,cum_h,cum_ob,cum_sf,cum_tb FROM kbo_league_records WHERE year=? AND game_date BETWEEN ? AND ? ORDER BY game_date DESC LIMIT 1');
+    $battingYears=$pitcher?[]:profileBattingLeagueContexts($db,$schedule,$seasonType,$leagueLevel);
     foreach($years as $year=>$rows){
-        $league=$leaguePitch[$year]??[];if($seasonType==='regular'){$lq->execute([$year,...$schedule[$year]['regular']]);$league=$lq->fetch(PDO::FETCH_ASSOC)?:[];}foreach($leagueAll as $key=>$v)$leagueAll[$key]+=(int)($league[$key]??0);
+        $league=$pitcher?($leaguePitch[$year]??[]):($battingYears[$year]??[]);foreach(['cum_ab','cum_h','cum_ob','cum_sf','cum_tb'] as $key)$leagueAll[$key]+=(int)($league[$key]??0);
+        if(!$pitcher){$league['battingYears']=[$year=>$battingYears[$year]??null];$leagueAll['battingYears'][$year]=$battingYears[$year]??null;}
         $league['pitchingYears']=$leaguePitch;$age=profileAgeOnJulyFirst($bio['birth']??null,$year);
         $teams=[];foreach($rows as $row)$teams[trim((string)$row['team'])?:'소속 미확인'][]=$row;
         $children=[];foreach($teams as $team=>$events)$children[]=['year'=>$year,'team'=>$team,'age'=>$age,'position'=>$pitcher?null:($year===$currentYear?$currentPosition:profileYearPosition($events)),'stats'=>profileYearTotals($events,$pitcher,$faced,$league,$pitchContext)];
@@ -130,5 +142,15 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
     $leagueAll['pitchingYears']=$leaguePitch;
     $career=profileYearTotals($all,$pitcher,$faced,$leagueAll,$pitchContext);
     $career['position']=$pitcher?null:profileYearPosition($all);
-    return ['rows'=>$out,'career'=>$career];
+    // 팀별 통산: 같은 팀에서 뛴 경기만 모아 계산한다(OPS+ 리그 기준은 그 팀에서 뛴 시즌들).
+    $teamEvents=[];foreach($all as $row)$teamEvents[trim((string)$row['team'])?:'소속 미확인'][]=$row;
+    $careerTeams=[];
+    foreach($teamEvents as $team=>$events){
+        $teamYears=array_values(array_unique(array_map(static fn($r)=>(int)substr($r['game_date'],0,4),$events)));
+        $teamLeague=['cum_ab'=>0,'cum_h'=>0,'cum_ob'=>0,'cum_sf'=>0,'cum_tb'=>0,'pitchingYears'=>$leaguePitch];
+        if(!$pitcher)foreach($teamYears as $y){$l=$battingYears[$y]??[];foreach(['cum_ab','cum_h','cum_ob','cum_sf','cum_tb'] as $key)$teamLeague[$key]+=(int)($l[$key]??0);$teamLeague['battingYears'][$y]=$battingYears[$y]??null;}
+        $stats=profileYearTotals($events,$pitcher,$faced,$teamLeague,$pitchContext);$stats['position']=$pitcher?null:profileYearPosition($events);
+        $careerTeams[]=['team'=>$team,'firstYear'=>min($teamYears),'lastYear'=>max($teamYears),'stats'=>$stats];
+    }
+    return ['rows'=>$out,'career'=>$career,'careerTeams'=>$careerTeams];
 }

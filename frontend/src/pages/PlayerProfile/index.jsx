@@ -11,6 +11,7 @@ import useTableDrag from './useTableDrag';
 import { recordColumnWidth } from './recordTableLayout';
 import { loadYearRecords } from './yearRecordsCache';
 import { teamFullName } from '../../lib/teamFullName';
+import { addRecentPlayer } from '../../lib/recentPlayers';
 import kboSmallLogo from '../../assets/images/s-logos/kbo-white-small.svg';
 import ulsanLogo from '../../assets/images/logos/ulsan-logo.png';
 import ulsanSmallLogo from '../../assets/images/s-logos/ulsan-small-logo.png';
@@ -29,6 +30,21 @@ import olympicLogo from '../../assets/images/logos/olympic.svg';
 
 const awardImages = { MVP: mvpAward, '골든글러브': goldenGloveAward, '수비상': defenseAward, '신인왕': rookieAward, '월간 MVP': monthlyMvpAward, '올스타': allStarAward, '우승': championshipAward };
 const nationalImages = { WBC: wbcLogo, '프리미어12': premier12Logo, APBC: apbcLogo, '아시안게임': asianGamesLogo, '올림픽': olympicLogo };
+const nationalTeamLogos = import.meta.glob('../../assets/images/logos/*.{svg,webp,png,jpg}', { eager: true, query: '?url', import: 'default' });
+// 국가대표팀 로고와 헤더 색. 파일은 logos 폴더의 <code>.<ext> / <code>-small.<ext>, 5번째 값은 흰색 로고 여부
+const nationalTeams = {
+    한국: ['korea', '대한민국', '#0d2a5c', '#c8102e', true], 대한민국: ['korea', '대한민국', '#0d2a5c', '#c8102e', true],
+    일본: ['japan', '일본', '#0b1f4b', '#2c4f9e'], 대만: ['taiwan', '대만', '#0b3270', '#2f6fd0'], 중국: ['china', '중국', '#8f0d1d', '#d62a2a'],
+    미국: ['usa', '미국', '#0a3161', '#b31942'], 캐나다: ['canada', '캐나다', '#7a0c1c', '#d52b1e'], 멕시코: ['mexico', '멕시코', '#004d35', '#ce1126'],
+    호주: ['australia', '호주', '#00573a', '#d4a300'], 이스라엘: ['israel', '이스라엘', '#0b2f8a', '#3a6fe0'],
+};
+const nationalTeam = country => nationalTeams[String(country || '한국').trim()] || null;
+const nationalTeamLogo = (country, small = false) => {
+    const code = nationalTeam(country)?.[0];
+    if (!code) return null;
+    const find = names => names.flatMap(name => ['svg', 'webp', 'png', 'jpg'].map(ext => nationalTeamLogos[`../../assets/images/logos/${name}.${ext}`])).find(Boolean) || null;
+    return find(small ? [`${code}-small`, code] : [code, `${code}-small`]);
+};
 const awardOrder = ['MVP', '골든글러브', '수비상', '올스타', '신인왕', '월간 MVP', '우승'];
 const nationalOrder = ['WBC', '올림픽', '프리미어12', '아시안게임', 'APBC'];
 const titleholderTypes = [['타율', '타격왕'], ['안타', '최다안타'], ['홈런', '홈런왕'], ['타점', '타점왕'], ['득점', '득점왕'], ['도루', '도루왕'], ['출루율', '출루왕'], ['장타율', '장타왕'], ['승리타점', '승리타점 1위'], ['다승', '다승왕'], ['평균자책점', '평균자책점왕'], ['탈삼진', '탈삼진왕'], ['세이브', '세이브왕'], ['홀드', '홀드왕'], ['승률', '승률왕'], ['세이브포인트', '세이브포인트 1위']];
@@ -231,6 +247,21 @@ function PlayerMovements({ movements = [] }) {
     </section>;
 }
 const careerResultTone = note => /금메달|^우승$/.test(note || '') ? 'gold' : /은메달|준우승/.test(note || '') ? 'silver' : /동메달|^3위$/.test(note || '') ? 'bronze' : 'plain';
+const recentWeekday = date => ['일', '월', '화', '수', '목', '금', '토'][new Date(`${date}T12:00:00+09:00`).getDay()] || '';
+// 최근 경기 결과: 점수는 원정-홈 순서이고, 내 팀 점수만 승(빨강)·패(파랑) 색을 입힌다.
+const recentResult = game => {
+    const match = game.result?.match(/^([WLD])\s+(.+)$/);
+    if (!match) return null;
+    const [label, tone] = { W: ['승', 'win'], L: ['패', 'loss'], D: ['무', 'draw'] }[match[1]];
+    const score = match[2].match(/^(\d+)\s*[-:]\s*(\d+)$/);
+    return { label, tone, text: match[2], score: score ? [score[1], score[2]] : null, ownIndex: game.isAway ? 0 : 1 };
+};
+// 기록 문장에서 홈런과 의미 있는 기록(안타·타점 등)을 굵게 강조한다.
+const recentLine = text => String(text || '—').split(' ').map((token, index) => <span key={index} className={/^[1-9]\d*홈런$/.test(token) ? 'is-hr' : /^[1-9]\d*(안타|타점|득점|도루|볼넷|삼진|이닝)$/.test(token) ? 'is-key' : /^0/.test(token) ? 'is-zero' : undefined}>{token}</span>);
+const bestNationalResult = rows => {
+    const order = ['gold', 'silver', 'bronze'];
+    return rows.map(row => ({ tone: careerResultTone(row.note), note: row.note })).filter(row => row.tone !== 'plain').sort((a, b) => order.indexOf(a.tone) - order.indexOf(b.tone))[0] || null;
+};
 function CareerTeam({ team }) {
     if (!team) return null;
     const src = movementLogo(team);
@@ -238,20 +269,86 @@ function CareerTeam({ team }) {
 }
 function CareerModal({ item, kind, onClose }) {
     const dialog = useRef(null);
+    const drag = useRef(null);
+    const justDragged = useRef(false);
+    const [expanded, setExpanded] = useState(false);
     useEffect(() => { dialog.current.showModal(); }, []);
     const close = () => dialog.current.close();
-    const national = kind === 'national';
-    const image = national ? nationalImages[item.name] : awardImages[item.name];
+    // 머리 부분을 잡고 아래로 끌면 닫히고, 위로 끌면 손가락을 따라 시트가 늘어나 화면 가득 펼쳐진다.
+    const maxSheetHeight = () => window.innerHeight * (window.innerWidth > 600 ? .9 : .94);
+    const dragStart = event => {
+        if (event.button > 0 || event.target.closest('button')) return;
+        drag.current = { y: event.clientY, dy: 0, height: dialog.current.getBoundingClientRect().height };
+        event.currentTarget.setPointerCapture?.(event.pointerId);
+        dialog.current.style.transition = 'none';
+    };
+    const dragMove = event => {
+        if (!drag.current) return;
+        const raw = event.clientY - drag.current.y;
+        // 살짝 움직인 정도(10px 이내)는 무시해서 탭·미세한 흔들림에 시트가 반응하지 않게 한다.
+        const dy = Math.abs(raw) < 10 ? 0 : raw - Math.sign(raw) * 10;
+        drag.current.dy = dy;
+        const element = dialog.current;
+        if (dy < 0) {
+            const max = maxSheetHeight();
+            const grown = drag.current.height - dy;
+            // 최대 높이를 넘기면 살짝만 따라오게 해서 끝에 닿은 느낌을 준다.
+            element.style.maxHeight = 'none';
+            element.style.height = `${Math.min(grown, max + (grown - max) / 4)}px`;
+            element.style.transform = '';
+        } else {
+            element.style.height = `${drag.current.height}px`;
+            element.style.transform = `translateY(${dy}px)`;
+        }
+    };
+    const dragEnd = () => {
+        if (!drag.current) return;
+        const { dy, height: startHeight } = drag.current;
+        drag.current = null;
+        // 드래그를 놓을 때 생기는 click이 바깥(배경) 클릭으로 처리되지 않게 막는다.
+        if (Math.abs(dy) > 5) { justDragged.current = true; window.setTimeout(() => { justDragged.current = false; }, 0); }
+        const element = dialog.current;
+        element.style.transition = 'transform .2s ease, height .25s ease';
+        // 살짝 스와이프하면 제자리로 돌아오고, 충분히 끌었을 때만 닫히거나 펼쳐진다.
+        const remaining = maxSheetHeight() - startHeight;
+        if (dy > (expanded ? 320 : 170)) { element.style.transform = 'translateY(110%)'; window.setTimeout(close, 180); return; }
+        element.style.transform = '';
+        const next = dy < -Math.max(110, Math.min(remaining, 400) * .4) ? true : expanded && dy > 130 ? false : expanded;
+        setExpanded(next);
+        // 목표 높이로 부드럽게 옮긴 뒤 인라인 스타일을 걷어내 CSS가 다시 높이를 맡게 한다.
+        const natural = element.style.height || `${element.getBoundingClientRect().height}px`;
+        element.classList.toggle('is-expanded', next);
+        element.style.height = '';
+        element.style.maxHeight = '';
+        const target = next ? maxSheetHeight() : Math.min(element.getBoundingClientRect().height, maxSheetHeight());
+        element.style.height = natural;
+        requestAnimationFrame(() => {
+            element.style.height = `${target}px`;
+            window.setTimeout(() => { element.style.height = ''; element.style.maxHeight = ''; element.style.transition = ''; }, 260);
+        });
+    };
+    const combined = kind === 'national-all';
+    const national = kind === 'national' || combined;
+    const countries = [...new Set(item.rows.map(row => row.country || '한국'))];
+    const multiCountry = countries.length > 1;
+    const mainCountry = national ? (item.rows[item.rows.length - 1]?.country || countries[0] || '한국') : null;
+    const team = national ? nationalTeam(mainCountry) : null;
+    const countryName = team?.[1] || mainCountry;
+    const countryLogo = national ? nationalTeamLogo(mainCountry) : null;
+    const countryMark = national ? nationalTeamLogo(mainCountry, true) : null;
+    const image = combined ? countryMark : national ? nationalImages[item.name] : awardImages[item.name];
+    const headStyle = team ? { '--career-head-a': team[2], '--career-head-b': team[3] } : undefined;
     const years = item.rows.map(row => Number(row.year)).filter(Boolean);
     const span = years.length ? (Math.min(...years) === Math.max(...years) ? `${Math.min(...years)}` : `${Math.min(...years)} – ${Math.max(...years)}`) : null;
     const count = item.name === '우승' ? `V${item.rows.length}` : `${item.rows.length}회`;
     const medals = national ? item.rows.filter(row => careerResultTone(row.note) !== 'plain').length : 0;
-    return <dialog ref={dialog} className="profile-career-modal" aria-labelledby="profile-career-title" onClose={onClose} onClick={e => { if (e.target === e.currentTarget) close(); }}>
-        <header className="profile-career-modal-head">
-            <div className="profile-career-emblem">{image ? <img src={image} alt="" /> : <span aria-hidden="true">{item.name.slice(0, 1)}</span>}</div>
+    return <dialog ref={dialog} className={`profile-career-modal${expanded ? ' is-expanded' : ''}`} aria-labelledby="profile-career-title" onClose={onClose} onClick={e => { if (e.target !== e.currentTarget || justDragged.current) return; const box = e.currentTarget.getBoundingClientRect(); if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) close(); }}>
+        <header className={`profile-career-modal-head${national && team ? ' is-national' : ''}`} style={headStyle} onPointerDown={dragStart} onPointerMove={dragMove} onPointerUp={dragEnd} onPointerCancel={dragEnd}>
+            {national && countryLogo && <img className="profile-career-watermark" src={countryLogo} alt="" aria-hidden="true" />}
+            <div className={`profile-career-emblem${combined && countryMark ? ' is-country' : ''}${combined && team?.[4] ? ' is-light-logo' : ''}`}>{image ? <img src={image} alt="" /> : <span aria-hidden="true">{combined ? countryName.slice(0, 2) : item.name.slice(0, 1)}</span>}</div>
             <div className="profile-career-title">
-                <small>{national ? '국가대표 경력' : '수상 경력'}</small>
-                <h2 id="profile-career-title">{item.name}</h2>
+                <small>{combined ? (multiCountry ? countries.map(c => nationalTeam(c)?.[1] || c).join(' · ') : '국가대표 경력') : national ? `${countryName} 국가대표` : '수상 경력'}</small>
+                <h2 id="profile-career-title">{combined ? (multiCountry ? '국가대표 경력' : `${countryName} 국가대표`) : item.name}</h2>
                 <p><strong>{count}</strong>{span && <span>{span}</span>}{medals > 0 && <span>메달·입상 {medals}회</span>}</p>
             </div>
             <button type="button" className="profile-career-close" aria-label="닫기" onClick={close}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg></button>
@@ -260,14 +357,40 @@ function CareerModal({ item, kind, onClose }) {
             {item.rows.map((row, index) => <li key={index}>
                 <span className="profile-career-year">{row.year || '—'}{row.month && <small>{row.month}월</small>}</span>
                 <span className="profile-career-detail">
+                    {combined && <span className="profile-career-tournament">{nationalImages[row.type] && <img src={nationalImages[row.type]} alt="" />}{row.type}</span>}
                     {national
-                        ? <span className={`profile-career-result is-${careerResultTone(row.note)}`}>{careerResultTone(row.note) !== 'plain' && <i aria-hidden="true" />}{row.note || '대표 선발'}</span>
+                        ? <>{(multiCountry || !combined) && <span className={`profile-career-chip profile-career-country${nationalTeam(row.country)?.[4] ? ' is-light-logo' : ''}`} style={nationalTeam(row.country) ? { '--country-color': nationalTeam(row.country)[2] } : undefined}>{nationalTeamLogo(row.country, true) && <img src={nationalTeamLogo(row.country, true)} alt="" />}{nationalTeam(row.country)?.[1] || row.country || '한국'}</span>}<span className={`profile-career-result is-${careerResultTone(row.note)}`}>{careerResultTone(row.note) !== 'plain' && <i aria-hidden="true" />}{row.note || '대표 선발'}</span></>
                         : <><CareerTeam team={row.team} />{row.pos && <span className="profile-career-chip">{row.pos}</span>}{row.note && <span className="profile-career-note">{row.note}</span>}</>}
                 </span>
             </li>)}
         </ol>
     </dialog>;
 }
+// 최근 7·15·30일 요약: 대표 지표(타율/ERA)를 크게 보여주고 시즌 기록과 비교해 상승·하락을 표시한다.
+function RollingSummary({ rows = [], pitcher = false, stats = [] }) {
+    if (!rows.length) return null;
+    const seasonValue = names => { const found = (stats || []).find(([label]) => names.includes(label)); const value = found ? Number(found[1]) : NaN; return Number.isFinite(value) ? value : null; };
+    const main = pitcher ? { key: 'era', label: 'ERA', season: seasonValue(['ERA', '평균자책점']), digits: 2, lowerBetter: true } : { key: 'avg', label: '타율', season: seasonValue(['타율']), digits: 3, lowerBetter: false };
+    const shortDate = date => date ? date.slice(5).replace('-', '.') : '';
+    return <div className="profile-rolling-cards">{rows.map(row => {
+        const raw = row[main.key];
+        const value = raw === null || raw === undefined || raw === '' ? null : Number(raw);
+        const played = Number(row.games) > 0 && value !== null && Number.isFinite(value);
+        const delta = played && main.season !== null ? value - main.season : null;
+        const flat = delta === null || Math.abs(delta) < (pitcher ? 0.005 : 0.0005);
+        const tone = !played ? 'empty' : flat ? 'flat' : (main.lowerBetter ? delta < 0 : delta > 0) ? 'hot' : 'cold';
+        const detail = pitcher
+            ? [['경기', row.games ?? 0], ['이닝', row.innings], ['삼진', row.so], ['WHIP', row.whip]]
+            : [['경기', row.games ?? 0], ['안타', row.h ?? 0], ['홈런', row.hr ?? 0], ['OPS', row.ops]];
+        return <article key={row.label} className={`profile-rolling-card is-${tone}`}>
+            <header><strong>{row.label}</strong><small>{shortDate(row.startDate)}–{shortDate(row.endDate)}</small></header>
+            <div className="profile-rolling-value"><span>{main.label}</span><b>{played ? value.toFixed(main.digits) : '—'}</b></div>
+            <p className="profile-rolling-delta">{!played ? '경기 없음' : delta === null ? '\u00a0' : flat ? '시즌 평균 수준' : <><span className="profile-rolling-delta-label">시즌 대비 </span><em>{delta > 0 ? '▲' : '▼'} {Math.abs(delta).toFixed(main.digits)}</em></>}</p>
+            {played && <dl className="profile-rolling-detail">{detail.filter(([, value]) => value != null && value !== '').map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>}
+        </article>;
+    })}</div>;
+}
+const heroIntroPlayed = new Set();
 export default function PlayerProfile({ pid }) {
     const rollingScrollRef = useTableDrag();
     const location = useLocation();
@@ -294,6 +417,19 @@ export default function PlayerProfile({ pid }) {
     const [photoIndex, setPhotoIndex] = useState(0);
     const [compact, setCompact] = useState(false);
     const heroRef = useRef(null);
+    // 어떤 경로로 들어왔든 선수 페이지를 열면 검색 화면의 '최근 본 선수'에 남긴다.
+    useEffect(() => {
+        if (player?.Name && String(player.PlayerId) === String(pid)) addRecentPlayer(player);
+    }, [pid, player?.PlayerId, player?.Name, player?.Team, player?.FormerTeam]);
+    // hero 등장 애니메이션은 선수 페이지에 처음 들어왔을 때 한 번만 재생한다(탭 이동 시 반복 X).
+    const [heroIntro, setHeroIntro] = useState(() => !heroIntroPlayed.has(String(pid)));
+    useEffect(() => {
+        if (heroIntroPlayed.has(String(pid))) { setHeroIntro(false); return undefined; }
+        heroIntroPlayed.add(String(pid));
+        setHeroIntro(true);
+        const timer = window.setTimeout(() => setHeroIntro(false), 2200);
+        return () => window.clearTimeout(timer);
+    }, [pid]);
     const contentRef = useRef(null);
     useEffect(() => { setTab(tabFromUrl()); }, [location.search]);
     useEffect(() => { setGameYear(''); setGameSeason(''); setGameLog({ years: [], games: [] }); }, [pid]);
@@ -403,10 +539,13 @@ export default function PlayerProfile({ pid }) {
     const dateValue = key => dateParts.find(part => part.type === key).value;
     const age = birthMatch ? Number(dateValue('year')) - Number(birthMatch[1]) - (`${dateValue('month')}-${dateValue('day')}` < `${birthMatch[2]}-${birthMatch[3]}` ? 1 : 0) : null;
     const birthday = birth ? `${birth.replaceAll('-', '.')}${age !== null ? ` (${age}세)` : ''}` : null;
+    // 오늘(한국 시간)이 생일이면 선수 정보의 생년월일 뒤에 케이크를 붙인다.
+    const todayMonthDay = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit' }).format(new Date());
+    const isBirthday = Boolean(birth) && String(birth).slice(5, 10) === todayMonthDay;
     const groupCareer = rows => Object.entries((rows || []).reduce((groups, row) => { (groups[row.type] ||= []).push(row); return groups; }, {})).map(([name, rows]) => ({ name, rows: rows.sort((a, b) => Number(a.year) - Number(b.year) || Number(a.month) - Number(b.month)) }));
     const awards = groupCareer(player.Awards).sort((a,b)=>(awardOrder.indexOf(a.name) < 0 ? 99 : awardOrder.indexOf(a.name))-(awardOrder.indexOf(b.name) < 0 ? 99 : awardOrder.indexOf(b.name)));
     const national = groupCareer(player.National).sort((a, b) => nationalOrder.indexOf(a.name) - nationalOrder.indexOf(b.name));
-    const info = [['이름', Number(player.IsForeign) === 1 ? player.FullName || player.Name : player.Name], ['개명', player.OldName ? `${player.OldName} → ${player.Name}` : null], ['등번호', numberRetired ? null : player.BackNo], ['소속팀', retired || numberRetired ? null : team[3]], ['영구결번', numberRetired ? `${team[3]}${player.BackNo != null ? ` No.${player.BackNo}` : ''}` : null], ['포지션', detailedPosition], ['투타', handedness], ['생년월일', birthday], ['신체', player.Body], ['학력', player.School], ['입단', player.Draft], ['은퇴', retired && retirementYear ? `${retirementYear}년` : null], ['별명', player.Nicknames?.join(', ')]].filter(([, value]) => value !== null && value !== undefined && String(value).trim() !== '');
+    const info = [['이름', Number(player.IsForeign) === 1 ? player.FullName || player.Name : player.Name], ['개명', player.OldName ? `${player.OldName} → ${player.Name}` : null], ['등번호', numberRetired ? null : player.BackNo], ['소속팀', retired || numberRetired ? null : team[3]], ['영구결번', numberRetired ? `${team[3]}${player.BackNo != null ? ` No.${player.BackNo}` : ''}` : null], ['포지션', detailedPosition], ['투타', handedness], ['생년월일', birthday], ['신체', player.Body], ['학력', player.School], ['입단', player.Draft], ['은퇴', retired && retirementYear ? `${retirementYear}년` : null], ['별명', player.Nicknames?.join(', ')], ['가족', player.Family?.length ? <span className="profile-family">{player.Family.map(member => <Link key={`${member.PlayerId}-${member.Relationship}`} className="profile-family-link" to={`/?pid=${encodeURIComponent(member.PlayerId)}`} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}><small>{member.Relationship}</small><b>{member.Name}</b><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>)}</span> : null]].filter(([, value]) => value !== null && value !== undefined && String(value).trim() !== '');
     const gameColumns = [['날짜','date'],['상대','opponent'],['구장','stadium'],['경기 결과','result'],['선발','isStarter'],...((gameLog.pitcher ?? records?.pitcher) ? (detailedGames ? [['기록','badge'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp']] : [['기록','summary']]) : [['포지션','position'],['타순','order'],...(detailedGames ? [['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['희플','sf'],['희생번트','sh'],['병살','gdp'],['도루','sb'],['도루실패','cs']] : [['기록','summary']])]),['비고','notes']];
     const rollingColumns = [['기간','label'],['경기','games'],...(records?.pitcher ? [['선발','starts'],['ERA','era'],['승리','wins'],['패전','losses'],['세이브','saves'],['홀드','holds'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp'],['WHIP','whip']] : [['타석','pa'],['타율','avg'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['희플','sf'],['희생번트','sh'],['병살','gdp'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['OPS+','opsPlus']])];
     const futuresCaption = overviewLeagueCaption(records, Number(dateValue('year')));
@@ -438,7 +577,11 @@ export default function PlayerProfile({ pid }) {
             const match = game.result?.match(/^([WLD])\s+(.+)$/);
             if (!match) return '—';
             const [label, className] = { W: ['승', 'is-win'], L: ['패', 'is-loss'], D: ['무', 'is-draw'] }[match[1]];
-            return <span className="profile-season-result"><span className={className}>{label}</span><span>{match[2]}</span></span>;
+            // 결과 점수는 원정-홈 순서. 내 팀 점수에 승(빨강)·패(파랑) 색을 입힌다.
+            const score = match[2].match(/^(\d+)\s*[-:]\s*(\d+)$/);
+            const ownIndex = game.isAway ? 0 : 1;
+            const scoreText = score ? <span className="profile-season-score">{[score[1], score[2]].map((value, index) => <span key={index} className={index === ownIndex ? `is-own ${className}` : undefined}>{value}</span>).reduce((parts, part, index) => index ? [...parts, <i key={`sep-${index}`}>-</i>, part] : [part], [])}</span> : <span>{match[2]}</span>;
+            return <span className="profile-season-result"><span className={className}>{label}</span>{scoreText}</span>;
         }
         return key === 'date' ? game.date.slice(5) : key === 'opponent' ? (game.opponent ? `${game.isAway ? '@' : ''}${game.opponent}` : '—') : key === 'isStarter' ? (game.isStarter === null || game.isStarter === undefined ? '—' : game.isStarter ? <span aria-label="선발">✓</span> : '') : game[key] ?? '—';
     };
@@ -448,12 +591,13 @@ export default function PlayerProfile({ pid }) {
     const compactWatermark = retiredTheme ? <img className="profile-watermark" src={kboSmallLogo} alt="" /> : <TeamLogo small team={teamCode} className="profile-watermark" />;
     const tabs = <div className="profile-tabs" style={{ '--active-tab': tab }} role="group" aria-label="선수 정보 보기"><span className="profile-tab-indicator" aria-hidden="true" />{['개요', '기록', '경기', '차트', '비교'].map((name, i) => <button key={name} type="button" aria-pressed={tab === i} className={tab === i ? 'active' : ''} onClick={() => { setTab(i); const params = new URLSearchParams(location.search); if (i === 0) params.delete('tab'); else params.set('tab', tabNames[i]); navigate(`${location.pathname}?${params.toString()}`, { state: location.state }); window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }}>{name}</button>)}</div>;
     return <main className="player-profile" style={{ '--team-primary': team[1], '--team-secondary': team[2], '--team-primary-light': heroPalette.light, '--team-primary-dark': heroPalette.dark, '--heading-primary': retiredTheme ? '#00b5e5' : team[1], '--heading-secondary': retiredTheme ? '#00d1c6' : team[2] }}>
-        <section ref={heroRef} className="profile-hero" aria-label="선수 소개">
+        <section ref={heroRef} className={`profile-hero${heroIntro ? ' is-intro' : ''}`} aria-label="선수 소개">
             {watermark}
+            <span className="profile-hero-spot" aria-hidden="true" /><span className="profile-hero-shine" aria-hidden="true" />
             <Link className="profile-back" to="/?search=1">← 선수 검색</Link>
             <div className="profile-identity">
                 <div className="profile-photo">{photo}</div>
-                <div className="profile-bio"><h1>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</h1><p>{heroSummary}</p>{(handedness || birthday) && <p>{[handedness, birthday].filter(Boolean).join(' | ')}</p>}{numberRetired ? <p>{team[3]} 영구결번</p> : retired && formerTeam && <p>前 {formerTeam}</p>}{!retired && !numberRetired && player.Body && <p>{player.Body}</p>}</div>
+                <div className="profile-bio"><h1>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</h1><p className="profile-hero-tags">{retiredTheme ? <span className="profile-hero-tag">은퇴</span> : <span className="profile-hero-tag is-team"><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{retired || numberRetired ? '은퇴' : team[3]}</span>}{heroPosition && <span className="profile-hero-tag">{heroPosition}</span>}</p>{(handedness || birthday) && <p>{[handedness, birthday && isBirthday ? `${birthday} 🎂` : birthday].filter(Boolean).join(' | ')}</p>}{numberRetired ? <p>{team[3]} 영구결번</p> : retired && formerTeam && <p>前 {formerTeam}</p>}{!retired && !numberRetired && player.Body && <p>{player.Body}</p>}</div>
             </div>
             {tabs}
         </section>
@@ -464,20 +608,41 @@ export default function PlayerProfile({ pid }) {
         <div ref={contentRef} className="profile-content">
             {(error || recordError) && <p role="alert">{error || recordError}</p>}
             {recordLoading && tab === 0 && <section aria-busy="true" aria-label="경기 기록 불러오는 중"><div className="profile-skeleton-grid">{Array.from({length:8},(_,i)=><span key={i}/>)}</div></section>}
-            {records && records.year === Number(dateValue('year')) && tab === 1 && records.rolling && <section><div className="profile-heading"><h2>최근 성적</h2></div><div className="profile-game-scroll" ref={rollingScrollRef}><table className="profile-season-games profile-rolling-table" style={{ '--record-table-mobile-width': `${rollingMobileWidths.reduce((sum, width) => sum + width, 0)}px` }}><colgroup>{rollingMobileWidths.map((width, index) => <col key={index} style={{ '--record-column-mobile-width': `${width}px` }} />)}</colgroup><caption className="sr-only">최근 7·15·30일 성적</caption><thead><tr>{rollingColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{records.rolling.map(row=><tr key={row.label}>{rollingColumns.map(([,key])=><td key={key}>{row[key] ?? (['sf','sh'].includes(key) ? 0 : '—')}</td>)}</tr>)}</tbody></table></div></section>}
-            {tab === 1 && <YearRecords key={`year-records-${pid}`} pid={pid} position={player.Pos} teams={teams} />}
+            {records && records.year === Number(dateValue('year')) && tab === 1 && records.rolling && <section><div className="profile-heading"><h2>최근 성적</h2></div><RollingSummary rows={records.rolling} pitcher={records.pitcher} stats={records.stats} /><div className="profile-game-scroll" ref={rollingScrollRef}><table className="profile-season-games profile-rolling-table" style={{ '--record-table-mobile-width': `${rollingMobileWidths.reduce((sum, width) => sum + width, 0)}px` }}><colgroup>{rollingMobileWidths.map((width, index) => <col key={index} style={{ '--record-column-mobile-width': `${width}px` }} />)}</colgroup><caption className="sr-only">최근 7·15·30일 성적</caption><thead><tr>{rollingColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{records.rolling.map(row=><tr key={row.label}>{rollingColumns.map(([,key])=><td key={key}>{row[key] ?? (['sf','sh'].includes(key) ? 0 : '—')}</td>)}</tr>)}</tbody></table></div></section>}
+            {tab === 1 && <YearRecords key={`year-records-${pid}`} pid={pid} position={player.Pos} teams={teams} titles={player.Titleholders} awards={player.Awards} awardImages={awardImages} getTeamLogo={movementLogo} />}
             {tab === 1 && <TitleholderRecords rows={player.Titleholders} />}
             {records && tab === 0 && <section style={retiredTheme ? { '--team-primary': '#002561', '--team-secondary': '#286fcc' } : undefined}><div className="profile-heading"><h2>{records.career ? '통산 주요 기록' : `${records.year} 시즌 주요 기록`}</h2>{futuresCaption && <small className="profile-season-caption">{records.career ? '퓨처스리그' : futuresCaption}</small>}</div><div className={`profile-stats ${`profile-stats-ranked${tab === 0 ? ' profile-stats-overview' : ''}`}`}>{records.stats.map(([label, value]) => {
                 const rank = value != null && Number(value) !== 0 ? ranks[label] : null;
-                return <div key={label} className={rank >= 1 && rank <= 5 ? 'profile-stat-top-five' : undefined}>{tab === 0 ? <><div className="profile-stat-header"><span>{label}</span><small>{rank != null ? `${rank}위` : ''}</small></div><strong>{value ?? '—'}</strong></> : <><span>{label}</span><strong>{value ?? '—'}</strong>{<small>{rank != null ? `${rank}위` : ''}</small>}</>}</div>;
+                return <div key={label} className={rank >= 1 && rank <= 5 ? 'profile-stat-top-five' : undefined}>{tab === 0 ? <><div className="profile-stat-header"><span>{label}</span>{rank != null && <small className={`profile-stat-rank ${rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : rank <= 5 ? 'is-top' : ''}${rank >= 100 ? ' is-long' : ''}`}>{rank}위</small>}</div><strong>{value ?? '—'}</strong></> : <><span>{label}</span><strong>{value ?? '—'}</strong>{<small>{rank != null ? `${rank}위` : ''}</small>}</>}</div>;
             })}</div></section>}
-            {records && tab === 0 && <section><div className="profile-heading"><h2>최근 5경기</h2>{recentCaption && <small className="profile-season-caption">{recentCaption}</small>}</div><div className="profile-game-scroll"><table className="profile-games"><caption className="sr-only">최근 5경기 기록</caption><tbody>{records.recent.map((game, i) => <tr key={`${game.date}-${i}`}><td>{game.date.slice(5).replace('-', '.')}</td><td>{game.opponent ? `vs ${game.isAway ? '@' : ''}${game.opponent}` : '—'}</td><td><span className="profile-recent-result">{game.text}<GameBadge value={game.badge} /></span></td></tr>)}</tbody></table></div></section>}
+            {records && tab === 0 && !retired && !numberRetired && <section><div className="profile-heading"><h2>최근 5경기</h2>{records.recent.length > 0 && <span className="profile-recent-form" aria-label="최근 경기 팀 결과">{[...records.recent].reverse().map((game, i) => { const result = recentResult(game); return <i key={i} className={result ? `is-${result.tone}` : ''} title={result?.label} />; })}</span>}{recentCaption && <small className="profile-season-caption">{recentCaption}</small>}</div>{records.recent.length ? <ol className="profile-recent-list">{records.recent.map((game, i) => { const result = recentResult(game); const logo = movementLogo(game.opponent); return <li key={`${game.date}-${i}`}>
+                <span className="profile-recent-date"><b>{game.date.slice(5).replace('-', '.')}</b><small>{recentWeekday(game.date)}</small></span>
+                <span className="profile-recent-opp" aria-hidden="true">{logo ? <img src={logo} alt="" /> : <i>{game.opponent?.slice(0, 1) || '—'}</i>}</span>
+                <span className="profile-recent-main"><span className="profile-recent-vs">{game.opponent ? <>{game.isAway ? '@' : 'vs'} <strong>{game.opponent}</strong></> : '—'}{game.stadium && <small>{game.stadium}</small>}</span><span className="profile-recent-line">{recentLine(game.text)}<GameBadge value={game.badge} /></span></span>
+                {result ? <span className={`profile-recent-score is-${result.tone}`}><b>{result.label}</b>{result.score ? <span>{result.score.map((value, index) => <em key={index} className={index === result.ownIndex ? 'is-own' : undefined}>{value}</em>).reduce((parts, part, index) => index ? [...parts, <i key={`s${index}`}>:</i>, part] : [part], [])}</span> : <span>{result.text}</span>}</span> : <span />}
+            </li>; })}</ol> : <p className="profile-games-empty">최근 경기 기록이 없습니다.</p>}</section>}
             {tab === 2 && <StreakRecords streaks={gameLog.currentSeasonStreaks} pitcher={(player.Pos || '').includes('투수') || gameLog.pitcher === true} />}
             {tab === 2 && <section><div className="profile-heading profile-game-heading"><h2>경기 일지</h2><GameLogFilter years={gameLog.years} year={gameYear || gameLog.year} season={gameSeason || gameLog.season || 'regular'} availableSeasons={gameLog.availableSeasons} onYearChange={value => { setGameYear(value); const available = gameLog.availableSeasons?.[value] || []; setGameSeason(available.includes(gameSeason || gameLog.season) ? gameSeason || gameLog.season : available[0] || ''); }} onSeasonChange={value => { setGameYear(String(gameYear || gameLog.year)); setGameSeason(value); }} /><div className={`profile-game-switch ${detailedGames ? 'is-detailed' : ''}`} role="group" aria-label="경기 기록 표시 방식">{['간략히','자세히'].map((label,i)=><button key={label} type="button" className={detailedGames === Boolean(i) ? 'active' : ''} aria-pressed={detailedGames === Boolean(i)} onClick={()=>setDetailedGames(Boolean(i))}>{label}</button>)}</div></div>{!gameLogLoading && gameLog.games?.length ? <div className="profile-game-scroll"><table className="profile-season-games"><caption className="sr-only">시즌 전체 경기 기록</caption><thead><tr>{gameColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{gameLog.games.map(game=><tr key={game.gameId}>{gameColumns.map(([,key])=><td key={key} className={key === 'summary' || key === 'badge' ? 'profile-record-cell' : undefined}>{gameCell(game,key)}</td>)}</tr>)}</tbody></table></div> : gameLogLoading ? <ProfileLoading>경기 일지를 불러오는 중이에요.</ProfileLoading> : <p className="profile-games-empty">{gameLogError || '경기 기록이 없습니다.'}</p>}</section>}
             {tab === 0 && <PlayerMovements key={`movements-${pid}`} movements={player.Movements} />}
-            {tab === 0 && awards.length > 0 && <section><div className="profile-heading"><h2>수상 경력</h2></div><div className="profile-awards">{awards.map(award => <div key={award.name}><strong className="profile-award-name">{awardImages[award.name] && <img className="profile-award-image" src={awardImages[award.name]} alt="" loading="lazy" />}{award.name}</strong><span className="profile-award-count">{award.name === '우승' ? `V${award.rows.length}` : `${award.rows.length}회`}</span><span className="profile-award-years">{[...new Set(award.rows.map(row => row.year).filter(Boolean))].join(', ')}</span>{award.name !== '신인왕' ? <button type="button" aria-label={`${award.name} 상세 내역`} onClick={() => setSelectedCareer({ item: award, kind: 'award' })}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></button> : <span />}</div>)}</div></section>}
-            {tab === 0 && national.length > 0 && <section><div className="profile-heading"><h2>국가대표 경력</h2></div><div className="profile-awards">{national.map(item=><div key={item.name}><strong className="profile-award-name">{nationalImages[item.name] && <img className="profile-award-image" src={nationalImages[item.name]} alt="" loading="lazy" />}{item.name}</strong><span className="profile-award-count">{item.rows.length}회</span><span className="profile-award-years">{[...new Set(item.rows.map(row=>row.year).filter(Boolean))].join(', ')}</span><button type="button" aria-label={`${item.name} 상세 내역`} onClick={() => setSelectedCareer({ item, kind: 'national' })}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></button></div>)}</div></section>}
-            {tab === 0 && <section><div className="profile-heading"><h2>선수 정보</h2></div><dl className="profile-info">{info.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl></section>}
+            {tab === 0 && awards.length > 0 && <section><div className="profile-heading"><h2>수상 경력</h2></div><div className="profile-honors">{awards.map(award => { const clickable = award.name !== '신인왕'; const Tag = clickable ? 'button' : 'div'; return <Tag key={award.name} {...(clickable ? { type: 'button', 'aria-label': `${award.name} 상세 내역`, onClick: () => setSelectedCareer({ item: award, kind: 'award' }) } : {})} className={`profile-honor${['MVP', '우승', '골든글러브'].includes(award.name) ? ' is-premium' : ''}`}>
+                <span className="profile-honor-icon">{awardImages[award.name] ? <img src={awardImages[award.name]} alt="" loading="lazy" /> : <b>{award.name.slice(0, 1)}</b>}</span>
+                <span className="profile-honor-text"><strong>{award.name}</strong><small>{[...new Set(award.rows.map(row => row.year).filter(Boolean))].join(' · ')}</small></span>
+                <span className="profile-honor-count">{award.name === '우승' ? `V${award.rows.length}` : <>{award.rows.length}<small>회</small></>}</span>
+                {clickable && <svg className="profile-honor-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+            </Tag>; })}</div></section>}
+            {tab === 0 && national.length > 0 && <section><div className="profile-heading"><h2>국가대표 경력</h2><button type="button" className="profile-heading-more" onClick={() => setSelectedCareer({ item: { name: '국가대표 경력', rows: [...(player.National || [])].sort((a, b) => Number(a.year) - Number(b.year) || nationalOrder.indexOf(a.type) - nationalOrder.indexOf(b.type)) }, kind: 'national-all' })}>자세히 보기<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></button></div><div className="profile-honors is-national">{national.map(item => { return <div key={item.name} className="profile-honor">
+                <span className="profile-honor-icon">{nationalImages[item.name] ? <img src={nationalImages[item.name]} alt="" loading="lazy" /> : <b>{item.name.slice(0, 1)}</b>}</span>
+                <span className="profile-honor-text"><strong>{item.name}</strong><small>{[...new Set(item.rows.map(row => row.year).filter(Boolean))].join(' · ')}</small></span>
+                <span className="profile-honor-count">{item.rows.length}<small>회</small></span>
+            </div>; })}</div></section>}
+            {tab === 0 && <section><div className="profile-heading"><h2>선수 정보</h2></div><dl className="profile-facts">{(() => {
+                // 짧은 항목은 격자로, 긴 항목(학력·입단 등)은 아래에 한 줄씩. 격자의 마지막 줄이 비지 않게 마지막 칸을 늘린다.
+                const wideLabels = ['학력', '입단', '별명', '개명', '영구결번', '가족'];
+                const narrow = info.filter(([label]) => !wideLabels.includes(label));
+                const wide = info.filter(([label]) => wideLabels.includes(label));
+                const fill = [narrow.length % 2 ? 'fill-m' : '', narrow.length % 3 === 1 ? 'fill-d3' : narrow.length % 3 === 2 ? 'fill-d2' : ''].filter(Boolean).join(' ');
+                return [...narrow.map(([label, value], index) => <div key={label} className={index === narrow.length - 1 && fill ? fill : undefined}><dt>{label}</dt><dd>{value}</dd></div>), ...wide.map(([label, value]) => <div key={label} className="is-wide"><dt>{label}</dt><dd>{value}</dd></div>)];
+            })()}</dl></section>}
             {(chartVisited || tab === 3) && <ProfileCandleChart key={`candle-chart-${pid}`} pid={pid} player={player} active={tab === 3} />}
             {tab === 4 && <PlayerCompare key={`compare-${pid}`} pid={pid} player={player} getTeamLogo={movementLogo} getTeamColor={compareTeamColor} />}
         </div>

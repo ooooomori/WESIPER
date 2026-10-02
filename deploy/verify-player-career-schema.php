@@ -6,8 +6,9 @@ $db = new PDO(sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $config
 $columns = $db->query('SHOW COLUMNS FROM kbo_player_data')->fetchAll(PDO::FETCH_COLUMN);
 foreach (['is_WBC','is_GG','is_AS'] as $old) if (in_array($old, $columns, true)) throw new RuntimeException('Old physical column remains: '.$old);
 foreach (['fullname','is_foreign','player_id'] as $new) if (!in_array($new, $columns, true)) throw new RuntimeException('Missing column: '.$new);
-if ($db->query('SHOW COLUMNS FROM kbo_player_career')->fetchAll(PDO::FETCH_COLUMN) !== ['PK','player_id','category','type','team','year','month','pos','note']) throw new RuntimeException('Career columns differ');
+if ($db->query('SHOW COLUMNS FROM kbo_player_career')->fetchAll(PDO::FETCH_COLUMN) !== ['PK','player_id','category','type','team','country','year','month','pos','note']) throw new RuntimeException('Career columns differ');
 $checks = [
+    'invalid_country' => "SELECT COUNT(*) FROM kbo_player_career WHERE (category='national' AND (country IS NULL OR TRIM(country)='')) OR (category<>'national' AND country IS NOT NULL)",
     'invalid_foreign' => 'SELECT COUNT(*) FROM kbo_player_data WHERE is_foreign IS NOT NULL AND is_foreign<>1',
     'foreign_oldname_remaining' => "SELECT COUNT(*) FROM kbo_player_data WHERE is_foreign=1 AND oldname IS NOT NULL AND TRIM(oldname)<>''",
     'missing_player' => 'SELECT COUNT(*) FROM kbo_player_career c LEFT JOIN kbo_player_data p ON p.player_id=c.player_id WHERE p.player_id IS NULL',

@@ -1,0 +1,317 @@
+[
+  {
+    "player_id": 67341,
+    "player_name": "이정후",
+    "player_birth": "1998-08-20",
+    "relative_player_id": 93607,
+    "relative_name": "이종범",
+    "relative_birth": "1970-08-15",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.mlb.com/player/jung-hoo-lee-808982"
+    ]
+  },
+  {
+    "player_id": 67119,
+    "player_name": "고우석",
+    "player_birth": "1998-08-06",
+    "relative_player_id": 93607,
+    "relative_name": "이종범",
+    "relative_birth": "1970-08-15",
+    "relationship": "장인",
+    "reverse_relationship": "사위",
+    "sources": [
+      "https://www.mlb.com/player/jung-hoo-lee-808982"
+    ]
+  },
+  {
+    "player_id": 67341,
+    "player_name": "이정후",
+    "player_birth": "1998-08-20",
+    "relative_player_id": 67119,
+    "relative_name": "고우석",
+    "relative_birth": "1998-08-06",
+    "relationship": "매제",
+    "reverse_relationship": "처남",
+    "sources": [
+      "https://www.mlb.com/player/jung-hoo-lee-808982"
+    ]
+  },
+  {
+    "player_id": 76757,
+    "player_name": "유원상",
+    "player_birth": "1986-06-17",
+    "relative_player_id": 82174,
+    "relative_name": "유승안",
+    "relative_birth": "1956-06-01",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.osen.co.kr/article/G1111361219"
+    ]
+  },
+  {
+    "player_id": 62265,
+    "player_name": "유민상",
+    "player_birth": "1989-04-13",
+    "relative_player_id": 82174,
+    "relative_name": "유승안",
+    "relative_birth": "1956-06-01",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.osen.co.kr/article/G1111361219"
+    ]
+  },
+  {
+    "player_id": 62265,
+    "player_name": "유민상",
+    "player_birth": "1989-04-13",
+    "relative_player_id": 76757,
+    "relative_name": "유원상",
+    "relative_birth": "1986-06-17",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://www.osen.co.kr/article/G1111361219"
+    ]
+  },
+  {
+    "player_id": 62244,
+    "player_name": "박세혁",
+    "player_birth": "1990-01-09",
+    "relative_player_id": 87630,
+    "relative_name": "박철우",
+    "relative_birth": "1964-04-12",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://ichannela.com/news/detail/77944377-2.do"
+    ]
+  },
+  {
+    "player_id": 66047,
+    "player_name": "박세진",
+    "player_birth": "1997-06-27",
+    "relative_player_id": 64021,
+    "relative_name": "박세웅",
+    "relative_birth": "1995-11-30",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://www.sportsworldi.com/newsView/20230227501704"
+    ]
+  },
+  {
+    "player_id": 62947,
+    "player_name": "나성범",
+    "player_birth": "1989-10-03",
+    "relative_player_id": 61742,
+    "relative_name": "나성용",
+    "relative_birth": "1988-01-05",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://www.osen.co.kr/article/G1110303016"
+    ]
+  },
+  {
+    "player_id": 72466,
+    "player_name": "조동찬",
+    "player_birth": "1983-07-27",
+    "relative_player_id": 71848,
+    "relative_name": "조동화",
+    "relative_birth": "1981-03-22",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://imnews.imbc.com/replay/2010/nwtoday/article/2718431_30527.html"
+    ]
+  },
+  {
+    "player_id": 62884,
+    "player_name": "최항",
+    "player_birth": "1994-01-03",
+    "relative_player_id": 75847,
+    "relative_name": "최정",
+    "relative_birth": "1987-02-28",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://v.daum.net/v/L1n7uQpxvv"
+    ]
+  },
+  {
+    "player_id": 64266,
+    "player_name": "이성곤",
+    "player_birth": "1992-03-25",
+    "relative_player_id": 85620,
+    "relative_name": "이순철",
+    "relative_birth": "1961-04-18",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.sportsseoul.com/news/read/937671"
+    ]
+  },
+  {
+    "player_id": 50662,
+    "player_name": "정해영",
+    "player_birth": "2001-08-23",
+    "relative_player_id": 90660,
+    "relative_name": "정회열",
+    "relative_birth": "1968-10-09",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.sportsseoul.com/news/read/937671"
+    ]
+  },
+  {
+    "player_id": 85370,
+    "player_name": "양후승",
+    "player_birth": "1961-09-11",
+    "relative_player_id": 82374,
+    "relative_name": "양승관",
+    "relative_birth": "1959-06-02",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://enews.imbc.com/News/ViewAmp/136173"
+    ]
+  },
+  {
+    "player_id": 93410,
+    "player_name": "양준혁",
+    "player_birth": "1969-05-26",
+    "relative_player_id": 82703,
+    "relative_name": "양일환",
+    "relative_birth": "1961-06-10",
+    "relationship": "사촌형",
+    "reverse_relationship": "사촌동생",
+    "sources": [
+      "https://lady.khan.co.kr/issue/article/201012031556531"
+    ]
+  },
+  {
+    "player_id": 97350,
+    "player_name": "정수성",
+    "player_birth": "1978-03-04",
+    "relative_player_id": 95208,
+    "relative_name": "정수근",
+    "relative_birth": "1977-01-20",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://mcst.go.kr/servlets/eduport/front/upload/UplDownloadFile?pFileName=%EA%B5%AD%EC%96%B4+%EA%B5%90%EC%9C%A1%EC%9D%98+%EA%B4%80%EC%A0%90%EC%97%90%EC%84%9C+%EB%B3%B8+%EB%B0%A9%EC%86%A1+%EC%96%B8%EC%96%B4+%EC%97%B0%EA%B5%AC.pdf&pPath=0406000000&pRealName=04201111250002846073664.pdf"
+    ]
+  },
+  {
+    "player_id": 62925,
+    "player_name": "강진성",
+    "player_birth": "1993-10-19",
+    "relative_player_id": 90347,
+    "relative_name": "강광회",
+    "relative_birth": "1968-06-23",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.starnewskorea.com/stview.php?no=2020122418255636929"
+    ]
+  },
+  {
+    "player_id": 79215,
+    "player_name": "박건우",
+    "player_birth": "1990-09-08",
+    "relative_player_id": 74513,
+    "relative_name": "장원준",
+    "relative_birth": "1985-07-31",
+    "relationship": "매형",
+    "reverse_relationship": "처남",
+    "sources": [
+      "https://www.donga.com/news/List/article/all/20170110/82305516/2"
+    ]
+  },
+  {
+    "player_id": 52060,
+    "player_name": "박영현",
+    "player_birth": "2003-10-11",
+    "relative_player_id": 50709,
+    "relative_name": "박정현",
+    "relative_birth": "2001-07-27",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://www.yna.co.kr/view/AKR20220528037100007"
+    ]
+  },
+  {
+    "player_id": 82243,
+    "player_name": "구재서",
+    "player_birth": "1963-08-15",
+    "relative_player_id": 82273,
+    "relative_name": "구천서",
+    "relative_birth": "1963-08-15",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://www.koreadaily.com/article/1407043"
+    ]
+  },
+  {
+    "player_id": 86312,
+    "player_name": "김동기",
+    "player_birth": "1964-03-05",
+    "relative_player_id": 83992,
+    "relative_name": "김상기",
+    "relative_birth": "1961-03-03",
+    "relationship": "형",
+    "reverse_relationship": "동생",
+    "sources": [
+      "https://www.koreadaily.com/article/1407043",
+      "https://www.namu.moe/w/%EA%B9%80%EB%8F%99%EA%B8%B0%28%EC%95%BC%EA%B5%AC%29"
+    ]
+  },
+  {
+    "player_id": 54806,
+    "player_name": "이승민",
+    "player_birth": "2005-01-06",
+    "relative_player_id": 97109,
+    "relative_name": "이병규",
+    "relative_birth": "1974-10-25",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.yna.co.kr/view/AKR20231008017900007",
+      "https://sports.khan.co.kr/article/202507111732003"
+    ]
+  },
+  {
+    "player_id": 51005,
+    "player_name": "김건형",
+    "player_birth": "1996-07-12",
+    "relative_player_id": 91803,
+    "relative_name": "김기태",
+    "relative_birth": "1969-05-23",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.yna.co.kr/view/AKR20210622140900007",
+      "https://imnews.imbc.com/replay/2020/nwdesk/article/5905203_32524.html"
+    ]
+  },
+  {
+    "player_id": 67762,
+    "player_name": "김성훈",
+    "player_birth": "1998-02-04",
+    "relative_player_id": 93242,
+    "relative_name": "김민호",
+    "relative_birth": "1969-03-19",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.sportschosun.com/baseball/2017-02-05/201702050100040470002782"
+    ]
+  }
+]

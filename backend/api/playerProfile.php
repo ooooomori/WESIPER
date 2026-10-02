@@ -63,7 +63,32 @@ try {
         error_log('Player movements unavailable: ' . $movementError->getMessage());
         $player['Movements'] = [];
     }
-    $stmt = $pdo->prepare('SELECT category,type,team,year,month,pos,note FROM kbo_player_career WHERE player_id=:pid ORDER BY year,month,category,type,PK');
+    // 가족관계: 한 쌍은 한 방향으로만 저장되므로, 상대 쪽에서 조회할 때는 관계를 뒤집어 보여준다.
+    try {
+        $family = $pdo->prepare('SELECT f.player_id AS OwnerId, f.relationship AS Relationship, p.player_id AS PlayerId, p.name AS Name, p.birth AS Birth, p.is_kbodle AS IsKbodle, p.team AS Team
+            FROM kbo_player_family f JOIN kbo_player_data p ON p.player_id = IF(f.player_id = ?, f.relative_player_id, f.player_id)
+            WHERE f.player_id = ? OR f.relative_player_id = ? ORDER BY f.PK');
+        $family->execute([$pid, $pid, $pid]);
+        $reverse = ['아버지'=>'아들','아들'=>'아버지','형'=>'동생','동생'=>'형','오빠'=>'동생','누나'=>'동생','장인'=>'사위','사위'=>'장인',
+            '매형'=>'처남','매제'=>'처남','사촌형'=>'사촌동생','사촌동생'=>'사촌형','사촌'=>'사촌','삼촌'=>'조카','외삼촌'=>'조카','할아버지'=>'손자','외할아버지'=>'외손자','손자'=>'할아버지','외손자'=>'외할아버지','쌍둥이 형'=>'쌍둥이 동생','쌍둥이 동생'=>'쌍둥이 형'];
+        $myBirth = (string)($player['Birth'] ?? '');
+        $player['Family'] = array_map(static function (array $row) use ($pid, $reverse, $myBirth) {
+            $relation = trim((string)$row['Relationship']);
+            if ((string)$row['OwnerId'] !== (string)$pid) {
+                // 처남의 반대는 나이로 매형/매제를 가른다. 표에 없는 관계는 그대로 둔다.
+                if ($relation === '처남') $relation = ($row['Birth'] && $myBirth && $row['Birth'] < $myBirth) ? '매형' : '매제';
+                elseif (in_array($relation, ['조카'], true)) $relation = '삼촌';
+                else $relation = $reverse[$relation] ?? $relation;
+            }
+            return ['PlayerId'=>(int)$row['PlayerId'], 'Name'=>$row['Name'], 'Relationship'=>$relation, 'Birth'=>$row['Birth'], 'IsActive'=>(string)$row['IsKbodle'] !== '0', 'Team'=>trim((string)$row['Team']) ?: null];
+        }, $family->fetchAll(PDO::FETCH_ASSOC));
+        // 윗사람(나이 많은 순)부터 보여준다.
+        usort($player['Family'], static fn($a, $b) => strcmp((string)$a['Birth'], (string)$b['Birth']));
+    } catch (Throwable $familyError) {
+        error_log('Player family unavailable: ' . $familyError->getMessage());
+        $player['Family'] = [];
+    }
+    $stmt = $pdo->prepare('SELECT category,type,team,country,year,month,pos,note FROM kbo_player_career WHERE player_id=:pid ORDER BY year,month,category,type,PK');
     $stmt->execute(['pid'=>$pid]);
     $career=$stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -76,6 +101,20 @@ try {
         $yearRecords=$type==='all'
             ? ['batter'=>profileYearRecords($pdo,(string)$pid,false,$schedule),'pitcher'=>profileYearRecords($pdo,(string)$pid,true,$schedule)]
             : profileYearRecords($pdo,(string)$pid,$type==='pitcher',$schedule);
+        // 비율 기록 커리어 하이 비교용 규정 타석·이닝 충족 여부
+        require_once __DIR__.'/../lib/player-year-qualified.php';
+        try {
+            if($type==='all'){foreach(['batter','pitcher'] as $kind)$yearRecords[$kind]=profileAnnotateQualified($pdo,$yearRecords[$kind],$kind==='pitcher',$schedule);}
+            else $yearRecords=profileAnnotateQualified($pdo,$yearRecords,$type==='pitcher',$schedule);
+        } catch (Throwable $qualifiedError) { error_log('Year qualification unavailable: '.$qualifiedError->getMessage()); }
+        // 기본 탭 리그 1위: 미리 계산된 kbo_player_year_leaders에서 읽는다(deploy/build-year-leaders.php). 표가 없으면 생략.
+        $leaderKeys=['batter'=>[],'pitcher'=>[]];
+        try {
+            $leaderQuery=$pdo->prepare('SELECT year,role,stat FROM kbo_player_year_leaders WHERE player_id=?');$leaderQuery->execute([$pid]);
+            while($leader=$leaderQuery->fetch(PDO::FETCH_ASSOC))$leaderKeys[$leader['role']][(string)$leader['year']][]=$leader['stat'];
+        } catch (Throwable $leaderError) { error_log('Year leaders unavailable: '.$leaderError->getMessage()); }
+        if($type==='all'){foreach(['batter','pitcher'] as $kind)$yearRecords[$kind]['leaders']=(object)$leaderKeys[$kind];}
+        else $yearRecords['leaders']=(object)$leaderKeys[$type];
         if($type!=='pitcher')$yearRecords['fielding']=profileFieldingRecords($pdo,(string)$pid,$schedule);
         if($type==='all'){foreach(['preseason','postseason','futures'] as $season)$yearRecords['seasons'][$season]=['batter'=>profileYearRecords($pdo,(string)$pid,false,$schedule,$season),'pitcher'=>profileYearRecords($pdo,(string)$pid,true,$schedule,$season)];}
         echo json_encode($yearRecords,JSON_UNESCAPED_UNICODE);exit;

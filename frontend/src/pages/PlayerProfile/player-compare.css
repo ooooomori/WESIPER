@@ -11,7 +11,6 @@
 .profile-compare-table tbody tr:not(.compare-group):hover > * { background: #f7f9fc; }
 .profile-compare-table td.is-best { color: var(--cell-color, #0b5fc7); font-weight: 900; background: color-mix(in srgb, var(--cell-color, #0b5fc7) 7%, #fff); }
 .profile-compare-table tbody tr:not(.compare-group):hover > td.is-best { background: color-mix(in srgb, var(--cell-color, #0b5fc7) 11%, #fff); }
-.profile-compare-table td.is-best::after { content: ''; display: inline-block; width: 6px; height: 6px; margin-left: 5px; border-radius: 50%; background: currentColor; vertical-align: 2px; }
 .profile-compare-table .compare-group th { position: static; padding: 18px 2px 8px; border-bottom: 2px solid #e6edf6; background: transparent; color: #102746; font-size: 14px; font-weight: 900; text-align: left; }
 .profile-compare-table .compare-group:first-child th { padding-top: 4px; }
 
@@ -20,7 +19,9 @@
 .compare-head::before { content: ''; position: absolute; left: 14px; right: 14px; top: 0; height: 3px; border-radius: 0 0 3px 3px; background: var(--c); }
 .compare-head-photo { position: relative; width: 52px; height: 52px; margin-bottom: 2px; }
 .compare-head-photo > img:first-child, .compare-head-photo > .compare-photo-empty { display: block; width: 100%; height: 100%; border-radius: 15px; background: #eef2f6; object-fit: cover; object-position: top; box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px color-mix(in srgb, var(--compare-color, #60758c) 55%, #fff); }
-.compare-head-logo { position: absolute; right: -7px; bottom: -6px; width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(16,39,70,.2); object-fit: contain; }
+.compare-head-logo { position: absolute; right: -8px; bottom: -6px; width: 24px; height: 24px; padding: 0; object-fit: contain;
+    /* 원형 배경 대신 로고 모양을 따라 흰 테두리를 두른다 */
+    filter: drop-shadow(.7px 0 0 #fff) drop-shadow(-.7px 0 0 #fff) drop-shadow(0 .7px 0 #fff) drop-shadow(0 -.7px 0 #fff) drop-shadow(0 1px 1.5px rgba(16,39,70,.28)); }
 .compare-head strong { max-width: 100%; overflow: hidden; color: #0b1b30; font-size: 15px; font-weight: 900; text-overflow: ellipsis; }
 .compare-head small { min-height: 15px; color: #7c8ba0; font-size: 11.5px; font-weight: 600; }
 .compare-head select { width: 100%; max-width: 110px; margin-top: 2px; padding: 5px 24px 5px 10px; border: 1px solid #dfe7f1; border-radius: 10px; background-color: #fff; color: #22364f; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; }
@@ -96,3 +97,22 @@
     .profile-compare-table col.compare-col-label { width: 66px; }
     .profile-compare-switches .profile-game-switch button { padding: 4px 0; font-size: 11px; }
 }
+
+/* 선수가 적을 때 머리칸이 전체 폭으로 늘어나지 않게 칸 폭 상한을 둔다 */
+.profile-compare-table { width: min(100%, calc(76px + var(--compare-cols, 1) * 172px)); }
+@media (max-width: 600px) { .profile-compare-table { width: min(100%, calc(66px + var(--compare-cols, 1) * 140px)); } }
+/* 표가 영역보다 좁을 때는 가운데 정렬 */
+.profile-compare-table { margin-inline: auto; }
+
+/* 스위치 두 개는 제목 줄 오른쪽에 가로로, 선수 추가 버튼은 그 아래 오른쪽 */
+.profile-compare-heading { flex-wrap: nowrap; margin-bottom: 10px; }
+.profile-compare-heading .profile-compare-switches { flex-direction: row; align-items: center; gap: 6px; margin-left: auto; }
+.profile-compare-heading .profile-compare-switches .profile-game-switch { width: auto; }
+.profile-compare-heading .profile-compare-switches .profile-game-switch button { min-width: 44px; padding: 5px 9px; font-size: 12px; }
+.profile-compare-actions { display: flex; justify-content: flex-end; margin: 0 0 12px; }
+.profile-compare .profile-compare-actions .compare-add { margin-left: 0; }
+@media (max-width: 600px) {
+    .profile-compare-heading .profile-compare-switches { gap: 4px; }
+    .profile-compare-heading .profile-compare-switches .profile-game-switch button { min-width: 38px; padding: 4px 7px; font-size: 11.5px; }
+}
+@media (max-width: 360px) { .profile-compare-heading h2 { font-size: 15px; } }

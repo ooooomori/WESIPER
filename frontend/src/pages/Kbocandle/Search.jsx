@@ -37,7 +37,7 @@ const Searchbar = ({ setSearchPlayer, clearOnSelect = false }) => {
         clearTimeout(debounceTimer);
         cancelTokenRef.current?.cancel();
 
-        if (keyword.length >= 2 || keyword === "홀") {
+        if (keyword.length >= 2 || ["홀", "필", "얀"].includes(keyword)) {
             const newDebounceTimer = setTimeout(() => {
                 setIsSearching(true);
                 setSearchList([]);

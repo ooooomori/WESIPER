@@ -1,0 +1,762 @@
+[
+    {
+        "PK": 1388,
+        "player_id": 64203,
+        "name": "칸투",
+        "type": "WBC",
+        "year": 2006,
+        "country": "멕시코",
+        "mlb_id": 408305,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2006&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1389,
+        "player_id": 64219,
+        "name": "마야",
+        "type": "WBC",
+        "year": 2006,
+        "country": "쿠바",
+        "mlb_id": 493337,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2006&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1397,
+        "player_id": 73559,
+        "name": "페레즈",
+        "type": "WBC",
+        "year": 2006,
+        "country": "베네수엘라",
+        "mlb_id": 120415,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2006&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1402,
+        "player_id": 78595,
+        "name": "가르시아",
+        "type": "WBC",
+        "year": 2006,
+        "country": "멕시코",
+        "mlb_id": 114588,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2006&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1596,
+        "player_id": 61629,
+        "name": "트레비스",
+        "type": "WBC",
+        "year": 2009,
+        "country": "호주",
+        "mlb_id": 429715,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1597,
+        "player_id": 63432,
+        "name": "밴덴헐크",
+        "type": "WBC",
+        "year": 2009,
+        "country": "네덜란드",
+        "mlb_id": 462995,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1598,
+        "player_id": 64203,
+        "name": "칸투",
+        "type": "WBC",
+        "year": 2009,
+        "country": "멕시코",
+        "mlb_id": 408305,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1599,
+        "player_id": 64219,
+        "name": "마야",
+        "type": "WBC",
+        "year": 2009,
+        "country": "쿠바",
+        "mlb_id": 493337,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1600,
+        "player_id": 67815,
+        "name": "다이아몬드",
+        "type": "WBC",
+        "year": 2009,
+        "country": "캐나다",
+        "mlb_id": 539438,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1610,
+        "player_id": 73653,
+        "name": "존슨",
+        "type": "WBC",
+        "year": 2009,
+        "country": "캐나다",
+        "mlb_id": 116611,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1623,
+        "player_id": 78595,
+        "name": "가르시아",
+        "type": "WBC",
+        "year": 2009,
+        "country": "멕시코",
+        "mlb_id": 114588,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1624,
+        "player_id": 78726,
+        "name": "토마스",
+        "type": "WBC",
+        "year": 2009,
+        "country": "호주",
+        "mlb_id": 346801,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2009&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1893,
+        "player_id": 50040,
+        "name": "데스파이네",
+        "type": "WBC",
+        "year": 2013,
+        "country": "쿠바",
+        "sources": [
+            "https://www.mister-baseball.com/wp-content/uploads/2013/01/2013-World-Baseball-Classic-Provisional-Rosters_011713.pdf"
+        ]
+    },
+    {
+        "PK": 1894,
+        "player_id": 62859,
+        "name": "마리오",
+        "type": "WBC",
+        "year": 2013,
+        "country": "푸에르토리코",
+        "mlb_id": 489289,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/897/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1895,
+        "player_id": 64203,
+        "name": "칸투",
+        "type": "WBC",
+        "year": 2013,
+        "country": "멕시코",
+        "mlb_id": 408305,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1896,
+        "player_id": 64737,
+        "name": "앨버스",
+        "type": "WBC",
+        "year": 2013,
+        "country": "캐나다",
+        "mlb_id": 452027,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1897,
+        "player_id": 67650,
+        "name": "버나디나",
+        "type": "WBC",
+        "year": 2013,
+        "country": "네덜란드",
+        "mlb_id": 465668,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1898,
+        "player_id": 69209,
+        "name": "페르난데스",
+        "type": "WBC",
+        "year": 2013,
+        "country": "쿠바",
+        "mlb_id": 628336,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1899,
+        "player_id": 69744,
+        "name": "서폴드",
+        "type": "WBC",
+        "year": 2013,
+        "country": "호주",
+        "mlb_id": 599683,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1920,
+        "player_id": 77199,
+        "name": "옥스프링",
+        "type": "WBC",
+        "year": 2013,
+        "country": "호주",
+        "mlb_id": 430684,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1924,
+        "player_id": 78595,
+        "name": "가르시아",
+        "type": "WBC",
+        "year": 2013,
+        "country": "멕시코",
+        "mlb_id": 114588,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/867/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 1926,
+        "player_id": 78726,
+        "name": "토마스",
+        "type": "WBC",
+        "year": 2013,
+        "country": "호주",
+        "mlb_id": 346801,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2013&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2202,
+        "player_id": 52833,
+        "name": "노바",
+        "type": "WBC",
+        "year": 2017,
+        "country": "도미니카공화국",
+        "sources": [
+            "https://www.mlb.com/amp/news/dominican-republic-wbc-17-roster-announced-c215434216.html"
+        ]
+    },
+    {
+        "PK": 2204,
+        "player_id": 56823,
+        "name": "타케다",
+        "type": "WBC",
+        "year": 2017,
+        "country": "일본",
+        "mlb_id": 660351,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/843/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2206,
+        "player_id": 61629,
+        "name": "트레비스",
+        "type": "WBC",
+        "year": 2017,
+        "country": "호주",
+        "mlb_id": 429715,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2207,
+        "player_id": 63432,
+        "name": "밴덴헐크",
+        "type": "WBC",
+        "year": 2017,
+        "country": "네덜란드",
+        "mlb_id": 462995,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2209,
+        "player_id": 64737,
+        "name": "앨버스",
+        "type": "WBC",
+        "year": 2017,
+        "country": "캐나다",
+        "mlb_id": 452027,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2210,
+        "player_id": 65060,
+        "name": "주권",
+        "type": "WBC",
+        "year": 2017,
+        "country": "중국",
+        "mlb_id": 673486,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/790/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2211,
+        "player_id": 66032,
+        "name": "피노",
+        "type": "WBC",
+        "year": 2017,
+        "country": "콜롬비아",
+        "mlb_id": 464416,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2212,
+        "player_id": 66049,
+        "name": "마리몬",
+        "type": "WBC",
+        "year": 2017,
+        "country": "콜롬비아",
+        "mlb_id": 516970,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2214,
+        "player_id": 67025,
+        "name": "로하스",
+        "type": "WBC",
+        "year": 2017,
+        "country": "도미니카공화국",
+        "mlb_id": 592692,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/805/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2215,
+        "player_id": 67872,
+        "name": "로맥",
+        "type": "WBC",
+        "year": 2017,
+        "country": "캐나다",
+        "mlb_id": 457449,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2216,
+        "player_id": 69032,
+        "name": "쿠에바스",
+        "type": "WBC",
+        "year": 2017,
+        "country": "콜롬비아",
+        "mlb_id": 571035,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2217,
+        "player_id": 69744,
+        "name": "서폴드",
+        "type": "WBC",
+        "year": 2017,
+        "country": "호주",
+        "mlb_id": 599683,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2624,
+        "player_id": 52234,
+        "name": "스탁",
+        "type": "WBC",
+        "year": 2023,
+        "country": "이스라엘",
+        "mlb_id": 476594,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/840/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2625,
+        "player_id": 53825,
+        "name": "엘리아스",
+        "type": "WBC",
+        "year": 2023,
+        "country": "쿠바",
+        "mlb_id": 606273,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/798/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2626,
+        "player_id": 54354,
+        "name": "헤이수스",
+        "type": "WBC",
+        "year": 2023,
+        "country": "베네수엘라",
+        "mlb_id": 646241,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2627,
+        "player_id": 55138,
+        "name": "코엔 윈",
+        "type": "WBC",
+        "year": 2023,
+        "country": "호주",
+        "mlb_id": 807650,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2628,
+        "player_id": 56168,
+        "name": "케네디",
+        "type": "WBC",
+        "year": 2023,
+        "country": "호주",
+        "mlb_id": 626943,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2629,
+        "player_id": 56464,
+        "name": "오러클린",
+        "type": "WBC",
+        "year": 2023,
+        "country": "호주",
+        "mlb_id": 672552,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2636,
+        "player_id": 64737,
+        "name": "앨버스",
+        "type": "WBC",
+        "year": 2023,
+        "country": "캐나다",
+        "mlb_id": 452027,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2637,
+        "player_id": 65060,
+        "name": "주권",
+        "type": "WBC",
+        "year": 2023,
+        "country": "중국",
+        "mlb_id": 673486,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/790/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2638,
+        "player_id": 65856,
+        "name": "켈리",
+        "type": "WBC",
+        "year": 2023,
+        "country": "미국",
+        "mlb_id": 518876,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/940/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2642,
+        "player_id": 67650,
+        "name": "버나디나",
+        "type": "WBC",
+        "year": 2023,
+        "country": "네덜란드",
+        "mlb_id": 465668,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/878/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2646,
+        "player_id": 68948,
+        "name": "왕웨이중",
+        "type": "WBC",
+        "year": 2023,
+        "country": "대만",
+        "mlb_id": 623913,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/791/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2647,
+        "player_id": 69032,
+        "name": "쿠에바스",
+        "type": "WBC",
+        "year": 2023,
+        "country": "콜롬비아",
+        "mlb_id": 571035,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/792/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2650,
+        "player_id": 69744,
+        "name": "서폴드",
+        "type": "WBC",
+        "year": 2023,
+        "country": "호주",
+        "mlb_id": 599683,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2651,
+        "player_id": 69950,
+        "name": "베탄코트",
+        "type": "WBC",
+        "year": 2023,
+        "country": "파나마",
+        "mlb_id": 542194,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2023&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2717,
+        "player_id": 53375,
+        "name": "후라도",
+        "type": "WBC",
+        "year": 2026,
+        "country": "파나마",
+        "mlb_id": 642558,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2720,
+        "player_id": 54354,
+        "name": "헤이수스",
+        "type": "WBC",
+        "year": 2026,
+        "country": "베네수엘라",
+        "mlb_id": 646241,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/944/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2721,
+        "player_id": 54944,
+        "name": "데이비슨",
+        "type": "WBC",
+        "year": 2026,
+        "country": "캐나다",
+        "mlb_id": 571602,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2722,
+        "player_id": 55138,
+        "name": "코엔 윈",
+        "type": "WBC",
+        "year": 2026,
+        "country": "호주",
+        "mlb_id": 807650,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2724,
+        "player_id": 55912,
+        "name": "로건",
+        "type": "WBC",
+        "year": 2026,
+        "country": "캐나다",
+        "mlb_id": 663531,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/784/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2725,
+        "player_id": 56168,
+        "name": "케네디",
+        "type": "WBC",
+        "year": 2026,
+        "country": "호주",
+        "mlb_id": 626943,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2726,
+        "player_id": 56464,
+        "name": "오러클린",
+        "type": "WBC",
+        "year": 2026,
+        "country": "호주",
+        "mlb_id": 672552,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2740,
+        "player_id": 69744,
+        "name": "서폴드",
+        "type": "WBC",
+        "year": 2026,
+        "country": "호주",
+        "mlb_id": 599683,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/760/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 2741,
+        "player_id": 69950,
+        "name": "베탄코트",
+        "type": "WBC",
+        "year": 2026,
+        "country": "파나마",
+        "mlb_id": 542194,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/890/roster?season=2026&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 4505,
+        "player_id": 56823,
+        "name": "타케다",
+        "type": "WBC",
+        "year": 2017,
+        "country": "일본",
+        "mlb_id": 660351,
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/teams/843/roster?season=2017&rosterType=fullSeason&hydrate=person"
+        ]
+    },
+    {
+        "PK": 4509,
+        "player_id": 31012,
+        "name": "홀",
+        "type": "WBC",
+        "year": 2023,
+        "country": "호주",
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2023-03-01&endDate=2023-03-31"
+        ]
+    },
+    {
+        "PK": 4510,
+        "player_id": 31012,
+        "name": "홀",
+        "type": "WBC",
+        "year": 2026,
+        "country": "호주",
+        "sources": [
+            "https://statsapi.mlb.com/api/v1/schedule?sportId=51&startDate=2026-03-01&endDate=2026-03-31"
+        ]
+    },
+    {
+        "PK": 4511,
+        "player_id": 56168,
+        "name": "케네디",
+        "type": "프리미어12",
+        "year": 2019,
+        "country": "호주",
+        "sources": [
+            "https://www.japan-baseball.jp/en/team/topteam/2019/premier12/overview.html"
+        ]
+    },
+    {
+        "PK": 4512,
+        "player_id": 56168,
+        "name": "케네디",
+        "type": "프리미어12",
+        "year": 2024,
+        "country": "호주",
+        "sources": [
+            "https://baseball.com.au/premier12/"
+        ]
+    },
+    {
+        "PK": 4513,
+        "player_id": 31012,
+        "name": "홀",
+        "type": "프리미어12",
+        "year": 2024,
+        "country": "호주",
+        "sources": [
+            "https://baseball.com.au/premier12/"
+        ]
+    },
+    {
+        "PK": 4514,
+        "player_id": 31012,
+        "name": "홀",
+        "type": "APBC",
+        "year": 2023,
+        "country": "호주",
+        "sources": [
+            "https://baseball.com.au/news/japan-crowd-loves-us/"
+        ]
+    }
+]

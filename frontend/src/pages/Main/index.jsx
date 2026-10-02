@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { addRecentPlayer, readRecentPlayers, removeRecentPlayer } from '../../lib/recentPlayers';
 import { Link, useLocation } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import "./main.css";
@@ -82,38 +83,31 @@ function SearchPlayerPhoto({ player }) {
 const POPULAR_PLAYER_NAMES = ['김도영', '안현민', '문동주', '노시환', '구자욱', '원태인', '양의지', '김광현', '최정', '김택연'];
 // 조회수 집계가 이 인원보다 적으면(서비스 초기 등) 아래 기본 추천 목록을 보여준다.
 const POPULAR_MIN_RANKED = 5;
-const RECENT_PLAYERS_KEY = 'wesiper-recent-players';
-function readRecentPlayers() {
-    try {
-        const saved = JSON.parse(window.localStorage.getItem(RECENT_PLAYERS_KEY) || '[]');
-        return Array.isArray(saved) ? saved.filter((player) => player && player.PlayerId).slice(0, 8) : [];
-    } catch { return []; }
-}
-function writeRecentPlayers(list) {
-    try { window.localStorage.setItem(RECENT_PLAYERS_KEY, JSON.stringify(list)); } catch { /* 저장 불가 환경에서는 메모리에만 유지한다. */ }
-}
 function getPlayerTeamInfo(player) {
     const active = player.IsActive !== false && player.Team !== '은퇴';
     const numberRetired = Number(player.IsNumberRetired) === 1;
     const badgeTeam = numberRetired ? player.NumberRetiredTeam || player.FormerTeam : player.Team;
     const teamLabel = numberRetired ? badgeTeam : active ? player.Team : player.FormerTeam ? `前 ${player.FormerTeam}` : null;
     const style = active || numberRetired ? getTeamStyle(badgeTeam || '') : { color: '#778391', logo: null };
-    return { active, teamLabel, color: style.color, logo: active || numberRetired ? getSmallTeamLogo(badgeTeam || '') : null };
+    return { active, numberRetired, teamLabel, color: style.color, logo: active || numberRetired ? getSmallTeamLogo(badgeTeam || '') : null, fullLogo: active || numberRetired ? style.logo || null : null };
 }
 function getPlayerPosition(player) {
     const rawPosition = player.MainPos?.trim() || player.Pos || '';
     return player.MainPos?.trim() && player.Pos?.includes('투수') && !rawPosition.endsWith('투수') ? `${rawPosition}투수` : rawPosition;
 }
 function SearchPlayerRow({ player, keyword = '', rank }) {
-    const { active, teamLabel, color, logo } = getPlayerTeamInfo(player);
+    const { active, numberRetired, teamLabel, color, logo, fullLogo } = getPlayerTeamInfo(player);
     const position = getPlayerPosition(player);
     const draftYear = player.Draft?.trim().match(/^(\d{4}|\d{2})/);
     const shortYear = draftYear ? Number(draftYear[1]) : null;
     const currentYear = Number(new Intl.DateTimeFormat('en', { timeZone: 'Asia/Seoul', year: 'numeric' }).format(new Date()));
-    const debutYear = shortYear == null ? null : draftYear[1].length === 4 ? shortYear : shortYear <= currentYear % 100 ? 2000 + shortYear : 1900 + shortYear;
+    const draftDebutYear = shortYear == null ? null : draftYear[1].length === 4 ? shortYear : shortYear <= currentYear % 100 ? 2000 + shortYear : 1900 + shortYear;
+    // 데뷔 연도: 실제 첫 출전 기록(경기 기록·연도별 통산 기록)이 있으면 우선, 없으면 드래프트 연도
+    const debutYear = Number(player.FirstRecordYear) || draftDebutYear;
     const retirementYear = player.Retire || player.LastRecordYear;
     const careerYears = !active && (debutYear || retirementYear) ? `${debutYear || '?'} - ${retirementYear || '?'}` : null;
-    const backNo = active && player.BackNo != null && String(player.BackNo).trim() ? `#${player.BackNo}` : null;
+    // 현역과 영구결번 선수는 등번호를 보여준다.
+    const backNo = (active || numberRetired) && player.BackNo != null && String(player.BackNo).trim() ? `#${player.BackNo}` : null;
     const query = keyword.trim().toLocaleLowerCase();
     const name = player.Name || '';
     const fragments = [];
@@ -123,7 +117,7 @@ function SearchPlayerRow({ player, keyword = '', rank }) {
     }
     fragments.push(name.slice(start));
     const meta = [position, careerYears].filter(Boolean);
-    return <div className={`main-home-search-player${active ? '' : ' is-retired'}`} style={{'--search-team-color':color}}>
+    return <div className={`main-home-search-player${active || numberRetired ? '' : ' is-retired'}${fullLogo ? ' has-team-logo' : ''}`} style={{'--search-team-color':color, ...(fullLogo ? { '--search-team-logo': `url("${fullLogo}")` } : {})}}>
         {rank != null && <span className={`main-home-search-rank${rank <= 3 ? ' is-top' : ''}`}>{rank}</span>}
         <div className="main-home-search-photo"><SearchPlayerPhoto player={player} />{logo && <img className="main-home-search-photo-logo" src={logo} alt="" />}</div>
         <div className="main-home-search-identity">
@@ -172,17 +166,8 @@ export default function Main() {
     const [playerSearchState, setPlayerSearchState] = useState("idle");
     const [popularPlayers, setPopularPlayers] = useState({ state: "idle", list: [], source: null });
     const [recentPlayers, setRecentPlayers] = useState(readRecentPlayers);
-    const rememberPlayer = (player) => setRecentPlayers((previous) => {
-        const keep = ({ PlayerId, Name, Team, FormerTeam, IsActive, IsNumberRetired, NumberRetiredTeam, Pos, MainPos }) => ({ PlayerId, Name, Team, FormerTeam, IsActive, IsNumberRetired, NumberRetiredTeam, Pos, MainPos });
-        const next = [keep(player), ...previous.filter((item) => item.PlayerId !== player.PlayerId)].slice(0, 8);
-        writeRecentPlayers(next);
-        return next;
-    });
-    const forgetPlayer = (playerId) => setRecentPlayers((previous) => {
-        const next = playerId == null ? [] : previous.filter((item) => item.PlayerId !== playerId);
-        writeRecentPlayers(next);
-        return next;
-    });
+    const rememberPlayer = (player) => setRecentPlayers((previous) => addRecentPlayer(player, previous));
+    const forgetPlayer = (playerId) => setRecentPlayers((previous) => removeRecentPlayer(playerId, previous));
     const openSearch = () => {
         if (!searchDialog.current.open) searchDialog.current.showModal();
         searchInput.current.focus();
@@ -198,7 +183,7 @@ export default function Main() {
     useEffect(() => {
         const keyword = search.trim();
         setPlayers([]);
-        if (!searchOpen || (keyword.length < 2 && keyword !== "홀")) {
+        if (!searchOpen || (keyword.length < 2 && !["홀", "필", "얀"].includes(keyword))) {
             setPlayerSearchState("idle");
             return;
         }
@@ -386,7 +371,6 @@ export default function Main() {
                             <section aria-labelledby="search-popular-title">
                                 <div className="main-home-search-section-head">
                                     <h2 id="search-popular-title"><span aria-hidden="true">🔥</span> 인기 선수</h2>
-                                    {popularPlayers.state === "ready" && popularPlayers.source === "views" && <span className="main-home-search-section-note">최근 7일 조회수 기준</span>}
                                 </div>
                                 {popularPlayers.state === "loading" && <ul className="main-home-popular-list" aria-label="인기 선수 불러오는 중">
                                     {POPULAR_PLAYER_NAMES.slice(0, 6).map((name) => <li key={name}><div className="main-home-search-skeleton" /></li>)}

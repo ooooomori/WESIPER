@@ -147,8 +147,8 @@ const Search = (props) => {
         props.setMode("search");
         clearTimeout(debounceTimer);
         cancelTokenRef.current?.cancel();
-        // 두 글자 이상 또는 외자 이름 '홀'만 검색
-        if (keyword.length >= 2 || keyword === "홀") {
+        // 두 글자 이상 또는 외자 이름 '홀'·'필'·'얀'만 검색
+        if (keyword.length >= 2 || ["홀", "필", "얀"].includes(keyword)) {
             props.setMode("search-ing");
             // 디바운싱을 적용하여 일정 시간 후에 검색을 실행
             const newDebounceTimer = setTimeout(() => {
