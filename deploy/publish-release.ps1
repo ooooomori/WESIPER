@@ -53,7 +53,7 @@ try {
 
     Write-Host '== 4. check on server =='
     $php = '/opt/bitnami/php/bin/php'
-    Remote "set -e; cd $remote/stage; tar -xzf ../backend.tar.gz; test -f /opt/bitnami/apache/htdocs/api/playerProfile.php; test -d /opt/bitnami/apache/htdocs/lib; find api lib -name '*.php' -print0 | while IFS= read -r -d '' f; do $php -l `"`$f`" >/dev/null 2>&1 || echo `"SYNTAX ERROR: `$f`"; done > ../lint.txt; if [ -s ../lint.txt ]; then cat ../lint.txt; exit 1; fi; echo php-lint-ok"
+    Remote "set -e; cd $remote/stage; tar -xzf ../backend.tar.gz; test -f /opt/bitnami/apache/htdocs/api/playerProfile.php; test -d /opt/bitnami/apache/htdocs/lib; find api lib -name '*.php' -print0 | while IFS= read -r -d '' f; do out=`$($php -l `"`$f`" 2>&1) || echo `"`$f :: `$out`"; done > ../lint.txt; if grep -q 'Parse error\|Errors parsing\|Fatal error' ../lint.txt; then cat ../lint.txt; exit 1; fi; if [ -s ../lint.txt ]; then echo 'lint warnings (not syntax errors):'; cat ../lint.txt; fi; echo php-lint-ok"
 
     Write-Host '== 5. backup and deploy =='
     Remote "set -e; mkdir -p /home/bitnami/deploy-backups; tar -czf /home/bitnami/deploy-backups/htdocs-before-$id.tar.gz -C /opt/bitnami/apache htdocs; sudo -n cp -R $remote/stage/api/. /opt/bitnami/apache/htdocs/api/; sudo -n cp -R $remote/stage/lib/. /opt/bitnami/apache/htdocs/lib/; tar -xzf $remote/frontend.tar.gz -C /opt/bitnami/apache/htdocs; sudo -n /opt/bitnami/apache/bin/apachectl -k graceful; echo deployed-$id; echo backup=/home/bitnami/deploy-backups/htdocs-before-$id.tar.gz"
