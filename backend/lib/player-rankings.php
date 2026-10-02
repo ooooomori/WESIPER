@@ -35,7 +35,7 @@ function profileBaseRankings(PDO $db, int $year, array $schedule, bool $career =
     if(!is_dir($dir)&&!@mkdir($dir,0700,true)) throw new RuntimeException('Ranking cache unavailable');
     // Career totals must also refresh when historical season boundaries expand.
     $scheduleKey=hash('sha256',json_encode($schedule,JSON_THROW_ON_ERROR));
-    $path=$career?"$dir/v8-career-$scheduleKey.json":"$dir/v4-$year.json";$lock=fopen("$path.lock",'c');
+    $path=$career?"$dir/v7-career-$scheduleKey.json":"$dir/v3-$year.json";$lock=fopen("$path.lock",'c');
     if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Ranking lock unavailable');
     try {
         // The crawler atomically replaces this revision only after its record updates succeed.
@@ -126,7 +126,7 @@ function profileEraPlusRankings(PDO $db,int $year,array $schedule,bool $career,i
     unset($season);
     $dir=sys_get_temp_dir().'/wesiper-profile-rankings-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('ERA+ cache unavailable');
-    $path=$dir.'/era-plus-v2-'.hash('sha256',json_encode([$career?null:$year,$career,$leagueLevel,$contextSchedule],JSON_THROW_ON_ERROR)).'.json';
+    $path=$dir.'/era-plus-v1-'.hash('sha256',json_encode([$career?null:$year,$career,$leagueLevel,$contextSchedule],JSON_THROW_ON_ERROR)).'.json';
     $read=static function()use($path){if(!is_file($path))return null;$cached=json_decode((string)file_get_contents($path),true);if(!is_array($cached)||time()-(int)($cached['createdAt']??0)>=300)return null;return profileRankingCachedPlayers($cached,profileRankingRevision());};
     if(($cached=$read())!==null)return $cached;
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('ERA+ cache lock unavailable');

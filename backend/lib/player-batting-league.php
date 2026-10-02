@@ -6,7 +6,7 @@ function profileBattingLeagueContexts(PDO $db,array $schedule,string $season='re
     require_once __DIR__.'/player-rankings.php';
     $dir=sys_get_temp_dir().'/wesiper-profile-batting-league-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Batting league cache unavailable');
-    $path=$dir.'/v2-'.hash('sha256',json_encode([$schedule,$season,$level],JSON_THROW_ON_ERROR)).'.json';
+    $path=$dir.'/v1-'.hash('sha256',json_encode([$schedule,$season,$level],JSON_THROW_ON_ERROR)).'.json';
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Batting league cache lock unavailable');
     try {
         $revision=profileRankingRevision();

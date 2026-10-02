@@ -6,7 +6,7 @@ require_once __DIR__.'/player-rankings.php';
 function profileLeaguePitchingContexts(PDO $db, array $schedule, int $leagueLevel=1): array {
     $dir=sys_get_temp_dir().'/wesiper-profile-league-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('League context cache unavailable');
-    $path=$dir.'/v3-'.hash('sha256',$leagueLevel.'|'.json_encode($schedule,JSON_THROW_ON_ERROR)).'.json';
+    $path=$dir.'/v2-'.hash('sha256',$leagueLevel.'|'.json_encode($schedule,JSON_THROW_ON_ERROR)).'.json';
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('League context lock unavailable');
     try {
         $revision=profileRankingRevision();

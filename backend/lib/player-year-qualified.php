@@ -14,7 +14,7 @@ function profileTeamGamesByYear(PDO $db, array $schedule): array {
     // 크롤러 갱신(revision)마다 한 번만 집계해 파일에 둔다.
     $dir=sys_get_temp_dir().'/wesiper-profile-team-games-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir))@mkdir($dir,0700,true);
-    $path=$dir.'/v2-'.hash('sha256',json_encode($schedule)).'.json';$revision=profileRankingRevision();
+    $path=$dir.'/v1-'.hash('sha256',json_encode($schedule)).'.json';$revision=profileRankingRevision();
     if(is_file($path)){$cached=json_decode((string)file_get_contents($path),true);if(is_array($cached)&&($cached['revision']??null)===$revision&&is_array($cached['games']??null))return $memo=$cached['games'];}
     $games=[];$bounds=[];
     foreach($schedule as $season){[$start,$end]=$season['regular']??['',''];if($start&&$end)$bounds[]='(game_date BETWEEN '.$db->quote($start).' AND '.$db->quote($end).')';}

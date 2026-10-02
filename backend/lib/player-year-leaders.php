@@ -159,7 +159,7 @@ function profileYearLeaders(PDO $db,int $year,array $schedule): array {
     $dir=sys_get_temp_dir().'/wesiper-profile-year-leaders-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Year leader cache unavailable');
     $historical=$year>=1982&&$year<=2000;
-    $path=$dir.'/v2-'.$year.'-'.hash('sha256',json_encode($historical?null:($schedule[$year]??null))).'.json';
+    $path=$dir.'/v1-'.$year.'-'.hash('sha256',json_encode($historical?null:($schedule[$year]??null))).'.json';
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Year leader cache lock unavailable');
     try{
         // 지난 시즌은 기록이 바뀌지 않으므로 한 번 계산하면 계속 쓰고, 올해만 크롤러 갱신(revision)마다 다시 계산한다.

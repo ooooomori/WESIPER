@@ -73,7 +73,7 @@ function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule
     $dir=sys_get_temp_dir().'/wesiper-profile-year-records-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Year record cache unavailable');
     $key=hash('sha256',$pid.'|'.($pitcher?'pitcher':'batter').'|'.$seasonType.'|'.json_encode($schedule));
-    $path="$dir/v12-$key.json";$lock=fopen("$path.lock",'c');
+    $path="$dir/v11-$key.json";$lock=fopen("$path.lock",'c');
     if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Year record cache lock unavailable');
     try {
         // Shared with ranking caches: only a successful crawler update changes this revision.
