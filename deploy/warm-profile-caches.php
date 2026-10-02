@@ -28,6 +28,10 @@ if(!$code){$log('no completed game');exit(1);}
 $pick=static function(string $table)use($db,$code):?string{$q=$db->prepare("SELECT player_id FROM `$table` WHERE league_level=1 AND game_id LIKE ? AND player_id IS NOT NULL LIMIT 1");$q->execute([$code.'%']);$id=$q->fetchColumn();return $id===false?null:(string)$id;};
 $samples=['batter'=>$pick('kbo_season_records'),'pitcher'=>$pick('kbo_season_pitch_records')];
 $log('revision='.profileRankingRevision().' game='.$code.' batter='.($samples['batter']??'-').' pitcher='.($samples['pitcher']??'-'));
+// 새 경기가 없어 revision이 그대로면 캐시도 그대로 유효하므로 건너뛴다(--force로 강제 실행).
+$marker=sys_get_temp_dir().'/wesiper-cache-warm-'.(function_exists('posix_geteuid')?posix_geteuid():'web').'.done';
+$stamp=profileRankingRevision().'|'.PROFILE_HISTORY_VERSION;
+if(!in_array('--force',$argv,true)&&is_file($marker)&&trim((string)file_get_contents($marker))===$stamp){$log('unchanged since last warm, skipped');exit(0);}
 $players=[];
 $q=$db->prepare('SELECT player_id AS PlayerId,pos AS Pos,is_kbodle AS IsKbodle,team AS Team FROM kbo_player_data WHERE player_id=?');
 foreach($samples as $role=>$pid)if($pid!==null){$q->execute([$pid]);if($row=$q->fetch())$players[$role]=$row;}
@@ -46,5 +50,6 @@ foreach($players as $role=>$player)$step("overview $role",static fn()=>profileCo
 // 리그 순위(ranks 탭): 올해 시즌·통산, 1군·퓨처스.
 foreach([[false,1],[true,1],[false,2]] as [$career,$level])$step(sprintf('rankings %d %s league%d',$year,$career?'career':'season',$level),static fn()=>profileRankings($db,$year,$schedule,$career,$level));
 
+if(!$failed)@file_put_contents($marker,$stamp);
 $log($failed?"done with $failed failure(s)":'done');
 exit($failed?1:0);

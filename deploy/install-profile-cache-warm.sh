@@ -10,7 +10,8 @@ cp "$stage/warm-profile-caches.php" "$dest/"
 chmod -R a+rX "$dest"
 touch "$dest/warm.log" && chmod 666 "$dest/warm.log"
 [[ "$(timedatectl show -p Timezone --value)" == Asia/Seoul ]] || { echo 'Cron host timezone must be Asia/Seoul' >&2; exit 1; }
-cmd="PATH=\$PATH:/opt/bitnami/php/bin; sudo -n -u daemon \$(command -v php) $dest/warm-profile-caches.php /opt/bitnami/apache/htdocs/lib /opt/bitnami/apache/conf/wesiper-db.php >> $dest/warm.log 2>&1"
+# candle 크롤링 작업의 락을 잡아, 크롤링이 끝난 뒤에 실행한다(최대 1시간 대기).
+cmd="PATH=\$PATH:/opt/bitnami/php/bin; flock -w 3600 /home/bitnami/wesiper/locks/candle.lock sudo -n -u daemon \$(command -v php) $dest/warm-profile-caches.php /opt/bitnami/apache/htdocs/lib /opt/bitnami/apache/conf/wesiper-db.php >> $dest/warm.log 2>&1"
 { crontab -l 2>/dev/null | grep -v 'warm-profile-caches.php' | grep -v '^# 선수 프로필 캐시 예열' || true; echo '# 선수 프로필 캐시 예열 (일일 크롤링 직후)'; echo "5 2 * * * $cmd"; echo "5 6 * * * $cmd"; } | crontab -
 echo "installed to $dest"
 crontab -l | grep -n 'warm-profile-caches' || true

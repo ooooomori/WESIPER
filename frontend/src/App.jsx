@@ -6,7 +6,6 @@ import Main from "./pages/Main";
 import Kbodle from "./pages/Kbodle";
 import Kbobingo from "./pages/Kbobingo";
 import Gameday from "./pages/Gameday";
-import Kbocandle from "./pages/Kbocandle";
 function App() {
     const location = useLocation();
     const pid = new URLSearchParams(location.search).get('pid');
@@ -18,7 +17,7 @@ function App() {
                 <Route path="/kbodle" element={<Kbodle />} />
                 <Route path="/bingo" element={<Kbobingo />} />
                 <Route path="/gameday" element={<Gameday />} />
-                <Route path="/kbocandle" element={<Kbocandle />} />
+                <Route path="/kbocandle" element={<Navigate to="/" replace />} />
                 <Route path="/grid" element={<Navigate to="/bingo" />} />
             </Routes>
         </div>
