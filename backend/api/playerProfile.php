@@ -1,5 +1,8 @@
 <?php
 header('Content-Type: application/json; charset=utf-8');
+// 기록은 하루 한 번(02:00) 크롤링으로 바뀌므로 5분간 재사용한다. 오류 응답은 저장하지 않는다.
+header('Cache-Control: public, max-age=300');
+header_register_callback(static function(): void { if (http_response_code() >= 400) header('Cache-Control: no-store'); });
 $pid = $_GET['pid'] ?? '';
 if (!is_string($pid) || !preg_match('/^\d{1,10}$/D', $pid)) {
     http_response_code(400);

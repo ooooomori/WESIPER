@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json; charset=UTF-8');
-header('Cache-Control: no-store');
+// 순위는 크롤링 때만 바뀌므로 5분간 재사용한다. 오류 응답은 저장하지 않는다.
+header('Cache-Control: public, max-age=300');
+header_register_callback(static function(): void { if (http_response_code() >= 400) header('Cache-Control: no-store'); });
 require_once __DIR__ . '/../lib/team-standings.php';
 require_once __DIR__ . '/kbocandle/common.php';
 try {
