@@ -313,5 +313,18 @@
     "sources": [
       "https://www.sportschosun.com/baseball/2017-02-05/201702050100040470002782"
     ]
+  },
+  {
+    "player_id": 56318,
+    "player_name": "박준현",
+    "player_birth": "2007-08-29",
+    "relative_player_id": 74465,
+    "relative_name": "박석민",
+    "relative_birth": "1985-06-22",
+    "relationship": "아버지",
+    "reverse_relationship": "아들",
+    "sources": [
+      "https://www.koreabaseball.com/MediaNews/News/KboPhoto/View.aspx?bdSe=506945"
+    ]
   }
 ]
