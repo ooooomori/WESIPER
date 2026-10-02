@@ -3,8 +3,11 @@ declare(strict_types=1);
 require_once __DIR__.'/player-records.php';
 require_once __DIR__.'/player-rankings.php';
 
+// The futures crawler and backfills do not bump the revision, so expire hourly as a fallback.
+const PROFILE_OVERVIEW_CACHE_TTL=3600;
+
 function profileOverviewCacheRead(array $cached, string $revision, int $now): ?array {
-    if(($cached['revision']??null)!==$revision||!isset($cached['createdAt'])||$now-(int)$cached['createdAt']>=300||$now<(int)$cached['createdAt']||!array_key_exists('records',$cached))return null;
+    if(($cached['revision']??null)!==$revision||!isset($cached['createdAt'])||$now-(int)$cached['createdAt']>=PROFILE_OVERVIEW_CACHE_TTL||$now<(int)$cached['createdAt']||!array_key_exists('records',$cached))return null;
     return ['records'=>$cached['records']];
 }
 

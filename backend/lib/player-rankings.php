@@ -127,7 +127,7 @@ function profileEraPlusRankings(PDO $db,int $year,array $schedule,bool $career,i
     $dir=sys_get_temp_dir().'/wesiper-profile-rankings-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('ERA+ cache unavailable');
     $path=$dir.'/era-plus-v1-'.hash('sha256',json_encode([$career?null:$year,$career,$leagueLevel,$contextSchedule],JSON_THROW_ON_ERROR)).'.json';
-    $read=static function()use($path){if(!is_file($path))return null;$cached=json_decode((string)file_get_contents($path),true);if(!is_array($cached)||time()-(int)($cached['createdAt']??0)>=300)return null;return profileRankingCachedPlayers($cached,profileRankingRevision());};
+    $read=static function()use($path){if(!is_file($path))return null;$cached=json_decode((string)file_get_contents($path),true);if(!is_array($cached)||time()-(int)($cached['createdAt']??0)>=3600)return null;return profileRankingCachedPlayers($cached,profileRankingRevision());};
     if(($cached=$read())!==null)return $cached;
     $lock=fopen($path.'.lock','c');if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('ERA+ cache lock unavailable');
     try {
