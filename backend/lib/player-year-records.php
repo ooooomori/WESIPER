@@ -65,11 +65,16 @@ function profileYearPosition(array $rows): ?string {
     return array_key_first($counts);
 }
 
+function profileYearRecordsSchedule(array $schedule, string $seasonType): array {
+    if($seasonType!=='regular')foreach($schedule as $year=>&$season)$season['regular']=$seasonType==='futures'?[$year.'-01-01',$year.'-12-31']:($season[$seasonType]??['','']);
+    unset($season);
+    return $schedule;
+}
+
 function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule, string $seasonType='regular'): array {
     if(!in_array($seasonType,['regular','preseason','postseason','futures'],true))throw new InvalidArgumentException('Invalid season');
     $leagueLevel=$seasonType==='futures'?2:1;
-    if($seasonType!=='regular')foreach($schedule as $year=>&$season)$season['regular']=$seasonType==='futures'?[$year.'-01-01',$year.'-12-31']:($season[$seasonType]??['','']);
-    unset($season);
+    $schedule=profileYearRecordsSchedule($schedule,$seasonType);
     $dir=sys_get_temp_dir().'/wesiper-profile-year-records-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Year record cache unavailable');
     $key=hash('sha256',$pid.'|'.($pitcher?'pitcher':'batter').'|'.$seasonType.'|'.json_encode($schedule));
