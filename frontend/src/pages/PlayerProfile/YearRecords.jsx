@@ -9,7 +9,7 @@ import { getCachedYearRecords, loadYearRecords } from './yearRecordsCache';
 
 export const yearRecordColumns = {
     batter: {
-        basic: [['경기','games'],['선발','starts'],['타율','avg'],['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['희플','sf'],['희생번트','sh'],['병살','gdp'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['실질OPS','effectiveOps'],['OPS+','opsPlus']],
+        basic: [['경기','games'],['선발','starts'],['타율','avg'],['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['삼진','so'],['병살','gdp'],['희플','sf'],['희생번트','sh'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['실질OPS','effectiveOps'],['OPS+','opsPlus']],
         advanced: [['경기','games'],['타석','pa'],['wOBA','woba'],['순출루율','isoObp'],['순장타율','isoSlg'],['BABIP','babip'],['땅볼/뜬공','groundFly'],['BB%','bbPct'],['K%','kPct'],['BB/K','bbK']],
         special: [['경기','games'],['Spd','spd'],['도루시도','sbAttempts'],['도루','sb'],['도루자','cs'],['도루성공률','sbPct'],['주루사','runOut']],
         fielding: [['포지션','position'],['경기','games'],['선발','starts'],['이닝','innings'],['수비율','fieldingPct'],['도루저지율','caughtStealingPct']],
