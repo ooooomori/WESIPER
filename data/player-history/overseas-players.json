@@ -1,0 +1,26 @@
+[
+  {
+    "player_id": 67341,
+    "name": "이정후",
+    "team": "키움",
+    "is_kbodle": 3
+  },
+  {
+    "player_id": 64300,
+    "name": "김하성",
+    "team": "키움",
+    "is_kbodle": 3
+  },
+  {
+    "player_id": 67304,
+    "name": "김혜성",
+    "team": "키움",
+    "is_kbodle": 3
+  },
+  {
+    "player_id": 65357,
+    "name": "송성문",
+    "team": "키움",
+    "is_kbodle": 3
+  }
+]

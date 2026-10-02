@@ -1,0 +1,6151 @@
+[
+  {
+    "player_id": 31004,
+    "name": "유토",
+    "profile": {
+      "선수명": "유토",
+      "경력": "일본 오카야마 가쿠게이칸고-일본 조사이대",
+      "지명순위": "26 울산 자유선발",
+      "입단년도": "26울산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=31004"
+  },
+  {
+    "player_id": 31011,
+    "name": "고바야시",
+    "profile": {
+      "선수명": "고바야시",
+      "경력": "일본 도카이대부속삿포로고",
+      "지명순위": "26 울산 자유선발",
+      "입단년도": "26울산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=31011"
+  },
+  {
+    "player_id": 31012,
+    "name": "홀",
+    "profile": {
+      "선수명": "홀",
+      "경력": "호주 Darling Range Sports(고)",
+      "지명순위": "26 울산 자유선발",
+      "입단년도": "26울산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=31012"
+  },
+  {
+    "player_id": 31017,
+    "name": "오카다",
+    "profile": {
+      "선수명": "오카다",
+      "경력": "일본 오사카쇼고대고",
+      "지명순위": "26 울산 자유선발",
+      "입단년도": "26울산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=31017"
+  },
+  {
+    "player_id": 31048,
+    "name": "나가",
+    "profile": {
+      "선수명": "나가",
+      "경력": "일본 홋카이도대",
+      "지명순위": "26 울산 자유선발",
+      "입단년도": "26울산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=31048"
+  },
+  {
+    "player_id": 50040,
+    "name": "데스파이네",
+    "profile": {
+      "선수명": "데스파이네",
+      "경력": "미국 Hermanos Martinez Tamayo(고)-KT",
+      "지명순위": "20 KT 자유선발",
+      "입단년도": "20KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50040"
+  },
+  {
+    "player_id": 50165,
+    "name": "라모스",
+    "profile": {
+      "선수명": "라모스",
+      "경력": "멕시코 Canyons(대)-LG",
+      "지명순위": "20 LG 자유선발",
+      "입단년도": "20LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50165"
+  },
+  {
+    "player_id": 50234,
+    "name": "플렉센",
+    "profile": {
+      "선수명": "플렉센",
+      "경력": "미국 Newark Memorial(고)-두산",
+      "지명순위": "20 두산 자유선발",
+      "입단년도": "20두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50234"
+  },
+  {
+    "player_id": 50300,
+    "name": "모터",
+    "profile": {
+      "선수명": "모터",
+      "경력": "미국 Coastal Carolina(대)-키움",
+      "지명순위": "20 키움 자유선발",
+      "입단년도": "20키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50300"
+  },
+  {
+    "player_id": 50350,
+    "name": "러셀",
+    "profile": {
+      "선수명": "러셀",
+      "경력": "미국 Pace(고)-키움",
+      "지명순위": "20 키움 자유선발",
+      "입단년도": "20키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50350"
+  },
+  {
+    "player_id": 50404,
+    "name": "뷰캐넌",
+    "profile": {
+      "선수명": "뷰캐넌",
+      "경력": "미국 Georgia State(대)-삼성",
+      "지명순위": "20 삼성 자유선발",
+      "입단년도": "20삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50404"
+  },
+  {
+    "player_id": 50468,
+    "name": "살라디노",
+    "profile": {
+      "선수명": "살라디노",
+      "경력": "미국 Oral Roberts(대)-삼성",
+      "지명순위": "20 삼성 자유선발",
+      "입단년도": "20삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50468"
+  },
+  {
+    "player_id": 50469,
+    "name": "팔카",
+    "profile": {
+      "선수명": "팔카",
+      "경력": "미국 Georgia Tech(대)-삼성",
+      "지명순위": "20 삼성 자유선발",
+      "입단년도": "20삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50469"
+  },
+  {
+    "player_id": 50506,
+    "name": "마차도",
+    "profile": {
+      "선수명": "마차도",
+      "경력": "베네수엘라 Miguel De Cervantes(고)-롯데",
+      "지명순위": "20 롯데 자유선발",
+      "입단년도": "20롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50506"
+  },
+  {
+    "player_id": 50524,
+    "name": "샘슨",
+    "profile": {
+      "선수명": "샘슨",
+      "경력": "미국 Skyline(고)-미국 Bellevue(대)-롯데",
+      "지명순위": "20 롯데 자유선발",
+      "입단년도": "20롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50524"
+  },
+  {
+    "player_id": 50558,
+    "name": "스트레일리",
+    "profile": {
+      "선수명": "스트레일리",
+      "경력": "미국 Turston(고)-미국 Marshall(대)-롯데",
+      "지명순위": "20 롯데 자유선발",
+      "입단년도": "20롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50558"
+  },
+  {
+    "player_id": 50636,
+    "name": "브룩스",
+    "profile": {
+      "선수명": "브룩스",
+      "경력": "미국 Cajon(고)-미국 California State(대)-KIA",
+      "지명순위": "20 KIA 자유선발",
+      "입단년도": "20KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50636"
+  },
+  {
+    "player_id": 50640,
+    "name": "가뇽",
+    "profile": {
+      "선수명": "가뇽",
+      "경력": "미국 Liberty(고)-미국 California State(대)-KIA",
+      "지명순위": "20 KIA 자유선발",
+      "입단년도": "20KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50640"
+  },
+  {
+    "player_id": 50730,
+    "name": "반즈",
+    "profile": {
+      "선수명": "반즈",
+      "경력": "미국 Katella(고)-미국 Cypress(대)-한화",
+      "지명순위": "20 한화 자유선발",
+      "입단년도": "20한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50730"
+  },
+  {
+    "player_id": 50802,
+    "name": "화이트",
+    "profile": {
+      "선수명": "화이트",
+      "경력": "미국 Western Carolina(대)-SK",
+      "지명순위": "20 SK 자유선발",
+      "입단년도": "20SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50802"
+  },
+  {
+    "player_id": 50815,
+    "name": "킹엄",
+    "profile": {
+      "선수명": "킹험",
+      "경력": "미국 Sierra Vista(고)-SK-한화",
+      "지명순위": "20 SK 자유선발",
+      "입단년도": "20SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50815"
+  },
+  {
+    "player_id": 50835,
+    "name": "핀토",
+    "profile": {
+      "선수명": "핀토",
+      "경력": "베네수엘라 Liceo Alfredo Pietri(고)-SK",
+      "지명순위": "20 SK 자유선발",
+      "입단년도": "20SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50835"
+  },
+  {
+    "player_id": 50912,
+    "name": "라이트",
+    "profile": {
+      "선수명": "라이트",
+      "경력": "미국 East Carolina(대)-NC",
+      "지명순위": "20 NC 자유선발",
+      "입단년도": "20NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50912"
+  },
+  {
+    "player_id": 50923,
+    "name": "알테어",
+    "profile": {
+      "선수명": "알테어",
+      "경력": "미국 Agua Fria(고)-NC",
+      "지명순위": "20 NC 자유선발",
+      "입단년도": "20NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=50923"
+  },
+  {
+    "player_id": 51004,
+    "name": "알몬테",
+    "profile": {
+      "선수명": "알몬테",
+      "경력": "도미니카 Cenapec(고)-KT",
+      "지명순위": "21 KT 자유선발",
+      "입단년도": "21KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51004"
+  },
+  {
+    "player_id": 51136,
+    "name": "수아레즈",
+    "profile": {
+      "선수명": "수아레즈",
+      "경력": "미국 Miami(대)-LG",
+      "지명순위": "21 LG 자유선발",
+      "입단년도": "21LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51136"
+  },
+  {
+    "player_id": 51144,
+    "name": "보어",
+    "profile": {
+      "선수명": "보어",
+      "경력": "LG",
+      "지명순위": "21 LG 자유선발",
+      "입단년도": "21LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51144"
+  },
+  {
+    "player_id": 51234,
+    "name": "로켓",
+    "profile": {
+      "선수명": "로켓",
+      "경력": "미국 Providence(고)-두산",
+      "지명순위": "21 두산 자유선발",
+      "입단년도": "21두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51234"
+  },
+  {
+    "player_id": 51257,
+    "name": "미란다",
+    "profile": {
+      "선수명": "미란다",
+      "경력": "쿠바-두산",
+      "지명순위": "21 두산 자유선발",
+      "입단년도": "21두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51257"
+  },
+  {
+    "player_id": 51309,
+    "name": "크레익",
+    "profile": {
+      "선수명": "크레익",
+      "경력": "미국 Wake Forest(대)-키움",
+      "지명순위": "21 키움 자유선발",
+      "입단년도": "21키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51309"
+  },
+  {
+    "player_id": 51324,
+    "name": "프레이타스",
+    "profile": {
+      "선수명": "프레이타스",
+      "경력": "미국 Elk Growth(고)-키움",
+      "지명순위": "21 키움 자유선발",
+      "입단년도": "21키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51324"
+  },
+  {
+    "player_id": 51334,
+    "name": "스미스",
+    "profile": {
+      "선수명": "스미스",
+      "경력": "미국 Lipscomb(대)-키움",
+      "지명순위": "21 키움 자유선발",
+      "입단년도": "21키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51334"
+  },
+  {
+    "player_id": 51439,
+    "name": "몽고메리",
+    "profile": {
+      "선수명": "몽고메리",
+      "경력": "미국 Hart(고)-삼성",
+      "지명순위": "21 삼성 자유선발",
+      "입단년도": "21삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51439"
+  },
+  {
+    "player_id": 51463,
+    "name": "피렐라",
+    "profile": {
+      "선수명": "피렐라",
+      "경력": "베네수엘라 Manuel Segundo Sanchez(고)-삼성",
+      "지명순위": "21 삼성 자유선발",
+      "입단년도": "21삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51463"
+  },
+  {
+    "player_id": 51567,
+    "name": "프랑코",
+    "profile": {
+      "선수명": "프랑코",
+      "경력": "베네수엘라 Escuela 23 de Enero(중)-롯데",
+      "지명순위": "21 롯데 자유선발",
+      "입단년도": "21롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51567"
+  },
+  {
+    "player_id": 51619,
+    "name": "멩덴",
+    "profile": {
+      "선수명": "멩덴",
+      "경력": "미국 Texas A&M(대)-KIA",
+      "지명순위": "21 KIA 자유선발",
+      "입단년도": "21KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51619"
+  },
+  {
+    "player_id": 51636,
+    "name": "다카하시",
+    "profile": {
+      "선수명": "다카하시",
+      "경력": "브라질 Colegio Anglo Prudentino(고)-KIA",
+      "지명순위": "21 KIA 자유선발",
+      "입단년도": "21KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51636"
+  },
+  {
+    "player_id": 51714,
+    "name": "페레즈",
+    "profile": {
+      "선수명": "페레즈",
+      "경력": "한화",
+      "지명순위": "21 한화 자유선발",
+      "입단년도": "21한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51714"
+  },
+  {
+    "player_id": 51722,
+    "name": "카펜터",
+    "profile": {
+      "선수명": "카펜터",
+      "경력": "미국 Gonzaga(대)-한화",
+      "지명순위": "21 한화 자유선발",
+      "입단년도": "21한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51722"
+  },
+  {
+    "player_id": 51725,
+    "name": "힐리",
+    "profile": {
+      "선수명": "힐리",
+      "경력": "미국 Oregon(대)-한화",
+      "지명순위": "21 한화 자유선발",
+      "입단년도": "21한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51725"
+  },
+  {
+    "player_id": 51833,
+    "name": "가빌리오",
+    "profile": {
+      "선수명": "가빌리오",
+      "경력": "미국 Ashland(고)-미국 Oregon State(대)-SSG",
+      "지명순위": "21 SSG 자유선발",
+      "입단년도": "21SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51833"
+  },
+  {
+    "player_id": 51834,
+    "name": "르위키",
+    "profile": {
+      "선수명": "르위키",
+      "경력": "미국 Saint Joseph Regional(고)-미국 Virginia(대)-SK-SSG",
+      "지명순위": "21 SK 자유선발",
+      "입단년도": "21SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51834"
+  },
+  {
+    "player_id": 51863,
+    "name": "폰트",
+    "profile": {
+      "선수명": "폰트",
+      "경력": "베네수엘라 E.B.Guaracaru mbo(중)-베네수엘라 Lic.Armando Reveron(고)-SK",
+      "지명순위": "21 SK 자유선발",
+      "입단년도": "21SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51863"
+  },
+  {
+    "player_id": 51967,
+    "name": "파슨스",
+    "profile": {
+      "선수명": "파슨스",
+      "경력": "미국 Clarksville(고)-미국 Jackson State(대)",
+      "지명순위": "21 NC 자유선발",
+      "입단년도": "21NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=51967"
+  },
+  {
+    "player_id": 52009,
+    "name": "알포드",
+    "profile": {
+      "선수명": "알포드",
+      "경력": "미국 Mississippi(대)-KT",
+      "지명순위": "22 KT 자유선발",
+      "입단년도": "22KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52009"
+  },
+  {
+    "player_id": 52025,
+    "name": "라모스",
+    "profile": {
+      "선수명": "라모스",
+      "경력": "푸에르토리코 Alfonso Casta Martinez(고)-KT-두산",
+      "지명순위": "22 KT 자유선발",
+      "입단년도": "22KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52025"
+  },
+  {
+    "player_id": 52043,
+    "name": "벤자민",
+    "profile": {
+      "선수명": "벤자민",
+      "경력": "미국 Kansas(대)-KT",
+      "지명순위": "22 KT 자유선발",
+      "입단년도": "22KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52043"
+  },
+  {
+    "player_id": 52112,
+    "name": "루이즈",
+    "profile": {
+      "선수명": "루이즈",
+      "경력": "미국 Bishop Amat Memorial(고)-LG",
+      "지명순위": "22 LG 자유선발",
+      "입단년도": "22LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52112"
+  },
+  {
+    "player_id": 52145,
+    "name": "플럿코",
+    "profile": {
+      "선수명": "플럿코",
+      "경력": "미국 UCLA(대)-LG",
+      "지명순위": "22 LG 자유선발",
+      "입단년도": "22LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52145"
+  },
+  {
+    "player_id": 52234,
+    "name": "스탁",
+    "profile": {
+      "선수명": "스탁",
+      "경력": "미국 Southern California(대)-두산",
+      "지명순위": "22 두산 자유선발",
+      "입단년도": "22두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52234"
+  },
+  {
+    "player_id": 52257,
+    "name": "브랜든",
+    "profile": {
+      "선수명": "브랜든",
+      "경력": "미국 Virginia(대)-두산",
+      "지명순위": "22 두산 자유선발",
+      "입단년도": "22두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52257"
+  },
+  {
+    "player_id": 52308,
+    "name": "애플러",
+    "profile": {
+      "선수명": "애플러",
+      "경력": "미국 Sam Houston State(대)-키움",
+      "지명순위": "22 키움 자유선발",
+      "입단년도": "22키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52308"
+  },
+  {
+    "player_id": 52366,
+    "name": "푸이그",
+    "profile": {
+      "선수명": "푸이그",
+      "경력": "쿠바 EIEFD(대)-키움",
+      "지명순위": "22 키움 자유선발",
+      "입단년도": "22키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52366"
+  },
+  {
+    "player_id": 52457,
+    "name": "수아레즈",
+    "profile": {
+      "선수명": "수아레즈",
+      "경력": "베네수엘라 Galileo Galilei(고)-삼성",
+      "지명순위": "22 삼성 자유선발",
+      "입단년도": "22삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52457"
+  },
+  {
+    "player_id": 52526,
+    "name": "피터스",
+    "profile": {
+      "선수명": "피터스",
+      "경력": "미국 Western Nevada(대)-롯데",
+      "지명순위": "22 롯데 자유선발",
+      "입단년도": "22롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52526"
+  },
+  {
+    "player_id": 52528,
+    "name": "반즈",
+    "profile": {
+      "선수명": "반즈",
+      "경력": "미국 Clemson(대)-롯데",
+      "지명순위": "22 롯데 자유선발",
+      "입단년도": "22롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52528"
+  },
+  {
+    "player_id": 52547,
+    "name": "렉스",
+    "profile": {
+      "선수명": "렉스",
+      "경력": "미국 Kentucky(대)-롯데",
+      "지명순위": "22 롯데 자유선발",
+      "입단년도": "22롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52547"
+  },
+  {
+    "player_id": 52557,
+    "name": "스파크맨",
+    "profile": {
+      "선수명": "스파크맨",
+      "경력": "미국 Wharton County Junior(대)-롯데",
+      "지명순위": "22 롯데 자유선발",
+      "입단년도": "22롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52557"
+  },
+  {
+    "player_id": 52606,
+    "name": "파노니",
+    "profile": {
+      "선수명": "파노니",
+      "경력": "미국 Southern Nevada(대)-KIA",
+      "지명순위": "22 KIA 자유선발",
+      "입단년도": "22KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52606"
+  },
+  {
+    "player_id": 52630,
+    "name": "소크라테스",
+    "profile": {
+      "선수명": "소크라테스",
+      "경력": "도미니카 Liceo Cacique Enriquillo(고)-KIA",
+      "지명순위": "22 KIA 자유선발",
+      "입단년도": "22KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52630"
+  },
+  {
+    "player_id": 52637,
+    "name": "놀린",
+    "profile": {
+      "선수명": "놀린",
+      "경력": "미국 Seaford(고)-미국 San Jacinto(대)-KIA",
+      "지명순위": "22 KIA 자유선발",
+      "입단년도": "22KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52637"
+  },
+  {
+    "player_id": 52645,
+    "name": "로니",
+    "profile": {
+      "선수명": "로니",
+      "경력": "미국 American Senior(고)-KIA",
+      "지명순위": "22 KIA 자유선발",
+      "입단년도": "22KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52645"
+  },
+  {
+    "player_id": 52712,
+    "name": "터크먼",
+    "profile": {
+      "선수명": "터크먼",
+      "경력": "미국 William Fremd(고)-미국 Bradley(대)-한화",
+      "지명순위": "22 한화 자유선발",
+      "입단년도": "22한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52712"
+  },
+  {
+    "player_id": 52720,
+    "name": "페냐",
+    "profile": {
+      "선수명": "페냐",
+      "경력": "도미니카 Crecimiento Credy(고)-한화",
+      "지명순위": "22 한화 자유선발",
+      "입단년도": "22한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52720"
+  },
+  {
+    "player_id": 52806,
+    "name": "라가레스",
+    "profile": {
+      "선수명": "라가레스",
+      "경력": "도미니카 Juan Pablo(고)-SSG",
+      "지명순위": "22 SSG 자유선발",
+      "입단년도": "22SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52806"
+  },
+  {
+    "player_id": 52808,
+    "name": "모리만도",
+    "profile": {
+      "선수명": "모리만도",
+      "경력": "미국 Ocean Lakes(고)-SSG",
+      "지명순위": "22 SSG 자유선발",
+      "입단년도": "22SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52808"
+  },
+  {
+    "player_id": 52827,
+    "name": "크론",
+    "profile": {
+      "선수명": "크론",
+      "경력": "미국 Mountain Pointe(고)-미국 Texas Christian(대)-SSG",
+      "지명순위": "22 SSG 자유선발",
+      "입단년도": "22SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52827"
+  },
+  {
+    "player_id": 52833,
+    "name": "노바",
+    "profile": {
+      "선수명": "노바",
+      "경력": "도미니카 Lic.Vespertino Lucila Mojica(고)-SSG",
+      "지명순위": "22 SSG 자유선발",
+      "입단년도": "22SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52833"
+  },
+  {
+    "player_id": 52904,
+    "name": "마티니",
+    "profile": {
+      "선수명": "마티니",
+      "경력": "미국 Prairie Ridge(고)-미국 Kansas State(대)-NC",
+      "지명순위": "22 NC 자유선발",
+      "입단년도": "22NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52904"
+  },
+  {
+    "player_id": 52950,
+    "name": "더모디",
+    "profile": {
+      "선수명": "더모디",
+      "경력": "미국 IOWA(대)-NC",
+      "지명순위": "22 NC 자유선발",
+      "입단년도": "22NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=52950"
+  },
+  {
+    "player_id": 53040,
+    "name": "슐서",
+    "profile": {
+      "선수명": "슐서",
+      "경력": "미국 Dartmouth(대)-KT",
+      "지명순위": "23 KT 자유선발",
+      "입단년도": "23KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53040"
+  },
+  {
+    "player_id": 53123,
+    "name": "오스틴",
+    "profile": {
+      "선수명": "오스틴",
+      "경력": "미국 Klein Collins(고)",
+      "지명순위": "23 LG 자유선발",
+      "입단년도": "23LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53123"
+  },
+  {
+    "player_id": 53211,
+    "name": "로하스",
+    "profile": {
+      "선수명": "로하스",
+      "경력": "미국 Vanguard(대)-두산",
+      "지명순위": "23 두산 자유선발",
+      "입단년도": "23두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53211"
+  },
+  {
+    "player_id": 53233,
+    "name": "딜런",
+    "profile": {
+      "선수명": "딜런",
+      "경력": "미국 Utah Tech(대)-두산",
+      "지명순위": "23 두산 자유선발",
+      "입단년도": "23두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53233"
+  },
+  {
+    "player_id": 53322,
+    "name": "맥키니",
+    "profile": {
+      "선수명": "맥키니",
+      "경력": "미국 William R.Boone(고)-키움",
+      "지명순위": "23 키움 자유선발",
+      "입단년도": "23키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53322"
+  },
+  {
+    "player_id": 53327,
+    "name": "도슨",
+    "profile": {
+      "선수명": "도슨",
+      "경력": "미국 Ohio Licking Heights(고)",
+      "지명순위": "23 키움 자유선발",
+      "입단년도": "23키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53327"
+  },
+  {
+    "player_id": 53375,
+    "name": "후라도",
+    "profile": {
+      "선수명": "후라도",
+      "경력": "파나마 San Judas Tadeo(고)-키움",
+      "지명순위": "23 키움 자유선발",
+      "입단년도": "23키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53375"
+  },
+  {
+    "player_id": 53506,
+    "name": "구드럼",
+    "profile": {
+      "선수명": "구드럼",
+      "경력": "미국 Fayette County(고)-롯데",
+      "지명순위": "23 롯데 자유선발",
+      "입단년도": "23롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53506"
+  },
+  {
+    "player_id": 53546,
+    "name": "윌커슨",
+    "profile": {
+      "선수명": "윌커슨",
+      "경력": "미국 Cumberland(대)-롯데",
+      "지명순위": "23 롯데 자유선발",
+      "입단년도": "23롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53546"
+  },
+  {
+    "player_id": 53645,
+    "name": "메디나",
+    "profile": {
+      "선수명": "메디나",
+      "경력": "도미니카 Liceo Secundario Cacique Enriquillo(고)-KIA",
+      "지명순위": "23 KIA 자유선발",
+      "입단년도": "23KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53645"
+  },
+  {
+    "player_id": 53664,
+    "name": "앤더슨",
+    "profile": {
+      "선수명": "앤더슨",
+      "경력": "미국 American Heritage(고)-KIA",
+      "지명순위": "23 KIA 자유선발",
+      "입단년도": "23KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53664"
+  },
+  {
+    "player_id": 53665,
+    "name": "산체스",
+    "profile": {
+      "선수명": "산체스",
+      "경력": "베네수엘라-KIA",
+      "지명순위": "23 KIA 자유선발",
+      "입단년도": "23KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53665"
+  },
+  {
+    "player_id": 53712,
+    "name": "오그레디",
+    "profile": {
+      "선수명": "오그레디",
+      "경력": "미국 Archbishop Wood(고)-미국 Rutgers(대)-한화",
+      "지명순위": "23 한화 자유선발",
+      "입단년도": "23한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53712"
+  },
+  {
+    "player_id": 53714,
+    "name": "산체스",
+    "profile": {
+      "선수명": "산체스",
+      "경력": "베네수엘라 Fernando Ramirez(고)-한화",
+      "지명순위": "23 한화 자유선발",
+      "입단년도": "23한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53714"
+  },
+  {
+    "player_id": 53716,
+    "name": "윌리엄스",
+    "profile": {
+      "선수명": "윌리엄스",
+      "경력": "미국 Ball(고)-한화",
+      "지명순위": "23 한화 자유선발",
+      "입단년도": "23한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53716"
+  },
+  {
+    "player_id": 53734,
+    "name": "스미스",
+    "profile": {
+      "선수명": "스미스",
+      "경력": "미국 Robert E. Lee(고)-미국 Oklahoma(대)-한화",
+      "지명순위": "23 한화 자유선발",
+      "입단년도": "23한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53734"
+  },
+  {
+    "player_id": 53825,
+    "name": "엘리아스",
+    "profile": {
+      "선수명": "엘리아스",
+      "경력": "쿠바 Omar Ranedo(고)-SSG",
+      "지명순위": "23 SSG 자유선발",
+      "입단년도": "23SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53825"
+  },
+  {
+    "player_id": 53827,
+    "name": "에레디아",
+    "profile": {
+      "선수명": "에레디아",
+      "경력": "쿠바 Eide Luis Agusto Tursios Lima",
+      "지명순위": "23 SSG 자유선발",
+      "입단년도": "23SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53827"
+  },
+  {
+    "player_id": 53833,
+    "name": "맥카티",
+    "profile": {
+      "선수명": "맥카티",
+      "경력": "미국 Oak Grove(고)-미국 Southern Mississippi(대)-SSG",
+      "지명순위": "23 SSG 자유선발",
+      "입단년도": "23SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53833"
+  },
+  {
+    "player_id": 53863,
+    "name": "로메로",
+    "profile": {
+      "선수명": "로메로",
+      "경력": "도미니카 Liceo Ramon Emilio Jimenez(고)-SSG",
+      "지명순위": "23 SSG 자유선발",
+      "입단년도": "23SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53863"
+  },
+  {
+    "player_id": 53909,
+    "name": "태너",
+    "profile": {
+      "선수명": "태너",
+      "경력": "미국 The Ohio State(대)-NC",
+      "지명순위": "23 NC 자유선발",
+      "입단년도": "23NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53909"
+  },
+  {
+    "player_id": 53913,
+    "name": "페디",
+    "profile": {
+      "선수명": "페디",
+      "경력": "미국 Nevada, Las Vegas(대)-NC",
+      "지명순위": "23 NC 자유선발",
+      "입단년도": "23NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53913"
+  },
+  {
+    "player_id": 53927,
+    "name": "와이드너",
+    "profile": {
+      "선수명": "와이드너",
+      "경력": "미국 South Carolina(대)-NC-삼성",
+      "지명순위": "23 NC 자유선발",
+      "입단년도": "23NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53927"
+  },
+  {
+    "player_id": 53955,
+    "name": "마틴",
+    "profile": {
+      "선수명": "마틴",
+      "경력": "미국 Orange Lutheran(고)-NC",
+      "지명순위": "23 NC 자유선발",
+      "입단년도": "23NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=53955"
+  },
+  {
+    "player_id": 54119,
+    "name": "에르난데스",
+    "profile": {
+      "선수명": "에르난데스",
+      "경력": "베네수엘라 U.E.N Monsenor Perez Leon(고)-LG",
+      "지명순위": "24 LG 자유선발",
+      "입단년도": "24LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54119"
+  },
+  {
+    "player_id": 54134,
+    "name": "엔스",
+    "profile": {
+      "선수명": "엔스",
+      "경력": "미국 Central Michigan(대)-LG",
+      "지명순위": "24 LG 자유선발",
+      "입단년도": "24LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54134"
+  },
+  {
+    "player_id": 54243,
+    "name": "발라조빅",
+    "profile": {
+      "선수명": "발라조빅",
+      "경력": "캐나다-두산",
+      "지명순위": "24 두산 자유선발",
+      "입단년도": "24두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54243"
+  },
+  {
+    "player_id": 54295,
+    "name": "제러드",
+    "profile": {
+      "선수명": "제러드",
+      "경력": "캐나다-두산",
+      "지명순위": "24 두산 자유선발",
+      "입단년도": "24두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54295"
+  },
+  {
+    "player_id": 54354,
+    "name": "헤이수스",
+    "profile": {
+      "선수명": "헤이수스",
+      "경력": "베네수엘라 Juanita Hernandez(고)-키움-KT",
+      "지명순위": "24 키움 자유선발",
+      "입단년도": "24키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54354"
+  },
+  {
+    "player_id": 54400,
+    "name": "디아즈",
+    "profile": {
+      "선수명": "디아즈",
+      "경력": "도미니카 Daniel Smith(고)",
+      "지명순위": "24 삼성 자유선발",
+      "입단년도": "24삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54400"
+  },
+  {
+    "player_id": 54424,
+    "name": "맥키넌",
+    "profile": {
+      "선수명": "맥키넌",
+      "경력": "미국 Hartford(대)-삼성",
+      "지명순위": "24 삼성 자유선발",
+      "입단년도": "24삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54424"
+  },
+  {
+    "player_id": 54443,
+    "name": "레예스",
+    "profile": {
+      "선수명": "레예스",
+      "경력": "도미니카 Melida Altagracia Baez(고)-삼성",
+      "지명순위": "24 삼성 자유선발",
+      "입단년도": "24삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54443"
+  },
+  {
+    "player_id": 54444,
+    "name": "카디네스",
+    "profile": {
+      "선수명": "카디네스",
+      "경력": "미국 California State(대)-삼성-키움",
+      "지명순위": "24 삼성 자유선발",
+      "입단년도": "24삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54444"
+  },
+  {
+    "player_id": 54452,
+    "name": "코너",
+    "profile": {
+      "선수명": "코너",
+      "경력": "미국 California State(대)-삼성",
+      "지명순위": "24 삼성 자유선발",
+      "입단년도": "24삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54452"
+  },
+  {
+    "player_id": 54529,
+    "name": "레이예스",
+    "profile": {
+      "선수명": "레이예스",
+      "경력": "베네수엘라 Dr. Felipe Guevara(고)",
+      "지명순위": "24 롯데 자유선발",
+      "입단년도": "24롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54529"
+  },
+  {
+    "player_id": 54615,
+    "name": "스타우트",
+    "profile": {
+      "선수명": "스타우트",
+      "경력": "미국-KIA",
+      "지명순위": "24 KIA 부상 대체 외국인선수",
+      "입단년도": "24KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54615"
+  },
+  {
+    "player_id": 54640,
+    "name": "네일",
+    "profile": {
+      "선수명": "네일",
+      "경력": "미국 Alabama at Birmingham(대)",
+      "지명순위": "24 KIA 자유선발",
+      "입단년도": "24KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54640"
+  },
+  {
+    "player_id": 54666,
+    "name": "라우어",
+    "profile": {
+      "선수명": "라우어",
+      "경력": "미국 Kent State(대)-KIA",
+      "지명순위": "24 KIA 자유선발",
+      "입단년도": "24KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54666"
+  },
+  {
+    "player_id": 54720,
+    "name": "바리아",
+    "profile": {
+      "선수명": "바리아",
+      "경력": "파나마-한화",
+      "지명순위": "24 한화 자유선발",
+      "입단년도": "24한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54720"
+  },
+  {
+    "player_id": 54730,
+    "name": "페라자",
+    "profile": {
+      "선수명": "페라자",
+      "경력": "베네수엘라 San Isidro Labrador(고)",
+      "지명순위": "24 한화 자유선발",
+      "입단년도": "24한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54730"
+  },
+  {
+    "player_id": 54755,
+    "name": "와이스",
+    "profile": {
+      "선수명": "와이스",
+      "경력": "미국 Wright State(대)-한화",
+      "지명순위": "24 한화 부상 대체 외국인선수",
+      "입단년도": "24한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54755"
+  },
+  {
+    "player_id": 54804,
+    "name": "더거",
+    "profile": {
+      "선수명": "더거",
+      "경력": "미국 Texas Tech(대)-SSG",
+      "지명순위": "24 SSG 자유선발",
+      "입단년도": "24SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54804"
+  },
+  {
+    "player_id": 54833,
+    "name": "앤더슨",
+    "profile": {
+      "선수명": "앤더슨",
+      "경력": "미국 Galena(고)-SSG",
+      "지명순위": "24 SSG 자유선발",
+      "입단년도": "24SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54833"
+  },
+  {
+    "player_id": 54843,
+    "name": "시라카와",
+    "profile": {
+      "선수명": "시라카와",
+      "경력": "일본 이케타고-SSG-두산",
+      "지명순위": "24 SSG 부상 대체 외국인선수",
+      "입단년도": "24SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54843"
+  },
+  {
+    "player_id": 54920,
+    "name": "카스타노",
+    "profile": {
+      "선수명": "카스타노",
+      "경력": "미국 Baylor(대)",
+      "지명순위": "24 NC 자유선발",
+      "입단년도": "24NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54920"
+  },
+  {
+    "player_id": 54930,
+    "name": "하트",
+    "profile": {
+      "선수명": "하트",
+      "경력": "미국 Indiana(대)",
+      "지명순위": "24 NC 자유선발",
+      "입단년도": "24NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54930"
+  },
+  {
+    "player_id": 54944,
+    "name": "데이비슨",
+    "profile": {
+      "선수명": "데이비슨",
+      "경력": "미국 Yucaipa(고)-NC",
+      "지명순위": "24 NC 자유선발",
+      "입단년도": "24NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=54944"
+  },
+  {
+    "player_id": 55032,
+    "name": "패트릭",
+    "profile": {
+      "선수명": "패트릭",
+      "경력": "미국 Hamilton(고)-KT",
+      "지명순위": "25 KT 자유선발",
+      "입단년도": "25KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55032"
+  },
+  {
+    "player_id": 55130,
+    "name": "톨허스트",
+    "profile": {
+      "선수명": "톨허스트",
+      "경력": "미국 Grossmont(대)",
+      "지명순위": "25 LG 자유선발",
+      "입단년도": "25LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55130"
+  },
+  {
+    "player_id": 55138,
+    "name": "코엔 윈",
+    "profile": {
+      "선수명": "코엔 윈",
+      "경력": "호주 Grand Canyon(대)-LG",
+      "지명순위": "25 LG 부상 대체 외국인선수",
+      "입단년도": "25LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55138"
+  },
+  {
+    "player_id": 55146,
+    "name": "치리노스",
+    "profile": {
+      "선수명": "치리노스",
+      "경력": "베네수엘라 U.E.N heroes nigales(고)-LG",
+      "지명순위": "25 LG 자유선발",
+      "입단년도": "25LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55146"
+  },
+  {
+    "player_id": 55208,
+    "name": "케이브",
+    "profile": {
+      "선수명": "케이브",
+      "경력": "미국 Kecoughtan(고)-두산",
+      "지명순위": "25 두산 자유선발",
+      "입단년도": "25두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55208"
+  },
+  {
+    "player_id": 55239,
+    "name": "잭로그",
+    "profile": {
+      "선수명": "잭로그",
+      "경력": "미국 Archbishop Moeller(고)-미국 Kentucky(대)",
+      "지명순위": "25 두산 자유선발",
+      "입단년도": "25두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55239"
+  },
+  {
+    "player_id": 55257,
+    "name": "콜어빈",
+    "profile": {
+      "선수명": "콜어빈",
+      "경력": "미국 Servite(고)-미국 Oregon(대)-두산",
+      "지명순위": "25 두산 자유선발",
+      "입단년도": "25두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55257"
+  },
+  {
+    "player_id": 55322,
+    "name": "로젠버그",
+    "profile": {
+      "선수명": "로젠버그",
+      "경력": "미국 California State(대)-키움",
+      "지명순위": "25 키움 자유선발",
+      "입단년도": "25키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55322"
+  },
+  {
+    "player_id": 55326,
+    "name": "스톤",
+    "profile": {
+      "선수명": "스톤",
+      "경력": "미국 George Ranch(고)-키움",
+      "지명순위": "25 키움 부상 대체 외국인선수",
+      "입단년도": "25키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55326"
+  },
+  {
+    "player_id": 55342,
+    "name": "메르세데스",
+    "profile": {
+      "선수명": "메르세데스",
+      "경력": "도미니카 Colegio Nueva Esperanza(고)-키움",
+      "지명순위": "25 키움 자유선발",
+      "입단년도": "25키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55342"
+  },
+  {
+    "player_id": 55348,
+    "name": "웰스",
+    "profile": {
+      "선수명": "웰스",
+      "경력": "호주 Hunter Sports(고)-키움-LG",
+      "지명순위": "25 키움 부상 대체 외국인선수",
+      "입단년도": "25키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55348"
+  },
+  {
+    "player_id": 55460,
+    "name": "가라비토",
+    "profile": {
+      "선수명": "가라비토",
+      "경력": "도미니카 Liceo Enedina Puella Renville(고)-삼성",
+      "지명순위": "25 삼성 자유선발",
+      "입단년도": "25삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55460"
+  },
+  {
+    "player_id": 55532,
+    "name": "감보아",
+    "profile": {
+      "선수명": "감보아",
+      "경력": "미국 Fresno City(대)-롯데",
+      "지명순위": "25 롯데 자유선발",
+      "입단년도": "25롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55532"
+  },
+  {
+    "player_id": 55536,
+    "name": "데이비슨",
+    "profile": {
+      "선수명": "데이비슨",
+      "경력": "미국 Midland(대)-롯데",
+      "지명순위": "25 롯데 자유선발",
+      "입단년도": "25롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55536"
+  },
+  {
+    "player_id": 55633,
+    "name": "올러",
+    "profile": {
+      "선수명": "올러",
+      "경력": "미국 Northwestern State(대)",
+      "지명순위": "25 KIA 자유선발",
+      "입단년도": "25KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55633"
+  },
+  {
+    "player_id": 55645,
+    "name": "위즈덤",
+    "profile": {
+      "선수명": "위즈덤",
+      "경력": "미국 Saint Mary's(대)-KIA",
+      "지명순위": "25 KIA 자유선발",
+      "입단년도": "25KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55645"
+  },
+  {
+    "player_id": 55730,
+    "name": "폰세",
+    "profile": {
+      "선수명": "폰세",
+      "경력": "미국 California State(대)-한화",
+      "지명순위": "25 한화 자유선발",
+      "입단년도": "25한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55730"
+  },
+  {
+    "player_id": 55734,
+    "name": "플로리얼",
+    "profile": {
+      "선수명": "플로리얼",
+      "경력": "도미니카-한화",
+      "지명순위": "25 한화 자유선발",
+      "입단년도": "25한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55734"
+  },
+  {
+    "player_id": 55844,
+    "name": "맥브룸",
+    "profile": {
+      "선수명": "맥브룸",
+      "경력": "미국 West Virginia(대)-SSG",
+      "지명순위": "25 SSG 부상 대체 외국인선수",
+      "입단년도": "25SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55844"
+  },
+  {
+    "player_id": 55855,
+    "name": "화이트",
+    "profile": {
+      "선수명": "화이트",
+      "경력": "미국 Santa Clara(대)-SSG",
+      "지명순위": "25 SSG 자유선발",
+      "입단년도": "25SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55855"
+  },
+  {
+    "player_id": 55903,
+    "name": "라일리",
+    "profile": {
+      "선수명": "라일리",
+      "경력": "미국 Louisville(대)",
+      "지명순위": "25 NC 자유선발",
+      "입단년도": "25NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55903"
+  },
+  {
+    "player_id": 55912,
+    "name": "로건",
+    "profile": {
+      "선수명": "로건",
+      "경력": "미국 IMG Academy(고)-NC",
+      "지명순위": "25 NC 자유선발",
+      "입단년도": "25NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=55912"
+  },
+  {
+    "player_id": 56002,
+    "name": "대니엘",
+    "profile": {
+      "선수명": "대니엘",
+      "경력": "미국 Auburn(대)",
+      "지명순위": "26 KT 자유선발",
+      "입단년도": "26KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56002"
+  },
+  {
+    "player_id": 56011,
+    "name": "스기모토",
+    "profile": {
+      "선수명": "스기모토",
+      "경력": "일본 오가키니혼대부고-일본 니혼대",
+      "지명순위": "26 KT 아시아쿼터",
+      "입단년도": "26KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56011"
+  },
+  {
+    "player_id": 56034,
+    "name": "힐리어드",
+    "profile": {
+      "선수명": "힐리어드",
+      "경력": "미국 Mansfield(고)-미국 Wichita State(대)",
+      "지명순위": "26 KT 자유선발",
+      "입단년도": "26KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56034"
+  },
+  {
+    "player_id": 56036,
+    "name": "보쉴리",
+    "profile": {
+      "선수명": "보쉴리",
+      "경력": "미국 Hortonville(고)-미국 Wisconsin(대)-KT",
+      "지명순위": "26 KT 자유선발",
+      "입단년도": "26KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56036"
+  },
+  {
+    "player_id": 56146,
+    "name": "리오스",
+    "profile": {
+      "선수명": "리오스",
+      "경력": "푸에르토리코 Cuevas(고)-LG",
+      "지명순위": "26 LG 자유선발",
+      "입단년도": "26LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56146"
+  },
+  {
+    "player_id": 56168,
+    "name": "케네디",
+    "profile": {
+      "선수명": "케네디",
+      "경력": "호주 Swinburne(대)",
+      "지명순위": "26 LG 아시아쿼터",
+      "입단년도": "26LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56168"
+  },
+  {
+    "player_id": 56212,
+    "name": "타카다",
+    "profile": {
+      "선수명": "타카다",
+      "경력": "일본 시즈오카상업고",
+      "지명순위": "26 두산 아시아쿼터",
+      "입단년도": "26두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56212"
+  },
+  {
+    "player_id": 56218,
+    "name": "타무라",
+    "profile": {
+      "선수명": "타무라",
+      "경력": "일본 릿쿄대-두산",
+      "지명순위": "26 두산 아시아쿼터",
+      "입단년도": "26두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56218"
+  },
+  {
+    "player_id": 56236,
+    "name": "세베리노",
+    "profile": {
+      "선수명": "세베리노",
+      "경력": "도미니카 Ivan Guzman Klang(고)",
+      "지명순위": "26 두산 자유선발",
+      "입단년도": "26두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56236"
+  },
+  {
+    "player_id": 56251,
+    "name": "카메론",
+    "profile": {
+      "선수명": "카메론",
+      "경력": "미국 Eagle's Landing(고)-두산",
+      "지명순위": "26 두산 자유선발",
+      "입단년도": "26두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56251"
+  },
+  {
+    "player_id": 56322,
+    "name": "브룩스",
+    "profile": {
+      "선수명": "브룩스",
+      "경력": "미국 Granite Hills(고)-미국 Nevada(대)-키움",
+      "지명순위": "26 키움 자유선발",
+      "입단년도": "26키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56322"
+  },
+  {
+    "player_id": 56334,
+    "name": "와일스",
+    "profile": {
+      "선수명": "와일스",
+      "경력": "미국 Oklahoma(대)-키움",
+      "지명순위": "26 키움 자유선발",
+      "입단년도": "26키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56334"
+  },
+  {
+    "player_id": 56348,
+    "name": "유토",
+    "profile": {
+      "선수명": "유토",
+      "경력": "일본 이치하라 보요고",
+      "지명순위": "26 키움 아시아쿼터",
+      "입단년도": "26키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56348"
+  },
+  {
+    "player_id": 56402,
+    "name": "보스",
+    "profile": {
+      "선수명": "보스",
+      "경력": "미국 Washington(대)",
+      "지명순위": "26 삼성 부상 대체 외국인선수",
+      "입단년도": "26삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56402"
+  },
+  {
+    "player_id": 56409,
+    "name": "매닝",
+    "profile": {
+      "선수명": "매닝",
+      "경력": "미국 Sheldon(고)-삼성",
+      "지명순위": "26 삼성 자유선발",
+      "입단년도": "26삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56409"
+  },
+  {
+    "player_id": 56415,
+    "name": "미야지",
+    "profile": {
+      "선수명": "미야지",
+      "경력": "일본 도카이대-삼성",
+      "지명순위": "26 삼성 아시아쿼터",
+      "입단년도": "26삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56415"
+  },
+  {
+    "player_id": 56459,
+    "name": "페덱",
+    "profile": {
+      "선수명": "페덱",
+      "경력": "미국 Cedar Park(고)",
+      "지명순위": "26 삼성 자유선발",
+      "입단년도": "26삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56459"
+  },
+  {
+    "player_id": 56464,
+    "name": "오러클린",
+    "profile": {
+      "선수명": "오러클린",
+      "경력": "호주 Seaton(고)-삼성",
+      "지명순위": "26 삼성 부상 대체 외국인선수",
+      "입단년도": "26삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56464"
+  },
+  {
+    "player_id": 56474,
+    "name": "사토시",
+    "profile": {
+      "선수명": "사토시",
+      "경력": "일본 유통경제대학",
+      "지명순위": "26 삼성 아시아쿼터",
+      "입단년도": "26삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56474"
+  },
+  {
+    "player_id": 56503,
+    "name": "이이무라",
+    "profile": {
+      "선수명": "이이무라",
+      "경력": "일본 카스미가우라고-일본 오비린대",
+      "지명순위": "26 롯데 아시아쿼터",
+      "입단년도": "26롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56503"
+  },
+  {
+    "player_id": 56523,
+    "name": "비슬리",
+    "profile": {
+      "선수명": "비슬리",
+      "경력": "미국 ToombsCounty(고)-미국 Clemson(대)",
+      "지명순위": "26 롯데 자유선발",
+      "입단년도": "26롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56523"
+  },
+  {
+    "player_id": 56531,
+    "name": "로드리게스",
+    "profile": {
+      "선수명": "로드리게스",
+      "경력": "도미니카 Cenapec Online(고)",
+      "지명순위": "26 롯데 자유선발",
+      "입단년도": "26롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56531"
+  },
+  {
+    "player_id": 56548,
+    "name": "쿄야마",
+    "profile": {
+      "선수명": "쿄야마",
+      "경력": "일본 오미고-롯데",
+      "지명순위": "26 롯데 아시아쿼터",
+      "입단년도": "26롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56548"
+  },
+  {
+    "player_id": 56613,
+    "name": "아데를린",
+    "profile": {
+      "선수명": "아데를린",
+      "경력": "도미니카 Centro Educativo Los Palmares(고)-KIA",
+      "지명순위": "26 KIA 부상 대체 외국인선수",
+      "입단년도": "26KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56613"
+  },
+  {
+    "player_id": 56626,
+    "name": "카스트로",
+    "profile": {
+      "선수명": "카스트로",
+      "경력": "베네수엘라 U.E.N. Luis Mariano Rivera(고)",
+      "지명순위": "26 KIA 자유선발",
+      "입단년도": "26KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56626"
+  },
+  {
+    "player_id": 56632,
+    "name": "데일",
+    "profile": {
+      "선수명": "데일",
+      "경력": "호주 McKinnon(고)-KIA",
+      "지명순위": "26 KIA 아시아쿼터",
+      "입단년도": "26KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56632"
+  },
+  {
+    "player_id": 56712,
+    "name": "에르난데스",
+    "profile": {
+      "선수명": "에르난데스",
+      "경력": "베네수엘라 Pedro Camejo(고)-한화",
+      "지명순위": "26 한화 자유선발",
+      "입단년도": "26한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56712"
+  },
+  {
+    "player_id": 56719,
+    "name": "왕옌청",
+    "profile": {
+      "선수명": "왕옌청",
+      "경력": "대만 Ku-Pao(고)",
+      "지명순위": "26 한화 아시아쿼터",
+      "입단년도": "26한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56719"
+  },
+  {
+    "player_id": 56724,
+    "name": "화이트",
+    "profile": {
+      "선수명": "화이트",
+      "경력": "미국 Carson(고)",
+      "지명순위": "26 한화 자유선발",
+      "입단년도": "26한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56724"
+  },
+  {
+    "player_id": 56760,
+    "name": "쿠싱",
+    "profile": {
+      "선수명": "쿠싱",
+      "경력": "미국 Georgetown(대)-한화",
+      "지명순위": "26 한화 부상 대체 외국인선수",
+      "입단년도": "26한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56760"
+  },
+  {
+    "player_id": 56799,
+    "name": "짐머맨",
+    "profile": {
+      "선수명": "짐머맨",
+      "경력": "미국 Mount Olive(대)",
+      "지명순위": "26 한화 자유선발",
+      "입단년도": "26한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56799"
+  },
+  {
+    "player_id": 56800,
+    "name": "긴지로",
+    "profile": {
+      "선수명": "긴지로",
+      "경력": "일본 쿄로고-일본 호세이대-SSG",
+      "지명순위": "26 SSG 부상 대체 외국인선수",
+      "입단년도": "26SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56800"
+  },
+  {
+    "player_id": 56801,
+    "name": "아빌라",
+    "profile": {
+      "선수명": "아빌라",
+      "경력": "베네수엘라 Electron Caracas(고)",
+      "지명순위": "26 SSG 자유선발",
+      "입단년도": "26SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56801"
+  },
+  {
+    "player_id": 56813,
+    "name": "마드리스",
+    "profile": {
+      "선수명": "마드리스",
+      "경력": "미국 Colorado Mesa(대)-SSG",
+      "지명순위": "26 SSG 부상 대체 외국인선수",
+      "입단년도": "26SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56813"
+  },
+  {
+    "player_id": 56823,
+    "name": "타케다",
+    "profile": {
+      "선수명": "타케다",
+      "경력": "일본 미야자키일본대학고",
+      "지명순위": "26 SSG 아시아쿼터",
+      "입단년도": "26SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56823"
+  },
+  {
+    "player_id": 56841,
+    "name": "베니지아노",
+    "profile": {
+      "선수명": "베니지아노",
+      "경력": "미국 Warren Hills Regional(고)-SSG",
+      "지명순위": "26 SSG 자유선발",
+      "입단년도": "26SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56841"
+  },
+  {
+    "player_id": 56855,
+    "name": "해치",
+    "profile": {
+      "선수명": "해치",
+      "경력": "미국 오클라호마주립대",
+      "지명순위": "26 SSG 자유선발",
+      "입단년도": "26SSG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56855"
+  },
+  {
+    "player_id": 56911,
+    "name": "토다",
+    "profile": {
+      "선수명": "토다",
+      "경력": "일본 도카이대부고",
+      "지명순위": "26 NC 아시아쿼터",
+      "입단년도": "26NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56911"
+  },
+  {
+    "player_id": 56928,
+    "name": "버하겐",
+    "profile": {
+      "선수명": "버하겐",
+      "경력": "미국 Vanderbilt(대)-NC",
+      "지명순위": "26 NC 부상 대체 외국인선수",
+      "입단년도": "26NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56928"
+  },
+  {
+    "player_id": 56950,
+    "name": "블레인",
+    "profile": {
+      "선수명": "블레인",
+      "경력": "미국 Mississippi(대)",
+      "지명순위": "26 NC 자유선발",
+      "입단년도": "26NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56950"
+  },
+  {
+    "player_id": 56966,
+    "name": "테일러",
+    "profile": {
+      "선수명": "테일러",
+      "경력": "캐나다 British Columbia(대)",
+      "지명순위": "26 NC 자유선발",
+      "입단년도": "26NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=56966"
+  },
+  {
+    "player_id": 60139,
+    "name": "더마트레",
+    "profile": {
+      "선수명": "더마트레",
+      "경력": "미국 베이커스필드대",
+      "지명순위": "10 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60139"
+  },
+  {
+    "player_id": 60154,
+    "name": "곤잘레스",
+    "profile": {
+      "선수명": "곤잘레스",
+      "경력": "멕시코 프리파토리아고",
+      "지명순위": "10 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60154"
+  },
+  {
+    "player_id": 60156,
+    "name": "오카모토",
+    "profile": {
+      "선수명": "오카모토",
+      "경력": "일본 미네야마고",
+      "지명순위": "10 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60156"
+  },
+  {
+    "player_id": 60240,
+    "name": "히메네스",
+    "profile": {
+      "선수명": "히메네스",
+      "경력": "도미니카 EXP.U.A.S.D고",
+      "지명순위": "10 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60240"
+  },
+  {
+    "player_id": 60329,
+    "name": "번사이드",
+    "profile": {
+      "선수명": "번사이드",
+      "경력": "호주 카톨릭고",
+      "지명순위": "10 넥센 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60329"
+  },
+  {
+    "player_id": 60430,
+    "name": "레딩",
+    "profile": {
+      "선수명": "레딩",
+      "경력": "미국",
+      "지명순위": "10 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60430"
+  },
+  {
+    "player_id": 60594,
+    "name": "사도스키",
+    "profile": {
+      "선수명": "사도스키",
+      "경력": "미국 웨스턴 와일드캣츠고-미국 플로리다대",
+      "지명순위": "10 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60594"
+  },
+  {
+    "player_id": 60649,
+    "name": "라이트",
+    "profile": {
+      "선수명": "라이트",
+      "경력": "미국 로빈슨고",
+      "지명순위": "10 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60649"
+  },
+  {
+    "player_id": 60650,
+    "name": "로드리게스",
+    "profile": {
+      "선수명": "로드리게스",
+      "경력": "도미니카 루이스호세안토인고",
+      "지명순위": "10 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60650"
+  },
+  {
+    "player_id": 60697,
+    "name": "콜론",
+    "profile": {
+      "선수명": "콜론",
+      "경력": "도미니카",
+      "지명순위": "10 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60697"
+  },
+  {
+    "player_id": 60726,
+    "name": "카페얀",
+    "profile": {
+      "선수명": "카페얀",
+      "경력": "도미니카 세인트마리노고",
+      "지명순위": "10 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60726"
+  },
+  {
+    "player_id": 60727,
+    "name": "부에노",
+    "profile": {
+      "선수명": "부에노",
+      "경력": "쿠바",
+      "지명순위": "10 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60727"
+  },
+  {
+    "player_id": 60729,
+    "name": "데폴라",
+    "profile": {
+      "선수명": "데폴라",
+      "경력": "도미니카 산마리엘고",
+      "지명순위": "10 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=60729"
+  },
+  {
+    "player_id": 61154,
+    "name": "주키치",
+    "profile": {
+      "선수명": "주키치",
+      "경력": "미국 다코타 웨슬리안대-LG",
+      "지명순위": "11 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61154"
+  },
+  {
+    "player_id": 61158,
+    "name": "리즈",
+    "profile": {
+      "선수명": "리즈",
+      "경력": "도미니카 엘세이보고-LG",
+      "지명순위": "11 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61158"
+  },
+  {
+    "player_id": 61230,
+    "name": "라미레즈",
+    "profile": {
+      "선수명": "라미레즈",
+      "경력": "베네수엘라 V.E.M Sucre",
+      "지명순위": "11 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61230"
+  },
+  {
+    "player_id": 61231,
+    "name": "페르난도",
+    "profile": {
+      "선수명": "페르난도",
+      "경력": "베네수엘라",
+      "지명순위": "11 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61231"
+  },
+  {
+    "player_id": 61240,
+    "name": "니퍼트",
+    "profile": {
+      "선수명": "니퍼트",
+      "경력": "미국 West Virginia(대)-두산-KT-두산",
+      "지명순위": "11 두산 자유선발",
+      "입단년도": "11두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61240"
+  },
+  {
+    "player_id": 61332,
+    "name": "알드리지",
+    "profile": {
+      "선수명": "알드리지",
+      "경력": "미국 쿠퍼고",
+      "지명순위": "11 넥센 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61332"
+  },
+  {
+    "player_id": 61434,
+    "name": "저마노",
+    "profile": {
+      "선수명": "저마노",
+      "경력": "미국 클레어몬트고-삼성-KT",
+      "지명순위": "11 삼성 자유선발",
+      "입단년도": "11삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61434"
+  },
+  {
+    "player_id": 61435,
+    "name": "가코",
+    "profile": {
+      "선수명": "가코",
+      "경력": "미국 스탠포드대",
+      "지명순위": "11 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61435"
+  },
+  {
+    "player_id": 61444,
+    "name": "매티스",
+    "profile": {
+      "선수명": "매티스",
+      "경력": "미국 미주리대",
+      "지명순위": "11 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61444"
+  },
+  {
+    "player_id": 61541,
+    "name": "코리",
+    "profile": {
+      "선수명": "코리",
+      "경력": "미국 사우전드 오크고-미국 피어스대",
+      "지명순위": "11 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61541"
+  },
+  {
+    "player_id": 61629,
+    "name": "트레비스",
+    "profile": {
+      "선수명": "트레비스",
+      "경력": "호주 셀튼핸고",
+      "지명순위": "11 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61629"
+  },
+  {
+    "player_id": 61726,
+    "name": "오넬리",
+    "profile": {
+      "선수명": "오넬리",
+      "경력": "도미니카 푸에르토프라타고",
+      "지명순위": "11 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61726"
+  },
+  {
+    "player_id": 61727,
+    "name": "바티스타",
+    "profile": {
+      "선수명": "바티스타",
+      "경력": "도미니카 산토도밍고고-한화",
+      "지명순위": "11 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61727"
+  },
+  {
+    "player_id": 61854,
+    "name": "매그레인",
+    "profile": {
+      "선수명": "매그레인",
+      "경력": "미국 오툼와고-미국 아이오와대",
+      "지명순위": "11 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61854"
+  },
+  {
+    "player_id": 61855,
+    "name": "고든",
+    "profile": {
+      "선수명": "고든",
+      "경력": "미국 라운드락고-SK",
+      "지명순위": "11 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61855"
+  },
+  {
+    "player_id": 61897,
+    "name": "부첵",
+    "profile": {
+      "선수명": "부첵",
+      "경력": "미국 오번대",
+      "지명순위": "11 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=61897"
+  },
+  {
+    "player_id": 62230,
+    "name": "프록터",
+    "profile": {
+      "선수명": "프록터",
+      "경력": "미국 플로리다주립대",
+      "지명순위": "12 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62230"
+  },
+  {
+    "player_id": 62322,
+    "name": "밴헤켄",
+    "profile": {
+      "선수명": "밴헤켄",
+      "경력": "미국 Holland(고)",
+      "지명순위": "12 넥센 자유선발",
+      "입단년도": "12넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62322"
+  },
+  {
+    "player_id": 62451,
+    "name": "탈보트",
+    "profile": {
+      "선수명": "탈보트",
+      "경력": "미국 캐넌뷰고-삼성-한화",
+      "지명순위": "12 삼성 자유선발",
+      "입단년도": "12삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62451"
+  },
+  {
+    "player_id": 62597,
+    "name": "유먼",
+    "profile": {
+      "선수명": "유먼",
+      "경력": "미국 뉴이베리아고-미국 루이지애나주립대-롯데-한화",
+      "지명순위": "12 롯데 자유선발",
+      "입단년도": "12롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62597"
+  },
+  {
+    "player_id": 62644,
+    "name": "앤서니",
+    "profile": {
+      "선수명": "앤서니",
+      "경력": "미국 Northern York(고)-KIA",
+      "지명순위": "12 KIA 자유선발",
+      "입단년도": "12KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62644"
+  },
+  {
+    "player_id": 62688,
+    "name": "빌로우",
+    "profile": {
+      "선수명": "빌로우",
+      "경력": "미국 레이크 미시간대-KIA",
+      "지명순위": "13 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62688"
+  },
+  {
+    "player_id": 62698,
+    "name": "소사",
+    "profile": {
+      "선수명": "소사",
+      "경력": "도미니카 Sergio agustovera(고)-KIA-넥센-LG-SK",
+      "지명순위": "12 KIA 자유선발",
+      "입단년도": "12KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62698"
+  },
+  {
+    "player_id": 62699,
+    "name": "라미레즈",
+    "profile": {
+      "선수명": "라미레즈",
+      "경력": "미국 잉글우드고",
+      "지명순위": "12 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62699"
+  },
+  {
+    "player_id": 62730,
+    "name": "배스",
+    "profile": {
+      "선수명": "배스",
+      "경력": "미국 로버트이고",
+      "지명순위": "12 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62730"
+  },
+  {
+    "player_id": 62731,
+    "name": "션헨",
+    "profile": {
+      "선수명": "션헨",
+      "경력": "미국 맥레넌 커뮤니티대",
+      "지명순위": "12 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62731"
+  },
+  {
+    "player_id": 62833,
+    "name": "부시",
+    "profile": {
+      "선수명": "부시",
+      "경력": "미국 웨이크포레스트대",
+      "지명순위": "12 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62833"
+  },
+  {
+    "player_id": 62859,
+    "name": "마리오",
+    "profile": {
+      "선수명": "마리오",
+      "경력": "푸에르토리코 스텔라마퀴고-푸에르토리코 VRCC대",
+      "지명순위": "12 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=62859"
+  },
+  {
+    "player_id": 63229,
+    "name": "핸킨스",
+    "profile": {
+      "선수명": "핸킨스",
+      "경력": "미국 멤피스대-두산",
+      "지명순위": "13 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63229"
+  },
+  {
+    "player_id": 63230,
+    "name": "올슨",
+    "profile": {
+      "선수명": "올슨",
+      "경력": "미국 캘리포니아 폴리테크닉 주립대-두산",
+      "지명순위": "13 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63230"
+  },
+  {
+    "player_id": 63432,
+    "name": "밴덴헐크",
+    "profile": {
+      "선수명": "밴덴헐크",
+      "경력": "네덜란드 파블로 마틴고-삼성",
+      "지명순위": "13 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63432"
+  },
+  {
+    "player_id": 63462,
+    "name": "로드리게스",
+    "profile": {
+      "선수명": "로드리게스",
+      "경력": "도미니카 세인트조리스대-삼성",
+      "지명순위": "13 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63462"
+  },
+  {
+    "player_id": 63465,
+    "name": "카리대",
+    "profile": {
+      "선수명": "카리대",
+      "경력": "도미니카 라몬 마티아스 멜라고-삼성",
+      "지명순위": "13 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63465"
+  },
+  {
+    "player_id": 63737,
+    "name": "이브랜드",
+    "profile": {
+      "선수명": "이브랜드",
+      "경력": "미국 케년대-한화",
+      "지명순위": "13 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63737"
+  },
+  {
+    "player_id": 63810,
+    "name": "세든",
+    "profile": {
+      "선수명": "세든",
+      "경력": "미국 캐넌고",
+      "지명순위": "13 SK 자유선발",
+      "입단년도": "13SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63810"
+  },
+  {
+    "player_id": 63857,
+    "name": "레이예스",
+    "profile": {
+      "선수명": "레이예스",
+      "경력": "미국 리버사이드고-SK",
+      "지명순위": "13 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63857"
+  },
+  {
+    "player_id": 63938,
+    "name": "해커",
+    "profile": {
+      "선수명": "해커",
+      "경력": "미국 Duncanville(고)-NC-넥센",
+      "지명순위": "13 NC 자유선발",
+      "입단년도": "13NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63938"
+  },
+  {
+    "player_id": 63939,
+    "name": "찰리",
+    "profile": {
+      "선수명": "찰리",
+      "경력": "미국 네브래스카대-NC",
+      "지명순위": "13 NC 자유선발",
+      "입단년도": "13NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63939"
+  },
+  {
+    "player_id": 63940,
+    "name": "아담",
+    "profile": {
+      "선수명": "아담",
+      "경력": "미국 캘리포니아주립대-NC",
+      "지명순위": "14 NC 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=63940"
+  },
+  {
+    "player_id": 64020,
+    "name": "마이크",
+    "profile": {
+      "선수명": "마이크",
+      "경력": "미국 빌라노바대",
+      "지명순위": "14 KT 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64020"
+  },
+  {
+    "player_id": 64136,
+    "name": "티포드",
+    "profile": {
+      "선수명": "티포드",
+      "경력": "미국 조지아서던대-LG",
+      "지명순위": "14 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64136"
+  },
+  {
+    "player_id": 64154,
+    "name": "조쉬벨",
+    "profile": {
+      "선수명": "조쉬벨",
+      "경력": "미국 산타루세스대-LG",
+      "지명순위": "14 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64154"
+  },
+  {
+    "player_id": 64157,
+    "name": "리오단",
+    "profile": {
+      "선수명": "리오단",
+      "경력": "미국 포드햄대-LG",
+      "지명순위": "14 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64157"
+  },
+  {
+    "player_id": 64158,
+    "name": "스나이더",
+    "profile": {
+      "선수명": "스나이더",
+      "경력": "미국 볼주립대-LG-넥센",
+      "지명순위": "14 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64158"
+  },
+  {
+    "player_id": 64203,
+    "name": "칸투",
+    "profile": {
+      "선수명": "칸투",
+      "경력": "미국 레이노사고-두산",
+      "지명순위": "14 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64203"
+  },
+  {
+    "player_id": 64219,
+    "name": "마야",
+    "profile": {
+      "선수명": "마야",
+      "경력": "쿠바 파하르도대-두산",
+      "지명순위": "14 두산 자유선발",
+      "입단년도": "14두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64219"
+  },
+  {
+    "player_id": 64230,
+    "name": "볼스테드",
+    "profile": {
+      "선수명": "볼스테드",
+      "경력": "미국 팜비치 가든고-두산",
+      "지명순위": "14 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64230"
+  },
+  {
+    "player_id": 64302,
+    "name": "로티노",
+    "profile": {
+      "선수명": "로티노",
+      "경력": "미국 위스콘신 라크로스대-넥센",
+      "지명순위": "14 넥센 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64302"
+  },
+  {
+    "player_id": 64430,
+    "name": "마틴",
+    "profile": {
+      "선수명": "마틴",
+      "경력": "미국 버로우스고-삼성",
+      "지명순위": "14 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64430"
+  },
+  {
+    "player_id": 64440,
+    "name": "나바로",
+    "profile": {
+      "선수명": "나바로",
+      "경력": "도미니카-삼성",
+      "지명순위": "14 삼성 자유선발",
+      "입단년도": "14삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64440"
+  },
+  {
+    "player_id": 64553,
+    "name": "히메네스",
+    "profile": {
+      "선수명": "히메네스",
+      "경력": "베네수엘라-롯데",
+      "지명순위": "14 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64553"
+  },
+  {
+    "player_id": 64641,
+    "name": "어센시오",
+    "profile": {
+      "선수명": "어센시오",
+      "경력": "도미니카-KIA",
+      "지명순위": "14 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64641"
+  },
+  {
+    "player_id": 64658,
+    "name": "홀튼",
+    "profile": {
+      "선수명": "홀튼",
+      "경력": "미국 퍼시픽대-KIA",
+      "지명순위": "14 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64658"
+  },
+  {
+    "player_id": 64659,
+    "name": "토마스",
+    "profile": {
+      "선수명": "토마스",
+      "경력": "미국 영스타운주립대-KIA",
+      "지명순위": "14 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64659"
+  },
+  {
+    "player_id": 64699,
+    "name": "필",
+    "profile": {
+      "선수명": "필",
+      "경력": "미국 캘리포니아주립대",
+      "지명순위": "14 KIA 자유선발",
+      "입단년도": "14KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64699"
+  },
+  {
+    "player_id": 64737,
+    "name": "앨버스",
+    "profile": {
+      "선수명": "앨버스",
+      "경력": "캐나다 켄터키대-한화",
+      "지명순위": "14 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64737"
+  },
+  {
+    "player_id": 64746,
+    "name": "피에",
+    "profile": {
+      "선수명": "피에",
+      "경력": "도미니카 산토도밍고고-한화",
+      "지명순위": "14 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64746"
+  },
+  {
+    "player_id": 64761,
+    "name": "클레이",
+    "profile": {
+      "선수명": "클레이",
+      "경력": "미국 쿨만고-한화",
+      "지명순위": "14 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64761"
+  },
+  {
+    "player_id": 64762,
+    "name": "타투스코",
+    "profile": {
+      "선수명": "타투스코",
+      "경력": "미국 인디애나주립대-한화",
+      "지명순위": "14 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64762"
+  },
+  {
+    "player_id": 64824,
+    "name": "울프",
+    "profile": {
+      "선수명": "울프",
+      "경력": "미국 와바쉬 밸리대-SK",
+      "지명순위": "14 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64824"
+  },
+  {
+    "player_id": 64864,
+    "name": "스캇",
+    "profile": {
+      "선수명": "스캇",
+      "경력": "미국 오클라호마 주립대-SK",
+      "지명순위": "14 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64864"
+  },
+  {
+    "player_id": 64914,
+    "name": "테임즈",
+    "profile": {
+      "선수명": "테임즈",
+      "경력": "미국 페퍼다인대",
+      "지명순위": "14 NC 자유선발",
+      "입단년도": "14NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64914"
+  },
+  {
+    "player_id": 64956,
+    "name": "웨버",
+    "profile": {
+      "선수명": "웨버",
+      "경력": "미국 네브래스카대-NC",
+      "지명순위": "14 NC 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=64956"
+  },
+  {
+    "player_id": 65005,
+    "name": "마르테",
+    "profile": {
+      "선수명": "마르테",
+      "경력": "도미니카 리시오 누에바 에스페란자고",
+      "지명순위": "15 KT 자유선발",
+      "입단년도": "15KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65005"
+  },
+  {
+    "player_id": 65036,
+    "name": "어윈",
+    "profile": {
+      "선수명": "어윈",
+      "경력": "미국 미시시피대-KT",
+      "지명순위": "15 KT 자유선발",
+      "입단년도": "15KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65036"
+  },
+  {
+    "player_id": 65052,
+    "name": "댄블랙",
+    "profile": {
+      "선수명": "댄블랙",
+      "경력": "미국 퍼듀대-KT",
+      "지명순위": "15 KT 자유선발",
+      "입단년도": "15KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65052"
+  },
+  {
+    "player_id": 65103,
+    "name": "히메네스",
+    "profile": {
+      "선수명": "히메네스",
+      "경력": "도미니카 Diaz(고)",
+      "지명순위": "15 LG 자유선발",
+      "입단년도": "15LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65103"
+  },
+  {
+    "player_id": 65104,
+    "name": "한나한",
+    "profile": {
+      "선수명": "한나한",
+      "경력": "미국 크레틴더햄홀고-미국 미네소타대-LG",
+      "지명순위": "15 LG 자유선발",
+      "입단년도": "15LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65104"
+  },
+  {
+    "player_id": 65137,
+    "name": "루카스",
+    "profile": {
+      "선수명": "루카스",
+      "경력": "미국 오자크고-LG",
+      "지명순위": "15 LG 자유선발",
+      "입단년도": "15LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65137"
+  },
+  {
+    "player_id": 65203,
+    "name": "루츠",
+    "profile": {
+      "선수명": "루츠",
+      "경력": "미국 알버니아대-두산",
+      "지명순위": "15 두산 자유선발",
+      "입단년도": "15두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65203"
+  },
+  {
+    "player_id": 65219,
+    "name": "스와잭",
+    "profile": {
+      "선수명": "스와잭",
+      "경력": "미국 노바고-두산",
+      "지명순위": "15 두산 자유선발",
+      "입단년도": "15두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65219"
+  },
+  {
+    "player_id": 65233,
+    "name": "로메로",
+    "profile": {
+      "선수명": "로메로",
+      "경력": "도미니카 엘세이보고-두산",
+      "지명순위": "15 두산 자유선발",
+      "입단년도": "15두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65233"
+  },
+  {
+    "player_id": 65331,
+    "name": "피어밴드",
+    "profile": {
+      "선수명": "피어밴드",
+      "경력": "미국 Midview(고)-넥센-KT",
+      "지명순위": "15 넥센 자유선발",
+      "입단년도": "15넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65331"
+  },
+  {
+    "player_id": 65425,
+    "name": "클로이드",
+    "profile": {
+      "선수명": "클로이드",
+      "경력": "미국 네브라스카 오마하대-삼성",
+      "지명순위": "15 삼성 자유선발",
+      "입단년도": "15삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65425"
+  },
+  {
+    "player_id": 65444,
+    "name": "피가로",
+    "profile": {
+      "선수명": "피가로",
+      "경력": "도미니카-삼성",
+      "지명순위": "15 삼성 자유선발",
+      "입단년도": "15삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65444"
+  },
+  {
+    "player_id": 65523,
+    "name": "아두치",
+    "profile": {
+      "선수명": "아두치",
+      "경력": "미국 에버그린파크고",
+      "지명순위": "15 롯데 자유선발",
+      "입단년도": "15롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65523"
+  },
+  {
+    "player_id": 65543,
+    "name": "린드블럼",
+    "profile": {
+      "선수명": "린드블럼",
+      "경력": "미국 Harrison(고)-미국 Purdue(대)-롯데-두산",
+      "지명순위": "15 롯데 자유선발",
+      "입단년도": "15롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65543"
+  },
+  {
+    "player_id": 65546,
+    "name": "레일리",
+    "profile": {
+      "선수명": "레일리",
+      "경력": "미국 Uvalde(고)-미국 Texas A&M(대)-롯데",
+      "지명순위": "15 롯데 자유선발",
+      "입단년도": "15롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65546"
+  },
+  {
+    "player_id": 65630,
+    "name": "에반",
+    "profile": {
+      "선수명": "에반",
+      "경력": "미국 벨레뷰 커뮤니티대-KIA",
+      "지명순위": "15 KIA 자유선발",
+      "입단년도": "15KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65630"
+  },
+  {
+    "player_id": 65658,
+    "name": "스틴슨",
+    "profile": {
+      "선수명": "스틴슨",
+      "경력": "미국 노스우드고-KIA",
+      "지명순위": "15 KIA 자유선발",
+      "입단년도": "15KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65658"
+  },
+  {
+    "player_id": 65659,
+    "name": "험버",
+    "profile": {
+      "선수명": "험버",
+      "경력": "미국 라이스대-KIA",
+      "지명순위": "15 KIA 자유선발",
+      "입단년도": "15KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65659"
+  },
+  {
+    "player_id": 65733,
+    "name": "모건",
+    "profile": {
+      "선수명": "모건",
+      "경력": "미국 왈라왈라대-한화",
+      "지명순위": "15 한화 자유선발",
+      "입단년도": "15한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65733"
+  },
+  {
+    "player_id": 65742,
+    "name": "로저스",
+    "profile": {
+      "선수명": "로저스",
+      "경력": "도미니카 Liceo Jose Joaquin(고)-한화-넥센",
+      "지명순위": "15 한화 자유선발",
+      "입단년도": "15한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65742"
+  },
+  {
+    "player_id": 65762,
+    "name": "폭스",
+    "profile": {
+      "선수명": "폭스",
+      "경력": "미국 미시간대-한화",
+      "지명순위": "15 한화 자유선발",
+      "입단년도": "15한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65762"
+  },
+  {
+    "player_id": 65823,
+    "name": "브라운",
+    "profile": {
+      "선수명": "브라운",
+      "경력": "미국 뉴맨 스미스고-미국 네브라스카대-SK",
+      "지명순위": "15 SK 자유선발",
+      "입단년도": "15SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65823"
+  },
+  {
+    "player_id": 65856,
+    "name": "켈리",
+    "profile": {
+      "선수명": "켈리",
+      "경력": "미국 Desert Mountain(고)-미국 Arizona State(대)-SK",
+      "지명순위": "15 SK 자유선발",
+      "입단년도": "15SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65856"
+  },
+  {
+    "player_id": 65931,
+    "name": "스튜어트",
+    "profile": {
+      "선수명": "스튜어트",
+      "경력": "미국 텍사스테크대",
+      "지명순위": "15 NC 자유선발",
+      "입단년도": "15NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=65931"
+  },
+  {
+    "player_id": 66032,
+    "name": "피노",
+    "profile": {
+      "선수명": "피노",
+      "경력": "베네수엘라 라몬 바스티다스고",
+      "지명순위": "16 KT 자유선발",
+      "입단년도": "16KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66032"
+  },
+  {
+    "player_id": 66049,
+    "name": "마리몬",
+    "profile": {
+      "선수명": "마리몬",
+      "경력": "콜롬비아",
+      "지명순위": "16 KT 자유선발",
+      "입단년도": "16KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66049"
+  },
+  {
+    "player_id": 66050,
+    "name": "로위",
+    "profile": {
+      "선수명": "로위",
+      "경력": "미국 머서대",
+      "지명순위": "16 KT 자유선발",
+      "입단년도": "16KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66050"
+  },
+  {
+    "player_id": 66138,
+    "name": "허프",
+    "profile": {
+      "선수명": "허프",
+      "경력": "미국 UCLA(대)",
+      "지명순위": "16 LG 자유선발",
+      "입단년도": "16LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66138"
+  },
+  {
+    "player_id": 66154,
+    "name": "코프랜드",
+    "profile": {
+      "선수명": "코프랜드",
+      "경력": "미국 서던 미시시피대",
+      "지명순위": "16 LG 자유선발",
+      "입단년도": "16LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66154"
+  },
+  {
+    "player_id": 66226,
+    "name": "보우덴",
+    "profile": {
+      "선수명": "보우덴",
+      "경력": "미국 Waubonsie Valley(고)",
+      "지명순위": "16 두산 자유선발",
+      "입단년도": "16두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66226"
+  },
+  {
+    "player_id": 66244,
+    "name": "에반스",
+    "profile": {
+      "선수명": "에반스",
+      "경력": "미국 St. Mary`s(고)",
+      "지명순위": "16 두산 자유선발",
+      "입단년도": "16두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66244"
+  },
+  {
+    "player_id": 66306,
+    "name": "대니돈",
+    "profile": {
+      "선수명": "대니돈",
+      "경력": "미국 Diamond Bar(고)-미국 California st. of Fullerton(대)",
+      "지명순위": "16 넥센 자유선발",
+      "입단년도": "16넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66306"
+  },
+  {
+    "player_id": 66323,
+    "name": "코엘로",
+    "profile": {
+      "선수명": "코엘로",
+      "경력": "미국 레이크 리지온고-미국 오카루사 왈튼대",
+      "지명순위": "16 넥센 자유선발",
+      "입단년도": "16넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66323"
+  },
+  {
+    "player_id": 66324,
+    "name": "맥그레거",
+    "profile": {
+      "선수명": "맥그레거",
+      "경력": "미국 라코타 이스트고-미국 멤피스대",
+      "지명순위": "16 넥센 자유선발",
+      "입단년도": "16넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66324"
+  },
+  {
+    "player_id": 66402,
+    "name": "웹스터",
+    "profile": {
+      "선수명": "웹스터",
+      "경력": "미국 맥마이클고",
+      "지명순위": "16 삼성 자유선발",
+      "입단년도": "16삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66402"
+  },
+  {
+    "player_id": 66423,
+    "name": "플란데",
+    "profile": {
+      "선수명": "플란데",
+      "경력": "도미니카",
+      "지명순위": "16 삼성 자유선발",
+      "입단년도": "16삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66423"
+  },
+  {
+    "player_id": 66440,
+    "name": "벨레스터",
+    "profile": {
+      "선수명": "벨레스터",
+      "경력": "미국 헌팅턴비치고",
+      "지명순위": "16 삼성 자유선발",
+      "입단년도": "16삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66440"
+  },
+  {
+    "player_id": 66446,
+    "name": "레온",
+    "profile": {
+      "선수명": "레온",
+      "경력": "멕시코 살바도르 알렌데고",
+      "지명순위": "16 삼성 자유선발",
+      "입단년도": "16삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66446"
+  },
+  {
+    "player_id": 66452,
+    "name": "발디리스",
+    "profile": {
+      "선수명": "발디리스",
+      "경력": "베네수엘라 살레시아노스 돈 보스코고",
+      "지명순위": "16 삼성 자유선발",
+      "입단년도": "16삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66452"
+  },
+  {
+    "player_id": 66523,
+    "name": "맥스웰",
+    "profile": {
+      "선수명": "맥스웰",
+      "경력": "미국 매릴랜드대",
+      "지명순위": "16 롯데 자유선발",
+      "입단년도": "16롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66523"
+  },
+  {
+    "player_id": 66628,
+    "name": "지크",
+    "profile": {
+      "선수명": "지크",
+      "경력": "미국 Calton J.Kell고",
+      "지명순위": "16 KIA 자유선발",
+      "입단년도": "16KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66628"
+  },
+  {
+    "player_id": 66643,
+    "name": "헥터",
+    "profile": {
+      "선수명": "헥터",
+      "경력": "도미니카 Ramon Matia Mella(고)",
+      "지명순위": "16 KIA 자유선발",
+      "입단년도": "16KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66643"
+  },
+  {
+    "player_id": 66740,
+    "name": "로사리오",
+    "profile": {
+      "선수명": "로사리오",
+      "경력": "도미니카 Elias Rodriguez(고)",
+      "지명순위": "16 한화 자유선발",
+      "입단년도": "16한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66740"
+  },
+  {
+    "player_id": 66742,
+    "name": "서캠프",
+    "profile": {
+      "선수명": "서캠프",
+      "경력": "미국 노스캐롤라이나 주립대",
+      "지명순위": "16 한화 자유선발",
+      "입단년도": "16한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66742"
+  },
+  {
+    "player_id": 66748,
+    "name": "마에스트리",
+    "profile": {
+      "선수명": "마에스트리",
+      "경력": "이탈리아",
+      "지명순위": "16 한화 자유선발",
+      "입단년도": "16한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66748"
+  },
+  {
+    "player_id": 66750,
+    "name": "카스티요",
+    "profile": {
+      "선수명": "카스티요",
+      "경력": "도미니카 메르세데스 라우라 아구이알고",
+      "지명순위": "16 한화 자유선발",
+      "입단년도": "16한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66750"
+  },
+  {
+    "player_id": 66805,
+    "name": "고메즈",
+    "profile": {
+      "선수명": "고메즈",
+      "경력": "도미니카 알레한드로 바쓰고",
+      "지명순위": "16 SK 자유선발",
+      "입단년도": "16SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66805"
+  },
+  {
+    "player_id": 66825,
+    "name": "라라",
+    "profile": {
+      "선수명": "라라",
+      "경력": "도미니카 리세오 호세 누네즈 데 카케레스고",
+      "지명순위": "16 SK 자유선발",
+      "입단년도": "16SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=66825"
+  },
+  {
+    "player_id": 67024,
+    "name": "모넬",
+    "profile": {
+      "선수명": "모넬",
+      "경력": "미국 Seminole State(대)",
+      "지명순위": "17 KT 자유선발",
+      "입단년도": "17KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67024"
+  },
+  {
+    "player_id": 67025,
+    "name": "로하스",
+    "profile": {
+      "선수명": "로하스",
+      "경력": "미국 Wabash Valley(대)-KT",
+      "지명순위": "17 KT 자유선발",
+      "입단년도": "17KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67025"
+  },
+  {
+    "player_id": 67033,
+    "name": "로치",
+    "profile": {
+      "선수명": "로치",
+      "경력": "미국 Southern Nevada(대)",
+      "지명순위": "17 KT 자유선발",
+      "입단년도": "17KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67033"
+  },
+  {
+    "player_id": 67134,
+    "name": "로니",
+    "profile": {
+      "선수명": "로니",
+      "경력": "미국 Lawrence E Elkins HS(고)",
+      "지명순위": "17 LG 자유선발",
+      "입단년도": "17LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67134"
+  },
+  {
+    "player_id": 67312,
+    "name": "오설리반",
+    "profile": {
+      "선수명": "오설리반",
+      "경력": "미국 Valhalla(고)",
+      "지명순위": "17 넥센 자유선발",
+      "입단년도": "17넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67312"
+  },
+  {
+    "player_id": 67313,
+    "name": "브리검",
+    "profile": {
+      "선수명": "브리검",
+      "경력": "미국 Central Florida Christian Academy(고)-히어로즈-키움",
+      "지명순위": "17 넥센 자유선발",
+      "입단년도": "17넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67313"
+  },
+  {
+    "player_id": 67394,
+    "name": "초이스",
+    "profile": {
+      "선수명": "초이스",
+      "경력": "미국 Texas at Arlington(대)-넥센",
+      "지명순위": "17 넥센 자유선발",
+      "입단년도": "17넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67394"
+  },
+  {
+    "player_id": 67423,
+    "name": "레나도",
+    "profile": {
+      "선수명": "레나도",
+      "경력": "미국 St.Rose(고)-미국 Louisiana State(대)",
+      "지명순위": "17 삼성 자유선발",
+      "입단년도": "17삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67423"
+  },
+  {
+    "player_id": 67435,
+    "name": "페트릭",
+    "profile": {
+      "선수명": "페트릭",
+      "경력": "미국 Morris(고)-미국 Northwestern Ohio(대)",
+      "지명순위": "17 삼성 자유선발",
+      "입단년도": "17삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67435"
+  },
+  {
+    "player_id": 67450,
+    "name": "러프",
+    "profile": {
+      "선수명": "러프",
+      "경력": "미국 Creighton(대)-삼성",
+      "지명순위": "17 삼성 자유선발",
+      "입단년도": "17삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67450"
+  },
+  {
+    "player_id": 67558,
+    "name": "마켈",
+    "profile": {
+      "선수명": "마켈",
+      "경력": "미국 Yavapai JC(대)",
+      "지명순위": "17 롯데 자유선발",
+      "입단년도": "17롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67558"
+  },
+  {
+    "player_id": 67559,
+    "name": "애디튼",
+    "profile": {
+      "선수명": "애디튼",
+      "경력": "미국 Indian river community(대)",
+      "지명순위": "17 롯데 자유선발",
+      "입단년도": "17롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67559"
+  },
+  {
+    "player_id": 67598,
+    "name": "번즈",
+    "profile": {
+      "선수명": "번즈",
+      "경력": "미국 Kentucky(대)-롯데",
+      "지명순위": "17 롯데 자유선발",
+      "입단년도": "17롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67598"
+  },
+  {
+    "player_id": 67645,
+    "name": "팻딘",
+    "profile": {
+      "선수명": "팻딘",
+      "경력": "미국 Boston(대)",
+      "지명순위": "17 KIA 자유선발",
+      "입단년도": "17KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67645"
+  },
+  {
+    "player_id": 67650,
+    "name": "버나디나",
+    "profile": {
+      "선수명": "버나디나",
+      "경력": "네덜란드 Voorben Praktyk(고)",
+      "지명순위": "17 KIA 자유선발",
+      "입단년도": "17KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67650"
+  },
+  {
+    "player_id": 67742,
+    "name": "비야누에바",
+    "profile": {
+      "선수명": "비야누에바",
+      "경력": "도미니카 Americas Bicultural(고)",
+      "지명순위": "17 한화 자유선발",
+      "입단년도": "17한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67742"
+  },
+  {
+    "player_id": 67815,
+    "name": "다이아몬드",
+    "profile": {
+      "선수명": "다이아몬드",
+      "경력": "미국 SUNY Binghamton(대)",
+      "지명순위": "17 SK 자유선발",
+      "입단년도": "17SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67815"
+  },
+  {
+    "player_id": 67827,
+    "name": "워스",
+    "profile": {
+      "선수명": "워스",
+      "경력": "미국 Pepperdine(대)",
+      "지명순위": "17 SK 자유선발",
+      "입단년도": "17SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67827"
+  },
+  {
+    "player_id": 67845,
+    "name": "밴와트",
+    "profile": {
+      "선수명": "밴와트",
+      "경력": "미국 고다드고-미국 위치타대-SK",
+      "지명순위": "14 SK 자유선발",
+      "입단년도": "14SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67845"
+  },
+  {
+    "player_id": 67872,
+    "name": "로맥",
+    "profile": {
+      "선수명": "로맥",
+      "경력": "캐나다 Lucas Secondary(고)-SK-SSG",
+      "지명순위": "17 SK 자유선발",
+      "입단년도": "17SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67872"
+  },
+  {
+    "player_id": 67935,
+    "name": "스크럭스",
+    "profile": {
+      "선수명": "스크럭스",
+      "경력": "미국 Las Vegas(대)",
+      "지명순위": "17 NC 자유선발",
+      "입단년도": "17NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67935"
+  },
+  {
+    "player_id": 67948,
+    "name": "맨쉽",
+    "profile": {
+      "선수명": "맨쉽",
+      "경력": "미국 Notre Dame(대)",
+      "지명순위": "17 NC 자유선발",
+      "입단년도": "17NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=67948"
+  },
+  {
+    "player_id": 68103,
+    "name": "가르시아",
+    "profile": {
+      "선수명": "가르시아",
+      "경력": "쿠바 Ciego de Avila Maximo Gomez Baez(대)",
+      "지명순위": "18 LG 자유선발",
+      "입단년도": "18LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68103"
+  },
+  {
+    "player_id": 68135,
+    "name": "윌슨",
+    "profile": {
+      "선수명": "윌슨",
+      "경력": "미국 Virginia(대)",
+      "지명순위": "18 LG 자유선발",
+      "입단년도": "18LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68135"
+  },
+  {
+    "player_id": 68240,
+    "name": "후랭코프",
+    "profile": {
+      "선수명": "후랭코프",
+      "경력": "미국 North Carolina at Wilmington(대)-두산",
+      "지명순위": "18 두산 자유선발",
+      "입단년도": "18두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68240"
+  },
+  {
+    "player_id": 68244,
+    "name": "파레디스",
+    "profile": {
+      "선수명": "파레디스",
+      "경력": "도미니카-두산",
+      "지명순위": "18 두산 자유선발",
+      "입단년도": "18두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68244"
+  },
+  {
+    "player_id": 68245,
+    "name": "반슬라이크",
+    "profile": {
+      "선수명": "반슬라이크",
+      "경력": "미국 John Burroughs(고)",
+      "지명순위": "18 두산 자유선발",
+      "입단년도": "18두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68245"
+  },
+  {
+    "player_id": 68345,
+    "name": "샌즈",
+    "profile": {
+      "선수명": "샌즈",
+      "경력": "미국 Smithfield-Selma(고)-미국 Catawba(대)-넥센-키움",
+      "지명순위": "18 넥센 자유선발",
+      "입단년도": "18넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68345"
+  },
+  {
+    "player_id": 68400,
+    "name": "보니야",
+    "profile": {
+      "선수명": "보니야",
+      "경력": "도미니카",
+      "지명순위": "18 삼성 자유선발",
+      "입단년도": "18삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68400"
+  },
+  {
+    "player_id": 68435,
+    "name": "아델만",
+    "profile": {
+      "선수명": "아델만",
+      "경력": "미국 Georgetown(대)",
+      "지명순위": "18 삼성 자유선발",
+      "입단년도": "18삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68435"
+  },
+  {
+    "player_id": 68526,
+    "name": "듀브론트",
+    "profile": {
+      "선수명": "듀브론트",
+      "경력": "베네수엘라 Agua Linda Academy-롯데",
+      "지명순위": "18 롯데 자유선발",
+      "입단년도": "18롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68526"
+  },
+  {
+    "player_id": 68730,
+    "name": "호잉",
+    "profile": {
+      "선수명": "호잉",
+      "경력": "미국 Fort Loramie(고)-미국 Toledo(대)-한화-KT",
+      "지명순위": "18 한화 자유선발",
+      "입단년도": "18한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68730"
+  },
+  {
+    "player_id": 68742,
+    "name": "휠러",
+    "profile": {
+      "선수명": "휠러",
+      "경력": "미국 Torrance(고)-미국 Loyola Marymount(대)-한화",
+      "지명순위": "18 한화 자유선발",
+      "입단년도": "18한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68742"
+  },
+  {
+    "player_id": 68748,
+    "name": "샘슨",
+    "profile": {
+      "선수명": "샘슨",
+      "경력": "미국 Forest(고)-한화",
+      "지명순위": "18 한화 자유선발",
+      "입단년도": "18한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68748"
+  },
+  {
+    "player_id": 68794,
+    "name": "헤일",
+    "profile": {
+      "선수명": "헤일",
+      "경력": "미국 The Walker School(고)-미국 Princeton(대)-한화",
+      "지명순위": "18 한화 자유선발",
+      "입단년도": "18한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68794"
+  },
+  {
+    "player_id": 68815,
+    "name": "산체스",
+    "profile": {
+      "선수명": "산체스",
+      "경력": "도미니카 Santo Domingo(대)-SK",
+      "지명순위": "18 SK 자유선발",
+      "입단년도": "18SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68815"
+  },
+  {
+    "player_id": 68948,
+    "name": "왕웨이중",
+    "profile": {
+      "선수명": "왕웨이중",
+      "경력": "대만 Hua De(고)",
+      "지명순위": "18 NC 자유선발",
+      "입단년도": "18NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68948"
+  },
+  {
+    "player_id": 68953,
+    "name": "베렛",
+    "profile": {
+      "선수명": "베렛",
+      "경력": "미국 Baylor(대)",
+      "지명순위": "18 NC 자유선발",
+      "입단년도": "18NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=68953"
+  },
+  {
+    "player_id": 69032,
+    "name": "쿠에바스",
+    "profile": {
+      "선수명": "쿠에바스",
+      "경력": "베네수엘라 Carabobo(대)-KT",
+      "지명순위": "19 KT 자유선발",
+      "입단년도": "19KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69032"
+  },
+  {
+    "player_id": 69045,
+    "name": "알칸타라",
+    "profile": {
+      "선수명": "알칸타라",
+      "경력": "도미니카 Liceo secundario Emma Balaguer(고)-KT-두산",
+      "지명순위": "19 KT 자유선발",
+      "입단년도": "19KT"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69045"
+  },
+  {
+    "player_id": 69103,
+    "name": "켈리",
+    "profile": {
+      "선수명": "켈리",
+      "경력": "미국 Sarasota(고)-LG",
+      "지명순위": "19 LG 자유선발",
+      "입단년도": "19LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69103"
+  },
+  {
+    "player_id": 69150,
+    "name": "조셉",
+    "profile": {
+      "선수명": "조셉",
+      "경력": "미국 Horizon(고)-LG",
+      "지명순위": "19 LG 자유선발",
+      "입단년도": "19LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69150"
+  },
+  {
+    "player_id": 69165,
+    "name": "페게로",
+    "profile": {
+      "선수명": "페게로",
+      "경력": "도미니카-LG",
+      "지명순위": "19 LG 자유선발",
+      "입단년도": "19LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69165"
+  },
+  {
+    "player_id": 69209,
+    "name": "페르난데스",
+    "profile": {
+      "선수명": "페르난데스",
+      "경력": "쿠바-두산",
+      "지명순위": "19 두산 자유선발",
+      "입단년도": "19두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69209"
+  },
+  {
+    "player_id": 69343,
+    "name": "요키시",
+    "profile": {
+      "선수명": "요키시",
+      "경력": "미국 Northwestern(대)-키움",
+      "지명순위": "19 키움 자유선발",
+      "입단년도": "19키움"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69343"
+  },
+  {
+    "player_id": 69405,
+    "name": "윌리엄슨",
+    "profile": {
+      "선수명": "윌리엄슨",
+      "경력": "미국 Wake Forest(대)-삼성",
+      "지명순위": "19 삼성 자유선발",
+      "입단년도": "19삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69405"
+  },
+  {
+    "player_id": 69413,
+    "name": "맥과이어",
+    "profile": {
+      "선수명": "맥과이어",
+      "경력": "미국 Georgia Tech(대)-삼성",
+      "지명순위": "19 삼성 자유선발",
+      "입단년도": "19삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69413"
+  },
+  {
+    "player_id": 69435,
+    "name": "헤일리",
+    "profile": {
+      "선수명": "헤일리",
+      "경력": "미국 CSU Fresno-삼성",
+      "지명순위": "19 삼성 자유선발",
+      "입단년도": "19삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69435"
+  },
+  {
+    "player_id": 69439,
+    "name": "라이블리",
+    "profile": {
+      "선수명": "라이블리",
+      "경력": "미국 Central Florida(대)-삼성",
+      "지명순위": "19 삼성 자유선발",
+      "입단년도": "19삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69439"
+  },
+  {
+    "player_id": 69530,
+    "name": "아수아헤",
+    "profile": {
+      "선수명": "아수아헤",
+      "경력": "베네수엘라 Aquinas(고)-롯데",
+      "지명순위": "19 롯데 자유선발",
+      "입단년도": "19롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69530"
+  },
+  {
+    "player_id": 69550,
+    "name": "톰슨",
+    "profile": {
+      "선수명": "톰슨",
+      "경력": "미국 Rockwall Heath(고)-롯데",
+      "지명순위": "19 롯데 자유선발",
+      "입단년도": "19롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69550"
+  },
+  {
+    "player_id": 69569,
+    "name": "윌슨",
+    "profile": {
+      "선수명": "윌슨",
+      "경력": "미국-롯데",
+      "지명순위": "19 롯데 자유선발",
+      "입단년도": "19롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69569"
+  },
+  {
+    "player_id": 69605,
+    "name": "해즐베이커",
+    "profile": {
+      "선수명": "해즐베이커",
+      "경력": "미국 Ball State(대)-KIA",
+      "지명순위": "19 KIA 자유선발",
+      "입단년도": "19KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69605"
+  },
+  {
+    "player_id": 69640,
+    "name": "터너",
+    "profile": {
+      "선수명": "터너",
+      "경력": "미국 Westminster Christian Academy(고)-KIA",
+      "지명순위": "19 KIA 자유선발",
+      "입단년도": "19KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69640"
+  },
+  {
+    "player_id": 69652,
+    "name": "터커",
+    "profile": {
+      "선수명": "터커",
+      "경력": "미국 Florida(대)-KIA",
+      "지명순위": "19 KIA 자유선발",
+      "입단년도": "19KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69652"
+  },
+  {
+    "player_id": 69656,
+    "name": "윌랜드",
+    "profile": {
+      "선수명": "윌랜드",
+      "경력": "미국 Bishop Manogue(고)-KIA",
+      "지명순위": "19 KIA 자유선발",
+      "입단년도": "19KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69656"
+  },
+  {
+    "player_id": 69744,
+    "name": "서폴드",
+    "profile": {
+      "선수명": "서폴드",
+      "경력": "호주 Bellmont City(대)",
+      "지명순위": "19 한화 자유선발",
+      "입단년도": "19한화"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69744"
+  },
+  {
+    "player_id": 69861,
+    "name": "다익손",
+    "profile": {
+      "선수명": "다익손",
+      "경력": "캐나다 Central Arizona(대)-SK-롯데",
+      "지명순위": "19 SK 자유선발",
+      "입단년도": "19SK"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69861"
+  },
+  {
+    "player_id": 69901,
+    "name": "스몰린스키",
+    "profile": {
+      "선수명": "스몰린스키",
+      "경력": "미국 Boylan Catholic(고)-NC",
+      "지명순위": "19 NC 자유선발",
+      "입단년도": "19NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69901"
+  },
+  {
+    "player_id": 69934,
+    "name": "버틀러",
+    "profile": {
+      "선수명": "버틀러",
+      "경력": "미국 Radford(대)-NC",
+      "지명순위": "19 NC 자유선발",
+      "입단년도": "19NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69934"
+  },
+  {
+    "player_id": 69940,
+    "name": "루친스키",
+    "profile": {
+      "선수명": "루친스키",
+      "경력": "미국 Tulsa Union(고)-미국 The Ohio State(대)-NC",
+      "지명순위": "19 NC 자유선발",
+      "입단년도": "19NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69940"
+  },
+  {
+    "player_id": 69950,
+    "name": "베탄코트",
+    "profile": {
+      "선수명": "베탄코트",
+      "경력": "파나마 PanaSystem(고)-NC",
+      "지명순위": "19 NC 자유선발",
+      "입단년도": "19NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69950"
+  },
+  {
+    "player_id": 69953,
+    "name": "프리드릭",
+    "profile": {
+      "선수명": "프리드릭",
+      "경력": "미국 Eastern Kentucky(대)-NC",
+      "지명순위": "19 NC 자유선발",
+      "입단년도": "19NC"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=69953"
+  },
+  {
+    "player_id": 70123,
+    "name": "테이텀",
+    "profile": {
+      "선수명": "테이텀",
+      "경력": "미국 산타나고",
+      "지명순위": "00 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70123"
+  },
+  {
+    "player_id": 70124,
+    "name": "쿡슨",
+    "profile": {
+      "선수명": "쿡슨",
+      "경력": "미국 롱비치대",
+      "지명순위": "00 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70124"
+  },
+  {
+    "player_id": 70143,
+    "name": "해리거",
+    "profile": {
+      "선수명": "해리거",
+      "경력": "미국 포드씨티고",
+      "지명순위": "00 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70143"
+  },
+  {
+    "player_id": 70220,
+    "name": "파머",
+    "profile": {
+      "선수명": "파머",
+      "경력": "미국 잭슨대",
+      "지명순위": "00 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70220"
+  },
+  {
+    "player_id": 70309,
+    "name": "윌리엄스",
+    "profile": {
+      "선수명": "윌리엄스",
+      "경력": "미국 후버고",
+      "지명순위": "00 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70309"
+  },
+  {
+    "player_id": 70310,
+    "name": "카펜터",
+    "profile": {
+      "선수명": "카펜터",
+      "경력": "미국 아칸사스대",
+      "지명순위": "00 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70310"
+  },
+  {
+    "player_id": 70317,
+    "name": "퀸란",
+    "profile": {
+      "선수명": "퀸란",
+      "경력": "미국 힐머래이고-현대",
+      "지명순위": "00 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70317"
+  },
+  {
+    "player_id": 70335,
+    "name": "브링클리",
+    "profile": {
+      "선수명": "브링클리",
+      "경력": "미국 새카리드히오트대",
+      "지명순위": "00 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70335"
+  },
+  {
+    "player_id": 70414,
+    "name": "프랑코",
+    "profile": {
+      "선수명": "프랑코",
+      "경력": "도미니카 Divine(고)-삼성",
+      "지명순위": "00 삼성 자유선발",
+      "입단년도": "00삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70414"
+  },
+  {
+    "player_id": 70441,
+    "name": "가르시아",
+    "profile": {
+      "선수명": "가르시아",
+      "경력": "미국 리버사이드 커뮤니티대",
+      "지명순위": "00 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70441"
+  },
+  {
+    "player_id": 70503,
+    "name": "우드",
+    "profile": {
+      "선수명": "우드",
+      "경력": "미국 뉴올리언즈대",
+      "지명순위": "00 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70503"
+  },
+  {
+    "player_id": 70542,
+    "name": "화이트",
+    "profile": {
+      "선수명": "화이트",
+      "경력": "미국 오클라호마대",
+      "지명순위": "00 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70542"
+  },
+  {
+    "player_id": 70640,
+    "name": "포조",
+    "profile": {
+      "선수명": "포조",
+      "경력": "도미니카 프라그라노배인고",
+      "지명순위": "00 해태 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70640"
+  },
+  {
+    "player_id": 70641,
+    "name": "타바레스",
+    "profile": {
+      "선수명": "타바레스",
+      "경력": "도미니카 에밀리오 히메네스고",
+      "지명순위": "00 해태 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70641"
+  },
+  {
+    "player_id": 70643,
+    "name": "배스",
+    "profile": {
+      "선수명": "배스",
+      "경력": "미국 오데아고",
+      "지명순위": "00 해태 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70643"
+  },
+  {
+    "player_id": 70644,
+    "name": "미첼",
+    "profile": {
+      "선수명": "미첼",
+      "경력": "미국 링컨고",
+      "지명순위": "00 해태 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70644"
+  },
+  {
+    "player_id": 70831,
+    "name": "뮬렌",
+    "profile": {
+      "선수명": "뮬렌",
+      "경력": "네덜란드 플로리다코랄대",
+      "지명순위": "00 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70831"
+  },
+  {
+    "player_id": 70834,
+    "name": "브리또",
+    "profile": {
+      "선수명": "브리또",
+      "경력": "도미니카 산이시드로고-SK-삼성-SK",
+      "지명순위": "00 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70834"
+  },
+  {
+    "player_id": 70837,
+    "name": "혼즈",
+    "profile": {
+      "선수명": "혼즈",
+      "경력": "미국 노스캐롤라이나 센트럴대",
+      "지명순위": "00 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70837"
+  },
+  {
+    "player_id": 70840,
+    "name": "콜",
+    "profile": {
+      "선수명": "콜",
+      "경력": "미국 산타클라라대",
+      "지명순위": "00 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70840"
+  },
+  {
+    "player_id": 70865,
+    "name": "풀리엄",
+    "profile": {
+      "선수명": "풀리엄",
+      "경력": "미국 매커티어고",
+      "지명순위": "00 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=70865"
+  },
+  {
+    "player_id": 71123,
+    "name": "발데스",
+    "profile": {
+      "선수명": "발데스",
+      "경력": "도미니카 앨리로 파울리뇨고",
+      "지명순위": "01 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71123"
+  },
+  {
+    "player_id": 71125,
+    "name": "린튼",
+    "profile": {
+      "선수명": "린튼",
+      "경력": "미국 UC 어빈대",
+      "지명순위": "01 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71125"
+  },
+  {
+    "player_id": 71220,
+    "name": "베넷",
+    "profile": {
+      "선수명": "베넷",
+      "경력": "호주 듀펫대-두산",
+      "지명순위": "01 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71220"
+  },
+  {
+    "player_id": 71299,
+    "name": "니일",
+    "profile": {
+      "선수명": "니일",
+      "경력": "미국 텍사스농공대",
+      "지명순위": "01 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71299"
+  },
+  {
+    "player_id": 71325,
+    "name": "필립스",
+    "profile": {
+      "선수명": "필립스",
+      "경력": "미국 비숍고",
+      "지명순위": "01 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71325"
+  },
+  {
+    "player_id": 71339,
+    "name": "테일러",
+    "profile": {
+      "선수명": "테일러",
+      "경력": "미국 베미지 주립대",
+      "지명순위": "01 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71339"
+  },
+  {
+    "player_id": 71353,
+    "name": "엔리케스",
+    "profile": {
+      "선수명": "엔리케스",
+      "경력": "베네수엘라 파나마공화국고",
+      "지명순위": "01 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71353"
+  },
+  {
+    "player_id": 71412,
+    "name": "바에르가",
+    "profile": {
+      "선수명": "바에르가",
+      "경력": "푸에르토리코 바바라고",
+      "지명순위": "01 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71412"
+  },
+  {
+    "player_id": 71414,
+    "name": "리베라",
+    "profile": {
+      "선수명": "리베라",
+      "경력": "도미니카 산페드로고",
+      "지명순위": "01 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71414"
+  },
+  {
+    "player_id": 71419,
+    "name": "마르티네스",
+    "profile": {
+      "선수명": "마르티네스",
+      "경력": "도미니카 가스톤고",
+      "지명순위": "01 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71419"
+  },
+  {
+    "player_id": 71441,
+    "name": "토레스",
+    "profile": {
+      "선수명": "토레스",
+      "경력": "도미니카 센트로고",
+      "지명순위": "01 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71441"
+  },
+  {
+    "player_id": 71443,
+    "name": "갈베스",
+    "profile": {
+      "선수명": "갈베스",
+      "경력": "도미니카 푸에르토리코고",
+      "지명순위": "01 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71443"
+  },
+  {
+    "player_id": 71522,
+    "name": "칸세코",
+    "profile": {
+      "선수명": "칸세코",
+      "경력": "미국 캐롤파크시니어고-롯데",
+      "지명순위": "01 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71522"
+  },
+  {
+    "player_id": 71536,
+    "name": "레이",
+    "profile": {
+      "선수명": "레이",
+      "경력": "미국 파랏카고",
+      "지명순위": "01 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71536"
+  },
+  {
+    "player_id": 71543,
+    "name": "얀",
+    "profile": {
+      "선수명": "얀",
+      "경력": "도미니카",
+      "지명순위": "01 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71543"
+  },
+  {
+    "player_id": 71642,
+    "name": "리치",
+    "profile": {
+      "선수명": "리치",
+      "경력": "미국 플로리다주립대",
+      "지명순위": "01 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71642"
+  },
+  {
+    "player_id": 71643,
+    "name": "산토스",
+    "profile": {
+      "선수명": "산토스",
+      "경력": "도미니카 뉴타운고",
+      "지명순위": "01 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71643"
+  },
+  {
+    "player_id": 71649,
+    "name": "레스",
+    "profile": {
+      "선수명": "레스",
+      "경력": "미국 미시시피주립대-KIA",
+      "지명순위": "01 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71649"
+  },
+  {
+    "player_id": 71653,
+    "name": "루이스",
+    "profile": {
+      "선수명": "루이스",
+      "경력": "도미니카 그레고리오베웬고",
+      "지명순위": "01 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71653"
+  },
+  {
+    "player_id": 71663,
+    "name": "젠슨",
+    "profile": {
+      "선수명": "젠슨",
+      "경력": "미국",
+      "지명순위": "01 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71663"
+  },
+  {
+    "player_id": 71719,
+    "name": "에반스",
+    "profile": {
+      "선수명": "에반스",
+      "경력": "미국 샌제이신토대",
+      "지명순위": "01 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71719"
+  },
+  {
+    "player_id": 71720,
+    "name": "워렌",
+    "profile": {
+      "선수명": "워렌",
+      "경력": "미국 브리지워터고",
+      "지명순위": "01 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71720"
+  },
+  {
+    "player_id": 71727,
+    "name": "누네스",
+    "profile": {
+      "선수명": "누네스",
+      "경력": "도미니카 UASD(대)",
+      "지명순위": "01 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71727"
+  },
+  {
+    "player_id": 71728,
+    "name": "리스",
+    "profile": {
+      "선수명": "리스",
+      "경력": "미국 버틀러대",
+      "지명순위": "01 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71728"
+  },
+  {
+    "player_id": 71729,
+    "name": "윈스턴",
+    "profile": {
+      "선수명": "윈스턴",
+      "경력": "미국 럿저스대",
+      "지명순위": "01 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71729"
+  },
+  {
+    "player_id": 71829,
+    "name": "에르난데스",
+    "profile": {
+      "선수명": "에르난데스",
+      "경력": "도미니카 파톤고-SK",
+      "지명순위": "01 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71829"
+  },
+  {
+    "player_id": 71859,
+    "name": "에레라",
+    "profile": {
+      "선수명": "에레라",
+      "경력": "도미니카 산체고-SK",
+      "지명순위": "01 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=71859"
+  },
+  {
+    "player_id": 72123,
+    "name": "만자니오",
+    "profile": {
+      "선수명": "만자니오",
+      "경력": "미국 산토도밍고고",
+      "지명순위": "02 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72123"
+  },
+  {
+    "player_id": 72124,
+    "name": "케펜",
+    "profile": {
+      "선수명": "케펜",
+      "경력": "미국 조지아서던고",
+      "지명순위": "02 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72124"
+  },
+  {
+    "player_id": 72322,
+    "name": "폴",
+    "profile": {
+      "선수명": "폴",
+      "경력": "미국 벨몬트고",
+      "지명순위": "02 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72322"
+  },
+  {
+    "player_id": 72337,
+    "name": "프랭클린",
+    "profile": {
+      "선수명": "프랭클린",
+      "경력": "미국 링컨고",
+      "지명순위": "02 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72337"
+  },
+  {
+    "player_id": 72342,
+    "name": "토레스",
+    "profile": {
+      "선수명": "토레스",
+      "경력": "도미니카 센트로고",
+      "지명순위": "02 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72342"
+  },
+  {
+    "player_id": 72350,
+    "name": "베라스",
+    "profile": {
+      "선수명": "베라스",
+      "경력": "도미니카 후안프라시스코고",
+      "지명순위": "02 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72350"
+  },
+  {
+    "player_id": 72412,
+    "name": "엘비라",
+    "profile": {
+      "선수명": "엘비라",
+      "경력": "멕시코 구티네즈고",
+      "지명순위": "02 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72412"
+  },
+  {
+    "player_id": 72428,
+    "name": "패트릭",
+    "profile": {
+      "선수명": "패트릭",
+      "경력": "미국 D.H 콘리고",
+      "지명순위": "02 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72428"
+  },
+  {
+    "player_id": 72444,
+    "name": "루크",
+    "profile": {
+      "선수명": "루크",
+      "경력": "미국 버클리대",
+      "지명순위": "02 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72444"
+  },
+  {
+    "player_id": 72513,
+    "name": "매기",
+    "profile": {
+      "선수명": "매기",
+      "경력": "미국 잭슨고-롯데",
+      "지명순위": "02 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72513"
+  },
+  {
+    "player_id": 72543,
+    "name": "베로아",
+    "profile": {
+      "선수명": "베로아",
+      "경력": "도미니카 유나이티드고",
+      "지명순위": "02 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72543"
+  },
+  {
+    "player_id": 72553,
+    "name": "해처",
+    "profile": {
+      "선수명": "해처",
+      "경력": "미국 아이오와대",
+      "지명순위": "02 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72553"
+  },
+  {
+    "player_id": 72650,
+    "name": "펨버튼",
+    "profile": {
+      "선수명": "펨버튼",
+      "경력": "도미니카 가스톤고",
+      "지명순위": "02 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72650"
+  },
+  {
+    "player_id": 72653,
+    "name": "키퍼",
+    "profile": {
+      "선수명": "키퍼",
+      "경력": "미국 플러튼대-KIA",
+      "지명순위": "02 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72653"
+  },
+  {
+    "player_id": 72654,
+    "name": "뉴선",
+    "profile": {
+      "선수명": "뉴선",
+      "경력": "미국 조지아대",
+      "지명순위": "02 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72654"
+  },
+  {
+    "player_id": 72659,
+    "name": "리오스",
+    "profile": {
+      "선수명": "리오스",
+      "경력": "미국 마이애미대-KIA",
+      "지명순위": "02 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72659"
+  },
+  {
+    "player_id": 72736,
+    "name": "가르시아",
+    "profile": {
+      "선수명": "가르시아",
+      "경력": "미국 산토도밍고고",
+      "지명순위": "02 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72736"
+  },
+  {
+    "player_id": 72756,
+    "name": "피코타",
+    "profile": {
+      "선수명": "피코타",
+      "경력": "파나마 에슈라고",
+      "지명순위": "02 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72756"
+  },
+  {
+    "player_id": 72824,
+    "name": "페르난데스",
+    "profile": {
+      "선수명": "페르난데스",
+      "경력": "도미니카 산티아고고",
+      "지명순위": "02 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72824"
+  },
+  {
+    "player_id": 72838,
+    "name": "러핀",
+    "profile": {
+      "선수명": "러핀",
+      "경력": "미국 척터 카운티고",
+      "지명순위": "02 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72838"
+  },
+  {
+    "player_id": 72859,
+    "name": "잉글린",
+    "profile": {
+      "선수명": "잉글린",
+      "경력": "미국 USC대",
+      "지명순위": "02 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=72859"
+  },
+  {
+    "player_id": 73123,
+    "name": "알칸트라",
+    "profile": {
+      "선수명": "알칸트라",
+      "경력": "도미니카 산토도밍고고",
+      "지명순위": "03 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73123"
+  },
+  {
+    "player_id": 73229,
+    "name": "이리키",
+    "profile": {
+      "선수명": "이리키",
+      "경력": "일본 가고시마고",
+      "지명순위": "03 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73229"
+  },
+  {
+    "player_id": 73233,
+    "name": "쿨바",
+    "profile": {
+      "선수명": "쿨바",
+      "경력": "미국 루즈벨트고",
+      "지명순위": "03 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73233"
+  },
+  {
+    "player_id": 73322,
+    "name": "바워스",
+    "profile": {
+      "선수명": "바워스",
+      "경력": "미국 로얄라 마운트대",
+      "지명순위": "03 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73322"
+  },
+  {
+    "player_id": 73324,
+    "name": "브룸바",
+    "profile": {
+      "선수명": "브룸바",
+      "경력": "미국 델라와대-현대-히어로즈",
+      "지명순위": "03 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73324"
+  },
+  {
+    "player_id": 73424,
+    "name": "라이언",
+    "profile": {
+      "선수명": "라이언",
+      "경력": "미국 버지니아대",
+      "지명순위": "03 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73424"
+  },
+  {
+    "player_id": 73503,
+    "name": "보이",
+    "profile": {
+      "선수명": "보이",
+      "경력": "푸에르토리코 라살레고",
+      "지명순위": "03 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73503"
+  },
+  {
+    "player_id": 73553,
+    "name": "모리",
+    "profile": {
+      "선수명": "모리",
+      "경력": "일본 일생학원제2고-롯데",
+      "지명순위": "03 롯데 자유선발",
+      "입단년도": "03롯데"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73553"
+  },
+  {
+    "player_id": 73559,
+    "name": "페레즈",
+    "profile": {
+      "선수명": "페레즈",
+      "경력": "베네수엘라 라울 레오니스 오테로고",
+      "지명순위": "03 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73559"
+  },
+  {
+    "player_id": 73653,
+    "name": "존슨",
+    "profile": {
+      "선수명": "존슨",
+      "경력": "캐나다 컴포짓고-KIA-SK",
+      "지명순위": "03 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73653"
+  },
+  {
+    "player_id": 73746,
+    "name": "에스트라다",
+    "profile": {
+      "선수명": "에스트라다",
+      "경력": "베네수엘라 카라보보고",
+      "지명순위": "03 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73746"
+  },
+  {
+    "player_id": 73747,
+    "name": "메히아",
+    "profile": {
+      "선수명": "메히아",
+      "경력": "도미니카 셉티모디아고",
+      "지명순위": "03 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73747"
+  },
+  {
+    "player_id": 73823,
+    "name": "스미스",
+    "profile": {
+      "선수명": "스미스",
+      "경력": "미국 텍사스공대",
+      "지명순위": "03 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73823"
+  },
+  {
+    "player_id": 73848,
+    "name": "디아즈",
+    "profile": {
+      "선수명": "디아즈",
+      "경력": "베네수엘라 마르커스고",
+      "지명순위": "03 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=73848"
+  },
+  {
+    "player_id": 74123,
+    "name": "후타도",
+    "profile": {
+      "선수명": "후타도",
+      "경력": "베네수엘라 라라고",
+      "지명순위": "04 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74123"
+  },
+  {
+    "player_id": 74124,
+    "name": "쿠퍼",
+    "profile": {
+      "선수명": "쿠퍼",
+      "경력": "미국 USC대",
+      "지명순위": "04 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74124"
+  },
+  {
+    "player_id": 74125,
+    "name": "마틴",
+    "profile": {
+      "선수명": "마틴",
+      "경력": "미국 USC(대)",
+      "지명순위": "04 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74125"
+  },
+  {
+    "player_id": 74336,
+    "name": "피어리",
+    "profile": {
+      "선수명": "피어리",
+      "경력": "미국 UCLA대",
+      "지명순위": "04 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74336"
+  },
+  {
+    "player_id": 74429,
+    "name": "오리어리",
+    "profile": {
+      "선수명": "오리어리",
+      "경력": "미국 사이프레스고-차패이대",
+      "지명순위": "04 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74429"
+  },
+  {
+    "player_id": 74430,
+    "name": "로페즈",
+    "profile": {
+      "선수명": "로페즈",
+      "경력": "도미니카 산페드로고",
+      "지명순위": "04 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74430"
+  },
+  {
+    "player_id": 74458,
+    "name": "호지스",
+    "profile": {
+      "선수명": "호지스",
+      "경력": "미국 클레인오크고",
+      "지명순위": "04 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74458"
+  },
+  {
+    "player_id": 74534,
+    "name": "라이온",
+    "profile": {
+      "선수명": "라이온",
+      "경력": "미국 듀크대",
+      "지명순위": "04 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74534"
+  },
+  {
+    "player_id": 74653,
+    "name": "마뇽",
+    "profile": {
+      "선수명": "마뇽",
+      "경력": "도미니카 산티아고고",
+      "지명순위": "04 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74653"
+  },
+  {
+    "player_id": 74723,
+    "name": "엔젤",
+    "profile": {
+      "선수명": "엔젤",
+      "경력": "도미니카 푸에르토리코고",
+      "지명순위": "04 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74723"
+  },
+  {
+    "player_id": 74828,
+    "name": "카브레라",
+    "profile": {
+      "선수명": "카브레라",
+      "경력": "도미니카 산티아고고-SK",
+      "지명순위": "04 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=74828"
+  },
+  {
+    "player_id": 75154,
+    "name": "클리어",
+    "profile": {
+      "선수명": "클리어",
+      "경력": "미국 발란스고-LG",
+      "지명순위": "05 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75154"
+  },
+  {
+    "player_id": 75155,
+    "name": "왈론드",
+    "profile": {
+      "선수명": "왈론드",
+      "경력": "미국 캔자스대-LG",
+      "지명순위": "05 LG 자유선발",
+      "입단년도": "10두산"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75155"
+  },
+  {
+    "player_id": 75156,
+    "name": "마테오",
+    "profile": {
+      "선수명": "마테오",
+      "경력": "도미니카 트린튼대",
+      "지명순위": "05 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75156"
+  },
+  {
+    "player_id": 75230,
+    "name": "랜들",
+    "profile": {
+      "선수명": "랜들",
+      "경력": "미국 루이스앤클락주립대",
+      "지명순위": "05 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75230"
+  },
+  {
+    "player_id": 75245,
+    "name": "스미스",
+    "profile": {
+      "선수명": "스미스",
+      "경력": "미국 인디애나주립대",
+      "지명순위": "05 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75245"
+  },
+  {
+    "player_id": 75324,
+    "name": "캘러웨이",
+    "profile": {
+      "선수명": "캘러웨이",
+      "경력": "미국 미시시피대",
+      "지명순위": "05 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75324"
+  },
+  {
+    "player_id": 75333,
+    "name": "서튼",
+    "profile": {
+      "선수명": "서튼",
+      "경력": "미국 Mater Dei(고)-미국 Illinois(대)-현대-KIA",
+      "지명순위": "05 현대 자유선발",
+      "입단년도": "05현대"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75333"
+  },
+  {
+    "player_id": 75429,
+    "name": "바르가스",
+    "profile": {
+      "선수명": "바르가스",
+      "경력": "도미니카 인디오산타페고",
+      "지명순위": "05 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75429"
+  },
+  {
+    "player_id": 75443,
+    "name": "하리칼라",
+    "profile": {
+      "선수명": "하리칼라",
+      "경력": "미국 플로리다 애틀랜틱대",
+      "지명순위": "05 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75443"
+  },
+  {
+    "player_id": 75444,
+    "name": "해크먼",
+    "profile": {
+      "선수명": "해크먼",
+      "경력": "미국 콜럼부스고",
+      "지명순위": "05 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75444"
+  },
+  {
+    "player_id": 75551,
+    "name": "펠로우",
+    "profile": {
+      "선수명": "펠로우",
+      "경력": "미국 아칸사스대",
+      "지명순위": "05 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75551"
+  },
+  {
+    "player_id": 75653,
+    "name": "블랭크",
+    "profile": {
+      "선수명": "블랭크",
+      "경력": "미국 텍사스 A&M대",
+      "지명순위": "05 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75653"
+  },
+  {
+    "player_id": 75659,
+    "name": "그레이싱어",
+    "profile": {
+      "선수명": "그레이싱어",
+      "경력": "미국 버지니아대",
+      "지명순위": "05 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75659"
+  },
+  {
+    "player_id": 75734,
+    "name": "스미스",
+    "profile": {
+      "선수명": "스미스",
+      "경력": "미국 USC(대)",
+      "지명순위": "05 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75734"
+  },
+  {
+    "player_id": 75828,
+    "name": "크루즈",
+    "profile": {
+      "선수명": "크루즈",
+      "경력": "도미니카 리세오고",
+      "지명순위": "05 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75828"
+  },
+  {
+    "player_id": 75831,
+    "name": "산체스",
+    "profile": {
+      "선수명": "산체스",
+      "경력": "도미니카 니자오반니고",
+      "지명순위": "05 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=75831"
+  },
+  {
+    "player_id": 76120,
+    "name": "베로커",
+    "profile": {
+      "선수명": "베로커",
+      "경력": "미국 루이스클락주립대",
+      "지명순위": "06 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76120"
+  },
+  {
+    "player_id": 76154,
+    "name": "텔레마코",
+    "profile": {
+      "선수명": "텔레마코",
+      "경력": "도미니카 라노마나고",
+      "지명순위": "06 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76154"
+  },
+  {
+    "player_id": 76156,
+    "name": "아이바",
+    "profile": {
+      "선수명": "아이바",
+      "경력": "도미니카 바니고",
+      "지명순위": "06 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76156"
+  },
+  {
+    "player_id": 76199,
+    "name": "카라이어",
+    "profile": {
+      "선수명": "카라이어",
+      "경력": "미국 벨뷰고",
+      "지명순위": "06 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76199"
+  },
+  {
+    "player_id": 76410,
+    "name": "세라노",
+    "profile": {
+      "선수명": "세라노",
+      "경력": "미국 뉴멕시코대",
+      "지명순위": "06 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76410"
+  },
+  {
+    "player_id": 76429,
+    "name": "브라운",
+    "profile": {
+      "선수명": "브라운",
+      "경력": "미국 메리디언 주니어대-삼성",
+      "지명순위": "06 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76429"
+  },
+  {
+    "player_id": 76512,
+    "name": "마이로우",
+    "profile": {
+      "선수명": "마이로우",
+      "경력": "미국 루이지애나공대",
+      "지명순위": "06 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76512"
+  },
+  {
+    "player_id": 76525,
+    "name": "존갈",
+    "profile": {
+      "선수명": "존갈",
+      "경력": "미국 스탠포드대",
+      "지명순위": "06 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76525"
+  },
+  {
+    "player_id": 76632,
+    "name": "서브넥",
+    "profile": {
+      "선수명": "서브넥",
+      "경력": "미국 미시간대",
+      "지명순위": "06 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76632"
+  },
+  {
+    "player_id": 76633,
+    "name": "스캇",
+    "profile": {
+      "선수명": "스캇",
+      "경력": "미국 웨스트 버지니아대",
+      "지명순위": "06 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76633"
+  },
+  {
+    "player_id": 76810,
+    "name": "시오타니",
+    "profile": {
+      "선수명": "시오타니",
+      "경력": "일본 고베싱고학원",
+      "지명순위": "06 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76810"
+  },
+  {
+    "player_id": 76836,
+    "name": "피커링",
+    "profile": {
+      "선수명": "피커링",
+      "경력": "미국 킹고",
+      "지명순위": "06 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=76836"
+  },
+  {
+    "player_id": 77157,
+    "name": "발데스",
+    "profile": {
+      "선수명": "발데스",
+      "경력": "푸에르토리코 칼로스대",
+      "지명순위": "07 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77157"
+  },
+  {
+    "player_id": 77199,
+    "name": "옥스프링",
+    "profile": {
+      "선수명": "옥스프링",
+      "경력": "호주 Ipswich(고)-LG-롯데-KT",
+      "지명순위": "07 LG 자유선발",
+      "입단년도": "07LG"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77199"
+  },
+  {
+    "player_id": 77443,
+    "name": "매존",
+    "profile": {
+      "선수명": "매존",
+      "경력": "미국 샌디에이고대",
+      "지명순위": "07 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77443"
+  },
+  {
+    "player_id": 77444,
+    "name": "윌슨",
+    "profile": {
+      "선수명": "윌슨",
+      "경력": "미국 조지아공대",
+      "지명순위": "07 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77444"
+  },
+  {
+    "player_id": 77503,
+    "name": "리오스",
+    "profile": {
+      "선수명": "리오스",
+      "경력": "베네수엘라 토스타 가르시아고",
+      "지명순위": "07 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77503"
+  },
+  {
+    "player_id": 77649,
+    "name": "로드리게스",
+    "profile": {
+      "선수명": "로드리게스",
+      "경력": "도미니카 비지아도르고",
+      "지명순위": "07 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77649"
+  },
+  {
+    "player_id": 77658,
+    "name": "스코비",
+    "profile": {
+      "선수명": "스코비",
+      "경력": "미국 루이지애나주립대",
+      "지명순위": "07 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77658"
+  },
+  {
+    "player_id": 77659,
+    "name": "에서튼",
+    "profile": {
+      "선수명": "에서튼",
+      "경력": "미국 USC(대)",
+      "지명순위": "07 KIA 자유선발",
+      "입단년도": "07KIA"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77659"
+  },
+  {
+    "player_id": 77725,
+    "name": "크루즈",
+    "profile": {
+      "선수명": "크루즈",
+      "경력": "미국 애리조나대",
+      "지명순위": "07 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77725"
+  },
+  {
+    "player_id": 77726,
+    "name": "세드릭",
+    "profile": {
+      "선수명": "세드릭",
+      "경력": "미국 치플랜드고",
+      "지명순위": "07 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77726"
+  },
+  {
+    "player_id": 77860,
+    "name": "레이번",
+    "profile": {
+      "선수명": "레이번",
+      "경력": "미국 사우스 앨러배마대",
+      "지명순위": "07 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77860"
+  },
+  {
+    "player_id": 77868,
+    "name": "로마노",
+    "profile": {
+      "선수명": "로마노",
+      "경력": "미국 툴레인대",
+      "지명순위": "07 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=77868"
+  },
+  {
+    "player_id": 78129,
+    "name": "페타지니",
+    "profile": {
+      "선수명": "페타지니",
+      "경력": "베네수엘라 카라카스고-LG",
+      "지명순위": "08 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78129"
+  },
+  {
+    "player_id": 78256,
+    "name": "레이어",
+    "profile": {
+      "선수명": "레이어",
+      "경력": "미국 USC(대)",
+      "지명순위": "08 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78256"
+  },
+  {
+    "player_id": 78333,
+    "name": "다카쓰",
+    "profile": {
+      "선수명": "다카쓰",
+      "경력": "일본 아세아대",
+      "지명순위": "08 우리 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78333"
+  },
+  {
+    "player_id": 78430,
+    "name": "션",
+    "profile": {
+      "선수명": "션",
+      "경력": "미국 브릭스고",
+      "지명순위": "08 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78430"
+  },
+  {
+    "player_id": 78431,
+    "name": "에니스",
+    "profile": {
+      "선수명": "에니스",
+      "경력": "미국 몬로고",
+      "지명순위": "08 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78431"
+  },
+  {
+    "player_id": 78435,
+    "name": "오버뮬러",
+    "profile": {
+      "선수명": "오버뮬러",
+      "경력": "미국 아이오와대",
+      "지명순위": "08 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78435"
+  },
+  {
+    "player_id": 78551,
+    "name": "코르테스",
+    "profile": {
+      "선수명": "코르테스",
+      "경력": "멕시코 센트럴유니언고",
+      "지명순위": "08 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78551"
+  },
+  {
+    "player_id": 78574,
+    "name": "매클레리",
+    "profile": {
+      "선수명": "매클레리",
+      "경력": "미국 마운트버논나자렌대",
+      "지명순위": "08 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78574"
+  },
+  {
+    "player_id": 78595,
+    "name": "가르시아",
+    "profile": {
+      "선수명": "가르시아",
+      "경력": "멕시코 아비에르타고-롯데",
+      "지명순위": "08 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78595"
+  },
+  {
+    "player_id": 78627,
+    "name": "리마",
+    "profile": {
+      "선수명": "리마",
+      "경력": "도미니카 리세오라스차르카스고",
+      "지명순위": "08 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78627"
+  },
+  {
+    "player_id": 78648,
+    "name": "데이비스",
+    "profile": {
+      "선수명": "데이비스",
+      "경력": "미국",
+      "지명순위": "08 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78648"
+  },
+  {
+    "player_id": 78649,
+    "name": "발데스",
+    "profile": {
+      "선수명": "발데스",
+      "경력": "미국 알리로폴리노고",
+      "지명순위": "08 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78649"
+  },
+  {
+    "player_id": 78665,
+    "name": "디아즈",
+    "profile": {
+      "선수명": "디아즈",
+      "경력": "도미니카",
+      "지명순위": "08 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78665"
+  },
+  {
+    "player_id": 78725,
+    "name": "클락",
+    "profile": {
+      "선수명": "클락",
+      "경력": "미국 매사추세츠대",
+      "지명순위": "08 한화 자유선발",
+      "입단년도": "09넥센"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78725"
+  },
+  {
+    "player_id": 78726,
+    "name": "토마스",
+    "profile": {
+      "선수명": "토마스",
+      "경력": "호주 미첼고-한화",
+      "지명순위": "08 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78726"
+  },
+  {
+    "player_id": 78853,
+    "name": "얀",
+    "profile": {
+      "선수명": "얀",
+      "경력": "도미니카",
+      "지명순위": "08 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78853"
+  },
+  {
+    "player_id": 78868,
+    "name": "쿠비얀",
+    "profile": {
+      "선수명": "쿠비얀",
+      "경력": "베네수엘라 ENP고",
+      "지명순위": "08 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78868"
+  },
+  {
+    "player_id": 78869,
+    "name": "레이",
+    "profile": {
+      "선수명": "레이",
+      "경력": "미국 로스웰고",
+      "지명순위": "08 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=78869"
+  },
+  {
+    "player_id": 79156,
+    "name": "존슨",
+    "profile": {
+      "선수명": "존슨",
+      "경력": "미국 무어스벌고-LG",
+      "지명순위": "09 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79156"
+  },
+  {
+    "player_id": 79199,
+    "name": "바우어",
+    "profile": {
+      "선수명": "바우어",
+      "경력": "미국 트레져밸리대-LG",
+      "지명순위": "09 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79199"
+  },
+  {
+    "player_id": 79225,
+    "name": "왓슨",
+    "profile": {
+      "선수명": "왓슨",
+      "경력": "미국 싸비에대-두산",
+      "지명순위": "09 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79225"
+  },
+  {
+    "player_id": 79230,
+    "name": "세데뇨",
+    "profile": {
+      "선수명": "세데뇨",
+      "경력": "도미니카-두산",
+      "지명순위": "09 두산 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79230"
+  },
+  {
+    "player_id": 79430,
+    "name": "나이트",
+    "profile": {
+      "선수명": "나이트",
+      "경력": "미국 Ventura(대)-삼성-히어로즈",
+      "지명순위": "09 삼성 자유선발",
+      "입단년도": "09삼성"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79430"
+  },
+  {
+    "player_id": 79435,
+    "name": "크루세타",
+    "profile": {
+      "선수명": "크루세타",
+      "경력": "도미니카 헥터가르시아고도이대",
+      "지명순위": "09 삼성 자유선발",
+      "입단년도": "04클리블랜드"
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79435"
+  },
+  {
+    "player_id": 79461,
+    "name": "에르난데스",
+    "profile": {
+      "선수명": "에르난데스",
+      "경력": "도미니카 세사니콜라스펜손고-삼성",
+      "지명순위": "09 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79461"
+  },
+  {
+    "player_id": 79596,
+    "name": "애킨스",
+    "profile": {
+      "선수명": "애킨스",
+      "경력": "미국 웨인고-미국 오클라호마대-롯데",
+      "지명순위": "09 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79596"
+  },
+  {
+    "player_id": 79644,
+    "name": "로페즈",
+    "profile": {
+      "선수명": "로페즈",
+      "경력": "도미니카 차르카스고-KIA-SK",
+      "지명순위": "09 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79644"
+  },
+  {
+    "player_id": 79650,
+    "name": "구톰슨",
+    "profile": {
+      "선수명": "구톰슨",
+      "경력": "미국 에드몬즈 커뮤니티대-KIA",
+      "지명순위": "09 KIA 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79650"
+  },
+  {
+    "player_id": 79725,
+    "name": "디아즈",
+    "profile": {
+      "선수명": "디아즈",
+      "경력": "도미니카 그레이슨 컨츄리대-한화",
+      "지명순위": "09 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79725"
+  },
+  {
+    "player_id": 79727,
+    "name": "연지",
+    "profile": {
+      "선수명": "연지",
+      "경력": "미국 버크넬대-한화",
+      "지명순위": "09 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79727"
+  },
+  {
+    "player_id": 79854,
+    "name": "카도쿠라",
+    "profile": {
+      "선수명": "카도쿠라",
+      "경력": "일본 세이보우가쿠엔고-일본 토호쿠후쿠시대-SK-삼성",
+      "지명순위": "09 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79854"
+  },
+  {
+    "player_id": 79858,
+    "name": "글로버",
+    "profile": {
+      "선수명": "글로버",
+      "경력": "미국 디랜드고",
+      "지명순위": "09 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79858"
+  },
+  {
+    "player_id": 79859,
+    "name": "니코스키",
+    "profile": {
+      "선수명": "니코스키",
+      "경력": "미국 세인트존스대-SK-두산",
+      "지명순위": "09 SK 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=79859"
+  },
+  {
+    "player_id": 80585,
+    "name": "치멜리스",
+    "profile": {
+      "선수명": "치멜리스",
+      "경력": "미국 텍사스주립대",
+      "지명순위": "98 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=80585"
+  },
+  {
+    "player_id": 80587,
+    "name": "쿨바",
+    "profile": {
+      "선수명": "쿨바",
+      "경력": "미국 텍사스대",
+      "지명순위": "98 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=80587"
+  },
+  {
+    "player_id": 80614,
+    "name": "헤어",
+    "profile": {
+      "선수명": "헤어",
+      "경력": "미국 센트럴 미시건대",
+      "지명순위": "98 해태 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=80614"
+  },
+  {
+    "player_id": 98116,
+    "name": "앤더슨",
+    "profile": {
+      "선수명": "앤더슨",
+      "경력": "미국 사우스웨스트 텍사스대",
+      "지명순위": "98 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98116"
+  },
+  {
+    "player_id": 98142,
+    "name": "펠릭스",
+    "profile": {
+      "선수명": "펠릭스",
+      "경력": "도미니카 산토도밍고대",
+      "지명순위": "98 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98142"
+  },
+  {
+    "player_id": 98213,
+    "name": "캐세레스",
+    "profile": {
+      "선수명": "캐세레스",
+      "경력": "베네수엘라 오벨리스코고",
+      "지명순위": "98 OB 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98213"
+  },
+  {
+    "player_id": 98233,
+    "name": "우즈",
+    "profile": {
+      "선수명": "우즈",
+      "경력": "미국 헤르난도고",
+      "지명순위": "98 OB 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98233"
+  },
+  {
+    "player_id": 98327,
+    "name": "스트롱",
+    "profile": {
+      "선수명": "스트롱",
+      "경력": "미국 UCR(대)",
+      "지명순위": "98 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98327"
+  },
+  {
+    "player_id": 98423,
+    "name": "베이커",
+    "profile": {
+      "선수명": "베이커",
+      "경력": "미국 TAFT대",
+      "지명순위": "98 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98423"
+  },
+  {
+    "player_id": 98445,
+    "name": "파라",
+    "profile": {
+      "선수명": "파라",
+      "경력": "도미니카 리제오 에반젤리코 자카구고-삼성",
+      "지명순위": "98 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98445"
+  },
+  {
+    "player_id": 98506,
+    "name": "브래디",
+    "profile": {
+      "선수명": "브래디",
+      "경력": "미국 리버티대",
+      "지명순위": "98 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98506"
+  },
+  {
+    "player_id": 98731,
+    "name": "부시",
+    "profile": {
+      "선수명": "부시",
+      "경력": "미국 아이오와 주립대",
+      "지명순위": "98 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=98731"
+  },
+  {
+    "player_id": 99145,
+    "name": "대톨라",
+    "profile": {
+      "선수명": "대톨라",
+      "경력": "미국 사우스플로리다대",
+      "지명순위": "99 LG 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99145"
+  },
+  {
+    "player_id": 99323,
+    "name": "바워스",
+    "profile": {
+      "선수명": "바워스",
+      "경력": "미국 세인트로렌스고",
+      "지명순위": "99 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99323"
+  },
+  {
+    "player_id": 99324,
+    "name": "카날리",
+    "profile": {
+      "선수명": "카날리",
+      "경력": "미국 버지니아공대",
+      "지명순위": "99 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99324"
+  },
+  {
+    "player_id": 99344,
+    "name": "피어슨",
+    "profile": {
+      "선수명": "피어슨",
+      "경력": "미국 비셰프대-현대",
+      "지명순위": "99 현대 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99344"
+  },
+  {
+    "player_id": 99408,
+    "name": "홀",
+    "profile": {
+      "선수명": "홀",
+      "경력": "미국 위치타주립대-삼성",
+      "지명순위": "99 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99408"
+  },
+  {
+    "player_id": 99433,
+    "name": "스미스",
+    "profile": {
+      "선수명": "스미스",
+      "경력": "미국 일리노이주립대-삼성",
+      "지명순위": "99 삼성 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99433"
+  },
+  {
+    "player_id": 99534,
+    "name": "호세",
+    "profile": {
+      "선수명": "호세",
+      "경력": "도미니카 엘다무노스고",
+      "지명순위": "99 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99534"
+  },
+  {
+    "player_id": 99548,
+    "name": "기론",
+    "profile": {
+      "선수명": "기론",
+      "경력": "도미니카 산펠립고-롯데",
+      "지명순위": "99 롯데 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99548"
+  },
+  {
+    "player_id": 99640,
+    "name": "브릭스",
+    "profile": {
+      "선수명": "브릭스",
+      "경력": "미국 델라웨어대",
+      "지명순위": "99 해태 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99640"
+  },
+  {
+    "player_id": 99643,
+    "name": "샌더스",
+    "profile": {
+      "선수명": "샌더스",
+      "경력": "미국 라임스톤대",
+      "지명순위": "99 해태 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99643"
+  },
+  {
+    "player_id": 99724,
+    "name": "로마이어",
+    "profile": {
+      "선수명": "로마이어",
+      "경력": "미국 세인트토마스대-한화",
+      "지명순위": "99 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99724"
+  },
+  {
+    "player_id": 99725,
+    "name": "데이비스",
+    "profile": {
+      "선수명": "데이비스",
+      "경력": "미국 시카고ORR고-한화",
+      "지명순위": "99 한화 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99725"
+  },
+  {
+    "player_id": 99846,
+    "name": "비아노",
+    "profile": {
+      "선수명": "비아노",
+      "경력": "미국 롱비치시립대",
+      "지명순위": "99 쌍방울 자유선발",
+      "입단년도": ""
+    },
+    "source": "https://www.koreabaseball.com/Record/Player/PitcherDetail/Total.aspx?playerId=99846"
+  }
+]

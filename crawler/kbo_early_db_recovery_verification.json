@@ -1,0 +1,1 @@
+{"automatic_backfill": false, "runtime_buffer_bytes": 134217728, "event_scheduler": "ON", "bingo_engine": "MyISAM", "bingo_check": [["wesiper.kbobingo_grid", "check", "status", "OK"]], "protected_counts_match": true}

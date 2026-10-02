@@ -31,9 +31,9 @@
             echo json_encode(array("code" => 200));
         }
     } else {
-        $query = "SELECT pick.picked, pl.p_name, pl.p_img
+        $query = "SELECT pick.picked, pl.name, pl.img
         FROM $pickTable pick
-        INNER JOIN $playerlist pl ON pick.p_no = pl.p_no
+        INNER JOIN $playerlist pl ON pick.p_no = pl.player_id
         WHERE pick.grid_index = ? AND pick.p_no = ? AND pick.row_no = ? AND pick.col_no = ?";
         $stmt = $con->prepare($query);
         $stmt->bind_param("iiii", $gridId, $pickId, $row, $col);
@@ -43,8 +43,8 @@
         if ($result->num_rows > 0) {
             $pickPlayer = $result->fetch_assoc();
             $pick = $pickPlayer['picked'];
-            $p_name = $pickPlayer['p_name'];
-            $p_img = image_exists($p_no) ? $pickId : $pickPlayer['p_img'];
+            $p_name = $pickPlayer['name'];
+            $p_img = image_exists($pickId) ? $pickId : $pickPlayer['img'];
 
             $query = "SELECT SUM(picked) FROM $pickTable WHERE grid_index = ? AND row_no = ? AND col_no = ?";
             $stmt = $con->prepare($query);

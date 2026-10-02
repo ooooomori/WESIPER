@@ -1,0 +1,5707 @@
+{
+  "rosters": [
+    {
+      "year": 1982,
+      "team": "OB 베어스",
+      "players": [
+        {
+          "name": "강철원",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%EC%B2%A0%EC%9B%90(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "계형철",
+          "role": "투수",
+          "source_path": "/w/%EA%B3%84%ED%98%95%EC%B2%A0"
+        },
+        {
+          "name": "김현홍",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%98%84%ED%99%8D"
+        },
+        {
+          "name": "박상열",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%83%81%EC%97%B4"
+        },
+        {
+          "name": "박철순",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%B2%A0%EC%88%9C"
+        },
+        {
+          "name": "선우대영",
+          "role": "투수",
+          "source_path": "/w/%EC%84%A0%EC%9A%B0%EB%8C%80%EC%98%81"
+        },
+        {
+          "name": "황태환",
+          "role": "투수",
+          "source_path": "/w/%ED%99%A9%ED%83%9C%ED%99%98"
+        },
+        {
+          "name": "정종현",
+          "role": "포수",
+          "source_path": "/w/%EC%A0%95%EC%A2%85%ED%98%84(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김경문",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EA%B2%BD%EB%AC%B8"
+        },
+        {
+          "name": "조범현",
+          "role": "포수",
+          "source_path": "/w/%EC%A1%B0%EB%B2%94%ED%98%84"
+        },
+        {
+          "name": "김진홍",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%A7%84%ED%99%8D(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "구천서",
+          "role": "내야수",
+          "source_path": "/w/%EA%B5%AC%EC%B2%9C%EC%84%9C(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "신경식",
+          "role": "내야수",
+          "source_path": "/w/%EC%8B%A0%EA%B2%BD%EC%8B%9D(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김광수",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EA%B4%91%EC%88%98(1959)"
+        },
+        {
+          "name": "유지훤",
+          "role": "내야수",
+          "source_path": "/w/%EC%9C%A0%EC%A7%80%ED%9B%A4"
+        },
+        {
+          "name": "박종호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A2%85%ED%98%B8(1964)"
+        },
+        {
+          "name": "양세종",
+          "role": "내야수",
+          "source_path": "/w/%EC%96%91%EC%84%B8%EC%A2%85(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이근식",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B7%BC%EC%8B%9D(1958)"
+        },
+        {
+          "name": "윤동균",
+          "role": "외야수",
+          "source_path": "/w/%EC%9C%A4%EB%8F%99%EA%B7%A0"
+        },
+        {
+          "name": "김유동",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9C%A0%EB%8F%99"
+        },
+        {
+          "name": "이홍범",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%99%8D%EB%B2%94"
+        },
+        {
+          "name": "정혁진",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%ED%98%81%EC%A7%84(1960)"
+        },
+        {
+          "name": "김우열",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%B0%EC%97%B4"
+        },
+        {
+          "name": "구재서",
+          "role": "외야수",
+          "source_path": "/w/%EA%B5%AC%EC%9E%AC%EC%84%9C(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이근식",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EA%B7%BC%EC%8B%9D(1959)"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1982%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1982,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "이선희",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%84%A0%ED%9D%AC(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "권영호",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%EC%98%81%ED%98%B8(1954)"
+        },
+        {
+          "name": "황규봉",
+          "role": "투수",
+          "source_path": "/w/%ED%99%A9%EA%B7%9C%EB%B4%89"
+        },
+        {
+          "name": "성낙수",
+          "role": "투수",
+          "source_path": "/w/%EC%84%B1%EB%82%99%EC%88%98"
+        },
+        {
+          "name": "박영진",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%98%81%EC%A7%84(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "송진호",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%A7%84%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이만수",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%A7%8C%EC%88%98"
+        },
+        {
+          "name": "손상득",
+          "role": "포수",
+          "source_path": "/w/%EC%86%90%EC%83%81%EB%93%9D"
+        },
+        {
+          "name": "박정환",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%99%98(1957)"
+        },
+        {
+          "name": "손상대",
+          "role": "포수",
+          "source_path": "/w/%EC%86%90%EC%83%81%EB%8C%80(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "함학수",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%A8%ED%95%99%EC%88%98"
+        },
+        {
+          "name": "배대웅",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B0%EB%8C%80%EC%9B%85"
+        },
+        {
+          "name": "김한근",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%95%9C%EA%B7%BC"
+        },
+        {
+          "name": "서정환",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%A0%95%ED%99%98"
+        },
+        {
+          "name": "오대석",
+          "role": "내야수",
+          "source_path": "/w/%EC%98%A4%EB%8C%80%EC%84%9D"
+        },
+        {
+          "name": "천보성",
+          "role": "내야수",
+          "source_path": "/w/%EC%B2%9C%EB%B3%B4%EC%84%B1"
+        },
+        {
+          "name": "장태수",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%83%9C%EC%88%98(1957)"
+        },
+        {
+          "name": "허규옥",
+          "role": "외야수",
+          "source_path": "/w/%ED%97%88%EA%B7%9C%EC%98%A5"
+        },
+        {
+          "name": "정현발",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%ED%98%84%EB%B0%9C"
+        },
+        {
+          "name": "정구왕",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EA%B5%AC%EC%99%95"
+        },
+        {
+          "name": "박찬",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%B0%AC(1955)"
+        },
+        {
+          "name": "김휘욱",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%ED%9C%98%EC%9A%B1"
+        }
+      ],
+      "expected": 22,
+      "count": 22,
+      "source": "https://namu.moe/w/1982%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1983,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "이상윤",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EC%9C%A4(%EC%95%BC%EA%B5%AC%EC%9D%B8)"
+        },
+        {
+          "name": "김용남",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EB%82%A8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "주동식",
+          "role": "투수",
+          "source_path": "/w/%EC%A3%BC%EB%8F%99%EC%8B%9D"
+        },
+        {
+          "name": "방수원",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%A9%EC%88%98%EC%9B%90"
+        },
+        {
+          "name": "강만식",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%EB%A7%8C%EC%8B%9D"
+        },
+        {
+          "name": "김현재",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%98%84%EC%9E%AC"
+        },
+        {
+          "name": "황기선",
+          "role": "투수",
+          "source_path": "/w/%ED%99%A9%EA%B8%B0%EC%84%A0"
+        },
+        {
+          "name": "엄평재",
+          "role": "투수",
+          "source_path": "/w/%EC%97%84%ED%8F%89%EC%9E%AC"
+        },
+        {
+          "name": "조도연",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EB%8F%84%EC%97%B0"
+        },
+        {
+          "name": "김무종",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%AC%B4%EC%A2%85"
+        },
+        {
+          "name": "박전섭",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EC%A0%84%EC%84%AD"
+        },
+        {
+          "name": "조종규",
+          "role": "포수",
+          "source_path": "/w/%EC%A1%B0%EC%A2%85%EA%B7%9C"
+        },
+        {
+          "name": "김봉연",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%B4%89%EC%97%B0"
+        },
+        {
+          "name": "김성한",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%95%9C"
+        },
+        {
+          "name": "서정환",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%A0%95%ED%99%98"
+        },
+        {
+          "name": "양승호",
+          "role": "내야수",
+          "source_path": "/w/%EC%96%91%EC%8A%B9%ED%98%B8"
+        },
+        {
+          "name": "차영화",
+          "role": "내야수",
+          "source_path": "/w/%EC%B0%A8%EC%98%81%ED%99%94"
+        },
+        {
+          "name": "장진범",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EC%A7%84%EB%B2%94"
+        },
+        {
+          "name": "임정면",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%84%EC%A0%95%EB%A9%B4"
+        },
+        {
+          "name": "김일환",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%ED%99%98(1954)"
+        },
+        {
+          "name": "조충열",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%B6%A9%EC%97%B4"
+        },
+        {
+          "name": "김일권",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%EA%B6%8C"
+        },
+        {
+          "name": "김종모",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EB%AA%A8"
+        },
+        {
+          "name": "김준환",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A4%80%ED%99%98"
+        },
+        {
+          "name": "김종윤",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EC%9C%A4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "송일섭",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%9D%BC%EC%84%AD"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/1983%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1983,
+      "team": "MBC 청룡",
+      "players": [
+        {
+          "name": "하기룡",
+          "role": "투수",
+          "source_path": "/w/%ED%95%98%EA%B8%B0%EB%A3%A1"
+        },
+        {
+          "name": "오영일",
+          "role": "투수",
+          "source_path": "/w/%EC%98%A4%EC%98%81%EC%9D%BC"
+        },
+        {
+          "name": "이길환",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B8%B8%ED%99%98"
+        },
+        {
+          "name": "이광권",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B4%91%EA%B6%8C"
+        },
+        {
+          "name": "유종겸",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%A0%EC%A2%85%EA%B2%B8"
+        },
+        {
+          "name": "이원국",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%9B%90%EA%B5%AD"
+        },
+        {
+          "name": "정순명",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EC%88%9C%EB%AA%85"
+        },
+        {
+          "name": "박석채",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%84%9D%EC%B1%84"
+        },
+        {
+          "name": "유승안",
+          "role": "포수",
+          "source_path": "/w/%EC%9C%A0%EC%8A%B9%EC%95%88"
+        },
+        {
+          "name": "김용운",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%9A%B4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "차동열",
+          "role": "포수",
+          "source_path": "/w/%EC%B0%A8%EB%8F%99%EC%97%B4"
+        },
+        {
+          "name": "김재박",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%EB%B0%95"
+        },
+        {
+          "name": "이광은",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B4%91%EC%9D%80"
+        },
+        {
+          "name": "이종도",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%8F%84"
+        },
+        {
+          "name": "김바위",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%B0%94%EC%9C%84"
+        },
+        {
+          "name": "김인식",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B8%EC%8B%9D(1953)"
+        },
+        {
+          "name": "김용달",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EB%8B%AC"
+        },
+        {
+          "name": "김정수",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1960)"
+        },
+        {
+          "name": "조호",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%ED%98%B8(1957)"
+        },
+        {
+          "name": "송영운",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%98%81%EC%9A%B4"
+        },
+        {
+          "name": "이해창",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%95%B4%EC%B0%BD(1953)"
+        },
+        {
+          "name": "김봉기",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EB%B4%89%EA%B8%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "신언호",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%A0%EC%96%B8%ED%98%B8"
+        }
+      ],
+      "expected": 22,
+      "count": 23,
+      "source": "https://namu.moe/w/1983%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1984,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "김시진",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%8B%9C%EC%A7%84"
+        },
+        {
+          "name": "김일융",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%EC%9C%B5"
+        },
+        {
+          "name": "황규봉",
+          "role": "투수",
+          "source_path": "/w/%ED%99%A9%EA%B7%9C%EB%B4%89"
+        },
+        {
+          "name": "권영호",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%EC%98%81%ED%98%B8(1954)"
+        },
+        {
+          "name": "성낙수",
+          "role": "투수",
+          "source_path": "/w/%EC%84%B1%EB%82%99%EC%88%98"
+        },
+        {
+          "name": "양일환",
+          "role": "투수",
+          "source_path": "/w/%EC%96%91%EC%9D%BC%ED%99%98"
+        },
+        {
+          "name": "송진호",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%A7%84%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이만수",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%A7%8C%EC%88%98"
+        },
+        {
+          "name": "송일수",
+          "role": "포수",
+          "source_path": "/w/%EC%86%A1%EC%9D%BC%EC%88%98"
+        },
+        {
+          "name": "함학수",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%A8%ED%95%99%EC%88%98"
+        },
+        {
+          "name": "천보성",
+          "role": "내야수",
+          "source_path": "/w/%EC%B2%9C%EB%B3%B4%EC%84%B1"
+        },
+        {
+          "name": "배대웅",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B0%EB%8C%80%EC%9B%85"
+        },
+        {
+          "name": "김근석",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EA%B7%BC%EC%84%9D"
+        },
+        {
+          "name": "박승호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%8A%B9%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김성래",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EB%9E%98"
+        },
+        {
+          "name": "오대석",
+          "role": "내야수",
+          "source_path": "/w/%EC%98%A4%EB%8C%80%EC%84%9D"
+        },
+        {
+          "name": "정진호",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%95%EC%A7%84%ED%98%B8(1956)"
+        },
+        {
+          "name": "김한근",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%95%9C%EA%B7%BC"
+        },
+        {
+          "name": "장효조",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%9A%A8%EC%A1%B0"
+        },
+        {
+          "name": "허규옥",
+          "role": "외야수",
+          "source_path": "/w/%ED%97%88%EA%B7%9C%EC%98%A5"
+        },
+        {
+          "name": "장태수",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%83%9C%EC%88%98(1957)"
+        },
+        {
+          "name": "홍승규",
+          "role": "외야수",
+          "source_path": "/w/%ED%99%8D%EC%8A%B9%EA%B7%9C"
+        },
+        {
+          "name": "정현발",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%ED%98%84%EB%B0%9C"
+        },
+        {
+          "name": "김이수",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B4%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "황병일",
+          "role": "외야수",
+          "source_path": "/w/%ED%99%A9%EB%B3%91%EC%9D%BC"
+        }
+      ],
+      "expected": 24,
+      "count": 25,
+      "source": "https://namu.moe/w/1984%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1984,
+      "team": "롯데 자이언츠",
+      "players": [
+        {
+          "name": "최동원",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EB%8F%99%EC%9B%90"
+        },
+        {
+          "name": "임호균",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%ED%98%B8%EA%B7%A0"
+        },
+        {
+          "name": "배경환",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%B0%EA%B2%BD%ED%99%98"
+        },
+        {
+          "name": "이진우",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%A7%84%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "천창호",
+          "role": "투수",
+          "source_path": "/w/%EC%B2%9C%EC%B0%BD%ED%98%B8"
+        },
+        {
+          "name": "안창완",
+          "role": "투수",
+          "source_path": "/w/%EC%95%88%EC%B0%BD%EC%99%84"
+        },
+        {
+          "name": "이문한",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%AC%B8%ED%95%9C"
+        },
+        {
+          "name": "조용철",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EC%9A%A9%EC%B2%A0"
+        },
+        {
+          "name": "심재원",
+          "role": "포수",
+          "source_path": "/w/%EC%8B%AC%EC%9E%AC%EC%9B%90(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "한문연",
+          "role": "포수",
+          "source_path": "/w/%ED%95%9C%EB%AC%B8%EC%97%B0"
+        },
+        {
+          "name": "김용철",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%B2%A0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김용희",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%ED%9D%AC"
+        },
+        {
+          "name": "박영태",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%98%81%ED%83%9C"
+        },
+        {
+          "name": "정영기",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%95%EC%98%81%EA%B8%B0"
+        },
+        {
+          "name": "이광길",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B4%91%EA%B8%B8"
+        },
+        {
+          "name": "김민호",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%ED%98%B8(1961)"
+        },
+        {
+          "name": "김성호",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%98%B8(1960)"
+        },
+        {
+          "name": "김성관",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B4%80(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "유두열",
+          "role": "외야수",
+          "source_path": "/w/%EC%9C%A0%EB%91%90%EC%97%B4"
+        },
+        {
+          "name": "홍문종",
+          "role": "외야수",
+          "source_path": "/w/%ED%99%8D%EB%AC%B8%EC%A2%85(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "박용성",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9A%A9%EC%84%B1(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김재상",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%EC%83%81(1959)"
+        },
+        {
+          "name": "조성옥",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%84%B1%EC%98%A5"
+        },
+        {
+          "name": "김석일",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%84%9D%EC%9D%BC"
+        },
+        {
+          "name": "김한조",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%ED%95%9C%EC%A1%B0"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1984%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1986,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "이상윤",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EC%9C%A4(%EC%95%BC%EA%B5%AC%EC%9D%B8)"
+        },
+        {
+          "name": "선동열",
+          "role": "투수",
+          "source_path": "/w/%EC%84%A0%EB%8F%99%EC%97%B4"
+        },
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "차동철",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%8F%99%EC%B2%A0"
+        },
+        {
+          "name": "신동수",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%88%98(1966)"
+        },
+        {
+          "name": "김대현",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%8C%80%ED%98%84(1962)"
+        },
+        {
+          "name": "방수원",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%A9%EC%88%98%EC%9B%90"
+        },
+        {
+          "name": "문희수",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%ED%9D%AC%EC%88%98"
+        },
+        {
+          "name": "김용남",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EB%82%A8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김무종",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%AC%B4%EC%A2%85"
+        },
+        {
+          "name": "장채근",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EC%B1%84%EA%B7%BC"
+        },
+        {
+          "name": "김봉연",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%B4%89%EC%97%B0"
+        },
+        {
+          "name": "김일환",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%ED%99%98(1954)"
+        },
+        {
+          "name": "김성한",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%95%9C"
+        },
+        {
+          "name": "서정환",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%A0%95%ED%99%98"
+        },
+        {
+          "name": "이건열",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B1%B4%EC%97%B4"
+        },
+        {
+          "name": "조충열",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%B6%A9%EC%97%B4"
+        },
+        {
+          "name": "차영화",
+          "role": "내야수",
+          "source_path": "/w/%EC%B0%A8%EC%98%81%ED%99%94"
+        },
+        {
+          "name": "한대화",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EB%8C%80%ED%99%94"
+        },
+        {
+          "name": "김일권",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%EA%B6%8C"
+        },
+        {
+          "name": "김종모",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EB%AA%A8"
+        },
+        {
+          "name": "김준환",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A4%80%ED%99%98"
+        },
+        {
+          "name": "김평호",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%ED%8F%89%ED%98%B8"
+        },
+        {
+          "name": "송일섭",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%9D%BC%EC%84%AD"
+        },
+        {
+          "name": "이순철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%9C%EC%B2%A0"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1986%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1986,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "김시진",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%8B%9C%EC%A7%84"
+        },
+        {
+          "name": "김일융",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%EC%9C%B5"
+        },
+        {
+          "name": "진동한",
+          "role": "투수",
+          "source_path": "/w/%EC%A7%84%EB%8F%99%ED%95%9C"
+        },
+        {
+          "name": "양일환",
+          "role": "투수",
+          "source_path": "/w/%EC%96%91%EC%9D%BC%ED%99%98"
+        },
+        {
+          "name": "권영호",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%EC%98%81%ED%98%B8(1954)"
+        },
+        {
+          "name": "황규봉",
+          "role": "투수",
+          "source_path": "/w/%ED%99%A9%EA%B7%9C%EB%B4%89"
+        },
+        {
+          "name": "성준",
+          "role": "투수",
+          "source_path": "/w/%EC%84%B1%EC%A4%80(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "송진호",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%A7%84%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김훈기",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%9B%88%EA%B8%B0"
+        },
+        {
+          "name": "이만수",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%A7%8C%EC%88%98"
+        },
+        {
+          "name": "손상득",
+          "role": "포수",
+          "source_path": "/w/%EC%86%90%EC%83%81%EB%93%9D"
+        },
+        {
+          "name": "송일수",
+          "role": "포수",
+          "source_path": "/w/%EC%86%A1%EC%9D%BC%EC%88%98"
+        },
+        {
+          "name": "함학수",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%A8%ED%95%99%EC%88%98"
+        },
+        {
+          "name": "김용국",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EA%B5%AD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김성래",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EB%9E%98"
+        },
+        {
+          "name": "이종두",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%91%90"
+        },
+        {
+          "name": "오대석",
+          "role": "내야수",
+          "source_path": "/w/%EC%98%A4%EB%8C%80%EC%84%9D"
+        },
+        {
+          "name": "배대웅",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B0%EB%8C%80%EC%9B%85"
+        },
+        {
+          "name": "박승호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%8A%B9%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "장효조",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%9A%A8%EC%A1%B0"
+        },
+        {
+          "name": "허규옥",
+          "role": "외야수",
+          "source_path": "/w/%ED%97%88%EA%B7%9C%EC%98%A5"
+        },
+        {
+          "name": "장태수",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%83%9C%EC%88%98(1957)"
+        },
+        {
+          "name": "이해창",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%95%B4%EC%B0%BD(1953)"
+        },
+        {
+          "name": "김동재",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%9E%AC"
+        },
+        {
+          "name": "홍승규",
+          "role": "외야수",
+          "source_path": "/w/%ED%99%8D%EC%8A%B9%EA%B7%9C"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1986%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1987,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "김시진",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%8B%9C%EC%A7%84"
+        },
+        {
+          "name": "김기태",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B8%B0%ED%83%9C(%EC%9E%AC%EC%9D%BC%EA%B5%90%ED%8F%AC)"
+        },
+        {
+          "name": "진동한",
+          "role": "투수",
+          "source_path": "/w/%EC%A7%84%EB%8F%99%ED%95%9C"
+        },
+        {
+          "name": "양일환",
+          "role": "투수",
+          "source_path": "/w/%EC%96%91%EC%9D%BC%ED%99%98"
+        },
+        {
+          "name": "권영호",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%EC%98%81%ED%98%B8(1954)"
+        },
+        {
+          "name": "김성길",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B8%B8"
+        },
+        {
+          "name": "성준",
+          "role": "투수",
+          "source_path": "/w/%EC%84%B1%EC%A4%80(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김훈기",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%9B%88%EA%B8%B0(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이만수",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%A7%8C%EC%88%98"
+        },
+        {
+          "name": "손상득",
+          "role": "포수",
+          "source_path": "/w/%EC%86%90%EC%83%81%EB%93%9D"
+        },
+        {
+          "name": "박정환",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%99%98(1957)"
+        },
+        {
+          "name": "함학수",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%A8%ED%95%99%EC%88%98"
+        },
+        {
+          "name": "김용국",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EA%B5%AD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김성래",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EB%9E%98"
+        },
+        {
+          "name": "이종두",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%91%90"
+        },
+        {
+          "name": "오대석",
+          "role": "내야수",
+          "source_path": "/w/%EC%98%A4%EB%8C%80%EC%84%9D"
+        },
+        {
+          "name": "류중일",
+          "role": "내야수",
+          "source_path": "/w/%EB%A5%98%EC%A4%91%EC%9D%BC"
+        },
+        {
+          "name": "박승호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%8A%B9%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김동재",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%9E%AC"
+        },
+        {
+          "name": "장효조",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%9A%A8%EC%A1%B0"
+        },
+        {
+          "name": "허규옥",
+          "role": "외야수",
+          "source_path": "/w/%ED%97%88%EA%B7%9C%EC%98%A5"
+        },
+        {
+          "name": "장태수",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%83%9C%EC%88%98(1957)"
+        },
+        {
+          "name": "최무영",
+          "role": "외야수",
+          "source_path": "/w/%EC%B5%9C%EB%AC%B4%EC%98%81"
+        },
+        {
+          "name": "구윤",
+          "role": "외야수",
+          "source_path": "/w/%EA%B5%AC%EC%9C%A4"
+        },
+        {
+          "name": "홍승규",
+          "role": "외야수",
+          "source_path": "/w/%ED%99%8D%EC%8A%B9%EA%B7%9C"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1987%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1987,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "이상윤",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EC%9C%A4(%EC%95%BC%EA%B5%AC%EC%9D%B8)"
+        },
+        {
+          "name": "선동열",
+          "role": "투수",
+          "source_path": "/w/%EC%84%A0%EB%8F%99%EC%97%B4"
+        },
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "차동철",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%8F%99%EC%B2%A0"
+        },
+        {
+          "name": "신동수",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%88%98(1966)"
+        },
+        {
+          "name": "김대현",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%8C%80%ED%98%84(1962)"
+        },
+        {
+          "name": "방수원",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%A9%EC%88%98%EC%9B%90"
+        },
+        {
+          "name": "문희수",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%ED%9D%AC%EC%88%98"
+        },
+        {
+          "name": "김무종",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%AC%B4%EC%A2%85"
+        },
+        {
+          "name": "장채근",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EC%B1%84%EA%B7%BC"
+        },
+        {
+          "name": "이건열",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EA%B1%B4%EC%97%B4"
+        },
+        {
+          "name": "김봉연",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%B4%89%EC%97%B0"
+        },
+        {
+          "name": "김성한",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%95%9C"
+        },
+        {
+          "name": "서정환",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%A0%95%ED%99%98"
+        },
+        {
+          "name": "한대화",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EB%8C%80%ED%99%94"
+        },
+        {
+          "name": "차영화",
+          "role": "내야수",
+          "source_path": "/w/%EC%B0%A8%EC%98%81%ED%99%94"
+        },
+        {
+          "name": "김일환",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%ED%99%98(1954)"
+        },
+        {
+          "name": "조충열",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%B6%A9%EC%97%B4"
+        },
+        {
+          "name": "백인호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B1%EC%9D%B8%EC%88%98"
+        },
+        {
+          "name": "박철우",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%B2%A0%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김준환",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A4%80%ED%99%98"
+        },
+        {
+          "name": "조재환",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%9E%AC%ED%99%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김종모",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EB%AA%A8"
+        },
+        {
+          "name": "이순철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%9C%EC%B2%A0"
+        },
+        {
+          "name": "송일섭",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%9D%BC%EC%84%AD"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1987%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1988,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "이상윤",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EC%9C%A4(%EC%95%BC%EA%B5%AC%EC%9D%B8)"
+        },
+        {
+          "name": "선동열",
+          "role": "투수",
+          "source_path": "/w/%EC%84%A0%EB%8F%99%EC%97%B4"
+        },
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "차동철",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%8F%99%EC%B2%A0"
+        },
+        {
+          "name": "신동수",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%88%98(1966)"
+        },
+        {
+          "name": "방수원",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%A9%EC%88%98%EC%9B%90"
+        },
+        {
+          "name": "문희수",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%ED%9D%AC%EC%88%98"
+        },
+        {
+          "name": "최상주",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%83%81%EC%A3%BC"
+        },
+        {
+          "name": "김무종",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%AC%B4%EC%A2%85"
+        },
+        {
+          "name": "장채근",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EC%B1%84%EA%B7%BC"
+        },
+        {
+          "name": "이건열",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EA%B1%B4%EC%97%B4"
+        },
+        {
+          "name": "김봉연",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%B4%89%EC%97%B0"
+        },
+        {
+          "name": "김성한",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%95%9C"
+        },
+        {
+          "name": "서정환",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%A0%95%ED%99%98"
+        },
+        {
+          "name": "한대화",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EB%8C%80%ED%99%94"
+        },
+        {
+          "name": "차영화",
+          "role": "내야수",
+          "source_path": "/w/%EC%B0%A8%EC%98%81%ED%99%94"
+        },
+        {
+          "name": "조충열",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%B6%A9%EC%97%B4"
+        },
+        {
+          "name": "백인호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B1%EC%9D%B8%EC%88%98"
+        },
+        {
+          "name": "박철우",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%B2%A0%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "서창기",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%B0%BD%EA%B8%B0"
+        },
+        {
+          "name": "김준환",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A4%80%ED%99%98"
+        },
+        {
+          "name": "조재환",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%9E%AC%ED%99%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김종모",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EB%AA%A8"
+        },
+        {
+          "name": "이순철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%9C%EC%B2%A0"
+        },
+        {
+          "name": "김평호",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%ED%8F%89%ED%98%B8"
+        },
+        {
+          "name": "김성규",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B7%9C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/1988%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1988,
+      "team": "빙그레 이글스",
+      "players": [
+        {
+          "name": "한용덕",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%EC%9A%A9%EB%8D%95"
+        },
+        {
+          "name": "한희민",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%ED%9D%AC%EB%AF%BC"
+        },
+        {
+          "name": "이상군",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EA%B5%B0"
+        },
+        {
+          "name": "이동석",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%8F%99%EC%84%9D(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김대중",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%8C%80%EC%A4%91(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김홍명",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%99%8D%EB%AA%85"
+        },
+        {
+          "name": "김용남",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EB%82%A8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "천창호",
+          "role": "투수",
+          "source_path": "/w/%EC%B2%9C%EC%B0%BD%ED%98%B8"
+        },
+        {
+          "name": "김상국",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EA%B5%AD"
+        },
+        {
+          "name": "유승안",
+          "role": "포수",
+          "source_path": "/w/%EC%9C%A0%EC%8A%B9%EC%95%88"
+        },
+        {
+          "name": "강정길",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%A0%95%EA%B8%B8"
+        },
+        {
+          "name": "전대영",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%84%EB%8C%80%EC%98%81"
+        },
+        {
+          "name": "장종훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EC%A2%85%ED%9B%88"
+        },
+        {
+          "name": "황병일",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%A9%EB%B3%91%EC%9D%BC"
+        },
+        {
+          "name": "조양근",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%96%91%EA%B7%BC"
+        },
+        {
+          "name": "김성갑",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B0%91"
+        },
+        {
+          "name": "이광길",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B4%91%EA%B8%B8"
+        },
+        {
+          "name": "김한근",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%95%9C%EA%B7%BC"
+        },
+        {
+          "name": "이정훈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A0%95%ED%9B%88(1963)"
+        },
+        {
+          "name": "이강돈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EB%8F%88"
+        },
+        {
+          "name": "이중화",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A4%91%ED%99%94"
+        },
+        {
+          "name": "고원부",
+          "role": "외야수",
+          "source_path": "/w/%EA%B3%A0%EC%9B%90%EB%B6%80"
+        },
+        {
+          "name": "송일섭",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%9D%BC%EC%84%AD"
+        },
+        {
+          "name": "조용호",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%9A%A9%ED%98%B8(1965)"
+        },
+        {
+          "name": "곽동열",
+          "role": "외야수",
+          "source_path": "/w/%EA%B3%BD%EB%8F%99%EC%97%B4"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1988%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1989,
+      "team": "빙그레 이글스",
+      "players": [
+        {
+          "name": "한용덕",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%EC%9A%A9%EB%8D%95"
+        },
+        {
+          "name": "한희민",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%ED%9D%AC%EB%AF%BC"
+        },
+        {
+          "name": "이상군",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EA%B5%B0"
+        },
+        {
+          "name": "송진우",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%A7%84%EC%9A%B0(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김대중",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%8C%80%EC%A4%91(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김홍명",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%99%8D%EB%AA%85"
+        },
+        {
+          "name": "장정순",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%A5%EC%A0%95%EC%88%9C"
+        },
+        {
+          "name": "김락기",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%9D%BD%EA%B8%B0"
+        },
+        {
+          "name": "김상국",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EA%B5%AD"
+        },
+        {
+          "name": "유승안",
+          "role": "포수",
+          "source_path": "/w/%EC%9C%A0%EC%8A%B9%EC%95%88"
+        },
+        {
+          "name": "강정길",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%A0%95%EA%B8%B8"
+        },
+        {
+          "name": "전대영",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%84%EB%8C%80%EC%98%81"
+        },
+        {
+          "name": "장종훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EC%A2%85%ED%9B%88"
+        },
+        {
+          "name": "황병일",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%A9%EB%B3%91%EC%9D%BC"
+        },
+        {
+          "name": "조양근",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%96%91%EA%B7%BC"
+        },
+        {
+          "name": "김성갑",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B0%91"
+        },
+        {
+          "name": "강석천",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%84%9D%EC%B2%9C"
+        },
+        {
+          "name": "황대연",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%A9%EB%8C%80%EC%97%B0"
+        },
+        {
+          "name": "이종호",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%ED%98%B8(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이정훈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A0%95%ED%9B%88(1963)"
+        },
+        {
+          "name": "이강돈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EB%8F%88"
+        },
+        {
+          "name": "이중화",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A4%91%ED%99%94"
+        },
+        {
+          "name": "고원부",
+          "role": "외야수",
+          "source_path": "/w/%EA%B3%A0%EC%9B%90%EB%B6%80"
+        },
+        {
+          "name": "송일섭",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%9D%BC%EC%84%AD"
+        },
+        {
+          "name": "조용호",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%9A%A9%ED%98%B8(1965)"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1989%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1989,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "선동열",
+          "role": "투수",
+          "source_path": "/w/%EC%84%A0%EB%8F%99%EC%97%B4"
+        },
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "차동철",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%8F%99%EC%B2%A0"
+        },
+        {
+          "name": "신동수",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%88%98(1966)"
+        },
+        {
+          "name": "방수원",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%A9%EC%88%98%EC%9B%90"
+        },
+        {
+          "name": "문희수",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%ED%9D%AC%EC%88%98"
+        },
+        {
+          "name": "이강철",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EC%B2%A0"
+        },
+        {
+          "name": "조계현",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B3%84%ED%98%84"
+        },
+        {
+          "name": "장채근",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EC%B1%84%EA%B7%BC"
+        },
+        {
+          "name": "장호익",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%ED%98%B8%EC%9D%B5(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김성한",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%95%9C"
+        },
+        {
+          "name": "서정환",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%A0%95%ED%99%98"
+        },
+        {
+          "name": "한대화",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EB%8C%80%ED%99%94"
+        },
+        {
+          "name": "차영화",
+          "role": "내야수",
+          "source_path": "/w/%EC%B0%A8%EC%98%81%ED%99%94"
+        },
+        {
+          "name": "조충열",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%B6%A9%EC%97%B4"
+        },
+        {
+          "name": "백인호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B1%EC%9D%B8%EC%88%98"
+        },
+        {
+          "name": "박철우",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%B2%A0%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "문승훈",
+          "role": "내야수",
+          "source_path": "/w/%EB%AC%B8%EC%8A%B9%ED%9B%88"
+        },
+        {
+          "name": "김종모",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EB%AA%A8"
+        },
+        {
+          "name": "이순철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%9C%EC%B2%A0"
+        },
+        {
+          "name": "조재환",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%9E%AC%ED%99%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김평호",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%ED%8F%89%ED%98%B8"
+        },
+        {
+          "name": "김성규",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B7%9C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이건열",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EA%B1%B4%EC%97%B4"
+        },
+        {
+          "name": "김태완",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EC%99%84(1966)"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1989%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1990,
+      "team": "LG 트윈스",
+      "players": [
+        {
+          "name": "정삼흠",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EC%82%BC%ED%9D%A0"
+        },
+        {
+          "name": "유종겸",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%A0%EC%A2%85%EA%B2%B8"
+        },
+        {
+          "name": "김태원",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EC%9B%90(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김용수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%88%98"
+        },
+        {
+          "name": "김기범",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B8%B0%EB%B2%94(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "문병권",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%EB%B3%91%EA%B6%8C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이국성",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B5%AD%EC%84%B1"
+        },
+        {
+          "name": "이용철",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%9A%A9%EC%B2%A0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "차동철",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%8F%99%EC%B2%A0"
+        },
+        {
+          "name": "최일언",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%9D%BC%EC%96%B8"
+        },
+        {
+          "name": "심재원",
+          "role": "포수",
+          "source_path": "/w/%EC%8B%AC%EC%9E%AC%EC%9B%90(1953)"
+        },
+        {
+          "name": "김동수",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김재박",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%EB%B0%95"
+        },
+        {
+          "name": "김상훈",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%ED%9B%88(1960)"
+        },
+        {
+          "name": "김동재",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%9E%AC(1960)"
+        },
+        {
+          "name": "유지홍",
+          "role": "내야수",
+          "source_path": "/w/%EC%9C%A0%EC%A7%80%ED%99%8D"
+        },
+        {
+          "name": "민경삼",
+          "role": "내야수",
+          "source_path": "/w/%EB%AF%BC%EA%B2%BD%EC%82%BC"
+        },
+        {
+          "name": "나웅",
+          "role": "내야수",
+          "source_path": "/w/%EB%82%98%EC%9B%85"
+        },
+        {
+          "name": "김선진",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%A0%EC%A7%84"
+        },
+        {
+          "name": "이광은",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B4%91%EC%9D%80"
+        },
+        {
+          "name": "신언호",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%A0%EC%96%B8%ED%98%B8"
+        },
+        {
+          "name": "박흥식",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%ED%9D%A5%EC%8B%9D"
+        },
+        {
+          "name": "윤덕규",
+          "role": "외야수",
+          "source_path": "/w/%EC%9C%A4%EB%8D%95%EA%B7%9C"
+        },
+        {
+          "name": "김영직",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%98%81%EC%A7%81"
+        },
+        {
+          "name": "노찬엽",
+          "role": "외야수",
+          "source_path": "/w/%EB%85%B8%EC%B0%AC%EC%97%BD"
+        },
+        {
+          "name": "양승관",
+          "role": "외야수",
+          "source_path": "/w/%EC%96%91%EC%8A%B9%EA%B4%80"
+        },
+        {
+          "name": "이병훈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EB%B3%91%ED%9B%88(%EC%95%BC%EA%B5%AC)"
+        }
+      ],
+      "expected": 27,
+      "count": 27,
+      "source": "https://namu.moe/w/1990%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1990,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "최동원",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EB%8F%99%EC%9B%90"
+        },
+        {
+          "name": "성준",
+          "role": "투수",
+          "source_path": "/w/%EC%84%B1%EC%A4%80(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이태일",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%ED%83%9C%EC%9D%BC(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김상엽",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EC%97%BD"
+        },
+        {
+          "name": "김성길",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B8%B8"
+        },
+        {
+          "name": "정윤수",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EC%9C%A4%EC%88%98"
+        },
+        {
+          "name": "홍성연",
+          "role": "투수",
+          "source_path": "/w/%ED%99%8D%EC%84%B1%EC%97%B0"
+        },
+        {
+          "name": "류명선",
+          "role": "투수",
+          "source_path": "/w/%EB%A5%98%EB%AA%85%EC%84%A0"
+        },
+        {
+          "name": "이문한",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%AC%B8%ED%95%9C"
+        },
+        {
+          "name": "오명록",
+          "role": "투수",
+          "source_path": "/w/%EC%98%A4%EB%AA%85%EB%A1%9D"
+        },
+        {
+          "name": "이만수",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%A7%8C%EC%88%98"
+        },
+        {
+          "name": "박정환",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%99%98(1957)"
+        },
+        {
+          "name": "김용철",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%B2%A0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "류중일",
+          "role": "내야수",
+          "source_path": "/w/%EB%A5%98%EC%A4%91%EC%9D%BC"
+        },
+        {
+          "name": "김용국",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EA%B5%AD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "강기웅",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EA%B8%B0%EC%9B%85"
+        },
+        {
+          "name": "박승호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%8A%B9%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "최해명",
+          "role": "내야수",
+          "source_path": "/w/%EC%B5%9C%ED%95%B4%EB%AA%85"
+        },
+        {
+          "name": "이현택",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%ED%98%84%ED%83%9D"
+        },
+        {
+          "name": "장태수",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%83%9C%EC%88%98(1957)"
+        },
+        {
+          "name": "홍승규",
+          "role": "외야수",
+          "source_path": "/w/%ED%99%8D%EC%8A%B9%EA%B7%9C"
+        },
+        {
+          "name": "강영수",
+          "role": "외야수",
+          "source_path": "/w/%EA%B0%95%EC%98%81%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이종두",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%91%90"
+        },
+        {
+          "name": "정성룡",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%84%B1%EB%A3%A1(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김종갑",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EA%B0%91(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "나광남",
+          "role": "외야수",
+          "source_path": "/w/%EB%82%98%EA%B4%91%EB%82%A8"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/1990%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1991,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "선동열",
+          "role": "투수",
+          "source_path": "/w/%EC%84%A0%EB%8F%99%EC%97%B4"
+        },
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "신동수",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%88%98(1966)"
+        },
+        {
+          "name": "문희수",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%ED%9D%AC%EC%88%98"
+        },
+        {
+          "name": "조계현",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B3%84%ED%98%84"
+        },
+        {
+          "name": "이강철",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EC%B2%A0"
+        },
+        {
+          "name": "송유석",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%9C%A0%EC%84%9D"
+        },
+        {
+          "name": "강태원",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%ED%83%9C%EC%9B%90(1971)"
+        },
+        {
+          "name": "장채근",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EC%B1%84%EA%B7%BC"
+        },
+        {
+          "name": "정회열",
+          "role": "포수",
+          "source_path": "/w/%EC%A0%95%ED%9A%8C%EC%97%B4"
+        },
+        {
+          "name": "김성한",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%95%9C"
+        },
+        {
+          "name": "한대화",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EB%8C%80%ED%99%94"
+        },
+        {
+          "name": "박철우",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%B2%A0%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "윤재호",
+          "role": "내야수",
+          "source_path": "/w/%EC%9C%A4%EC%9E%AC%ED%98%B8(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "홍현우",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%8D%ED%98%84%EC%9A%B0"
+        },
+        {
+          "name": "김태완",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EC%99%84(1966)"
+        },
+        {
+          "name": "백인호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B1%EC%9D%B8%EC%88%98"
+        },
+        {
+          "name": "김종모",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EB%AA%A8"
+        },
+        {
+          "name": "이순철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%9C%EC%B2%A0"
+        },
+        {
+          "name": "이건열",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EA%B1%B4%EC%97%B4"
+        },
+        {
+          "name": "김성규",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EA%B7%9C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이호성",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%98%B8%EC%84%B1(1967)"
+        }
+      ],
+      "expected": 22,
+      "count": 22,
+      "source": "https://namu.moe/w/1991%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1991,
+      "team": "빙그레 이글스",
+      "players": [
+        {
+          "name": "한용덕",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%EC%9A%A9%EB%8D%95"
+        },
+        {
+          "name": "한희민",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%ED%9D%AC%EB%AF%BC"
+        },
+        {
+          "name": "송진우",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%A7%84%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이동석",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%8F%99%EC%84%9D(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "진정필",
+          "role": "투수",
+          "source_path": "/w/%EC%A7%84%EC%A0%95%ED%95%84"
+        },
+        {
+          "name": "김대중",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%8C%80%EC%A4%91(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "장정순",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%A5%EC%A0%95%EC%88%9C"
+        },
+        {
+          "name": "김인권",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B8%EA%B6%8C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김홍명",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%99%8D%EB%AA%85"
+        },
+        {
+          "name": "김상국",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EA%B5%AD"
+        },
+        {
+          "name": "양용모",
+          "role": "포수",
+          "source_path": "/w/%EC%96%91%EC%9A%A9%EB%AA%A8"
+        },
+        {
+          "name": "유승안",
+          "role": "포수",
+          "source_path": "/w/%EC%9C%A0%EC%8A%B9%EC%95%88"
+        },
+        {
+          "name": "강정길",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%A0%95%EA%B8%B8"
+        },
+        {
+          "name": "전대영",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%84%EB%8C%80%EC%98%81"
+        },
+        {
+          "name": "장종훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EC%A2%85%ED%9B%88"
+        },
+        {
+          "name": "강석천",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%84%9D%EC%B2%9C"
+        },
+        {
+          "name": "황대연",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%A9%EB%8C%80%EC%97%B0"
+        },
+        {
+          "name": "조양근",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%96%91%EA%B7%BC"
+        },
+        {
+          "name": "지화동",
+          "role": "내야수",
+          "source_path": "/w/%EC%A7%80%ED%99%94%EB%8F%99"
+        },
+        {
+          "name": "김용선",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%84%A0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이정훈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A0%95%ED%9B%88(1963)"
+        },
+        {
+          "name": "이강돈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EB%8F%88"
+        },
+        {
+          "name": "이중화",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A4%91%ED%99%94"
+        },
+        {
+          "name": "임주택",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%84%EC%A3%BC%ED%83%9D"
+        },
+        {
+          "name": "진상봉",
+          "role": "외야수",
+          "source_path": "/w/%EC%A7%84%EC%83%81%EB%B4%89"
+        },
+        {
+          "name": "임성우",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%84%EC%84%B1%EC%9A%B0"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/1991%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1992,
+      "team": "빙그레 이글스",
+      "players": [
+        {
+          "name": "한희민",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%ED%9D%AC%EB%AF%BC"
+        },
+        {
+          "name": "이상군",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EA%B5%B0"
+        },
+        {
+          "name": "송진우",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%A7%84%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "지연규",
+          "role": "투수",
+          "source_path": "/w/%EC%A7%80%EC%97%B0%EA%B7%9C"
+        },
+        {
+          "name": "김인권",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B8%EA%B6%8C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김홍명",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%99%8D%EB%AA%85"
+        },
+        {
+          "name": "한용덕",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%EC%9A%A9%EB%8D%95"
+        },
+        {
+          "name": "장정순",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%A5%EC%A0%95%EC%88%9C"
+        },
+        {
+          "name": "정민철",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AF%BC%EC%B2%A0"
+        },
+        {
+          "name": "김상국",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EA%B5%AD"
+        },
+        {
+          "name": "양용모",
+          "role": "포수",
+          "source_path": "/w/%EC%96%91%EC%9A%A9%EB%AA%A8"
+        },
+        {
+          "name": "지화동",
+          "role": "내야수",
+          "source_path": "/w/%EC%A7%80%ED%99%94%EB%8F%99"
+        },
+        {
+          "name": "조양근",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EC%96%91%EA%B7%BC"
+        },
+        {
+          "name": "강정길",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%A0%95%EA%B8%B8"
+        },
+        {
+          "name": "전대영",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%84%EB%8C%80%EC%98%81"
+        },
+        {
+          "name": "강석천",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%84%9D%EC%B2%9C"
+        },
+        {
+          "name": "이종호",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%ED%98%B8(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "장종훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EC%A2%85%ED%9B%88"
+        },
+        {
+          "name": "김용선",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%84%A0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이중화",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A4%91%ED%99%94"
+        },
+        {
+          "name": "이정훈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A0%95%ED%9B%88(1963)"
+        },
+        {
+          "name": "성군철",
+          "role": "외야수",
+          "source_path": "/w/%EC%84%B1%EA%B5%B0%EC%B2%A0"
+        },
+        {
+          "name": "이강돈",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EB%8F%88"
+        },
+        {
+          "name": "진상봉",
+          "role": "외야수",
+          "source_path": "/w/%EC%A7%84%EC%83%81%EB%B4%89"
+        },
+        {
+          "name": "임주택",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%84%EC%A3%BC%ED%83%9D"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1992%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1992,
+      "team": "롯데 자이언츠",
+      "players": [
+        {
+          "name": "윤학길",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%A4%ED%95%99%EA%B8%B8"
+        },
+        {
+          "name": "이상번",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EB%B2%88(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "박동희",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EB%8F%99%ED%9D%AC(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김태형",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%ED%98%95(1972)"
+        },
+        {
+          "name": "박동수",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EB%8F%99%EC%88%98(1961)"
+        },
+        {
+          "name": "김상현",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%ED%98%84(1968)"
+        },
+        {
+          "name": "윤형배",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%A4%ED%98%95%EB%B0%B0"
+        },
+        {
+          "name": "염종석",
+          "role": "투수",
+          "source_path": "/w/%EC%97%BC%EC%A2%85%EC%84%9D"
+        },
+        {
+          "name": "김종석",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EC%84%9D(1964)"
+        },
+        {
+          "name": "배숙현",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%B0%EC%88%99%ED%98%84(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김선일",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%84%A0%EC%9D%BC(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "강성우",
+          "role": "포수",
+          "source_path": "/w/%EA%B0%95%EC%84%B1%EC%9A%B0"
+        },
+        {
+          "name": "고정식",
+          "role": "포수",
+          "source_path": "/w/%EA%B3%A0%EC%A0%95%EC%8B%9D(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "한문연",
+          "role": "포수",
+          "source_path": "/w/%ED%95%9C%EB%AC%B8%EC%97%B0"
+        },
+        {
+          "name": "전호근",
+          "role": "포수",
+          "source_path": "/w/%EC%A0%84%ED%98%B8%EA%B7%BC"
+        },
+        {
+          "name": "박영태",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%98%81%ED%83%9C"
+        },
+        {
+          "name": "김민호",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%ED%98%B8(1961)"
+        },
+        {
+          "name": "한영준",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EC%98%81%EC%A4%80"
+        },
+        {
+          "name": "공필성",
+          "role": "내야수",
+          "source_path": "/w/%EA%B3%B5%ED%95%84%EC%84%B1"
+        },
+        {
+          "name": "박정태",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%83%9C"
+        },
+        {
+          "name": "박계원",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EA%B3%84%EC%9B%90"
+        },
+        {
+          "name": "김민재",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%EC%9E%AC(1973)"
+        },
+        {
+          "name": "장효조",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%ED%9A%A8%EC%A1%B0"
+        },
+        {
+          "name": "조성옥",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%84%B1%EC%98%A5"
+        },
+        {
+          "name": "최계영",
+          "role": "외야수",
+          "source_path": "/w/%EC%B5%9C%EA%B3%84%EC%98%81"
+        },
+        {
+          "name": "김응국",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%91%EA%B5%AD"
+        },
+        {
+          "name": "이종운",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EC%9A%B4"
+        },
+        {
+          "name": "김종헌",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%ED%97%8C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "전준호",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EC%A4%80%ED%98%B8(1969)"
+        }
+      ],
+      "expected": 29,
+      "count": 29,
+      "source": "https://namu.moe/w/1992%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1993,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "선동열",
+          "role": "투수",
+          "source_path": "/w/%EC%84%A0%EB%8F%99%EC%97%B4"
+        },
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "문희수",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%ED%9D%AC%EC%88%98"
+        },
+        {
+          "name": "조계현",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B3%84%ED%98%84"
+        },
+        {
+          "name": "이강철",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EC%B2%A0"
+        },
+        {
+          "name": "신동수",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%88%98(1966)"
+        },
+        {
+          "name": "송유석",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%9C%A0%EC%84%9D"
+        },
+        {
+          "name": "이대진",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%8C%80%EC%A7%84"
+        },
+        {
+          "name": "강태원",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%ED%83%9C%EC%9B%90(1971)"
+        },
+        {
+          "name": "장채근",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EC%B1%84%EA%B7%BC"
+        },
+        {
+          "name": "정회열",
+          "role": "포수",
+          "source_path": "/w/%EC%A0%95%ED%9A%8C%EC%97%B4"
+        },
+        {
+          "name": "김성한",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%95%9C"
+        },
+        {
+          "name": "한대화",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EB%8C%80%ED%99%94"
+        },
+        {
+          "name": "박철우",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%B2%A0%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "윤재호",
+          "role": "내야수",
+          "source_path": "/w/%EC%9C%A4%EC%9E%AC%ED%98%B8(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "홍현우",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%8D%ED%98%84%EC%9A%B0"
+        },
+        {
+          "name": "이종범",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%B2%94"
+        },
+        {
+          "name": "김병조",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%B3%91%EC%A1%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이경복",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B2%BD%EB%B3%B5"
+        },
+        {
+          "name": "이건열",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B1%B4%EC%97%B4"
+        },
+        {
+          "name": "이순철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%9C%EC%B2%A0"
+        },
+        {
+          "name": "이호성",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%98%B8%EC%84%B1(1967)"
+        },
+        {
+          "name": "정성룡",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%84%B1%EB%A3%A1(1964)"
+        },
+        {
+          "name": "이용석",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%9A%A9%EC%84%9D(%EC%95%BC%EA%B5%AC)"
+        }
+      ],
+      "expected": 25,
+      "count": 24,
+      "source": "https://namu.moe/w/1993%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1993,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "성준",
+          "role": "투수",
+          "source_path": "/w/%EC%84%B1%EC%A4%80(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "류명선",
+          "role": "투수",
+          "source_path": "/w/%EB%A5%98%EB%AA%85%EC%84%A0"
+        },
+        {
+          "name": "이태일",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%ED%83%9C%EC%9D%BC(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김태한",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%ED%95%9C"
+        },
+        {
+          "name": "오봉옥",
+          "role": "투수",
+          "source_path": "/w/%EC%98%A4%EB%B4%89%EC%98%A5"
+        },
+        {
+          "name": "김상엽",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EC%97%BD"
+        },
+        {
+          "name": "박충식",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%B6%A9%EC%8B%9D"
+        },
+        {
+          "name": "이상훈",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%ED%9B%88(%EC%9A%B0%EC%99%84%ED%88%AC%EC%88%98)"
+        },
+        {
+          "name": "이만수",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%A7%8C%EC%88%98"
+        },
+        {
+          "name": "김성현",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%ED%98%84(1963)"
+        },
+        {
+          "name": "박선일",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EC%84%A0%EC%9D%BC"
+        },
+        {
+          "name": "김성래",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%B1%EB%9E%98"
+        },
+        {
+          "name": "김용국",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EA%B5%AD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "류중일",
+          "role": "내야수",
+          "source_path": "/w/%EB%A5%98%EC%A4%91%EC%9D%BC"
+        },
+        {
+          "name": "강기웅",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EA%B8%B0%EC%9B%85"
+        },
+        {
+          "name": "양준혁",
+          "role": "내야수",
+          "source_path": "/w/%EC%96%91%EC%A4%80%ED%98%81"
+        },
+        {
+          "name": "김태룡",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EB%A3%A1(1968)"
+        },
+        {
+          "name": "정경훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%95%EA%B2%BD%ED%9B%88(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이종두",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%91%90"
+        },
+        {
+          "name": "강태윤",
+          "role": "외야수",
+          "source_path": "/w/%EA%B0%95%ED%83%9C%EC%9C%A4"
+        },
+        {
+          "name": "윤용하",
+          "role": "외야수",
+          "source_path": "/w/%EC%9C%A4%EC%9A%A9%ED%95%98"
+        },
+        {
+          "name": "동봉철",
+          "role": "외야수",
+          "source_path": "/w/%EB%8F%99%EB%B4%89%EC%B2%A0"
+        },
+        {
+          "name": "한기철",
+          "role": "외야수",
+          "source_path": "/w/%ED%95%9C%EA%B8%B0%EC%B2%A0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "정영규",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%98%81%EA%B7%9C"
+        },
+        {
+          "name": "박인구",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9D%B8%EA%B5%AC"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1993%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1995,
+      "team": "OB 베어스",
+      "players": [
+        {
+          "name": "박철순",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%B2%A0%EC%88%9C"
+        },
+        {
+          "name": "장호연",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%A5%ED%98%B8%EC%97%B0"
+        },
+        {
+          "name": "강길용",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%EA%B8%B8%EC%9A%A9"
+        },
+        {
+          "name": "권명철",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%EB%AA%85%EC%B2%A0"
+        },
+        {
+          "name": "김상진",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EC%A7%84(1970)"
+        },
+        {
+          "name": "이용호",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%9A%A9%ED%98%B8(1970)"
+        },
+        {
+          "name": "홍길남",
+          "role": "투수",
+          "source_path": "/w/%ED%99%8D%EA%B8%B8%EB%82%A8"
+        },
+        {
+          "name": "김경원",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B2%BD%EC%9B%90(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "진필중",
+          "role": "투수",
+          "source_path": "/w/%EC%A7%84%ED%95%84%EC%A4%91"
+        },
+        {
+          "name": "김태형",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%ED%98%95(1967)"
+        },
+        {
+          "name": "박현영",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%ED%98%84%EC%98%81(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이도형",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%8F%84%ED%98%95"
+        },
+        {
+          "name": "김광현",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EA%B4%91%ED%98%84(1971)"
+        },
+        {
+          "name": "이명수",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EB%AA%85%EC%88%98(1966)"
+        },
+        {
+          "name": "안경현",
+          "role": "내야수",
+          "source_path": "/w/%EC%95%88%EA%B2%BD%ED%98%84"
+        },
+        {
+          "name": "김민호",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%ED%98%B8(1969)"
+        },
+        {
+          "name": "김종석",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EC%84%9D(1971)"
+        },
+        {
+          "name": "윤기수",
+          "role": "내야수",
+          "source_path": "/w/%EC%9C%A4%EA%B8%B0%EC%88%98"
+        },
+        {
+          "name": "소상영",
+          "role": "내야수",
+          "source_path": "/w/%EC%86%8C%EC%83%81%EC%98%81"
+        },
+        {
+          "name": "김정규",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EA%B7%9C(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김형석",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%ED%98%95%EC%84%9D(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김상호",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%ED%98%B8(1965)"
+        },
+        {
+          "name": "장원진",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%EC%9B%90%EC%A7%84"
+        },
+        {
+          "name": "심정수",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%A0%95%EC%88%98"
+        },
+        {
+          "name": "정수근",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%88%98%EA%B7%BC"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1995%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1995,
+      "team": "롯데 자이언츠",
+      "players": [
+        {
+          "name": "가득염",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%80%EB%93%9D%EC%97%BC"
+        },
+        {
+          "name": "강상수",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%EC%83%81%EC%88%98"
+        },
+        {
+          "name": "김경환",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B2%BD%ED%99%98(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김상현",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%ED%98%84(1968)"
+        },
+        {
+          "name": "박동희",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EB%8F%99%ED%9D%AC(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "박지철",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%A7%80%EC%B2%A0"
+        },
+        {
+          "name": "염종석",
+          "role": "투수",
+          "source_path": "/w/%EC%97%BC%EC%A2%85%EC%84%9D"
+        },
+        {
+          "name": "윤학길",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%A4%ED%95%99%EA%B8%B8"
+        },
+        {
+          "name": "주형광",
+          "role": "투수",
+          "source_path": "/w/%EC%A3%BC%ED%98%95%EA%B4%91"
+        },
+        {
+          "name": "강성우",
+          "role": "포수",
+          "source_path": "/w/%EA%B0%95%EC%84%B1%EC%9A%B0"
+        },
+        {
+          "name": "임수혁",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%84%EC%88%98%ED%98%81"
+        },
+        {
+          "name": "김선일",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%84%A0%EC%9D%BC(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "공필성",
+          "role": "내야수",
+          "source_path": "/w/%EA%B3%B5%ED%95%84%EC%84%B1"
+        },
+        {
+          "name": "김민재",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%EC%9E%AC(1973)"
+        },
+        {
+          "name": "조규철",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EA%B7%9C%EC%B2%A0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김민호",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%ED%98%B8(1961)"
+        },
+        {
+          "name": "김종훈",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%ED%9B%88(1972)"
+        },
+        {
+          "name": "마해영",
+          "role": "내야수",
+          "source_path": "/w/%EB%A7%88%ED%95%B4%EC%98%81"
+        },
+        {
+          "name": "박정태",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%83%9C"
+        },
+        {
+          "name": "한영준",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%9C%EC%98%81%EC%A4%80"
+        },
+        {
+          "name": "김응국",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%91%EA%B5%AD"
+        },
+        {
+          "name": "손동일",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%90%EB%8F%99%EC%9D%BC"
+        },
+        {
+          "name": "이종운",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EC%9A%B4"
+        },
+        {
+          "name": "김종헌",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%ED%97%8C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "전준호",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EC%A4%80%ED%98%B8(1969)"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1995%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1996,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "조계현",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B3%84%ED%98%84"
+        },
+        {
+          "name": "이강철",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EC%B2%A0"
+        },
+        {
+          "name": "이대진",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%8C%80%EC%A7%84"
+        },
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "김상진",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EC%A7%84(1977)"
+        },
+        {
+          "name": "임창용",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%B0%BD%EC%9A%A9"
+        },
+        {
+          "name": "강태원",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%ED%83%9C%EC%9B%90(1971)"
+        },
+        {
+          "name": "이원식",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%9B%90%EC%8B%9D(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이재만",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%9E%AC%EB%A7%8C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "최해식",
+          "role": "포수",
+          "source_path": "/w/%EC%B5%9C%ED%95%B4%EC%8B%9D"
+        },
+        {
+          "name": "정회열",
+          "role": "포수",
+          "source_path": "/w/%EC%A0%95%ED%9A%8C%EC%97%B4"
+        },
+        {
+          "name": "이종범",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%B2%94"
+        },
+        {
+          "name": "홍현우",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%8D%ED%98%84%EC%9A%B0"
+        },
+        {
+          "name": "김종국",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EA%B5%AD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "안상준",
+          "role": "내야수",
+          "source_path": "/w/%EC%95%88%EC%83%81%EC%A4%80"
+        },
+        {
+          "name": "이건열",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B1%B4%EC%97%B4"
+        },
+        {
+          "name": "김태룡",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EB%A3%A1(1968)"
+        },
+        {
+          "name": "이경복",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B2%BD%EB%B3%B5"
+        },
+        {
+          "name": "동봉철",
+          "role": "외야수",
+          "source_path": "/w/%EB%8F%99%EB%B4%89%EC%B2%A0"
+        },
+        {
+          "name": "이호성",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%98%B8%EC%84%B1(1967)"
+        },
+        {
+          "name": "박재용",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9E%AC%EC%9A%A9"
+        },
+        {
+          "name": "박재벌",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9E%AC%EB%B2%8C"
+        },
+        {
+          "name": "김재덕",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%EB%8D%95(1973)"
+        },
+        {
+          "name": "김병조",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EB%B3%91%EC%A1%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이순철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%9C%EC%B2%A0"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1996%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1996,
+      "team": "현대 유니콘스",
+      "players": [
+        {
+          "name": "정명원",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AA%85%EC%9B%90"
+        },
+        {
+          "name": "정민태",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AF%BC%ED%83%9C"
+        },
+        {
+          "name": "위재영",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%84%EC%9E%AC%EC%98%81"
+        },
+        {
+          "name": "조웅천",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EC%9B%85%EC%B2%9C"
+        },
+        {
+          "name": "가내영",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%80%EB%82%B4%EC%98%81"
+        },
+        {
+          "name": "전준호",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%84%EC%A4%80%ED%98%B8(1975)"
+        },
+        {
+          "name": "최창호",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%B0%BD%ED%98%B8(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김홍집",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%99%8D%EC%A7%91(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "안병원",
+          "role": "투수",
+          "source_path": "/w/%EC%95%88%EB%B3%91%EC%9B%90(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "장광호",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EA%B4%91%ED%98%B8"
+        },
+        {
+          "name": "김상국",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EA%B5%AD"
+        },
+        {
+          "name": "김형남",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%ED%98%95%EB%82%A8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "박진만",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A7%84%EB%A7%8C"
+        },
+        {
+          "name": "김경기",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EA%B2%BD%EA%B8%B0"
+        },
+        {
+          "name": "권준헌",
+          "role": "내야수",
+          "source_path": "/w/%EA%B6%8C%EC%A4%80%ED%97%8C"
+        },
+        {
+          "name": "손차훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%86%90%EC%B0%A8%ED%9B%88"
+        },
+        {
+          "name": "하득인",
+          "role": "내야수",
+          "source_path": "/w/%ED%95%98%EB%93%9D%EC%9D%B8"
+        },
+        {
+          "name": "염경엽",
+          "role": "내야수",
+          "source_path": "/w/%EC%97%BC%EA%B2%BD%EC%97%BD"
+        },
+        {
+          "name": "안명성",
+          "role": "내야수",
+          "source_path": "/w/%EC%95%88%EB%AA%85%EC%84%B1"
+        },
+        {
+          "name": "김인호",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B8%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "윤덕규",
+          "role": "외야수",
+          "source_path": "/w/%EC%9C%A4%EB%8D%95%EA%B7%9C"
+        },
+        {
+          "name": "박재홍",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9E%AC%ED%99%8D"
+        },
+        {
+          "name": "장정석",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%EC%A0%95%EC%84%9D"
+        },
+        {
+          "name": "이희성",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%9D%AC%EC%84%B1(1966)"
+        },
+        {
+          "name": "이숭용",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%AD%EC%9A%A9"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1996%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1997,
+      "team": "해태 타이거즈",
+      "players": [
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "조계현",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B3%84%ED%98%84"
+        },
+        {
+          "name": "이강철",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B0%95%EC%B2%A0"
+        },
+        {
+          "name": "이대진",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%8C%80%EC%A7%84"
+        },
+        {
+          "name": "임창용",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%B0%BD%EC%9A%A9"
+        },
+        {
+          "name": "김상진",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%83%81%EC%A7%84(1977)"
+        },
+        {
+          "name": "강태원",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%ED%83%9C%EC%9B%90(1971)"
+        },
+        {
+          "name": "박진철",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%A7%84%EC%B2%A0(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "최해식",
+          "role": "포수",
+          "source_path": "/w/%EC%B5%9C%ED%95%B4%EC%8B%9D"
+        },
+        {
+          "name": "권오성",
+          "role": "포수",
+          "source_path": "/w/%EA%B6%8C%EC%98%A4%EC%84%B1(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "김지영",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%A7%80%EC%98%81(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "백인호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B1%EC%9D%B8%EC%88%98"
+        },
+        {
+          "name": "이종범",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%B2%94"
+        },
+        {
+          "name": "김종국",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%EA%B5%AD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "홍현우",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%8D%ED%98%84%EC%9A%B0"
+        },
+        {
+          "name": "장성호",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EC%84%B1%ED%98%B8"
+        },
+        {
+          "name": "이경복",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EA%B2%BD%EB%B3%B5"
+        },
+        {
+          "name": "이호준",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%ED%98%B8%EC%A4%80"
+        },
+        {
+          "name": "김태룡",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EB%A3%A1(1968)"
+        },
+        {
+          "name": "최훈재",
+          "role": "외야수",
+          "source_path": "/w/%EC%B5%9C%ED%9B%88%EC%9E%AC"
+        },
+        {
+          "name": "이호성",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%ED%98%B8%EC%84%B1(1967)"
+        },
+        {
+          "name": "김창희",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%B0%BD%ED%9D%AC(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "박재벌",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9E%AC%EB%B2%8C"
+        },
+        {
+          "name": "박재용",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9E%AC%EC%9A%A9"
+        },
+        {
+          "name": "조현",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%ED%98%84(1976)"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1997%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1997,
+      "team": "LG 트윈스",
+      "players": [
+        {
+          "name": "이상훈",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%ED%9B%88(%EC%A2%8C%EC%99%84%ED%88%AC%EC%88%98)"
+        },
+        {
+          "name": "임선동",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%84%A0%EB%8F%99"
+        },
+        {
+          "name": "손혁",
+          "role": "투수",
+          "source_path": "/w/%EC%86%90%ED%98%81"
+        },
+        {
+          "name": "김용수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%88%98"
+        },
+        {
+          "name": "전승남",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%84%EC%8A%B9%EB%82%A8"
+        },
+        {
+          "name": "김기범",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B8%B0%EB%B2%94(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "차명석",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%AA%85%EC%84%9D"
+        },
+        {
+          "name": "김건우",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B1%B4%EC%9A%B0(1963)"
+        },
+        {
+          "name": "신동수",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%88%98(1966)"
+        },
+        {
+          "name": "송유석",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%9C%A0%EC%84%9D"
+        },
+        {
+          "name": "김동수",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "최동수",
+          "role": "포수",
+          "source_path": "/w/%EC%B5%9C%EB%8F%99%EC%88%98"
+        },
+        {
+          "name": "유지현",
+          "role": "내야수",
+          "source_path": "/w/%EB%A5%98%EC%A7%80%ED%98%84(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "서용빈",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%9A%A9%EB%B9%88"
+        },
+        {
+          "name": "박종호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A2%85%ED%98%B8(1973)"
+        },
+        {
+          "name": "김선진",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%84%A0%EC%A7%84"
+        },
+        {
+          "name": "신국환",
+          "role": "내야수",
+          "source_path": "/w/%EC%8B%A0%EA%B5%AD%ED%99%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "허문회",
+          "role": "내야수",
+          "source_path": "/w/%ED%97%88%EB%AC%B8%ED%9A%8C"
+        },
+        {
+          "name": "권용관",
+          "role": "내야수",
+          "source_path": "/w/%EA%B6%8C%EC%9A%A9%EA%B4%80"
+        },
+        {
+          "name": "송구홍",
+          "role": "내야수",
+          "source_path": "/w/%EC%86%A1%EA%B5%AC%ED%99%8D"
+        },
+        {
+          "name": "동봉철",
+          "role": "외야수",
+          "source_path": "/w/%EB%8F%99%EB%B4%89%EC%B2%A0"
+        },
+        {
+          "name": "노찬엽",
+          "role": "외야수",
+          "source_path": "/w/%EB%85%B8%EC%B0%AC%EC%97%BD"
+        },
+        {
+          "name": "이병규",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EB%B3%91%EA%B7%9C(1974)"
+        },
+        {
+          "name": "심재학",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%9E%AC%ED%95%99"
+        },
+        {
+          "name": "박준태",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%A4%80%ED%83%9C(1967)"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1997%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1998,
+      "team": "현대 유니콘스",
+      "players": [
+        {
+          "name": "정민태",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AF%BC%ED%83%9C"
+        },
+        {
+          "name": "정명원",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AA%85%EC%9B%90"
+        },
+        {
+          "name": "김수경",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%88%98%EA%B2%BD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "스트롱",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%20%EC%8A%A4%ED%8A%B8%EB%A1%B1"
+        },
+        {
+          "name": "최원호",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%9B%90%ED%98%B8"
+        },
+        {
+          "name": "위재영",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%84%EC%9E%AC%EC%98%81"
+        },
+        {
+          "name": "김익재",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B5%EC%9E%AC"
+        },
+        {
+          "name": "조규제",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B7%9C%EC%A0%9C"
+        },
+        {
+          "name": "김홍집",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%99%8D%EC%A7%91(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "박경완",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EA%B2%BD%EC%99%84"
+        },
+        {
+          "name": "장광호",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EA%B4%91%ED%98%B8"
+        },
+        {
+          "name": "이재주",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EC%9E%AC%EC%A3%BC"
+        },
+        {
+          "name": "박진만",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A7%84%EB%A7%8C"
+        },
+        {
+          "name": "김경기",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EA%B2%BD%EA%B8%B0"
+        },
+        {
+          "name": "염경엽",
+          "role": "내야수",
+          "source_path": "/w/%EC%97%BC%EA%B2%BD%EC%97%BD"
+        },
+        {
+          "name": "이명수",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EB%AA%85%EC%88%98(1966)"
+        },
+        {
+          "name": "박종호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A2%85%ED%98%B8(1973)"
+        },
+        {
+          "name": "쿨바",
+          "role": "내야수",
+          "source_path": "/w/%EC%8A%A4%EC%BA%87%20%EC%BF%A8%EB%B0%94"
+        },
+        {
+          "name": "권준헌",
+          "role": "내야수",
+          "source_path": "/w/%EA%B6%8C%EC%A4%80%ED%97%8C"
+        },
+        {
+          "name": "이숭용",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%AD%EC%9A%A9"
+        },
+        {
+          "name": "박재홍",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9E%AC%ED%99%8D"
+        },
+        {
+          "name": "전준호",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EC%A4%80%ED%98%B8(1969)"
+        },
+        {
+          "name": "김광림",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EA%B4%91%EB%A6%BC(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김인호",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B8%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "장정석",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%EC%A0%95%EC%84%9D"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1998%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1998,
+      "team": "LG 트윈스",
+      "players": [
+        {
+          "name": "김용수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9A%A9%EC%88%98"
+        },
+        {
+          "name": "전승남",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%84%EC%8A%B9%EB%82%A8"
+        },
+        {
+          "name": "최향남",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%ED%96%A5%EB%82%A8"
+        },
+        {
+          "name": "손혁",
+          "role": "투수",
+          "source_path": "/w/%EC%86%90%ED%98%81"
+        },
+        {
+          "name": "차명석",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%AA%85%EC%84%9D"
+        },
+        {
+          "name": "김기범",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B8%B0%EB%B2%94(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "송유석",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%9C%A0%EC%84%9D"
+        },
+        {
+          "name": "앤더슨",
+          "role": "투수",
+          "source_path": "/w/%EB%A7%88%EC%9D%B4%ED%81%AC%20%EC%95%A4%EB%8D%94%EC%8A%A8"
+        },
+        {
+          "name": "최창호",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%B0%BD%ED%98%B8(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "신윤호",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EC%9C%A4%ED%98%B8(1975)"
+        },
+        {
+          "name": "김동수",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김정민",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EB%AF%BC(%ED%8F%AC%EC%88%98)"
+        },
+        {
+          "name": "류지현",
+          "role": "내야수",
+          "source_path": "/w/%EB%A5%98%EC%A7%80%ED%98%84(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "서용빈",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%EC%9A%A9%EB%B9%88"
+        },
+        {
+          "name": "이준용",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A4%80%EC%9A%A9"
+        },
+        {
+          "name": "손지환",
+          "role": "내야수",
+          "source_path": "/w/%EC%86%90%EC%A7%80%ED%99%98"
+        },
+        {
+          "name": "펠릭스",
+          "role": "내야수",
+          "source_path": "/w/%EC%A3%BC%EB%8B%88%EC%96%B4%20%ED%8E%A0%EB%A6%AD%EC%8A%A4"
+        },
+        {
+          "name": "이종열",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EC%97%B4"
+        },
+        {
+          "name": "안상준",
+          "role": "내야수",
+          "source_path": "/w/%EC%95%88%EC%83%81%EC%A4%80"
+        },
+        {
+          "name": "허문회",
+          "role": "내야수",
+          "source_path": "/w/%ED%97%88%EB%AC%B8%ED%9A%8C"
+        },
+        {
+          "name": "김재현",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%ED%98%84(1975)"
+        },
+        {
+          "name": "이병규",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EB%B3%91%EA%B7%9C(1974)"
+        },
+        {
+          "name": "심재학",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%9E%AC%ED%95%99"
+        },
+        {
+          "name": "김선진",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%84%A0%EC%A7%84"
+        },
+        {
+          "name": "김종헌",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%ED%97%8C(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1998%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1999,
+      "team": "롯데 자이언츠",
+      "players": [
+        {
+          "name": "가득염",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%80%EB%93%9D%EC%97%BC"
+        },
+        {
+          "name": "강상수",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%EC%83%81%EC%88%98"
+        },
+        {
+          "name": "기론",
+          "role": "투수",
+          "source_path": "/w/%EC%97%90%EB%B0%80%EB%A6%AC%EC%95%84%EB%85%B8%20%EA%B8%B0%EB%A1%A0"
+        },
+        {
+          "name": "문동환",
+          "role": "투수",
+          "source_path": "/w/%EB%AC%B8%EB%8F%99%ED%99%98"
+        },
+        {
+          "name": "박보현",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EB%B3%B4%ED%98%84"
+        },
+        {
+          "name": "박석진",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%84%9D%EC%A7%84"
+        },
+        {
+          "name": "손민한",
+          "role": "투수",
+          "source_path": "/w/%EC%86%90%EB%AF%BC%ED%95%9C"
+        },
+        {
+          "name": "염종석",
+          "role": "투수",
+          "source_path": "/w/%EC%97%BC%EC%A2%85%EC%84%9D"
+        },
+        {
+          "name": "주형광",
+          "role": "투수",
+          "source_path": "/w/%EC%A3%BC%ED%98%95%EA%B4%91"
+        },
+        {
+          "name": "김태석",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EC%84%9D(1967)"
+        },
+        {
+          "name": "강성우",
+          "role": "포수",
+          "source_path": "/w/%EA%B0%95%EC%84%B1%EC%9A%B0"
+        },
+        {
+          "name": "임수혁",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%84%EC%88%98%ED%98%81"
+        },
+        {
+          "name": "최기문",
+          "role": "포수",
+          "source_path": "/w/%EC%B5%9C%EA%B8%B0%EB%AC%B8"
+        },
+        {
+          "name": "공필성",
+          "role": "내야수",
+          "source_path": "/w/%EA%B3%B5%ED%95%84%EC%84%B1"
+        },
+        {
+          "name": "김민재",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%EC%9E%AC(1973)"
+        },
+        {
+          "name": "마해영",
+          "role": "내야수",
+          "source_path": "/w/%EB%A7%88%ED%95%B4%EC%98%81"
+        },
+        {
+          "name": "박정태",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%83%9C"
+        },
+        {
+          "name": "박현승",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%ED%98%84%EC%8A%B9"
+        },
+        {
+          "name": "김응국",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%91%EA%B5%AD"
+        },
+        {
+          "name": "박종일",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%A2%85%EC%9D%BC(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "손인호",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%90%EC%9D%B8%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "임재철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%84%EC%9E%AC%EC%B2%A0"
+        },
+        {
+          "name": "조경환",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EA%B2%BD%ED%99%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "호세",
+          "role": "외야수",
+          "source_path": "/w/%ED%8E%A0%EB%A6%AD%EC%8A%A4%20%ED%98%B8%EC%84%B8"
+        },
+        {
+          "name": "김대익",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EB%8C%80%EC%9D%B5"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/1999%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 1999,
+      "team": "한화 이글스",
+      "players": [
+        {
+          "name": "이상군",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EA%B5%B0"
+        },
+        {
+          "name": "한용덕",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%EC%9A%A9%EB%8D%95"
+        },
+        {
+          "name": "송진우",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%A7%84%EC%9A%B0(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "구대성",
+          "role": "투수",
+          "source_path": "/w/%EA%B5%AC%EB%8C%80%EC%84%B1"
+        },
+        {
+          "name": "김경원",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B2%BD%EC%9B%90(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "홍우태",
+          "role": "투수",
+          "source_path": "/w/%ED%99%8D%EC%9A%B0%ED%83%9C"
+        },
+        {
+          "name": "이상목",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EB%AA%A9"
+        },
+        {
+          "name": "정민철",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AF%BC%EC%B2%A0"
+        },
+        {
+          "name": "임창식",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%B0%BD%EC%8B%9D"
+        },
+        {
+          "name": "이상열",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EC%97%B4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "조경택",
+          "role": "포수",
+          "source_path": "/w/%EC%A1%B0%EA%B2%BD%ED%83%9D"
+        },
+        {
+          "name": "김충민",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%B6%A9%EB%AF%BC"
+        },
+        {
+          "name": "강석천",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EC%84%9D%EC%B2%9C"
+        },
+        {
+          "name": "장종훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EC%A2%85%ED%9B%88"
+        },
+        {
+          "name": "허준",
+          "role": "내야수",
+          "source_path": "/w/%ED%97%88%EC%A4%80(1970)"
+        },
+        {
+          "name": "로마이어",
+          "role": "내야수",
+          "source_path": "/w/%EB%8C%84%20%EB%A1%9C%EB%A7%88%EC%9D%B4%EC%96%B4"
+        },
+        {
+          "name": "백재호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%B1%EC%9E%AC%ED%98%B8"
+        },
+        {
+          "name": "임수민",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%84%EC%88%98%EB%AF%BC(%EC%95%BC%EA%B5%AC%EC%9D%B8)"
+        },
+        {
+          "name": "김승권",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%8A%B9%EA%B6%8C"
+        },
+        {
+          "name": "심재윤",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%9E%AC%EC%9C%A4(1975)"
+        },
+        {
+          "name": "임주택",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%84%EC%A3%BC%ED%83%9D"
+        },
+        {
+          "name": "송지만",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%A7%80%EB%A7%8C"
+        },
+        {
+          "name": "이영우",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%98%81%EC%9A%B0"
+        },
+        {
+          "name": "최익성",
+          "role": "외야수",
+          "source_path": "/w/%EC%B5%9C%EC%9D%B5%EC%84%B1"
+        },
+        {
+          "name": "데이비스",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%9C%EC%9D%B4%20%EB%8D%B0%EC%9D%B4%EB%B9%84%EC%8A%A4"
+        }
+      ],
+      "expected": 26,
+      "count": 25,
+      "source": "https://namu.moe/w/1999%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2000,
+      "team": "현대 유니콘스",
+      "players": [
+        {
+          "name": "정민태",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AF%BC%ED%83%9C"
+        },
+        {
+          "name": "임선동",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%84%A0%EB%8F%99"
+        },
+        {
+          "name": "김수경",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%88%98%EA%B2%BD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "조웅천",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EC%9B%85%EC%B2%9C"
+        },
+        {
+          "name": "정명원",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AA%85%EC%9B%90"
+        },
+        {
+          "name": "신철인",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EC%B2%A0%EC%9D%B8"
+        },
+        {
+          "name": "위재영",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%84%EC%9E%AC%EC%98%81"
+        },
+        {
+          "name": "조규제",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B7%9C%EC%A0%9C"
+        },
+        {
+          "name": "마일영",
+          "role": "투수",
+          "source_path": "/w/%EB%A7%88%EC%9D%BC%EC%98%81"
+        },
+        {
+          "name": "박경완",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EA%B2%BD%EC%99%84"
+        },
+        {
+          "name": "이재주",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EC%9E%AC%EC%A3%BC"
+        },
+        {
+          "name": "이숭용",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%AD%EC%9A%A9"
+        },
+        {
+          "name": "퀸란",
+          "role": "내야수",
+          "source_path": "/w/%ED%86%B0%20%ED%80%B8%EB%9E%80"
+        },
+        {
+          "name": "이명수",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EB%AA%85%EC%88%98(1966)"
+        },
+        {
+          "name": "박종호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A2%85%ED%98%B8(1973)"
+        },
+        {
+          "name": "박진만",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A7%84%EB%A7%8C"
+        },
+        {
+          "name": "염경엽",
+          "role": "내야수",
+          "source_path": "/w/%EC%97%BC%EA%B2%BD%EC%97%BD"
+        },
+        {
+          "name": "장교성",
+          "role": "내야수",
+          "source_path": "/w/%EC%9E%A5%EA%B5%90%EC%84%B1"
+        },
+        {
+          "name": "박재홍",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9E%AC%ED%99%8D"
+        },
+        {
+          "name": "심재학",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%9E%AC%ED%95%99"
+        },
+        {
+          "name": "김인호",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%B8%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "카펜터",
+          "role": "외야수",
+          "source_path": "/w/%EC%B0%B0%EC%8A%A4%20%EC%B9%B4%ED%8E%9C%ED%84%B0"
+        },
+        {
+          "name": "전근표",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EA%B7%BC%ED%91%9C"
+        }
+      ],
+      "expected": 25,
+      "count": 23,
+      "source": "https://namu.moe/w/2000%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2000,
+      "team": "두산 베어스",
+      "players": [
+        {
+          "name": "이광우",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B4%91%EC%9A%B0"
+        },
+        {
+          "name": "조계현",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B3%84%ED%98%84"
+        },
+        {
+          "name": "진필중",
+          "role": "투수",
+          "source_path": "/w/%EC%A7%84%ED%95%84%EC%A4%91"
+        },
+        {
+          "name": "최용호",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%9A%A9%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "한태균",
+          "role": "투수",
+          "source_path": "/w/%ED%95%9C%ED%83%9C%EA%B7%A0"
+        },
+        {
+          "name": "박명환",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EB%AA%85%ED%99%98"
+        },
+        {
+          "name": "차명주",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%AA%85%EC%A3%BC"
+        },
+        {
+          "name": "이혜천",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%ED%98%9C%EC%B2%9C"
+        },
+        {
+          "name": "구자운",
+          "role": "투수",
+          "source_path": "/w/%EA%B5%AC%EC%9E%90%EC%9A%B4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "파머",
+          "role": "투수",
+          "source_path": "/w/%EB%A7%88%EC%9D%B4%ED%81%AC%20%ED%8C%8C%EB%A8%B8"
+        },
+        {
+          "name": "홍성흔",
+          "role": "포수",
+          "source_path": "/w/%ED%99%8D%EC%84%B1%ED%9D%94"
+        },
+        {
+          "name": "이도형",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%8F%84%ED%98%95"
+        },
+        {
+          "name": "김동주",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%A3%BC(%ED%83%80%EC%9E%90)"
+        },
+        {
+          "name": "이종민",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EB%AF%BC(1972)"
+        },
+        {
+          "name": "김민호",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%ED%98%B8(1969)"
+        },
+        {
+          "name": "강혁",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%ED%98%81(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "홍원기",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%8D%EC%9B%90%EA%B8%B0"
+        },
+        {
+          "name": "우즈",
+          "role": "내야수",
+          "source_path": "/w/%ED%83%80%EC%9D%B4%EB%A1%A0%20%EC%9A%B0%EC%A6%88"
+        },
+        {
+          "name": "안경현",
+          "role": "내야수",
+          "source_path": "/w/%EC%95%88%EA%B2%BD%ED%98%84"
+        },
+        {
+          "name": "전형도",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%84%ED%98%95%EB%8F%84"
+        },
+        {
+          "name": "최훈재",
+          "role": "외야수",
+          "source_path": "/w/%EC%B5%9C%ED%9B%88%EC%9E%AC"
+        },
+        {
+          "name": "전상렬",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EC%83%81%EB%A0%AC"
+        },
+        {
+          "name": "장원진",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%EC%9B%90%EC%A7%84"
+        },
+        {
+          "name": "심정수",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%A0%95%EC%88%98"
+        },
+        {
+          "name": "정수근",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%88%98%EA%B7%BC"
+        }
+      ],
+      "expected": 25,
+      "count": 25,
+      "source": "https://namu.moe/w/2000%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2001,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "갈베스",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%9C%EB%B9%84%EB%85%B8%20%EA%B0%88%EB%B2%A0%EC%8A%A4"
+        },
+        {
+          "name": "김진웅",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A7%84%EC%9B%85(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김현욱",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%98%84%EC%9A%B1(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "노장진",
+          "role": "투수",
+          "source_path": "/w/%EB%85%B8%EC%9E%A5%EC%A7%84"
+        },
+        {
+          "name": "라형진",
+          "role": "투수",
+          "source_path": "/w/%EB%9D%BC%ED%98%95%EC%A7%84"
+        },
+        {
+          "name": "박동희",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EB%8F%99%ED%9D%AC(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "배영수",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%B0%EC%98%81%EC%88%98"
+        },
+        {
+          "name": "이용훈",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%9A%A9%ED%9B%88(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "임창용",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%B0%BD%EC%9A%A9"
+        },
+        {
+          "name": "전병호",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%84%EB%B3%91%ED%98%B8"
+        },
+        {
+          "name": "김동수",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "진갑용",
+          "role": "포수",
+          "source_path": "/w/%EC%A7%84%EA%B0%91%EC%9A%A9"
+        },
+        {
+          "name": "김승권",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%8A%B9%EA%B6%8C"
+        },
+        {
+          "name": "김재걸",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%EA%B1%B8"
+        },
+        {
+          "name": "김태균",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%83%9C%EA%B7%A0(1971)"
+        },
+        {
+          "name": "김한수",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%95%9C%EC%88%98"
+        },
+        {
+          "name": "마해영",
+          "role": "내야수",
+          "source_path": "/w/%EB%A7%88%ED%95%B4%EC%98%81"
+        },
+        {
+          "name": "바에르가",
+          "role": "내야수",
+          "source_path": "/w/%EC%B9%B4%EB%A5%BC%EB%A1%9C%EC%8A%A4%20%EB%B0%94%EC%97%90%EB%A5%B4%EA%B0%80"
+        },
+        {
+          "name": "박정환",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%99%98(1977)"
+        },
+        {
+          "name": "이승엽",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%8A%B9%EC%97%BD"
+        },
+        {
+          "name": "정경배",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%95%EA%B2%BD%EB%B0%B0"
+        },
+        {
+          "name": "강동우",
+          "role": "외야수",
+          "source_path": "/w/%EA%B0%95%EB%8F%99%EC%9A%B0"
+        },
+        {
+          "name": "김종훈",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%ED%9B%88(1972)"
+        },
+        {
+          "name": "마르티네스",
+          "role": "외야수",
+          "source_path": "/w/%EB%A7%A4%EB%8B%88%20%EB%A7%88%EB%A5%B4%ED%8B%B0%EB%84%A4%EC%8A%A4"
+        },
+        {
+          "name": "박한이",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%ED%95%9C%EC%9D%B4"
+        },
+        {
+          "name": "장영균",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%EC%98%81%EA%B7%A0"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/2001%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2001,
+      "team": "두산 베어스",
+      "players": [
+        {
+          "name": "구자운",
+          "role": "투수",
+          "source_path": "/w/%EA%B5%AC%EC%9E%90%EC%9A%B4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "박명환",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EB%AA%85%ED%99%98"
+        },
+        {
+          "name": "이경필",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EA%B2%BD%ED%95%84"
+        },
+        {
+          "name": "이혜천",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%ED%98%9C%EC%B2%9C"
+        },
+        {
+          "name": "정진용",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EC%A7%84%EC%9A%A9"
+        },
+        {
+          "name": "조계현",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B3%84%ED%98%84"
+        },
+        {
+          "name": "진필중",
+          "role": "투수",
+          "source_path": "/w/%EC%A7%84%ED%95%84%EC%A4%91"
+        },
+        {
+          "name": "차명주",
+          "role": "투수",
+          "source_path": "/w/%EC%B0%A8%EB%AA%85%EC%A3%BC"
+        },
+        {
+          "name": "최용호",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%9A%A9%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이대현",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%8C%80%ED%98%84(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "이도형",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EB%8F%84%ED%98%95"
+        },
+        {
+          "name": "홍성흔",
+          "role": "포수",
+          "source_path": "/w/%ED%99%8D%EC%84%B1%ED%9D%94"
+        },
+        {
+          "name": "김동주",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%A3%BC(%ED%83%80%EC%9E%90)"
+        },
+        {
+          "name": "김호",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%98%B8(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "송원국",
+          "role": "내야수",
+          "source_path": "/w/%EC%86%A1%EC%9B%90%EA%B5%AD"
+        },
+        {
+          "name": "안경현",
+          "role": "내야수",
+          "source_path": "/w/%EC%95%88%EA%B2%BD%ED%98%84"
+        },
+        {
+          "name": "우즈",
+          "role": "내야수",
+          "source_path": "/w/%ED%83%80%EC%9D%B4%EB%A1%A0%20%EC%9A%B0%EC%A6%88"
+        },
+        {
+          "name": "정원석",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%95%EC%9B%90%EC%84%9D(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "홍원기",
+          "role": "내야수",
+          "source_path": "/w/%ED%99%8D%EC%9B%90%EA%B8%B0"
+        },
+        {
+          "name": "강봉규",
+          "role": "외야수",
+          "source_path": "/w/%EA%B0%95%EB%B4%89%EA%B7%9C"
+        },
+        {
+          "name": "심재학",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%9E%AC%ED%95%99"
+        },
+        {
+          "name": "장원진",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%EC%9B%90%EC%A7%84"
+        },
+        {
+          "name": "전상렬",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EC%83%81%EB%A0%AC"
+        },
+        {
+          "name": "정수근",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%88%98%EA%B7%BC"
+        },
+        {
+          "name": "최훈재",
+          "role": "외야수",
+          "source_path": "/w/%EC%B5%9C%ED%9B%88%EC%9E%AC"
+        }
+      ],
+      "expected": 26,
+      "count": 25,
+      "source": "https://namu.moe/w/2001%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2002,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "강영식",
+          "role": "투수",
+          "source_path": "/w/%EA%B0%95%EC%98%81%EC%8B%9D"
+        },
+        {
+          "name": "김현욱",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%ED%98%84%EC%9A%B1(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "노병오",
+          "role": "투수",
+          "source_path": "/w/%EB%85%B8%EB%B3%91%EC%98%A4"
+        },
+        {
+          "name": "노장진",
+          "role": "투수",
+          "source_path": "/w/%EB%85%B8%EC%9E%A5%EC%A7%84"
+        },
+        {
+          "name": "라형진",
+          "role": "투수",
+          "source_path": "/w/%EB%9D%BC%ED%98%95%EC%A7%84"
+        },
+        {
+          "name": "배영수",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%B0%EC%98%81%EC%88%98"
+        },
+        {
+          "name": "오상민",
+          "role": "투수",
+          "source_path": "/w/%EC%98%A4%EC%83%81%EB%AF%BC"
+        },
+        {
+          "name": "엘비라",
+          "role": "투수",
+          "source_path": "/w/%EB%82%98%EB%A5%B4%EC%8B%9C%EC%86%8C%20%EC%97%98%EB%B9%84%EB%9D%BC"
+        },
+        {
+          "name": "임창용",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%B0%BD%EC%9A%A9"
+        },
+        {
+          "name": "전병호",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%84%EB%B3%91%ED%98%B8"
+        },
+        {
+          "name": "정현욱",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%ED%98%84%EC%9A%B1"
+        },
+        {
+          "name": "진갑용",
+          "role": "포수",
+          "source_path": "/w/%EC%A7%84%EA%B0%91%EC%9A%A9"
+        },
+        {
+          "name": "현재윤",
+          "role": "포수",
+          "source_path": "/w/%ED%98%84%EC%9E%AC%EC%9C%A4"
+        },
+        {
+          "name": "김승권",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%8A%B9%EA%B6%8C"
+        },
+        {
+          "name": "김재걸",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%EA%B1%B8"
+        },
+        {
+          "name": "김한수",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%95%9C%EC%88%98"
+        },
+        {
+          "name": "박정환",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A0%95%ED%99%98(1977)"
+        },
+        {
+          "name": "이승엽",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%8A%B9%EC%97%BD"
+        },
+        {
+          "name": "조동찬",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EB%8F%99%EC%B0%AC"
+        },
+        {
+          "name": "브리또",
+          "role": "내야수",
+          "source_path": "/w/%ED%8B%B8%EC%8A%A8%20%EB%B8%8C%EB%A6%AC%EB%98%90"
+        },
+        {
+          "name": "강동우",
+          "role": "외야수",
+          "source_path": "/w/%EA%B0%95%EB%8F%99%EC%9A%B0"
+        },
+        {
+          "name": "김종훈",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%ED%9B%88(1972)"
+        },
+        {
+          "name": "마해영",
+          "role": "외야수",
+          "source_path": "/w/%EB%A7%88%ED%95%B4%EC%98%81"
+        },
+        {
+          "name": "박한이",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%ED%95%9C%EC%9D%B4"
+        },
+        {
+          "name": "양준혁",
+          "role": "외야수",
+          "source_path": "/w/%EC%96%91%EC%A4%80%ED%98%81"
+        },
+        {
+          "name": "임재철",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%84%EC%9E%AC%EC%B2%A0"
+        },
+        {
+          "name": "장영균",
+          "role": "외야수",
+          "source_path": "/w/%EC%9E%A5%EC%98%81%EA%B7%A0"
+        }
+      ],
+      "expected": 27,
+      "count": 27,
+      "source": "https://namu.moe/w/2002%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2002,
+      "team": "<colbgcolor=#000000><colcolor=#ffffff> L",
+      "players": [
+        {
+          "name": "경헌호",
+          "role": "투수",
+          "source_path": "/w/%EA%B2%BD%ED%97%8C%ED%98%B8"
+        },
+        {
+          "name": "김민기",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%EA%B8%B0(1977)"
+        },
+        {
+          "name": "류택현",
+          "role": "투수",
+          "source_path": "/w/%EB%A5%98%ED%83%9D%ED%98%84"
+        },
+        {
+          "name": "만자니오",
+          "role": "투수",
+          "source_path": "/w/%EB%9D%BC%EB%B2%A8%EB%A1%9C%20%EB%A7%8C%EC%9E%90%EB%8B%88%EC%98%A4"
+        },
+        {
+          "name": "신윤호",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EC%9C%A4%ED%98%B8(1975)"
+        },
+        {
+          "name": "이동현",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%8F%99%ED%98%84(1983)"
+        },
+        {
+          "name": "이상훈",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%ED%9B%88(%EC%A2%8C%EC%99%84%ED%88%AC%EC%88%98)"
+        },
+        {
+          "name": "이승호",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%8A%B9%ED%98%B8(1976)"
+        },
+        {
+          "name": "장문석",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%A5%EB%AC%B8%EC%84%9D"
+        },
+        {
+          "name": "최원호",
+          "role": "투수",
+          "source_path": "/w/%EC%B5%9C%EC%9B%90%ED%98%B8"
+        },
+        {
+          "name": "케펜",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%9C%ED%94%84%20%EC%BC%80%ED%8E%9C"
+        },
+        {
+          "name": "장재중",
+          "role": "포수",
+          "source_path": "/w/%EC%9E%A5%EC%9E%AC%EC%A4%91"
+        },
+        {
+          "name": "조인성",
+          "role": "포수",
+          "source_path": "/w/%EC%A1%B0%EC%9D%B8%EC%84%B1(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "권용관",
+          "role": "내야수",
+          "source_path": "/w/%EA%B6%8C%EC%9A%A9%EA%B4%80"
+        },
+        {
+          "name": "김우석",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9A%B0%EC%84%9D(1975)"
+        },
+        {
+          "name": "손지환",
+          "role": "내야수",
+          "source_path": "/w/%EC%86%90%EC%A7%80%ED%99%98"
+        },
+        {
+          "name": "류지현",
+          "role": "내야수",
+          "source_path": "/w/%EB%A5%98%EC%A7%80%ED%98%84(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이종열",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%A2%85%EC%97%B4"
+        },
+        {
+          "name": "최동수",
+          "role": "내야수",
+          "source_path": "/w/%EC%B5%9C%EB%8F%99%EC%88%98"
+        },
+        {
+          "name": "박연수",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%97%B0%EC%88%98(1974)"
+        },
+        {
+          "name": "박용택",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%EC%9A%A9%ED%83%9D"
+        },
+        {
+          "name": "마르티네스",
+          "role": "외야수",
+          "source_path": "/w/%EB%A7%A4%EB%8B%88%20%EB%A7%88%EB%A5%B4%ED%8B%B0%EB%84%A4%EC%8A%A4"
+        },
+        {
+          "name": "심성보",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%84%B1%EB%B3%B4"
+        },
+        {
+          "name": "이병규",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EB%B3%91%EA%B7%9C(1974)"
+        },
+        {
+          "name": "이일의",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%9D%BC%EC%9D%98"
+        },
+        {
+          "name": "최만호",
+          "role": "외야수",
+          "source_path": "/w/%EC%B5%9C%EB%A7%8C%ED%98%B8"
+        }
+      ],
+      "expected": 27,
+      "count": 26,
+      "source": "https://namu.moe/w/2002%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2003,
+      "team": "현대 유니콘스",
+      "players": [
+        {
+          "name": "정민태",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AF%BC%ED%83%9C"
+        },
+        {
+          "name": "바워스",
+          "role": "투수",
+          "source_path": "/w/%EC%85%B0%EC%9D%B8%20%EB%B0%94%EC%9B%8C%EC%8A%A4"
+        },
+        {
+          "name": "김수경",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%88%98%EA%B2%BD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "송신영",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%8B%A0%EC%98%81"
+        },
+        {
+          "name": "신철인",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EC%B2%A0%EC%9D%B8"
+        },
+        {
+          "name": "조용준",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EC%9A%A9%EC%A4%80"
+        },
+        {
+          "name": "이상열",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EC%97%B4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "조규제",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EA%B7%9C%EC%A0%9C"
+        },
+        {
+          "name": "권준헌",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%EC%A4%80%ED%97%8C"
+        },
+        {
+          "name": "마일영",
+          "role": "투수",
+          "source_path": "/w/%EB%A7%88%EC%9D%BC%EC%98%81"
+        },
+        {
+          "name": "김동수",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "강귀태",
+          "role": "포수",
+          "source_path": "/w/%EA%B0%95%EA%B7%80%ED%83%9C"
+        },
+        {
+          "name": "이택근",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%ED%83%9D%EA%B7%BC"
+        },
+        {
+          "name": "박진만",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A7%84%EB%A7%8C"
+        },
+        {
+          "name": "이숭용",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%AD%EC%9A%A9"
+        },
+        {
+          "name": "정성훈",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%95%EC%84%B1%ED%9B%88"
+        },
+        {
+          "name": "박종호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A2%85%ED%98%B8(1973)"
+        },
+        {
+          "name": "채종국",
+          "role": "내야수",
+          "source_path": "/w/%EC%B1%84%EC%A2%85%EA%B5%AD"
+        },
+        {
+          "name": "김민우",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%EC%9A%B0(1979)"
+        },
+        {
+          "name": "서한규",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%ED%95%9C%EA%B7%9C"
+        },
+        {
+          "name": "심정수",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%A0%95%EC%88%98"
+        },
+        {
+          "name": "브룸바",
+          "role": "외야수",
+          "source_path": "/w/%ED%81%B4%EB%A6%AC%ED%94%84%20%EB%B8%8C%EB%A3%B8%EB%B0%94"
+        },
+        {
+          "name": "전근표",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EA%B7%BC%ED%91%9C"
+        },
+        {
+          "name": "정수성",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%88%98%EC%84%B1"
+        }
+      ],
+      "expected": 26,
+      "count": 24,
+      "source": "https://namu.moe/w/2003%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2003,
+      "team": "SK 와이번스",
+      "players": [
+        {
+          "name": "김정수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A0%95%EC%88%98(1962)"
+        },
+        {
+          "name": "조웅천",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EC%9B%85%EC%B2%9C"
+        },
+        {
+          "name": "김원형",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%9B%90%ED%98%95"
+        },
+        {
+          "name": "김영수",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%98%81%EC%88%98(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "채병용",
+          "role": "투수",
+          "source_path": "/w/%EC%B1%84%EB%B3%91%EC%9A%A9"
+        },
+        {
+          "name": "스미스",
+          "role": "투수",
+          "source_path": "/w/%ED%8A%B8%EB%9E%98%EB%B9%84%EC%8A%A4%20%EC%8A%A4%EB%AF%B8%EC%8A%A4"
+        },
+        {
+          "name": "김희걸",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EA%B1%B4%ED%95%9C"
+        },
+        {
+          "name": "제춘모",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%9C%EC%B6%98%EB%AA%A8"
+        },
+        {
+          "name": "윤길현",
+          "role": "투수",
+          "source_path": "/w/%EC%9C%A4%EA%B8%B8%ED%98%84"
+        },
+        {
+          "name": "김명완",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EC%8A%B9%ED%98%84"
+        },
+        {
+          "name": "이승호",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%8A%B9%ED%98%B8(1981)"
+        },
+        {
+          "name": "강성우",
+          "role": "포수",
+          "source_path": "/w/%EA%B0%95%EC%84%B1%EC%9A%B0"
+        },
+        {
+          "name": "박경완",
+          "role": "포수",
+          "source_path": "/w/%EB%B0%95%EA%B2%BD%EC%99%84"
+        },
+        {
+          "name": "김기태",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EA%B8%B0%ED%83%9C(1969)"
+        },
+        {
+          "name": "김민재",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%EC%9E%AC(1973)"
+        },
+        {
+          "name": "안재만",
+          "role": "내야수",
+          "source_path": "/w/%EC%95%88%EC%9E%AC%EB%A7%8C"
+        },
+        {
+          "name": "정경배",
+          "role": "내야수",
+          "source_path": "/w/%EC%A0%95%EA%B2%BD%EB%B0%B0"
+        },
+        {
+          "name": "강혁",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%ED%98%81(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "송재익",
+          "role": "내야수",
+          "source_path": "/w/%EC%86%A1%EC%9E%AC%EC%9D%B5(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이호준",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%ED%98%B8%EC%A4%80"
+        },
+        {
+          "name": "디아스",
+          "role": "내야수",
+          "source_path": "/w/%EC%97%90%EB%94%94%20%EB%94%94%EC%95%84%EC%8A%A4"
+        },
+        {
+          "name": "조원우",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EC%9B%90%EC%9A%B0"
+        },
+        {
+          "name": "조경환",
+          "role": "외야수",
+          "source_path": "/w/%EC%A1%B0%EA%B2%BD%ED%99%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "양현석",
+          "role": "외야수",
+          "source_path": "/w/%EC%96%91%ED%98%84%EC%84%9D(%EC%95%BC%EA%B5%AC%EC%84%A0%EC%88%98)"
+        },
+        {
+          "name": "채종범",
+          "role": "외야수",
+          "source_path": "/w/%EC%B1%84%EC%A2%85%EB%B2%94"
+        },
+        {
+          "name": "이진영",
+          "role": "외야수",
+          "source_path": "/w/%EC%9D%B4%EC%A7%84%EC%98%81"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/2003%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2004,
+      "team": "현대 유니콘스",
+      "players": [
+        {
+          "name": "김민범",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%AF%BC%EB%B2%94"
+        },
+        {
+          "name": "김수경",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%88%98%EA%B2%BD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "송신영",
+          "role": "투수",
+          "source_path": "/w/%EC%86%A1%EC%8B%A0%EC%98%81"
+        },
+        {
+          "name": "신철인",
+          "role": "투수",
+          "source_path": "/w/%EC%8B%A0%EC%B2%A0%EC%9D%B8"
+        },
+        {
+          "name": "이대환",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EB%8C%80%ED%99%98"
+        },
+        {
+          "name": "이상열",
+          "role": "투수",
+          "source_path": "/w/%EC%9D%B4%EC%83%81%EC%97%B4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "전준호",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%84%EC%A4%80%ED%98%B8(1975)"
+        },
+        {
+          "name": "정민태",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%95%EB%AF%BC%ED%83%9C"
+        },
+        {
+          "name": "조용준",
+          "role": "투수",
+          "source_path": "/w/%EC%A1%B0%EC%9A%A9%EC%A4%80"
+        },
+        {
+          "name": "피어리",
+          "role": "투수",
+          "source_path": "/w/%EB%A7%88%EC%9D%B4%ED%81%B4%20%ED%94%BC%EC%96%B4%EB%A6%AC"
+        },
+        {
+          "name": "오재영",
+          "role": "투수",
+          "source_path": "/w/%EC%98%A4%EC%A3%BC%EC%9B%90"
+        },
+        {
+          "name": "김동수",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EB%8F%99%EC%88%98(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "강귀태",
+          "role": "포수",
+          "source_path": "/w/%EA%B0%95%EA%B7%80%ED%83%9C"
+        },
+        {
+          "name": "이택근",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%ED%83%9D%EA%B7%BC"
+        },
+        {
+          "name": "강병식",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EB%B3%91%EC%8B%9D"
+        },
+        {
+          "name": "김일경",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9D%BC%EA%B2%BD(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "박진만",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A7%84%EB%A7%8C"
+        },
+        {
+          "name": "서한규",
+          "role": "내야수",
+          "source_path": "/w/%EC%84%9C%ED%95%9C%EA%B7%9C"
+        },
+        {
+          "name": "이숭용",
+          "role": "내야수",
+          "source_path": "/w/%EC%9D%B4%EC%88%AD%EC%9A%A9"
+        },
+        {
+          "name": "채종국",
+          "role": "내야수",
+          "source_path": "/w/%EC%B1%84%EC%A2%85%EA%B5%AD"
+        },
+        {
+          "name": "브룸바",
+          "role": "내야수",
+          "source_path": "/w/%ED%81%B4%EB%A6%AC%ED%94%84%20%EB%B8%8C%EB%A3%B8%EB%B0%94"
+        },
+        {
+          "name": "송지만",
+          "role": "외야수",
+          "source_path": "/w/%EC%86%A1%EC%A7%80%EB%A7%8C"
+        },
+        {
+          "name": "심정수",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%AC%EC%A0%95%EC%88%98"
+        },
+        {
+          "name": "전근표",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EA%B7%BC%ED%91%9C"
+        },
+        {
+          "name": "전준호",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%84%EC%A4%80%ED%98%B8(1969)"
+        },
+        {
+          "name": "정수성",
+          "role": "외야수",
+          "source_path": "/w/%EC%A0%95%EC%88%98%EC%84%B1"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/2004%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    },
+    {
+      "year": 2004,
+      "team": "삼성 라이온즈",
+      "players": [
+        {
+          "name": "권오준",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%EC%98%A4%EC%A4%80"
+        },
+        {
+          "name": "권혁",
+          "role": "투수",
+          "source_path": "/w/%EA%B6%8C%ED%98%81"
+        },
+        {
+          "name": "김덕윤",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EB%8D%95%EC%9C%A4(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "김진웅",
+          "role": "투수",
+          "source_path": "/w/%EA%B9%80%EC%A7%84%EC%9B%85(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "박석진",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%95%EC%84%9D%EC%A7%84"
+        },
+        {
+          "name": "배영수",
+          "role": "투수",
+          "source_path": "/w/%EB%B0%B0%EC%98%81%EC%88%98"
+        },
+        {
+          "name": "안지만",
+          "role": "투수",
+          "source_path": "/w/%EC%95%88%EC%A7%80%EB%A7%8C"
+        },
+        {
+          "name": "임창용",
+          "role": "투수",
+          "source_path": "/w/%EC%9E%84%EC%B0%BD%EC%9A%A9"
+        },
+        {
+          "name": "전병호",
+          "role": "투수",
+          "source_path": "/w/%EC%A0%84%EB%B3%91%ED%98%B8"
+        },
+        {
+          "name": "호지스",
+          "role": "투수",
+          "source_path": "/w/%EC%BC%80%EB%B9%88%20%ED%98%B8%EC%A7%80%EC%8A%A4"
+        },
+        {
+          "name": "김영복",
+          "role": "포수",
+          "source_path": "/w/%EA%B9%80%EC%98%81%EB%B3%B5(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "이정식",
+          "role": "포수",
+          "source_path": "/w/%EC%9D%B4%EC%A0%95%EC%8B%9D(%EC%95%BC%EA%B5%AC)"
+        },
+        {
+          "name": "진갑용",
+          "role": "포수",
+          "source_path": "/w/%EC%A7%84%EA%B0%91%EC%9A%A9"
+        },
+        {
+          "name": "강명구",
+          "role": "내야수",
+          "source_path": "/w/%EA%B0%95%EB%AA%85%EA%B5%AC"
+        },
+        {
+          "name": "김재걸",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%EC%9E%AC%EA%B1%B8"
+        },
+        {
+          "name": "김한수",
+          "role": "내야수",
+          "source_path": "/w/%EA%B9%80%ED%95%9C%EC%88%98"
+        },
+        {
+          "name": "로페즈",
+          "role": "내야수",
+          "source_path": "/w/%EB%A9%98%EB%94%94%20%EB%A1%9C%ED%8E%98%EC%A6%88"
+        },
+        {
+          "name": "박석민",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%84%9D%EB%AF%BC"
+        },
+        {
+          "name": "박종호",
+          "role": "내야수",
+          "source_path": "/w/%EB%B0%95%EC%A2%85%ED%98%B8(1973)"
+        },
+        {
+          "name": "양준혁",
+          "role": "내야수",
+          "source_path": "/w/%EC%96%91%EC%A4%80%ED%98%81"
+        },
+        {
+          "name": "조동찬",
+          "role": "내야수",
+          "source_path": "/w/%EC%A1%B0%EB%8F%99%EC%B0%AC"
+        },
+        {
+          "name": "강동우",
+          "role": "외야수",
+          "source_path": "/w/%EA%B0%95%EB%8F%99%EC%9A%B0"
+        },
+        {
+          "name": "김대익",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EB%8C%80%EC%9D%B5"
+        },
+        {
+          "name": "김종훈",
+          "role": "외야수",
+          "source_path": "/w/%EA%B9%80%EC%A2%85%ED%9B%88(1972)"
+        },
+        {
+          "name": "박한이",
+          "role": "외야수",
+          "source_path": "/w/%EB%B0%95%ED%95%9C%EC%9D%B4"
+        },
+        {
+          "name": "신동주",
+          "role": "외야수",
+          "source_path": "/w/%EC%8B%A0%EB%8F%99%EC%A3%BC(%EC%95%BC%EA%B5%AC)"
+        }
+      ],
+      "expected": 26,
+      "count": 26,
+      "source": "https://namu.moe/w/2004%EB%85%84%20%ED%95%9C%EA%B5%AD%EC%8B%9C%EB%A6%AC%EC%A6%88"
+    }
+  ],
+  "errors": [
+    {
+      "year": 1983,
+      "team": "MBC 청룡",
+      "reason": "expected 22, parsed 23"
+    },
+    {
+      "year": 1984,
+      "team": "삼성 라이온즈",
+      "reason": "expected 24, parsed 25"
+    },
+    {
+      "year": 1993,
+      "team": "해태 타이거즈",
+      "reason": "expected 25, parsed 24"
+    },
+    {
+      "year": 1994,
+      "reason": "HTTPError: HTTP Error 404: Not Found"
+    },
+    {
+      "year": 1999,
+      "team": "한화 이글스",
+      "reason": "expected 26, parsed 25"
+    },
+    {
+      "year": 2000,
+      "team": "현대 유니콘스",
+      "reason": "expected 25, parsed 23"
+    },
+    {
+      "year": 2001,
+      "team": "두산 베어스",
+      "reason": "expected 26, parsed 25"
+    },
+    {
+      "year": 2002,
+      "team": "<colbgcolor=#000000><colcolor=#ffffff> L",
+      "reason": "expected 27, parsed 26"
+    },
+    {
+      "year": 2003,
+      "team": "현대 유니콘스",
+      "reason": "expected 26, parsed 24"
+    },
+    {
+      "year": 2005,
+      "reason": "HTTPError: HTTP Error 404: Not Found"
+    }
+  ]
+}

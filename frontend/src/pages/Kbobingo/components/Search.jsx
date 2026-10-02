@@ -278,8 +278,13 @@ const SearchResultDiv = (props) => {
                         <span className="ml-2">No.{player.BackNo}</span>
                     </div>
                     <div className="font-normal text-xs text-gray-500 dark:text-gray-400 -mt-1 text-start">
-                        {player.Debut} - {player.End}
-                        <span className="mx-1">|</span>
+                        {/* 메인페이지 선수 검색 규칙 + 현역은 올해까지 (End = 올해), 모르는 값은 ? */}
+                        {(player.Debut || player.End) && (
+                            <>
+                                {`${player.Debut || "?"} - ${player.End || "?"}`}
+                                <span className="mx-1">|</span>
+                            </>
+                        )}
                         {player.Pos}
                     </div>
                 </div>

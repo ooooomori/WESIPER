@@ -9,6 +9,7 @@ $start_date = $_GET['start_date'] ?? '';
 $end_date   = $_GET['end_date'] ?? '';
 $date_preset = $_GET['date_preset'] ?? 'whole';
 $img        = $_GET['img'] ?? '';
+$league_level = $season === 'futures' ? 2 : 1;
 
 if ($season === 'preseason' && in_array((string)$year, ['2008', '2009', '2010', '2012'], true)) {
     http_response_code(400);
@@ -92,6 +93,9 @@ function parseKboResultPHP($pa) {
 }
 
 $schedule = getKBOSchedule();
+if ($season === 'futures') {
+    $schedule[$year]['futures'] = [sprintf('%04d-01-01', (int)$year), sprintf('%04d-12-31', (int)$year)];
+}
 require_once __DIR__ . '/predictions.php';
 $prediction_eligible = candlePredictionEligible($year, $season, $date_preset, $start_date, $end_date, $schedule);
 
@@ -103,14 +107,14 @@ if (empty($start_date) && empty($end_date)) {
 }
 
 try {
-    $season_start_bound = $schedule[$year][$season][0] ?? clone $start_date;
+    $season_start_bound = $schedule[$year][$season][0] ?? $start_date;
 
     $baseline_sql = "
         SELECT 
             cum_ab, cum_h, cum_ob, cum_sf, cum_tb,
             cum_eff_ab, cum_eff_h, cum_eff_ob, cum_eff_tb
         FROM kbo_league_records
-        WHERE year = :year AND game_date < :season_start
+        WHERE year = :year AND game_date < :season_start AND $league_level = 1
         ORDER BY game_date DESC LIMIT 1
     ";
     $b_stmt = $pdo->prepare($baseline_sql);
@@ -149,7 +153,7 @@ try {
                           FROM (
                               SELECT game_date 
                               FROM kbo_season_records 
-                              WHERE player_id = :player_id
+                              WHERE league_level=$league_level AND player_id = :player_id
                                 AND game_date BETWEEN :season_start AND :end_date
                               GROUP BY game_date, game_id 
                               ORDER BY game_date DESC, game_id DESC 
@@ -184,7 +188,7 @@ try {
             s.sb, 
             s.cs
         FROM kbo_season_records s
-        WHERE s.player_id = :player_id 
+        WHERE s.league_level=$league_level AND s.player_id = :player_id
           AND s.game_date >= :season_start AND s.game_date < :start_date 
         ORDER BY s.game_date ASC, s.game_id ASC, s.inning ASC";
     
@@ -312,9 +316,10 @@ try {
             l.cum_eff_tb 
         FROM kbo_season_records s
         LEFT JOIN kbo_league_records l 
-            ON s.game_date = l.game_date
-        WHERE s.player_id = :player_id 
-          AND s.game_date BETWEEN :start_date AND :end_date 
+            ON s.game_date = l.game_date AND $league_level = 1
+        WHERE s.league_level=$league_level AND s.player_id = :player_id
+          AND s.game_date BETWEEN :start_date AND :end_date
+          AND ($league_level <> 2 OR NOT EXISTS (SELECT 1 FROM kbo_schedule fs WHERE fs.league_level=2 AND fs.game_code=CONVERT(LEFT(s.game_id,13) USING utf8mb4) COLLATE utf8mb4_general_ci AND fs.is_allstar=1))
         ORDER BY s.game_date ASC, s.game_id ASC, s.inning ASC";
 
     $stmt = $pdo->prepare($sql);
@@ -477,13 +482,13 @@ try {
         $league_eff_slg = ($l_eff_ab > 0) ? ($l_eff_tb / $l_eff_ab) : 0;
 
         // 💡 증발 위험이 있는 $current_obp 대신, 무조건 값이 보존되는 $close 배열 참조로 교체
-        $ops_plus = 0;
-        if ($league_obp > 0 && $league_slg > 0) {
+        $ops_plus = $league_level === 2 ? null : 0;
+        if ($league_level === 1 && $league_obp > 0 && $league_slg > 0) {
             $ops_plus = 100 * (($close['obp'] / $league_obp) + ($close['slg'] / $league_slg) - 1);
         }
 
-        $eff_ops_plus = 0;
-        if ($league_eff_obp > 0 && $league_eff_slg > 0) {
+        $eff_ops_plus = $league_level === 2 ? null : 0;
+        if ($league_level === 1 && $league_eff_obp > 0 && $league_eff_slg > 0) {
             $eff_ops_plus = 100 * (($close['eff_obp'] / $league_eff_obp) + ($close['eff_slg'] / $league_eff_slg) - 1);
         }
         $last_ops_plus = $ops_plus;
@@ -522,8 +527,8 @@ try {
                 'low'   => round($low['eff_ops'], 3),
                 'close' => round($close['eff_ops'], 3)
             ],
-            'ops_plus'     => round($ops_plus, 1),
-            'eff_ops_plus' => round($eff_ops_plus, 1),
+            'ops_plus'     => ($ops_plus === null ? null : round($ops_plus, 1)),
+            'eff_ops_plus' => ($eff_ops_plus === null ? null : round($eff_ops_plus, 1)),
         ];
 
         $prev_close = $close;
@@ -543,8 +548,8 @@ try {
         'slg' => round($period_slg, 3),
         'ops' => round($period_obp + $period_slg, 3),
         'eff_ops' => round((float)($prev_close['eff_ops'] ?? 0), 3),
-        'ops_plus' => round($last_ops_plus, 1),
-        'eff_ops_plus' => round($last_eff_ops_plus, 1),
+        'ops_plus' => ($last_ops_plus === null ? null : round($last_ops_plus, 1)),
+        'eff_ops_plus' => ($last_eff_ops_plus === null ? null : round($last_eff_ops_plus, 1)),
         'hits' => $cum_h,
         'singles' => $period_1b,
         'doubles' => $period_2b,
@@ -578,7 +583,7 @@ try {
         $last_pa_date) : null;
 
     $rankings = null;
-    if (($_GET['include_rankings'] ?? '') === '1') {
+    if ($league_level === 1 && ($_GET['include_rankings'] ?? '') === '1') {
         try {
             require_once __DIR__ . '/rankings.php';
             $seasonEnd = min($schedule[$year][$season][1] ?? $end_date, date('Y-m-d'));
@@ -594,6 +599,7 @@ try {
         'player_id' => $player_id,
         'year'      => $year,
         'season'    => $season,
+        'league_level' => $league_level,
         'start_date'=> $start_date,
         'end_date'  => $end_date,
         'date_preset' => $date_preset,

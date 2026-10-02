@@ -1,0 +1,684 @@
+[
+  {
+    "event": "프리미어12:2015",
+    "source": "https://www.koreabaseball.com/Schedule/International/Etc/Premier2015.aspx",
+    "error": "roster heading not found"
+  },
+  {
+    "event": "프리미어12:2019",
+    "source": "https://www.koreabaseball.com/Schedule/International/Etc/Premier2019.aspx",
+    "players": [
+      {
+        "player_id": 67119,
+        "name": "고우석"
+      },
+      {
+        "player_id": 65643,
+        "name": "문경찬"
+      },
+      {
+        "player_id": 66291,
+        "name": "이영하"
+      },
+      {
+        "player_id": 77211,
+        "name": "이용찬"
+      },
+      {
+        "player_id": 63342,
+        "name": "조상우"
+      },
+      {
+        "player_id": 69813,
+        "name": "하재훈"
+      },
+      {
+        "player_id": 77829,
+        "name": "김광현"
+      },
+      {
+        "player_id": 77637,
+        "name": "양현종"
+      },
+      {
+        "player_id": 67603,
+        "name": "이승호"
+      },
+      {
+        "player_id": 76455,
+        "name": "차우찬"
+      },
+      {
+        "player_id": 63248,
+        "name": "함덕주"
+      },
+      {
+        "player_id": 60841,
+        "name": "박종훈"
+      },
+      {
+        "player_id": 76118,
+        "name": "원종현"
+      },
+      {
+        "player_id": 62244,
+        "name": "박세혁"
+      },
+      {
+        "player_id": 76232,
+        "name": "양의지"
+      },
+      {
+        "player_id": 79402,
+        "name": "김상수"
+      },
+      {
+        "player_id": 64300,
+        "name": "김하성"
+      },
+      {
+        "player_id": 62907,
+        "name": "박민우"
+      },
+      {
+        "player_id": 75125,
+        "name": "박병호"
+      },
+      {
+        "player_id": 75847,
+        "name": "최정"
+      },
+      {
+        "player_id": 79240,
+        "name": "허경민"
+      },
+      {
+        "player_id": 76313,
+        "name": "황재균"
+      },
+      {
+        "player_id": 68050,
+        "name": "강백호"
+      },
+      {
+        "player_id": 78224,
+        "name": "김재환"
+      },
+      {
+        "player_id": 76290,
+        "name": "김현수"
+      },
+      {
+        "player_id": 76249,
+        "name": "민병헌"
+      },
+      {
+        "player_id": 79215,
+        "name": "박건우"
+      },
+      {
+        "player_id": 67341,
+        "name": "이정후"
+      }
+    ],
+    "count": 28
+  },
+  {
+    "event": "프리미어12:2024",
+    "source": "https://www.koreabaseball.com/Schedule/International/Etc/Premier2024.aspx",
+    "players": [
+      {
+        "player_id": 50662,
+        "name": "정해영"
+      },
+      {
+        "player_id": 50106,
+        "name": "유영찬"
+      },
+      {
+        "player_id": 61101,
+        "name": "임찬규"
+      },
+      {
+        "player_id": 68220,
+        "name": "곽빈"
+      },
+      {
+        "player_id": 54263,
+        "name": "김택연"
+      },
+      {
+        "player_id": 66291,
+        "name": "이영하"
+      },
+      {
+        "player_id": 64001,
+        "name": "고영표"
+      },
+      {
+        "player_id": 52060,
+        "name": "박영현"
+      },
+      {
+        "player_id": 50030,
+        "name": "소형준"
+      },
+      {
+        "player_id": 51897,
+        "name": "조병현"
+      },
+      {
+        "player_id": 53754,
+        "name": "김서현"
+      },
+      {
+        "player_id": 52639,
+        "name": "최지민"
+      },
+      {
+        "player_id": 53609,
+        "name": "곽도규"
+      },
+      {
+        "player_id": 51264,
+        "name": "최승용"
+      },
+      {
+        "player_id": 79365,
+        "name": "박동원"
+      },
+      {
+        "player_id": 68912,
+        "name": "김형준"
+      },
+      {
+        "player_id": 52605,
+        "name": "김도영"
+      },
+      {
+        "player_id": 69102,
+        "name": "문보경"
+      },
+      {
+        "player_id": 65207,
+        "name": "신민재"
+      },
+      {
+        "player_id": 67893,
+        "name": "박성한"
+      },
+      {
+        "player_id": 51551,
+        "name": "나승엽"
+      },
+      {
+        "player_id": 51344,
+        "name": "김휘집"
+      },
+      {
+        "player_id": 51907,
+        "name": "김주원"
+      },
+      {
+        "player_id": 65357,
+        "name": "송성문"
+      },
+      {
+        "player_id": 66606,
+        "name": "최원준"
+      },
+      {
+        "player_id": 66108,
+        "name": "홍창기"
+      },
+      {
+        "player_id": 52591,
+        "name": "윤동희"
+      },
+      {
+        "player_id": 50167,
+        "name": "이주형"
+      }
+    ],
+    "count": 28
+  },
+  {
+    "event": "APBC:2017",
+    "source": "https://www.koreabaseball.com/Schedule/International/APBC/Main2017.aspx",
+    "players": [
+      {
+        "player_id": 62648,
+        "name": "김윤동"
+      },
+      {
+        "player_id": 67246,
+        "name": "김명신"
+      },
+      {
+        "player_id": 62929,
+        "name": "이민호"
+      },
+      {
+        "player_id": 63950,
+        "name": "장현식"
+      },
+      {
+        "player_id": 64021,
+        "name": "박세웅"
+      },
+      {
+        "player_id": 63512,
+        "name": "박진형"
+      },
+      {
+        "player_id": 66145,
+        "name": "김대현"
+      },
+      {
+        "player_id": 77927,
+        "name": "장필준"
+      },
+      {
+        "player_id": 63248,
+        "name": "함덕주"
+      },
+      {
+        "player_id": 65933,
+        "name": "구창모"
+      },
+      {
+        "player_id": 64017,
+        "name": "심재민"
+      },
+      {
+        "player_id": 62754,
+        "name": "임기영"
+      },
+      {
+        "player_id": 63722,
+        "name": "한승택"
+      },
+      {
+        "player_id": 63202,
+        "name": "장승현"
+      },
+      {
+        "player_id": 66606,
+        "name": "최원준"
+      },
+      {
+        "player_id": 62234,
+        "name": "류지혁"
+      },
+      {
+        "player_id": 62907,
+        "name": "박민우"
+      },
+      {
+        "player_id": 64300,
+        "name": "김하성"
+      },
+      {
+        "player_id": 62700,
+        "name": "하주석"
+      },
+      {
+        "player_id": 63450,
+        "name": "정  현"
+      },
+      {
+        "player_id": 62934,
+        "name": "김성욱"
+      },
+      {
+        "player_id": 66508,
+        "name": "나경민"
+      },
+      {
+        "player_id": 67341,
+        "name": "이정후"
+      },
+      {
+        "player_id": 65115,
+        "name": "안익훈"
+      },
+      {
+        "player_id": 62404,
+        "name": "구자욱"
+      }
+    ],
+    "count": 25
+  },
+  {
+    "event": "APBC:2023",
+    "source": "https://www.koreabaseball.com/Schedule/International/APBC/Main2023.aspx",
+    "players": [
+      {
+        "player_id": 51897,
+        "name": "조병현"
+      },
+      {
+        "player_id": 50662,
+        "name": "정해영"
+      },
+      {
+        "player_id": 68902,
+        "name": "신민혁"
+      },
+      {
+        "player_id": 69446,
+        "name": "원태인"
+      },
+      {
+        "player_id": 50556,
+        "name": "최준용"
+      },
+      {
+        "player_id": 68220,
+        "name": "곽빈"
+      },
+      {
+        "player_id": 52701,
+        "name": "문동주"
+      },
+      {
+        "player_id": 50859,
+        "name": "오원석"
+      },
+      {
+        "player_id": 51648,
+        "name": "이의리"
+      },
+      {
+        "player_id": 52639,
+        "name": "최지민"
+      },
+      {
+        "player_id": 68900,
+        "name": "김영규"
+      },
+      {
+        "player_id": 51264,
+        "name": "최승용"
+      },
+      {
+        "player_id": 53344,
+        "name": "김동헌"
+      },
+      {
+        "player_id": 68912,
+        "name": "김형준"
+      },
+      {
+        "player_id": 51528,
+        "name": "손성빈"
+      },
+      {
+        "player_id": 67304,
+        "name": "김혜성"
+      },
+      {
+        "player_id": 51344,
+        "name": "김휘집"
+      },
+      {
+        "player_id": 52605,
+        "name": "김도영"
+      },
+      {
+        "player_id": 51907,
+        "name": "김주원"
+      },
+      {
+        "player_id": 51551,
+        "name": "나승엽"
+      },
+      {
+        "player_id": 69737,
+        "name": "노시환"
+      },
+      {
+        "player_id": 53764,
+        "name": "문현빈"
+      },
+      {
+        "player_id": 50854,
+        "name": "최지훈"
+      },
+      {
+        "player_id": 67449,
+        "name": "김성윤"
+      },
+      {
+        "player_id": 52591,
+        "name": "윤동희"
+      },
+      {
+        "player_id": 69418,
+        "name": "박승규"
+      }
+    ],
+    "count": 26
+  },
+  {
+    "event": "아시안게임:2018",
+    "source": "https://www.koreabaseball.com/Schedule/International/AsianGames/Main2018.aspx",
+    "players": [
+      {
+        "player_id": 77211,
+        "name": "이용찬"
+      },
+      {
+        "player_id": 61101,
+        "name": "임찬규"
+      },
+      {
+        "player_id": 65320,
+        "name": "최원태"
+      },
+      {
+        "player_id": 77927,
+        "name": "장필준"
+      },
+      {
+        "player_id": 66451,
+        "name": "최충연"
+      },
+      {
+        "player_id": 77637,
+        "name": "양현종"
+      },
+      {
+        "player_id": 63248,
+        "name": "함덕주"
+      },
+      {
+        "player_id": 74857,
+        "name": "정우람"
+      },
+      {
+        "player_id": 62754,
+        "name": "임기영"
+      },
+      {
+        "player_id": 67266,
+        "name": "박치국"
+      },
+      {
+        "player_id": 60841,
+        "name": "박종훈"
+      },
+      {
+        "player_id": 76232,
+        "name": "양의지"
+      },
+      {
+        "player_id": 76812,
+        "name": "이재원"
+      },
+      {
+        "player_id": 79608,
+        "name": "안치홍"
+      },
+      {
+        "player_id": 62907,
+        "name": "박민우"
+      },
+      {
+        "player_id": 79109,
+        "name": "오지환"
+      },
+      {
+        "player_id": 64300,
+        "name": "김하성"
+      },
+      {
+        "player_id": 75125,
+        "name": "박병호"
+      },
+      {
+        "player_id": 76313,
+        "name": "황재균"
+      },
+      {
+        "player_id": 78224,
+        "name": "김재환"
+      },
+      {
+        "player_id": 77532,
+        "name": "손아섭"
+      },
+      {
+        "player_id": 76290,
+        "name": "김현수"
+      },
+      {
+        "player_id": 67341,
+        "name": "이정후"
+      },
+      {
+        "player_id": 62415,
+        "name": "박해민"
+      }
+    ],
+    "count": 24
+  },
+  {
+    "event": "아시안게임:2023",
+    "source": "https://www.koreabaseball.com/Schedule/International/AsianGames/Main2023.aspx",
+    "error": "roster heading not found"
+  },
+  {
+    "event": "아시안게임:2026",
+    "source": "https://www.koreabaseball.com/Schedule/International/AsianGames/Main2026.aspx",
+    "players": [
+      {
+        "player_id": 55167,
+        "name": "김영우"
+      },
+      {
+        "player_id": 51897,
+        "name": "조병현"
+      },
+      {
+        "player_id": 52060,
+        "name": "박영현"
+      },
+      {
+        "player_id": 50030,
+        "name": "소형준"
+      },
+      {
+        "player_id": 50556,
+        "name": "최준용"
+      },
+      {
+        "player_id": 54610,
+        "name": "성영탁"
+      },
+      {
+        "player_id": 68220,
+        "name": "곽빈"
+      },
+      {
+        "player_id": 55268,
+        "name": "최민석"
+      },
+      {
+        "player_id": 55455,
+        "name": "배찬승"
+      },
+      {
+        "player_id": 50859,
+        "name": "오원석"
+      },
+      {
+        "player_id": 51516,
+        "name": "김진욱"
+      },
+      {
+        "player_id": 51865,
+        "name": "조형우"
+      },
+      {
+        "player_id": 53312,
+        "name": "김건희"
+      },
+      {
+        "player_id": 69102,
+        "name": "문보경"
+      },
+      {
+        "player_id": 69737,
+        "name": "노시환"
+      },
+      {
+        "player_id": 54812,
+        "name": "정준재"
+      },
+      {
+        "player_id": 52415,
+        "name": "이재현"
+      },
+      {
+        "player_id": 51907,
+        "name": "김주원"
+      },
+      {
+        "player_id": 52605,
+        "name": "김도영"
+      },
+      {
+        "player_id": 55252,
+        "name": "박준순"
+      },
+      {
+        "player_id": 53764,
+        "name": "문현빈"
+      },
+      {
+        "player_id": 50458,
+        "name": "김지찬"
+      },
+      {
+        "player_id": 52591,
+        "name": "윤동희"
+      },
+      {
+        "player_id": 55636,
+        "name": "박재현"
+      }
+    ],
+    "count": 24
+  },
+  {
+    "event": "올림픽:2008",
+    "source": "https://www.koreabaseball.com/Schedule/International/Olympic/Main2008.aspx",
+    "error": "roster heading not found"
+  },
+  {
+    "event": "올림픽:2020",
+    "source": "https://www.koreabaseball.com/Schedule/International/Olympic/Main2020.aspx",
+    "error": "roster heading not found"
+  }
+]

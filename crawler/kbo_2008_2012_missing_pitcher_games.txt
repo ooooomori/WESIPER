@@ -1,0 +1,16 @@
+KBO pitcher-data fallback status
+Updated 2026-09-29.
+
+No remaining games.
+
+The official KBO fallback filled the 2010 partial game, all 532 missing 2011
+games, and the 2012 postseason game. User-supplied historical box scores filled
+the final four 2008 postseason games:
+
+55551021OBSS0
+55551023SSOB0
+77771026OBSK0
+77771027OBSK0
+
+Winning-hit precedence: cached record API first, manual source only when the API
+has no winning-hit value.

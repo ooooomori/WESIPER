@@ -1,4 +1,5 @@
 <?php
+require __DIR__ . '/backend/lib/player-school.php';
 $c=require '/opt/bitnami/apache/conf/wesiper-db.php';
 $p=new PDO("mysql:host={$c['host']};dbname={$c['database']};charset=utf8mb4",$c['username'],$c['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC]);
 $rows=[
@@ -9,10 +10,9 @@ $rows=[
 ];
 $p->beginTransaction();
 try{
- $q=$p->prepare('SELECT COUNT(*) FROM player_data WHERE playerId=?'); $l=$p->prepare('SELECT COUNT(*) FROM kbo_playerlist_20250613 WHERE p_no=?');
- foreach($rows as $r){$q->execute([$r[14]]);$l->execute([$r[14]]);if($q->fetchColumn()||$l->fetchColumn())throw new RuntimeException("already exists {$r[1]}");}
- $q=$p->prepare('INSERT INTO player_data (backNo,name,oldname,team,pos,bat,`throw`,birth,body,career,draft,isKbodle,mainPos,subPos,hs,hsLoc,playerId) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
- $l=$p->prepare('INSERT INTO kbo_playerlist_20250613 (p_name,p_oldname,p_no,p_img,p_pos,is_WBC) VALUES (?,NULL,?,?,?,NULL)');
- foreach($rows as $r){$q->execute([$r[0],$r[1],null,$r[2],$r[3],$r[4],$r[5],$r[6],$r[7],$r[8],$r[9],null,$r[10],$r[11],$r[12],$r[13],$r[14]]);$l->execute([$r[1],$r[14],$r[15],$r[3]]);}
+ $q=$p->prepare('SELECT COUNT(*) FROM kbo_player_data WHERE player_id=?');
+ foreach($rows as $r){$q->execute([$r[14]]);if($q->fetchColumn())throw new RuntimeException("already exists {$r[1]}");}
+ $q=$p->prepare('INSERT INTO kbo_player_data (backNo,name,oldname,team,pos,bat,`throw`,birth,body,school,draft,is_kbodle,mainPos,subPos,hs,hsLoc,player_id,img) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+ foreach($rows as $r){$q->execute([$r[0],$r[1],null,$r[2],$r[3],$r[4],$r[5],$r[6],$r[7],playerSchoolOnly($r[8]),$r[9],2,$r[10],$r[11],$r[12],$r[13],$r[14],$r[15]]);}
  $p->commit(); echo json_encode($rows,JSON_UNESCAPED_UNICODE),PHP_EOL;
 }catch(Throwable $e){if($p->inTransaction())$p->rollBack();fwrite(STDERR,$e->getMessage().PHP_EOL);exit(1);}

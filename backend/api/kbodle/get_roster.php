@@ -71,7 +71,7 @@ $posMap = ["투수" => 0, "포수" => 1, "내야수" => 2, "외야수" => 3];
 
 try {
     // --- JSON 파일 처리 ---
-    $jsonFilePath = 'update_log.json';
+    $jsonFilePath = __DIR__ . '/update_log.json';
     if (!file_exists($jsonFilePath)) throw new Exception("JSON file not found");
 
     $jsonContent = file_get_contents($jsonFilePath);
@@ -87,7 +87,7 @@ try {
 
     // --- 2. MySQLi 데이터베이스 조회 ---
     // $con은 mysqli 객체라고 가정 (예: $con = new mysqli("host", "user", "pw", "db");)
-    $query = "SELECT `name`, `pos`, `team` FROM $playerlist ORDER BY `name`";
+    $query = "SELECT `name`, `pos`, `team` FROM $playerlist WHERE `is_kbodle` IN (1, 2) ORDER BY `name`";
     $dbResult = $con->query($query);
 
     if (!$dbResult) {

@@ -1,0 +1,10 @@
+{
+  "backend/lib/player-year-records.php": "d23ce897b3d5a0f98174e6f6d86e734bafbbaa3bd0caad9933da12036620aa85",
+  "crawler/verify_official_old_seasons.py": "311c41ae940ebfa18bce0ef98fc109a23d7c061c2f90bbb0dc8d8b819e0ac86a",
+  "backend/lib/player-season-schedule.php": "9e11b7b31d75e1497d611e2cd8c891801bd5d302ac3471637250d9cbda66c72d",
+  "backend/lib/player-season-totals.php": "e064e87a7255c7e50c064123247a39ec7262b38b34da9996c73b863105cf590c",
+  "backend/lib/player-overview-cache.php": "66d720552ebf42e107f3df0c2bb9fe04ea18d6c30d5a19a56e122cf4bc77a83e",
+  "crawler/supplement_old_season_rates.py": "1672d156189856bd941a41962778a86386d5b9eda27bdd78f0c4f82d93da350b",
+  "backend/lib/player-records.php": "f0b7946d855cf5c7db457527755de0597360cd287f8231e320af7a45e78cdc92",
+  "backend/lib/player-year-metrics.php": "850a8aa2b3e7f8bedd1f57ddbcd14224d5da9278bb2606609c36a66b73c7123f"
+}

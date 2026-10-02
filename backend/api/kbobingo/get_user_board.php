@@ -24,7 +24,7 @@ if (!$grid) {
     exit;
 }
 $players = [];
-$stmt = $con->prepare("SELECT p_no, p_name, p_img FROM $playerlist WHERE p_no = ?");
+$stmt = $con->prepare("SELECT player_id, name, img FROM $playerlist WHERE player_id = ?");
 foreach ($picks as $pick) {
     if ($pick === null) { $players[] = null; continue; }
     $id = (int)$pick;
@@ -32,9 +32,9 @@ foreach ($picks as $pick) {
     $stmt->execute();
     $player = $stmt->get_result()->fetch_assoc();
     $players[] = $player ? [
-        'no' => (int)$player['p_no'],
-        'name' => $player['p_name'],
-        'img' => image_exists($player['p_no']) ? $player['p_no'] : $player['p_img'],
+        'no' => (int)$player['player_id'],
+        'name' => $player['name'],
+        'img' => image_exists($player['player_id']) ? $player['player_id'] : $player['img'],
     ] : ['no' => $id, 'name' => '선수 정보 없음', 'img' => 'ssg_b_l'];
 }
 echo json_encode(['code' => 200, 'players' => $players, 'grid' => [

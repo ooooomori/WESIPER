@@ -75,7 +75,7 @@ function candleBreakdownStats(array $events, ?array $league): array {
 
 function candleSeasonBreakdown(PDO $pdo, string $playerId, string $year, string $start, string $end, array $baseline): array {
     $stmt = $pdo->prepare('SELECT game_date, game_id, inning, pa_result, sb, cs
-        FROM kbo_season_records WHERE player_id = :player_id AND game_date BETWEEN :start AND :end
+        FROM kbo_season_records WHERE league_level=1 AND player_id = :player_id AND game_date BETWEEN :start AND :end
         ORDER BY game_date ASC, game_id ASC, inning ASC');
     $stmt->execute(['player_id' => $playerId, 'start' => $start, 'end' => $end]);
     $events = $stmt->fetchAll(PDO::FETCH_ASSOC);

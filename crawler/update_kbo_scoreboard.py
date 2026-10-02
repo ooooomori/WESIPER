@@ -65,14 +65,101 @@ def parse_scoreboard(data, game_id):
             data['S_NM'], json.dumps(innings[0]), json.dumps(innings[1]))
 
 
+def parse_naver_scoreboard(data, game_id):
+    """Parse the already-fetched Naver record response; never perform HTTP here."""
+    match = re.fullmatch(r'(\d{8}[A-Z]{4}\d)(\d{4})?', game_id)
+    if not match:
+        raise ValueError('Invalid Naver game ID')
+    code = match[1]
+    if data.get('code') != 200 or data.get('success') is not True:
+        raise ValueError('Invalid Naver record response')
+    record = data['result']['recordData']
+    info = record['gameInfo']
+    actual_day = str(info.get('gdate'))
+    if not re.fullmatch(r'20\d{6}', actual_day):
+        raise ValueError('Invalid actual game date')
+    if match[2] and match[2] != actual_day[:4]:
+        raise ValueError('Naver game year suffix mismatch')
+    if code[:8] != actual_day:
+        series_flag = str(info.get('gameFlag'))
+        if code[:4] != series_flag * 4 or code[4:8] != actual_day[4:8]:
+            raise ValueError('Naver pseudo-date game ID mismatch')
+    games = [
+        game for game in record['games']
+        if (game.get('gmkey') or game.get('gameId')) == code
+    ]
+    if len(games) != 1:
+        raise ValueError('Missing or ambiguous matching game')
+    game = games[0]
+    if game.get('suspendedInfo'):
+        return None
+    for source in (info, game):
+        if str(source.get('gdate')) != actual_day or source.get('aCode') != code[8:10] or source.get('hCode') != code[10:12]:
+            raise ValueError('Naver scoreboard identity mismatch')
+        if (str(source.get('statusCode')) != '4'
+                or ('cancelFlag' in source and source.get('cancelFlag') != 'N')):
+            return None  # Do not publish live, suspended or cancelled results.
+    if game.get('dheader') is not None and str(game.get('dheader')) != code[-1]:
+        # Historical responses use dheader="2" on *both* games of a
+        # doubleheader (meaning two games that day), while the exact gmkey
+        # suffix still distinguishes game 1 and game 2.
+        sibling_codes = {
+            (item.get('gmkey') or item.get('gameId')) for item in record['games']
+            if str(item.get('gdate')) == actual_day
+            and item.get('aCode') == code[8:10]
+            and item.get('hCode') == code[10:12]
+        }
+        expected_pair = {code[:-1] + '1', code[:-1] + '2'}
+        if not (str(game.get('dheader')) == '2' and code[-1] in '12'
+                and expected_pair <= sibling_codes):
+            raise ValueError('Doubleheader identity mismatch')
+    board = record['scoreBoard']
+    if all(board.get('inn', {}).get(side) == [] and board.get('rheb', {}).get(side) == {}
+           for side in ('away', 'home')):
+        return None
+    innings, totals = [], []
+    for side, score_key in [('away', 'aScore'), ('home', 'hScore')]:
+        values = board['inn'][side]
+        score = board['rheb'][side]['r']
+        if not isinstance(values, list) or not values or any(type(n) is not int or n < 0 for n in values):
+            raise ValueError('Invalid Naver inning scores')
+        if type(score) is not int or score < 0 or sum(values) != score or game['score'][score_key] != score:
+            raise ValueError('Naver inning totals do not match final score')
+        innings.append(list(values))
+        totals.append(score)
+    if len(innings[0]) - len(innings[1]) not in (0, 1):
+        raise ValueError('Invalid home/away inning lengths')
+    if len(innings[0]) != len(innings[1]):
+        # Naver omits an unplayed final home half for walk-offs and called games.
+        innings[1].append(None)
+    if not all(isinstance(info.get(field), str) and info[field].strip() for field in ('aName', 'hName', 'stadium')):
+        raise ValueError('Missing team or stadium')
+    day = datetime.strptime(actual_day, '%Y%m%d').strftime('%Y-%m-%d')
+    stored_code = code if code[:8] == actual_day else code + actual_day[:4]
+    return (stored_code, day, info['aName'], info['hName'], *totals, info['stadium'],
+            json.dumps(innings[0]), json.dumps(innings[1]))
+
+
+def update_scoreboards_from_records(fetched_results, config):
+    records = []
+    seen = set()
+    for match in fetched_results:
+        row = parse_naver_scoreboard(match['raw_data'], match['game_id'])
+        if row is not None and row[0] not in seen:
+            records.append(row)
+            seen.add(row[0])
+    return save_scoreboards(records, config)
+
+
 def migrate(config):
     connection = pymysql.connect(**config)
     try:
         with connection.cursor() as cursor:
             cursor.execute('SHOW COLUMNS FROM kbo_schedule')
-            columns = {row[0] for row in cursor.fetchall()}
+            columns = {row[0]: row for row in cursor.fetchall()}
             additions = [name for name in ('away_inning_scores', 'home_inning_scores') if name not in columns]
-            if not additions:
+            tv_needs_null = columns.get('tv') is not None and columns['tv'][2] != 'YES'
+            if not additions and not tv_needs_null:
                 return
             # Persist a private data backup before schema changes.
             cursor.execute('SELECT * FROM kbo_schedule')
@@ -82,7 +169,10 @@ def migrate(config):
             fd = os.open(backup, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
             with os.fdopen(fd, 'w', encoding='utf-8') as output:
                 json.dump(rows, output, ensure_ascii=False, default=str)
-            cursor.execute('ALTER TABLE kbo_schedule ' + ', '.join(f'ADD COLUMN {name} JSON NULL' for name in additions))
+            changes = [f'ADD COLUMN {name} JSON NULL' for name in additions]
+            if tv_needs_null:
+                changes.append('MODIFY COLUMN tv VARCHAR(255) NULL DEFAULT NULL')
+            cursor.execute('ALTER TABLE kbo_schedule ' + ', '.join(changes))
             print(f'Schema updated; backup: {backup}', flush=True)
     finally:
         connection.close()
@@ -109,16 +199,29 @@ def update_scoreboards(game_ids, config):
         payload = api('GetScoreBoardScroll', {'leId': '1', 'srId': '0', 'seasonId': day[:4], 'gameId': game_id})
         records.append(parse_scoreboard(payload, game_id))
         time.sleep(0.2)
+    return save_scoreboards(records, config)
+
+
+def save_scoreboards(records, config, require_existing=False):
     if not records:
         print('No finished scoreboards to update', flush=True)
         return 0
     connection = pymysql.connect(**config)
     try:
         with connection.cursor() as cursor:
+            if require_existing:
+                # The existing schedule defines regular-season membership; no KBO request needed.
+                placeholders = ','.join(['%s'] * len(records))
+                cursor.execute(f'SELECT game_code FROM kbo_schedule WHERE league_level=1 AND game_code IN ({placeholders}) FOR UPDATE',
+                               [row[0] for row in records])
+                existing = {row[0] for row in cursor.fetchall()}
+                missing = {row[0] for row in records} - existing
+                if missing:
+                    raise ValueError(f'Games absent from stored regular-season schedule: {sorted(missing)}')
             cursor.executemany('''INSERT INTO kbo_schedule
-                (game_code,game_date,away_team,home_team,away_score,home_score,stadium,
+                (league_level,game_code,game_date,away_team,home_team,away_score,home_score,stadium,
                  away_inning_scores,home_inning_scores,tv)
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,'')
+                VALUES (1,%s,%s,%s,%s,%s,%s,%s,%s,%s,NULL)
                 ON DUPLICATE KEY UPDATE game_date=VALUES(game_date), away_team=VALUES(away_team),
                 home_team=VALUES(home_team), away_score=VALUES(away_score), home_score=VALUES(home_score),
                 stadium=VALUES(stadium), away_inning_scores=VALUES(away_inning_scores),
@@ -150,7 +253,7 @@ if __name__ == '__main__':
         connection = pymysql.connect(**config)
         try:
             with connection.cursor() as cursor:
-                cursor.execute('SELECT game_code FROM kbo_schedule WHERE game_date=%s', (args.date,))
+                cursor.execute('SELECT game_code FROM kbo_schedule WHERE league_level=1 AND game_date=%s', (args.date,))
                 ids.extend(row[0] for row in cursor.fetchall())
         finally:
             connection.close()

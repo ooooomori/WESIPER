@@ -8,7 +8,8 @@ $con = mysqli_connect(
     $dbConfig['host'],
     $dbConfig['username'],
     $dbConfig['password'],
-    $dbConfig['database']
+    $dbConfig['database'],
+    $dbConfig['port'] ?? 3306
 );
     if(mysqli_error($con)) {
         echo mysqli_error();
@@ -18,7 +19,8 @@ $con = mysqli_connect(
         
     }
 
-    $playerlist = "kbo_playerlist_20250613";
+    mysqli_set_charset($con, $dbConfig['charset']);
+    $playerlist = "kbo_player_data";
     
     function image_exists($p_no) {
         return file_exists($_SERVER["DOCUMENT_ROOT"]."/assets/images/player/kbo/$p_no.png");

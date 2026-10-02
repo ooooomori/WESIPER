@@ -1,0 +1,30 @@
+{
+  "player": {
+    "PlayerId": 65948,
+    "Name": "배지환",
+    "Img": null,
+    "Pos": "투수",
+    "FullName": null,
+    "OldName": "배준빈",
+    "IsForeign": null,
+    "IsKbodle": 0,
+    "IsNumberRetired": null,
+    "Body": "183cm, 83kg",
+    "Birth": "1992-04-27",
+    "School": null,
+    "BackNo": null,
+    "Bat": null,
+    "Throws": null,
+    "Draft": null,
+    "Retire": null,
+    "MainPos": null,
+    "SubPos": null,
+    "Team": "은퇴",
+    "NumberRetiredTeam": null,
+    "FormerTeam": null,
+    "Nicknames": [],
+    "Titleholders": []
+  },
+  "career": [],
+  "records": null
+}

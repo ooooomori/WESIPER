@@ -19,6 +19,8 @@ crawler.env
 *.tar.gz
 *backup*
 *.before-env
+/deploy/player-data-migration-state.json
+/deploy/player-api-baseline.json
 
 # Python
 .venv/
@@ -50,3 +52,15 @@ coverage/
 
 # 인증서 발급용 일회성 파일
 **/.well-known/acme-challenge/
+
+/deploy/player-columns-state.json
+/.player-history/
+/.player-career/
+/.player-profile-backfill/
+/.contract-enrichment/
+/.movement-contracts.json
+/deploy/player-career-state.json
+/deploy/player-history-state.json
+
+# 로컬 선수 식별자 복구용 DB 스냅샷
+/.identity-repairs/

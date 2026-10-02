@@ -2,6 +2,14 @@ Options -MultiViews
 RewriteEngine On
 
 <IfModule mod_headers.c>
+    # Baseline browser security headers for the HTTPS site.
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self' https://toss.me; script-src 'self' 'unsafe-inline' https://t1.kakaocdn.net https://www.googletagmanager.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://cdn.jsdelivr.net https://hangeul.pstatic.net; img-src 'self' data: blob: https://developers.kakao.com https://t1.kakaocdn.net; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://kapi.kakao.com https://kauth.kakao.com; frame-src 'self' https://www.googletagmanager.com; worker-src 'self' blob:; upgrade-insecure-requests"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "accelerometer=(), autoplay=(), camera=(), cross-origin-isolated=(), display-capture=(), encrypted-media=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()"
+
     <FilesMatch "^(index\.html|manifest\.json)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate"
         Header set Pragma "no-cache"

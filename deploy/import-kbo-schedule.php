@@ -32,7 +32,7 @@ $db->exec('CREATE TABLE IF NOT EXISTS kbo_schedule (
     game_code VARCHAR(32) PRIMARY KEY, game_date DATE NOT NULL,
     away_team VARCHAR(40) NOT NULL, home_team VARCHAR(40) NOT NULL,
     away_score INTEGER NULL, home_score INTEGER NULL,
-    tv VARCHAR(255) NOT NULL, stadium VARCHAR(80) NOT NULL
+    tv VARCHAR(255) NULL, stadium VARCHAR(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4');
 $engine = $db->query("SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='kbo_schedule'")->fetchColumn();
 if (strtoupper($engine) !== 'INNODB') throw new RuntimeException('Transactional table required');

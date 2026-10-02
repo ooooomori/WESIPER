@@ -54,7 +54,16 @@ try {
             '2011' => ['preseason' => ['2011-03-12', '2011-03-27'], 'regular' => ['2011-04-02', '2011-10-06'], 'postseason' => ['2011-10-08', '2011-10-31']],
             '2010' => ['preseason' => ['', ''], 'regular' => ['2010-03-27', '2010-09-26'], 'postseason' => ['2010-09-29', '2010-10-19']],
             '2009' => ['preseason' => ['', ''], 'regular' => ['2009-04-04', '2009-09-26'], 'postseason' => ['2009-09-29', '2009-10-24']],
-            '2008' => ['preseason' => ['', ''], 'regular' => ['2008-03-29', '2008-10-05'], 'postseason' => ['2008-10-08', '2008-10-31']]
+            '2008' => ['preseason' => ['', ''], 'regular' => ['2008-03-29', '2008-10-05'], 'postseason' => ['2008-10-08', '2008-10-31']],
+            // Verified regular-season boundaries from the imported KBO schedules.
+            // Exhibition/postseason data has not been imported for these years.
+            '2007' => ['preseason' => ['', ''], 'regular' => ['2007-04-06', '2007-10-19'], 'postseason' => ['', '']],
+            '2006' => ['preseason' => ['', ''], 'regular' => ['2006-04-08', '2006-10-05'], 'postseason' => ['', '']],
+            '2005' => ['preseason' => ['', ''], 'regular' => ['2005-04-02', '2005-09-28'], 'postseason' => ['', '']],
+            '2004' => ['preseason' => ['', ''], 'regular' => ['2004-04-04', '2004-10-05'], 'postseason' => ['', '']],
+            '2003' => ['preseason' => ['', ''], 'regular' => ['2003-04-05', '2003-10-02'], 'postseason' => ['', '']],
+            '2002' => ['preseason' => ['', ''], 'regular' => ['2002-04-05', '2002-10-20'], 'postseason' => ['', '']],
+            '2001' => ['preseason' => ['', ''], 'regular' => ['2001-04-05', '2001-10-04'], 'postseason' => ['', '']]
         ];
     }
 ?>

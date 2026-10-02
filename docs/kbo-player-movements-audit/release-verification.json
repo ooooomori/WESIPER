@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "code_files": [
+    "collect_player_movements.py",
+    "plan_player_renames.py",
+    "import_player_movements.py",
+    "plan_player_movement_numbers.py",
+    "verify_player_movement_release.py"
+  ],
+  "api_health": {
+    "todayGames.php": {
+      "status": 200,
+      "valid_json": true
+    },
+    "teamRank.php": {
+      "status": 200,
+      "valid_json": true
+    },
+    "playerProfile.php?pid=65948&part=profile": {
+      "status": 200,
+      "valid_json": true
+    },
+    "playerProfile.php?pid=61145&part=profile": {
+      "status": 200,
+      "valid_json": true
+    }
+  }
+}

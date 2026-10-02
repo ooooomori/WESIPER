@@ -1,0 +1,5637 @@
+{
+  "updates": [
+    {
+      "player_id": 61145,
+      "before_name": "이우찬",
+      "before_oldname": null,
+      "name": "이우찬",
+      "oldname": "이영재",
+      "profile": {
+        "player_id": 61145,
+        "name": "이우찬",
+        "back_no": "21",
+        "position": "투수(좌투좌타)",
+        "draft": "11 LG 2라운드 15순위",
+        "last_profile_year": 2026,
+        "team": "LG",
+        "source_file": "profiles/61145.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-11-06",
+          "team": "LG",
+          "player_text": "이우찬(투수)",
+          "note": "개명전:이영재",
+          "source_file": "2017/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-11-06",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "LG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "이우찬(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:이영재",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "이우찬",
+          "old_name": "이영재",
+          "player_id": 61145
+        }
+      ]
+    },
+    {
+      "player_id": 65411,
+      "before_name": "김주온",
+      "before_oldname": null,
+      "name": "김주온",
+      "oldname": "김찬",
+      "profile": {
+        "player_id": 65411,
+        "name": "김주온",
+        "back_no": "57",
+        "position": "투수(우투우타)",
+        "draft": "15 삼성 2차 7라운드 72순위",
+        "last_profile_year": 2026,
+        "team": "LG",
+        "source_file": "profiles/65411.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-08-28",
+          "team": "삼성",
+          "player_text": "김주온(투수)",
+          "note": "개명전:김찬",
+          "source_file": "2017/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-08-28",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "삼성",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김주온(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김찬",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김주온",
+          "old_name": "김찬",
+          "player_id": 65411
+        }
+      ]
+    },
+    {
+      "player_id": 63494,
+      "before_name": "나준성",
+      "before_oldname": null,
+      "name": "나준성",
+      "oldname": "라준성",
+      "profile": {
+        "player_id": 63494,
+        "name": "나준성",
+        "back_no": "113",
+        "position": "내야수(우투우타)",
+        "draft": "13 삼성 10라운드 86순위",
+        "last_profile_year": 2018,
+        "team": "삼성",
+        "source_file": "profiles/63494.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-08-28",
+          "team": "삼성",
+          "player_text": "나준성(내야수)",
+          "note": "개명전:라준성",
+          "source_file": "2017/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-08-28",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "삼성",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "나준성(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:라준성",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "나준성",
+          "old_name": "라준성",
+          "player_id": 63494
+        }
+      ]
+    },
+    {
+      "player_id": 67291,
+      "before_name": "김승후",
+      "before_oldname": null,
+      "name": "김승후",
+      "oldname": "김진영",
+      "profile": {
+        "player_id": 67291,
+        "name": "김승후",
+        "back_no": "0",
+        "position": "내야수(우투좌타)",
+        "draft": "17 두산 육성선수",
+        "last_profile_year": 2018,
+        "team": "두산",
+        "source_file": "profiles/67291.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-05-22",
+          "team": "두산",
+          "player_text": "김승후(내야수)",
+          "note": "개명전:김진영",
+          "source_file": "2017/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-05-22",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김승후(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김진영",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김승후",
+          "old_name": "김진영",
+          "player_id": 67291
+        }
+      ]
+    },
+    {
+      "player_id": 60496,
+      "before_name": "김동은",
+      "before_oldname": null,
+      "name": "김동은",
+      "oldname": "김선민",
+      "profile": {
+        "player_id": 60496,
+        "name": "김동은",
+        "back_no": "3",
+        "position": "내야수(우투우타)",
+        "draft": "10 삼성 육성선수",
+        "last_profile_year": 2018,
+        "team": "KT",
+        "source_file": "profiles/60496.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-05-22",
+          "team": "KT",
+          "player_text": "김동은(내야수)",
+          "note": "개명전:김선민",
+          "source_file": "2017/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-05-22",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김동은(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김선민",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김동은",
+          "old_name": "김선민",
+          "player_id": 60496
+        }
+      ]
+    },
+    {
+      "player_id": 67096,
+      "before_name": "이구름",
+      "before_oldname": null,
+      "name": "이구름",
+      "oldname": "이성욱",
+      "profile": {
+        "player_id": 67096,
+        "name": "이구름",
+        "back_no": "100",
+        "position": "투수(좌투좌타)",
+        "draft": "17 KT 2차 10라운드 91순위",
+        "last_profile_year": 2020,
+        "team": "KT",
+        "source_file": "profiles/67096.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-03-22",
+          "team": "KT",
+          "player_text": "이구름(투수)",
+          "note": "개명전:이성욱",
+          "source_file": "2017/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-03-22",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "이구름(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:이성욱",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "이구름",
+          "old_name": "이성욱",
+          "player_id": 67096
+        }
+      ]
+    },
+    {
+      "player_id": 77462,
+      "before_name": "김동욱",
+      "before_oldname": null,
+      "name": "김동욱",
+      "oldname": "김동명",
+      "profile": {
+        "player_id": 77462,
+        "name": "김동욱",
+        "back_no": "33",
+        "position": "내야수(우투우타)",
+        "draft": "07 삼성 1차",
+        "last_profile_year": 2018,
+        "team": "KT",
+        "source_file": "profiles/77462.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-03-18",
+          "team": "KT",
+          "player_text": "김동욱(내야수)",
+          "note": "개명전:김동명",
+          "source_file": "2017/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-03-18",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김동욱(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김동명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김동욱",
+          "old_name": "김동명",
+          "player_id": 77462
+        }
+      ]
+    },
+    {
+      "player_id": 63961,
+      "before_name": "윤호솔",
+      "before_oldname": null,
+      "name": "윤호솔",
+      "oldname": "윤형배",
+      "profile": {
+        "player_id": 63961,
+        "name": "윤호솔",
+        "back_no": "28",
+        "position": "투수(우투우타)",
+        "draft": "13 NC 우선지명",
+        "last_profile_year": 2024,
+        "team": "LG",
+        "source_file": "profiles/63961.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-03-16",
+          "team": "NC",
+          "player_text": "윤호솔(투수)",
+          "note": "개명전:윤형배",
+          "source_file": "2017/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-03-16",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "NC",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "윤호솔(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:윤형배",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "윤호솔",
+          "old_name": "윤형배",
+          "player_id": 63961
+        }
+      ]
+    },
+    {
+      "player_id": 62694,
+      "before_name": "조태진",
+      "before_oldname": null,
+      "name": "조태진",
+      "oldname": "조성진",
+      "profile": {
+        "player_id": 62694,
+        "name": "조태진",
+        "back_no": "110",
+        "position": "투수(좌투좌타)",
+        "draft": "12 KIA 육성선수",
+        "last_profile_year": 2018,
+        "team": "키움",
+        "source_file": "profiles/62694.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-01-20",
+          "team": "넥센",
+          "player_text": "조태진(투수)",
+          "note": "개명전:조성진",
+          "source_file": "2017/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-01-20",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "넥센",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "조태진(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:조성진",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "조태진",
+          "old_name": "조성진",
+          "player_id": 62694
+        }
+      ]
+    },
+    {
+      "player_id": 78366,
+      "before_name": "민태호",
+      "before_oldname": null,
+      "name": "민태호",
+      "oldname": "민성기",
+      "profile": {
+        "player_id": 78366,
+        "name": "민태호",
+        "back_no": "17",
+        "position": "투수(좌투좌타)",
+        "draft": "08 현대 2차 3라운드 22순위",
+        "last_profile_year": 2019,
+        "team": "NC",
+        "source_file": "profiles/78366.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-01-13",
+          "team": "NC",
+          "player_text": "민태호(투수)",
+          "note": "개명전:민성기",
+          "source_file": "2017/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-01-13",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "NC",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "민태호(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:민성기",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "민태호",
+          "old_name": "민성기",
+          "player_id": 78366
+        }
+      ]
+    },
+    {
+      "player_id": 63636,
+      "before_name": "고장혁",
+      "before_oldname": null,
+      "name": "고장혁",
+      "oldname": "고영우",
+      "profile": {
+        "player_id": 63636,
+        "name": "고장혁",
+        "back_no": "52",
+        "position": "내야수(우투양타)",
+        "draft": "13 KIA 5라운드 44순위",
+        "last_profile_year": 2020,
+        "team": "KIA",
+        "source_file": "profiles/63636.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-01-13",
+          "team": "KIA",
+          "player_text": "고장혁(내야수)",
+          "note": "개명전:고영우",
+          "source_file": "2017/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-01-13",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KIA",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "고장혁(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:고영우",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "고장혁",
+          "old_name": "고영우",
+          "player_id": 63636
+        }
+      ]
+    },
+    {
+      "player_id": 62007,
+      "before_name": "김지성",
+      "before_oldname": null,
+      "name": "김지성",
+      "oldname": "김영관",
+      "profile": {
+        "player_id": 62007,
+        "name": "김지성",
+        "back_no": "53",
+        "position": "내야수(우투우타)",
+        "draft": "12 LG 육성선수",
+        "last_profile_year": 2018,
+        "team": "KIA",
+        "source_file": "profiles/62007.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-01-05",
+          "team": "LG",
+          "player_text": "김지성(내야수)",
+          "note": "개명전:김영관",
+          "source_file": "2017/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-01-05",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "LG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김지성(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김영관",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김지성",
+          "old_name": "김영관",
+          "player_id": 62007
+        }
+      ]
+    },
+    {
+      "player_id": 65515,
+      "before_name": "강로한",
+      "before_oldname": null,
+      "name": "강로한",
+      "oldname": "강동수",
+      "profile": {
+        "player_id": 65515,
+        "name": "강로한",
+        "back_no": "54",
+        "position": "외야수(우투좌타)",
+        "draft": "15 롯데 2차 7라운드 68순위",
+        "last_profile_year": 2022,
+        "team": "롯데",
+        "source_file": "profiles/65515.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-11-12",
+          "team": "롯데",
+          "player_text": "강로한(내야수)",
+          "note": "개명전:강동수",
+          "source_file": "2018/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-11-12",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "강로한(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:강동수",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "강로한",
+          "old_name": "강동수",
+          "player_id": 65515
+        }
+      ]
+    },
+    {
+      "player_id": 67604,
+      "before_name": "강이준",
+      "before_oldname": null,
+      "name": "강이준",
+      "oldname": "강찬영",
+      "profile": {
+        "player_id": 67604,
+        "name": "강이준",
+        "back_no": "102",
+        "position": "투수(우투우타)",
+        "draft": "17 KIA 2차 4라운드 34순위",
+        "last_profile_year": 2026,
+        "team": "KIA",
+        "source_file": "profiles/67604.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-06-25",
+          "team": "KIA",
+          "player_text": "강이준(투수)",
+          "note": "개명전:강찬영",
+          "source_file": "2018/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-06-25",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KIA",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "강이준(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:강찬영",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "강이준",
+          "old_name": "강찬영",
+          "player_id": 67604
+        }
+      ]
+    },
+    {
+      "player_id": 65948,
+      "before_name": "배준빈",
+      "before_oldname": null,
+      "name": "배지환",
+      "oldname": "배준빈",
+      "profile": {
+        "player_id": 65948,
+        "name": "배준빈",
+        "back_no": "108",
+        "position": "투수(좌투우타)",
+        "draft": "15 NC 2차 9라운드 86순위",
+        "last_profile_year": 2018,
+        "team": "NC",
+        "source_file": "profiles/65948.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-05-28",
+          "team": "NC",
+          "player_text": "배지환(투수)",
+          "note": "개명전:배준빈",
+          "source_file": "2018/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-05-28",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "NC",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "배지환(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:배준빈",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "배지환",
+          "old_name": "배준빈",
+          "player_id": 65948
+        }
+      ]
+    },
+    {
+      "player_id": 66243,
+      "before_name": "양구열",
+      "before_oldname": null,
+      "name": "양구열",
+      "oldname": "양구렬",
+      "profile": {
+        "player_id": 66243,
+        "name": "양구열",
+        "back_no": "58",
+        "position": "내야수(우투우타)",
+        "draft": "16 두산 2차 8라운드 76순위",
+        "last_profile_year": 2018,
+        "team": "두산",
+        "source_file": "profiles/66243.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-05-24",
+          "team": "두산",
+          "player_text": "양구열(내야수)",
+          "note": "개명전:양구렬",
+          "source_file": "2018/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-05-24",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "양구열(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:양구렬",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "양구열",
+          "old_name": "양구렬",
+          "player_id": 66243
+        }
+      ]
+    },
+    {
+      "player_id": 68260,
+      "before_name": "현도훈",
+      "before_oldname": null,
+      "name": "현도훈",
+      "oldname": "현기형",
+      "profile": {
+        "player_id": 68260,
+        "name": "현도훈",
+        "back_no": "17",
+        "position": "투수(우투좌타)",
+        "draft": "18 두산 육성선수",
+        "last_profile_year": 2026,
+        "team": "롯데",
+        "source_file": "profiles/68260.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-03-30",
+          "team": "두산",
+          "player_text": "현도훈(투수)",
+          "note": "개명전:현기형",
+          "source_file": "2018/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-03-30",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "현도훈(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:현기형",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "현도훈",
+          "old_name": "현기형",
+          "player_id": 68260
+        }
+      ]
+    },
+    {
+      "player_id": 66504,
+      "before_name": "이찬건",
+      "before_oldname": null,
+      "name": "이찬건",
+      "oldname": "이석훈",
+      "profile": {
+        "player_id": 66504,
+        "name": "이찬건",
+        "back_no": "12",
+        "position": "내야수(우투좌타)",
+        "draft": "16 롯데 2차 6라운드 57순위",
+        "last_profile_year": 2019,
+        "team": "롯데",
+        "source_file": "profiles/66504.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-01-24",
+          "team": "롯데",
+          "player_text": "이찬건(내야수)",
+          "note": "개명전:이석훈",
+          "source_file": "2018/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-01-24",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "이찬건(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:이석훈",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "이찬건",
+          "old_name": "이석훈",
+          "player_id": 66504
+        }
+      ]
+    },
+    {
+      "player_id": 78753,
+      "before_name": "김지열",
+      "before_oldname": null,
+      "name": "김지열",
+      "oldname": "김사연",
+      "profile": {
+        "player_id": 78753,
+        "name": "김지열",
+        "back_no": "3",
+        "position": "외야수(우투우타)",
+        "draft": "07 한화 육성선수",
+        "last_profile_year": 2018,
+        "team": "KT",
+        "source_file": "profiles/78753.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-01-11",
+          "team": "KT",
+          "player_text": "김지열(외야수)",
+          "note": "개명전:김사연",
+          "source_file": "2018/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-01-11",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김지열(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김사연",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김지열",
+          "old_name": "김사연",
+          "player_id": 78753
+        }
+      ]
+    },
+    {
+      "player_id": 63103,
+      "before_name": "류원석",
+      "before_oldname": null,
+      "name": "류원석",
+      "oldname": "유원석",
+      "profile": {
+        "player_id": 63103,
+        "name": "류원석",
+        "back_no": "61",
+        "position": "투수(우언우타)",
+        "draft": "13 LG 육성선수",
+        "last_profile_year": 2023,
+        "team": "한화",
+        "source_file": "profiles/63103.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-12-19",
+          "team": "LG",
+          "player_text": "류원석(투수)",
+          "note": "개명전:유원석",
+          "source_file": "2019/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-12-19",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "LG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "류원석(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:유원석",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "류원석",
+          "old_name": "유원석",
+          "player_id": 63103
+        }
+      ]
+    },
+    {
+      "player_id": 78819,
+      "before_name": "백청훈",
+      "before_oldname": null,
+      "name": "백청훈",
+      "oldname": "백인식",
+      "profile": {
+        "player_id": 78819,
+        "name": "백청훈",
+        "back_no": "52",
+        "position": "투수(우언우타)",
+        "draft": "08 SK 2차 2라운드 14순위",
+        "last_profile_year": 2020,
+        "team": "LG",
+        "source_file": "profiles/78819.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-08-08",
+          "team": "SK",
+          "player_text": "백청훈(투수)",
+          "note": "개명전:백인식",
+          "source_file": "2019/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-08-08",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "SK",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "백청훈(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:백인식",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "백청훈",
+          "old_name": "백인식",
+          "player_id": 78819
+        }
+      ]
+    },
+    {
+      "player_id": 64041,
+      "before_name": "안현준",
+      "before_oldname": null,
+      "name": "안현준",
+      "oldname": "안상빈",
+      "profile": {
+        "player_id": 64041,
+        "name": "안현준",
+        "back_no": null,
+        "position": "투수(우언우타)",
+        "draft": "14 KT 2차 4라운드 36순위",
+        "last_profile_year": 2022,
+        "team": "KT",
+        "source_file": "profiles/64041.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-04-20",
+          "team": "KT",
+          "player_text": "안현준(투수)",
+          "note": "개명전:안상빈",
+          "source_file": "2019/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-04-20",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "안현준(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:안상빈",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "안현준",
+          "old_name": "안상빈",
+          "player_id": 64041
+        }
+      ]
+    },
+    {
+      "player_id": 65304,
+      "before_name": "김은성",
+      "before_oldname": null,
+      "name": "김은성",
+      "oldname": "김수산",
+      "profile": {
+        "player_id": 65304,
+        "name": "김은성",
+        "back_no": "37",
+        "position": "내야수(우투우타)",
+        "draft": "15 넥센 육성선수",
+        "last_profile_year": 2021,
+        "team": "키움",
+        "source_file": "profiles/65304.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-04-05",
+          "team": "키움",
+          "player_text": "김은성(내야수)",
+          "note": "개명전:김수산",
+          "source_file": "2019/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-04-05",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "키움",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김은성(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김수산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김은성",
+          "old_name": "김수산",
+          "player_id": 65304
+        }
+      ]
+    },
+    {
+      "player_id": 63559,
+      "before_name": "백동훈",
+      "before_oldname": null,
+      "name": "백동훈",
+      "oldname": "백민기",
+      "profile": {
+        "player_id": 63559,
+        "name": "백동훈",
+        "back_no": "49",
+        "position": "외야수(우투우타)",
+        "draft": "13 롯데 5라운드 45순위",
+        "last_profile_year": 2021,
+        "team": "두산",
+        "source_file": "profiles/63559.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-01-23",
+          "team": "두산",
+          "player_text": "백동훈(외야수)",
+          "note": "개명전:백민기",
+          "source_file": "2019/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-01-23",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "백동훈(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:백민기",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "백동훈",
+          "old_name": "백민기",
+          "player_id": 63559
+        }
+      ]
+    },
+    {
+      "player_id": 68068,
+      "before_name": "박시윤",
+      "before_oldname": null,
+      "name": "박시윤",
+      "oldname": "박재영",
+      "profile": {
+        "player_id": 68068,
+        "name": "박시윤",
+        "back_no": "67",
+        "position": "투수(좌투좌타)",
+        "draft": "18 KT 2차 3라운드 21순위",
+        "last_profile_year": 2024,
+        "team": "KT",
+        "source_file": "profiles/68068.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-01-18",
+          "team": "KT",
+          "player_text": "박시윤(투수)",
+          "note": "개명전:박재영",
+          "source_file": "2019/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-01-18",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "박시윤(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:박재영",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "박시윤",
+          "old_name": "박재영",
+          "player_id": 68068
+        }
+      ]
+    },
+    {
+      "player_id": 65522,
+      "before_name": "김강현",
+      "before_oldname": null,
+      "name": "김강현",
+      "oldname": "김호준",
+      "profile": {
+        "player_id": 65522,
+        "name": "김강현",
+        "back_no": "19",
+        "position": "투수(우투좌타)",
+        "draft": "15 롯데 육성선수",
+        "last_profile_year": 2026,
+        "team": "롯데",
+        "source_file": "profiles/65522.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-09-18",
+          "team": "롯데",
+          "player_text": "김강현(포수)",
+          "note": "개명전:김호준",
+          "source_file": "2020/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-09-18",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김강현(포수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김호준",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김강현",
+          "old_name": "김호준",
+          "player_id": 65522
+        }
+      ]
+    },
+    {
+      "player_id": 50013,
+      "before_name": "김범",
+      "before_oldname": null,
+      "name": "김범",
+      "oldname": "김경민",
+      "profile": {
+        "player_id": 50013,
+        "name": "김범",
+        "back_no": "113",
+        "position": "외야수(우투좌타)",
+        "draft": "20 KT 육성선수",
+        "last_profile_year": 2020,
+        "team": "KT",
+        "source_file": "profiles/50013.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-08-27",
+          "team": "KT",
+          "player_text": "김범(외야수)",
+          "note": "개명전:김경민",
+          "source_file": "2020/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-08-27",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김범(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김경민",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김범",
+          "old_name": "김경민",
+          "player_id": 50013
+        }
+      ]
+    },
+    {
+      "player_id": 63348,
+      "before_name": "조성운",
+      "before_oldname": null,
+      "name": "조성운",
+      "oldname": "조덕길",
+      "profile": {
+        "player_id": 63348,
+        "name": "조성운",
+        "back_no": "13",
+        "position": "투수(우투우타)",
+        "draft": "13 넥센 7라운드 58순위",
+        "last_profile_year": 2021,
+        "team": "키움",
+        "source_file": "profiles/63348.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-07-01",
+          "team": "키움",
+          "player_text": "조성운(투수)",
+          "note": "개명전:조덕길",
+          "source_file": "2020/page-0005.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-07-01",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "키움",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "조성운(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:조덕길",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "조성운",
+          "old_name": "조덕길",
+          "player_id": 63348
+        }
+      ]
+    },
+    {
+      "player_id": 65514,
+      "before_name": "강태율",
+      "before_oldname": null,
+      "name": "강태율",
+      "oldname": "강동관",
+      "profile": {
+        "player_id": 65514,
+        "name": "강태율",
+        "back_no": "32",
+        "position": "포수(우투우타)",
+        "draft": "15 롯데 1차",
+        "last_profile_year": 2024,
+        "team": "롯데",
+        "source_file": "profiles/65514.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-06-24",
+          "team": "롯데",
+          "player_text": "강태율(포수)",
+          "note": "개명전:강동관",
+          "source_file": "2020/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-06-24",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "강태율(포수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:강동관",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "강태율",
+          "old_name": "강동관",
+          "player_id": 65514
+        }
+      ]
+    },
+    {
+      "player_id": 63905,
+      "before_name": "윤형준",
+      "before_oldname": null,
+      "name": "윤형준",
+      "oldname": "윤대영",
+      "profile": {
+        "player_id": 63905,
+        "name": "윤형준",
+        "back_no": "94",
+        "position": "(우투우타)",
+        "draft": "13 NC 4라운드 31순위",
+        "last_profile_year": 2026,
+        "team": "NC",
+        "source_file": "profiles/63905.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-02-28",
+          "team": "LG",
+          "player_text": "윤형준(내야수)",
+          "note": "개명전:윤대영",
+          "source_file": "2020/page-0007.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-02-28",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "LG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "윤형준(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:윤대영",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "윤형준",
+          "old_name": "윤대영",
+          "player_id": 63905
+        }
+      ]
+    },
+    {
+      "player_id": 69206,
+      "before_name": "이민혁",
+      "before_oldname": null,
+      "name": "이민혁",
+      "oldname": "이재민",
+      "profile": {
+        "player_id": 69206,
+        "name": "이민혁",
+        "back_no": "112",
+        "position": "투수(우투우타)",
+        "draft": "19 두산 2차 4라운드 39순위",
+        "last_profile_year": 2024,
+        "team": "두산",
+        "source_file": "profiles/69206.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-01-29",
+          "team": "두산",
+          "player_text": "이민혁(투수)",
+          "note": "개명전:이재민",
+          "source_file": "2020/page-0007.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-01-29",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "이민혁(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:이재민",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "이민혁",
+          "old_name": "이재민",
+          "player_id": 69206
+        }
+      ]
+    },
+    {
+      "player_id": 66005,
+      "before_name": "임지한",
+      "before_oldname": null,
+      "name": "임지한",
+      "oldname": "임성재",
+      "profile": {
+        "player_id": 66005,
+        "name": "임지한",
+        "back_no": null,
+        "position": "외야수(우투우타)",
+        "draft": "16 KT 육성선수",
+        "last_profile_year": 2020,
+        "team": "KT",
+        "source_file": "profiles/66005.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-01-22",
+          "team": "KT",
+          "player_text": "임지한(외야수)",
+          "note": "개명전:임성재",
+          "source_file": "2020/page-0008.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-01-22",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "임지한(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:임성재",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "임지한",
+          "old_name": "임성재",
+          "player_id": 66005
+        }
+      ]
+    },
+    {
+      "player_id": 67049,
+      "before_name": "한대겸",
+      "before_oldname": null,
+      "name": "한대겸",
+      "oldname": "한승훈",
+      "profile": {
+        "player_id": 67049,
+        "name": "한대겸",
+        "back_no": "105",
+        "position": "투수(좌투좌타)",
+        "draft": "17 KT 2차 4라운드 31순위",
+        "last_profile_year": 2020,
+        "team": "KT",
+        "source_file": "profiles/67049.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-01-22",
+          "team": "KT",
+          "player_text": "한대겸(투수)",
+          "note": "개명전:한승훈",
+          "source_file": "2020/page-0008.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-01-22",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KT",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한대겸(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:한승훈",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "한대겸",
+          "old_name": "한승훈",
+          "player_id": 67049
+        }
+      ]
+    },
+    {
+      "player_id": 66556,
+      "before_name": "박선우",
+      "before_oldname": null,
+      "name": "박선우",
+      "oldname": "박종무",
+      "profile": {
+        "player_id": 66556,
+        "name": "박선우",
+        "back_no": "45",
+        "position": "투수(우투우타)",
+        "draft": "16 롯데 1차",
+        "last_profile_year": 2023,
+        "team": "KT",
+        "source_file": "profiles/66556.html.gz"
+      },
+      "events": [
+        {
+          "year": 2021,
+          "event_date": "2021-09-11",
+          "team": "롯데",
+          "player_text": "박선우(투수)",
+          "note": "개명전:박종무",
+          "source_file": "2021/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2021-09-11",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "박선우(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:박종무",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "박선우",
+          "old_name": "박종무",
+          "player_id": 66556
+        }
+      ]
+    },
+    {
+      "player_id": 66963,
+      "before_name": "최우재",
+      "before_oldname": null,
+      "name": "최우재",
+      "oldname": "최상인",
+      "profile": {
+        "player_id": 66963,
+        "name": "최우재",
+        "back_no": "29",
+        "position": "외야수(우투좌타)",
+        "draft": "16 NC 2차 5라운드 48순위",
+        "last_profile_year": 2024,
+        "team": "NC",
+        "source_file": "profiles/66963.html.gz"
+      },
+      "events": [
+        {
+          "year": 2021,
+          "event_date": "2021-08-13",
+          "team": "NC",
+          "player_text": "최우재(외야수)",
+          "note": "개명전:최상인",
+          "source_file": "2021/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2021-08-13",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "NC",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "최우재(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:최상인",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "최우재",
+          "old_name": "최상인",
+          "player_id": 66963
+        }
+      ]
+    },
+    {
+      "player_id": 62349,
+      "before_name": "김병현",
+      "before_oldname": null,
+      "name": "김태욱",
+      "oldname": "김병현",
+      "profile": {
+        "player_id": 62349,
+        "name": "김병현",
+        "back_no": "45",
+        "position": "투수(우언우타)",
+        "draft": "07 해외진출선수 특별지명",
+        "last_profile_year": 2018,
+        "team": "KIA",
+        "source_file": "profiles/62349.html.gz"
+      },
+      "events": [
+        {
+          "year": 2021,
+          "event_date": "2021-02-19",
+          "team": "한화",
+          "player_text": "김태욱(투수)",
+          "note": "개명전:김병현",
+          "source_file": "2021/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2021-02-19",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한화",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김태욱(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김병현",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김태욱",
+          "old_name": "김병현",
+          "player_id": 62349
+        }
+      ]
+    },
+    {
+      "player_id": 69893,
+      "before_name": "최수호",
+      "before_oldname": null,
+      "name": "최수호",
+      "oldname": "최재성",
+      "profile": {
+        "player_id": 69893,
+        "name": "최수호",
+        "back_no": null,
+        "position": "투수(우투우타)",
+        "draft": "19 SK 2차 3라운드 26순위",
+        "last_profile_year": 2026,
+        "team": "SSG",
+        "source_file": "profiles/69893.html.gz"
+      },
+      "events": [
+        {
+          "year": 2022,
+          "event_date": "2022-06-09",
+          "team": "SSG",
+          "player_text": "최수호(투수)",
+          "note": "개명전:최재성",
+          "source_file": "2022/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2022-06-09",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "SSG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "최수호(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:최재성",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "최수호",
+          "old_name": "최재성",
+          "player_id": 69893
+        }
+      ]
+    },
+    {
+      "player_id": 69702,
+      "before_name": "김건",
+      "before_oldname": null,
+      "name": "김건",
+      "oldname": "김현민",
+      "profile": {
+        "player_id": 69702,
+        "name": "김건",
+        "back_no": "56",
+        "position": "내야수(우투우타)",
+        "draft": "19 한화 2차 5라운드 43순위",
+        "last_profile_year": 2026,
+        "team": "한화",
+        "source_file": "profiles/69702.html.gz"
+      },
+      "events": [
+        {
+          "year": 2022,
+          "event_date": "2022-04-29",
+          "team": "한화",
+          "player_text": "김건(내야수)",
+          "note": "개명전:김현민",
+          "source_file": "2022/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2022-04-29",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한화",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김건(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김현민",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김건",
+          "old_name": "김현민",
+          "player_id": 69702
+        }
+      ]
+    },
+    {
+      "player_id": 66702,
+      "before_name": "이시원",
+      "before_oldname": null,
+      "name": "이시원",
+      "oldname": "이동훈",
+      "profile": {
+        "player_id": 66702,
+        "name": "이시원",
+        "back_no": "13",
+        "position": "외야수(좌투좌타)",
+        "draft": "16 한화 2차 2라운드 19순위",
+        "last_profile_year": 2023,
+        "team": "KT",
+        "source_file": "profiles/66702.html.gz"
+      },
+      "events": [
+        {
+          "year": 2022,
+          "event_date": "2022-03-23",
+          "team": "한화",
+          "player_text": "이시원(외야수)",
+          "note": "개명전:이동훈",
+          "source_file": "2022/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2022-03-23",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한화",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "이시원(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:이동훈",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "이시원",
+          "old_name": "이동훈",
+          "player_id": 66702
+        }
+      ]
+    },
+    {
+      "player_id": 69238,
+      "before_name": "김대한",
+      "before_oldname": null,
+      "name": "김대한",
+      "oldname": "김동은",
+      "profile": {
+        "player_id": 69238,
+        "name": "김대한",
+        "back_no": "32",
+        "position": "외야수(우투우타)",
+        "draft": "19 두산 1차",
+        "last_profile_year": 2026,
+        "team": "두산",
+        "source_file": "profiles/69238.html.gz"
+      },
+      "events": [
+        {
+          "year": 2022,
+          "event_date": "2022-03-11",
+          "team": "키움",
+          "player_text": "김대한(투수)",
+          "note": "개명전:김동은",
+          "source_file": "2022/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2022-03-11",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "키움",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김대한(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김동은",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김대한",
+          "old_name": "김동은",
+          "player_id": 69238
+        }
+      ]
+    },
+    {
+      "player_id": 54301,
+      "before_name": "이우현",
+      "before_oldname": null,
+      "name": "이태준",
+      "oldname": "이우현",
+      "profile": {
+        "player_id": 54301,
+        "name": "이태준",
+        "back_no": "109",
+        "position": "투수(우투우타)",
+        "draft": "24 키움 3라운드 24순위",
+        "last_profile_year": 2026,
+        "team": "키움",
+        "source_file": "profiles/54301.html.gz"
+      },
+      "events": [
+        {
+          "year": 2025,
+          "event_date": "2025-06-19",
+          "team": "키움",
+          "player_text": "이태준(투수)",
+          "note": "개명전:이우현",
+          "source_file": "2025/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2025-06-19",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "키움",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "이태준(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:이우현",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "이태준",
+          "old_name": "이우현",
+          "player_id": 54301
+        }
+      ]
+    }
+  ],
+  "already_current": [
+    {
+      "player_id": 60558,
+      "before_name": "오태곤",
+      "before_oldname": "오승택",
+      "name": "오태곤",
+      "oldname": "오승택",
+      "profile": {
+        "player_id": 60558,
+        "name": "오태곤",
+        "back_no": "37",
+        "position": "외야수(우투우타)",
+        "draft": "10 롯데 3라운드 22순위",
+        "last_profile_year": 2026,
+        "team": "SSG",
+        "source_file": "profiles/60558.html.gz"
+      },
+      "events": [
+        {
+          "year": 2017,
+          "event_date": "2017-04-14",
+          "team": "롯데",
+          "player_text": "오태곤(내야수)",
+          "note": "개명전:오승택(4.18적용)",
+          "source_file": "2017/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2017-04-14",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "오태곤(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:오승택(4.18적용)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "오태곤",
+          "old_name": "오승택",
+          "player_id": 60558
+        }
+      ]
+    },
+    {
+      "player_id": 67263,
+      "before_name": "최원준",
+      "before_oldname": "최동현",
+      "name": "최원준",
+      "oldname": "최동현",
+      "profile": {
+        "player_id": 67263,
+        "name": "최원준",
+        "back_no": "61",
+        "position": "투수(우언우타)",
+        "draft": "17 두산 1차",
+        "last_profile_year": 2026,
+        "team": "두산",
+        "source_file": "profiles/67263.html.gz"
+      },
+      "events": [
+        {
+          "year": 2018,
+          "event_date": "2018-09-28",
+          "team": "두산",
+          "player_text": "최원준(투수)",
+          "note": "개명전:최동현",
+          "source_file": "2018/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2018-09-28",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "최원준(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:최동현",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "최원준",
+          "old_name": "최동현",
+          "player_id": 67263
+        }
+      ]
+    },
+    {
+      "player_id": 60100,
+      "before_name": "백진우",
+      "before_oldname": "백창수",
+      "name": "백진우",
+      "oldname": "백창수",
+      "profile": {
+        "player_id": 60100,
+        "name": "백진우",
+        "back_no": "89",
+        "position": "(우투우타)",
+        "draft": "09 LG 육성선수",
+        "last_profile_year": 2026,
+        "team": "KT",
+        "source_file": "profiles/60100.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-12-12",
+          "team": "한화",
+          "player_text": "백진우(외야수)",
+          "note": "개명전:백창수",
+          "source_file": "2019/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-12-12",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한화",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "백진우(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:백창수",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "백진우",
+          "old_name": "백창수",
+          "player_id": 60100
+        }
+      ]
+    },
+    {
+      "player_id": 67207,
+      "before_name": "이유찬",
+      "before_oldname": "이병휘",
+      "name": "이유찬",
+      "oldname": "이병휘",
+      "profile": {
+        "player_id": 67207,
+        "name": "이유찬",
+        "back_no": "13",
+        "position": "내야수(우투우타)",
+        "draft": "17 두산 2차 5라운드 50순위",
+        "last_profile_year": 2026,
+        "team": "두산",
+        "source_file": "profiles/67207.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-05-04",
+          "team": "두산",
+          "player_text": "이유찬(내야수)",
+          "note": "개명전:이병휘",
+          "source_file": "2019/page-0003.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-05-04",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "이유찬(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:이병휘",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "이유찬",
+          "old_name": "이병휘",
+          "player_id": 67207
+        }
+      ]
+    },
+    {
+      "player_id": 62668,
+      "before_name": "윤해진",
+      "before_oldname": "윤완주",
+      "name": "윤해진",
+      "oldname": "윤완주",
+      "profile": {
+        "player_id": 62668,
+        "name": "윤해진",
+        "back_no": "81",
+        "position": "(우투우타)",
+        "draft": "12 KIA 10라운드 90순위",
+        "last_profile_year": 2025,
+        "team": "KIA",
+        "source_file": "profiles/62668.html.gz"
+      },
+      "events": [
+        {
+          "year": 2019,
+          "event_date": "2019-01-08",
+          "team": "KIA",
+          "player_text": "윤해진(내야수)",
+          "note": "개명전:윤완주",
+          "source_file": "2019/page-0004.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2019-01-08",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KIA",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "윤해진(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:윤완주",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "윤해진",
+          "old_name": "윤완주",
+          "player_id": 62668
+        }
+      ]
+    },
+    {
+      "player_id": 67539,
+      "before_name": "나균안",
+      "before_oldname": "나종덕",
+      "name": "나균안",
+      "oldname": "나종덕",
+      "profile": {
+        "player_id": 67539,
+        "name": "나균안",
+        "back_no": "43",
+        "position": "투수(우투우타)",
+        "draft": "17 롯데 2차 1라운드 3순위",
+        "last_profile_year": 2026,
+        "team": "롯데",
+        "source_file": "profiles/67539.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-07-08",
+          "team": "롯데",
+          "player_text": "나균안(포수)",
+          "note": "개명전:나종덕",
+          "source_file": "2020/page-0005.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-07-08",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "나균안(포수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:나종덕",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "나균안",
+          "old_name": "나종덕",
+          "player_id": 67539
+        }
+      ]
+    },
+    {
+      "player_id": 62360,
+      "before_name": "김태훈",
+      "before_oldname": "김동준",
+      "name": "김태훈",
+      "oldname": "김동준",
+      "profile": {
+        "player_id": 62360,
+        "name": "김태훈",
+        "back_no": "27",
+        "position": "투수(우투우타)",
+        "draft": "12 넥센 9라운드 79순위",
+        "last_profile_year": 2026,
+        "team": "삼성",
+        "source_file": "profiles/62360.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-04-21",
+          "team": "키움",
+          "player_text": "김태훈(투수)",
+          "note": "개명전:김동준",
+          "source_file": "2020/page-0007.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-04-21",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "키움",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김태훈(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김동준",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김태훈",
+          "old_name": "김동준",
+          "player_id": 62360
+        }
+      ]
+    },
+    {
+      "player_id": 64944,
+      "before_name": "박대온",
+      "before_oldname": "박광열",
+      "name": "박대온",
+      "oldname": "박광열",
+      "profile": {
+        "player_id": 64944,
+        "name": "박대온",
+        "back_no": null,
+        "position": "포수(우투우타)",
+        "draft": "14 NC 2차 2라운드 25순위",
+        "last_profile_year": 2025,
+        "team": "SSG",
+        "source_file": "profiles/64944.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-01-09",
+          "team": "NC",
+          "player_text": "박대온(포수)",
+          "note": "개명전:박광열",
+          "source_file": "2020/page-0008.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-01-09",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "NC",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "박대온(포수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:박광열",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "박대온",
+          "old_name": "박광열",
+          "player_id": 64944
+        }
+      ]
+    },
+    {
+      "player_id": 62263,
+      "before_name": "변시원",
+      "before_oldname": "변진수",
+      "name": "변시원",
+      "oldname": "변진수",
+      "profile": {
+        "player_id": 62263,
+        "name": "변시원",
+        "back_no": "66",
+        "position": "투수(우언우타)",
+        "draft": "12 두산 2라운드 13순위",
+        "last_profile_year": 2023,
+        "team": "키움",
+        "source_file": "profiles/62263.html.gz"
+      },
+      "events": [
+        {
+          "year": 2020,
+          "event_date": "2020-01-07",
+          "team": "KIA",
+          "player_text": "변시원(투수)",
+          "note": "개명전:변진수",
+          "source_file": "2020/page-0008.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2020-01-07",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KIA",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "변시원(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:변진수",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "변시원",
+          "old_name": "변진수",
+          "player_id": 62263
+        }
+      ]
+    },
+    {
+      "player_id": 63292,
+      "before_name": "박소준",
+      "before_oldname": "박종기",
+      "name": "박소준",
+      "oldname": "박종기",
+      "profile": {
+        "player_id": 63292,
+        "name": "박소준",
+        "back_no": "18",
+        "position": "투수(우투우타)",
+        "draft": "13 두산 육성선수",
+        "last_profile_year": 2024,
+        "team": "두산",
+        "source_file": "profiles/63292.html.gz"
+      },
+      "events": [
+        {
+          "year": 2021,
+          "event_date": "2021-12-16",
+          "team": "두산",
+          "player_text": "박소준(투수)",
+          "note": "개명전:박종기",
+          "source_file": "2021/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2021-12-16",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "박소준(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:박종기",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "박소준",
+          "old_name": "박종기",
+          "player_id": 63292
+        }
+      ]
+    },
+    {
+      "player_id": 69766,
+      "before_name": "유로결",
+      "before_oldname": "유장혁",
+      "name": "유로결",
+      "oldname": "유장혁",
+      "profile": {
+        "player_id": 69766,
+        "name": "유로결",
+        "back_no": "33",
+        "position": "외야수(우투우타)",
+        "draft": "19 한화 2차 2라운드 13순위",
+        "last_profile_year": 2026,
+        "team": "한화",
+        "source_file": "profiles/69766.html.gz"
+      },
+      "events": [
+        {
+          "year": 2021,
+          "event_date": "2021-12-16",
+          "team": "한화",
+          "player_text": "유로결(외야수)",
+          "note": "개명전:유장혁",
+          "source_file": "2021/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2021-12-16",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한화",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "유로결(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:유장혁",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "유로결",
+          "old_name": "유장혁",
+          "player_id": 69766
+        }
+      ]
+    },
+    {
+      "player_id": 51109,
+      "before_name": "김단우",
+      "before_oldname": "김대현",
+      "name": "김단우",
+      "oldname": "김대현",
+      "profile": {
+        "player_id": 51109,
+        "name": "김단우",
+        "back_no": "109",
+        "position": "투수(우투우타)",
+        "draft": "21 LG 2차 8라운드 77순위",
+        "last_profile_year": 2024,
+        "team": "LG",
+        "source_file": "profiles/51109.html.gz"
+      },
+      "events": [
+        {
+          "year": 2022,
+          "event_date": "2022-12-20",
+          "team": "LG",
+          "player_text": "김단우(투수)",
+          "note": "개명전:김대현",
+          "source_file": "2022/page-0001.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2022-12-20",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "LG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김단우(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김대현",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김단우",
+          "old_name": "김대현",
+          "player_id": 51109
+        }
+      ]
+    },
+    {
+      "player_id": 52844,
+      "before_name": "김도현",
+      "before_oldname": "김이환",
+      "name": "김도현",
+      "oldname": "김이환",
+      "profile": {
+        "player_id": 52844,
+        "name": "김도현",
+        "back_no": "61",
+        "position": "투수(우투우타)",
+        "draft": "22 SSG 2차 2라운드 12순위",
+        "last_profile_year": 2026,
+        "team": "SSG",
+        "source_file": "profiles/52844.html.gz"
+      },
+      "events": [
+        {
+          "year": 2022,
+          "event_date": "2022-03-23",
+          "team": "한화",
+          "player_text": "김도현(투수)",
+          "note": "개명전:김이환",
+          "source_file": "2022/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2022-03-23",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한화",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김도현(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김이환",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김도현",
+          "old_name": "김이환",
+          "player_id": 52844
+        }
+      ]
+    },
+    {
+      "player_id": 64768,
+      "before_name": "조이현",
+      "before_oldname": "조영우",
+      "name": "조이현",
+      "oldname": "조영우",
+      "profile": {
+        "player_id": 64768,
+        "name": "조이현",
+        "back_no": "54",
+        "position": "투수(우투좌타)",
+        "draft": "14 한화 2차 5라운드 47순위",
+        "last_profile_year": 2026,
+        "team": "KT",
+        "source_file": "profiles/64768.html.gz"
+      },
+      "events": [
+        {
+          "year": 2022,
+          "event_date": "2022-03-17",
+          "team": "SSG",
+          "player_text": "조이현(투수)",
+          "note": "개명전:조영우",
+          "source_file": "2022/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2022-03-17",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "SSG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "조이현(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:조영우",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "조이현",
+          "old_name": "조영우",
+          "player_id": 64768
+        }
+      ]
+    },
+    {
+      "player_id": 69204,
+      "before_name": "전루건",
+      "before_oldname": "전창민",
+      "name": "전루건",
+      "oldname": "전창민",
+      "profile": {
+        "player_id": 69204,
+        "name": "전루건",
+        "back_no": "104",
+        "position": "투수(우투우타)",
+        "draft": "19 두산 2차 1라운드 9순위",
+        "last_profile_year": 2026,
+        "team": "NC",
+        "source_file": "profiles/69204.html.gz"
+      },
+      "events": [
+        {
+          "year": 2023,
+          "event_date": "2023-05-30",
+          "team": "NC",
+          "player_text": "전루건(투수)",
+          "note": "개명전:전창민",
+          "source_file": "2023/page-0005.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2023-05-30",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "NC",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "전루건(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:전창민",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "전루건",
+          "old_name": "전창민",
+          "player_id": 69204
+        }
+      ]
+    },
+    {
+      "player_id": 68703,
+      "before_name": "박성웅",
+      "before_oldname": "박주홍",
+      "name": "박성웅",
+      "oldname": "박주홍",
+      "profile": {
+        "player_id": 68703,
+        "name": "박성웅",
+        "back_no": "27",
+        "position": "투수(좌투좌타)",
+        "draft": "18 한화 2차 2라운드 14순위",
+        "last_profile_year": 2026,
+        "team": null,
+        "source_file": "profiles/68703.html.gz"
+      },
+      "events": [
+        {
+          "year": 2023,
+          "event_date": "2023-05-18",
+          "team": "한화",
+          "player_text": "박성웅(투수)",
+          "note": "개명전:박주홍",
+          "source_file": "2023/page-0005.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2023-05-18",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "한화",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "박성웅(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:박주홍",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "박성웅",
+          "old_name": "박주홍",
+          "player_id": 68703
+        }
+      ]
+    },
+    {
+      "player_id": 62920,
+      "before_name": "노건우",
+      "before_oldname": "노성호",
+      "name": "노건우",
+      "oldname": "노성호",
+      "profile": {
+        "player_id": 62920,
+        "name": "노건우",
+        "back_no": "37",
+        "position": "투수(좌투좌타)",
+        "draft": "12 NC 우선지명",
+        "last_profile_year": 2023,
+        "team": "삼성",
+        "source_file": "profiles/62920.html.gz"
+      },
+      "events": [
+        {
+          "year": 2023,
+          "event_date": "2023-03-16",
+          "team": "삼성",
+          "player_text": "노건우(투수)",
+          "note": "개명전:노성호",
+          "source_file": "2023/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2023-03-16",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "삼성",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "노건우(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:노성호",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "노건우",
+          "old_name": "노성호",
+          "player_id": 62920
+        }
+      ]
+    },
+    {
+      "player_id": 67365,
+      "before_name": "양지율",
+      "before_oldname": "양기현",
+      "name": "양지율",
+      "oldname": "양기현",
+      "profile": {
+        "player_id": 67365,
+        "name": "양지율",
+        "back_no": null,
+        "position": "투수(우투우타)",
+        "draft": "17 넥센 2차 2라운드 17순위",
+        "last_profile_year": 2026,
+        "team": "키움",
+        "source_file": "profiles/67365.html.gz"
+      },
+      "events": [
+        {
+          "year": 2023,
+          "event_date": "2023-03-09",
+          "team": "키움",
+          "player_text": "양지율(투수)",
+          "note": "개명전:양기현",
+          "source_file": "2023/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2023-03-09",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "키움",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "양지율(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:양기현",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "양지율",
+          "old_name": "양기현",
+          "player_id": 67365
+        }
+      ]
+    },
+    {
+      "player_id": 63894,
+      "before_name": "김사윤",
+      "before_oldname": "김정빈",
+      "name": "김사윤",
+      "oldname": "김정빈",
+      "profile": {
+        "player_id": 63894,
+        "name": "김사윤",
+        "back_no": "21",
+        "position": "투수(좌투좌타)",
+        "draft": "13 SK 3라운드 28순위",
+        "last_profile_year": 2026,
+        "team": "KIA",
+        "source_file": "profiles/63894.html.gz"
+      },
+      "events": [
+        {
+          "year": 2023,
+          "event_date": "2023-03-09",
+          "team": "KIA",
+          "player_text": "김사윤(투수)",
+          "note": "개명전:김정빈",
+          "source_file": "2023/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2023-03-09",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KIA",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김사윤(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김정빈",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김사윤",
+          "old_name": "김정빈",
+          "player_id": 63894
+        }
+      ]
+    },
+    {
+      "player_id": 50115,
+      "before_name": "김수인",
+      "before_oldname": "김태우",
+      "name": "김수인",
+      "oldname": "김태우",
+      "profile": {
+        "player_id": 50115,
+        "name": "김수인",
+        "back_no": "16",
+        "position": "내야수(우투우타)",
+        "draft": "20 LG 육성선수",
+        "last_profile_year": 2026,
+        "team": null,
+        "source_file": "profiles/50115.html.gz"
+      },
+      "events": [
+        {
+          "year": 2024,
+          "event_date": "2024-09-12",
+          "team": "LG",
+          "player_text": "김수인(내야수)",
+          "note": "개명전:김태우",
+          "source_file": "2024/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2024-09-12",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "LG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김수인(내야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김태우",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김수인",
+          "old_name": "김태우",
+          "player_id": 50115
+        }
+      ]
+    },
+    {
+      "player_id": 51640,
+      "before_name": "권다결",
+      "before_oldname": "권혁경",
+      "name": "권다결",
+      "oldname": "권혁경",
+      "profile": {
+        "player_id": 51640,
+        "name": "권다결",
+        "back_no": "24",
+        "position": "포수(우투우타)",
+        "draft": "21 KIA 2차 4라운드 34순위",
+        "last_profile_year": 2026,
+        "team": "KIA",
+        "source_file": "profiles/51640.html.gz"
+      },
+      "events": [
+        {
+          "year": 2025,
+          "event_date": "2025-04-09",
+          "team": "KIA",
+          "player_text": "권다결(포수)",
+          "note": "개명전:권혁경",
+          "source_file": "2025/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2025-04-09",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "KIA",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "권다결(포수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:권혁경",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "권다결",
+          "old_name": "권혁경",
+          "player_id": 51640
+        }
+      ]
+    },
+    {
+      "player_id": 68403,
+      "before_name": "김무신",
+      "before_oldname": "김윤수",
+      "name": "김무신",
+      "oldname": "김윤수",
+      "profile": {
+        "player_id": 68403,
+        "name": "김무신",
+        "back_no": "48",
+        "position": "투수(우투우타)",
+        "draft": "18 삼성 2차 6라운드 52순위",
+        "last_profile_year": 2026,
+        "team": "삼성",
+        "source_file": "profiles/68403.html.gz"
+      },
+      "events": [
+        {
+          "year": 2025,
+          "event_date": "2025-02-25",
+          "team": "삼성",
+          "player_text": "김무신(투수)",
+          "note": "개명전:김윤수",
+          "source_file": "2025/page-0006.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2025-02-25",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "삼성",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김무신(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김윤수",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김무신",
+          "old_name": "김윤수",
+          "player_id": 68403
+        }
+      ]
+    },
+    {
+      "player_id": 53597,
+      "before_name": "박하늘",
+      "before_oldname": "박건",
+      "name": "박하늘",
+      "oldname": "박건",
+      "profile": {
+        "player_id": 53597,
+        "name": "박하늘",
+        "back_no": "129",
+        "position": "외야수(우투우타)",
+        "draft": "23 롯데 육성선수",
+        "last_profile_year": 2026,
+        "team": "롯데",
+        "source_file": "profiles/53597.html.gz"
+      },
+      "events": [
+        {
+          "year": 2026,
+          "event_date": "2026-07-16",
+          "team": "롯데",
+          "player_text": "박하늘(외야수)",
+          "note": "개명전:박건",
+          "source_file": "2026/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2026-07-16",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "박하늘(외야수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:박건",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "박하늘",
+          "old_name": "박건",
+          "player_id": 53597
+        }
+      ]
+    },
+    {
+      "player_id": 50205,
+      "before_name": "박강민",
+      "before_oldname": "박웅",
+      "name": "박강민",
+      "oldname": "박웅",
+      "profile": {
+        "player_id": 50205,
+        "name": "박강민",
+        "back_no": "57",
+        "position": "투수(우투우타)",
+        "draft": "20 두산 육성선수",
+        "last_profile_year": 2026,
+        "team": "두산",
+        "source_file": "profiles/50205.html.gz"
+      },
+      "events": [
+        {
+          "year": 2026,
+          "event_date": "2026-07-04",
+          "team": "두산",
+          "player_text": "박강민(투수)",
+          "note": "개명전:박웅",
+          "source_file": "2026/page-0002.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2026-07-04",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "두산",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "박강민(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:박웅",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "박강민",
+          "old_name": "박웅",
+          "player_id": 50205
+        }
+      ]
+    },
+    {
+      "player_id": 55109,
+      "before_name": "안이도",
+      "before_oldname": "안시후",
+      "name": "안이도",
+      "oldname": "안시후",
+      "profile": {
+        "player_id": 55109,
+        "name": "안이도",
+        "back_no": "109",
+        "position": "투수(우투우타)",
+        "draft": "25 LG 9라운드 90순위",
+        "last_profile_year": 2026,
+        "team": "LG",
+        "source_file": "profiles/55109.html.gz"
+      },
+      "events": [
+        {
+          "year": 2026,
+          "event_date": "2026-04-25",
+          "team": "LG",
+          "player_text": "안이도(투수)",
+          "note": "개명전:안시후",
+          "source_file": "2026/page-0005.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2026-04-25",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "LG",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "안이도(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:안시후",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "안이도",
+          "old_name": "안시후",
+          "player_id": 55109
+        }
+      ]
+    },
+    {
+      "player_id": 76430,
+      "before_name": "김태혁",
+      "before_oldname": "김상수",
+      "name": "김태혁",
+      "oldname": "김상수",
+      "profile": {
+        "player_id": 76430,
+        "name": "김태혁",
+        "back_no": "24",
+        "position": "투수(우투우타)",
+        "draft": "06 삼성 2차 2라운드 15순위",
+        "last_profile_year": 2026,
+        "team": "롯데",
+        "source_file": "profiles/76430.html.gz"
+      },
+      "events": [
+        {
+          "year": 2026,
+          "event_date": "2026-03-16",
+          "team": "롯데",
+          "player_text": "김태혁(투수)",
+          "note": "개명전:김상수",
+          "source_file": "2026/page-0005.json.gz",
+          "raw": {
+            "row": [
+              {
+                "Text": "2026-03-16",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "롯데",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "김태혁(투수)",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              },
+              {
+                "Text": "개명전:김상수",
+                "Class": null,
+                "Scope": null,
+                "RowSpan": null,
+                "ColSpan": null,
+                "Width": null,
+                "TypeObj": null
+              }
+            ],
+            "Class": null,
+            "OnClick": null,
+            "Style": null,
+            "Value": null,
+            "Id": null
+          },
+          "new_name": "김태혁",
+          "old_name": "김상수",
+          "player_id": 76430
+        }
+      ]
+    }
+  ],
+  "unresolved": [],
+  "failures": [],
+  "official_rename_records": 67
+}

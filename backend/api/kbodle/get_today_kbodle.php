@@ -7,9 +7,9 @@
     }
 
 
-    $sql = "SELECT kbodle_answer.PK, kbodle_answer.PlayerID, kbodle_answer.PlayerName, player_data.hs, player_data.hsLoc, player_data.team, player_data.mainPos, player_data.subPos, player_data.backNo, player_data.draft, player_data.birth, player_data.throw, player_data.bat
+    $sql = "SELECT kbodle_answer.PK, kbodle_answer.PlayerID, kbodle_answer.PlayerName, p.hs, p.hsLoc, p.team, p.mainPos, p.subPos, p.backNo, p.draft, p.birth, p.throw, p.bat
     FROM kbodle_answer
-    INNER JOIN player_data ON kbodle_answer.PlayerID = player_data.playerId
+    INNER JOIN $playerlist p ON kbodle_answer.PlayerID = p.player_id
     WHERE kbodle_answer.Kbodle_Date = DATE(NOW());";
     
     $result = $con->query($sql);
@@ -19,7 +19,6 @@
     if ($result->num_rows > 0) {
     
         $row = $result->fetch_assoc();
-        //$playerInfo = getPlayerData($row['playerID'], "answer");
 
         $age = 20;
         if($row['birth']) {

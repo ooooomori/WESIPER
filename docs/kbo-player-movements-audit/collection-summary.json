@@ -1,0 +1,87 @@
+{
+  "annual": [
+    {
+      "year": 2017,
+      "official_rows": 377,
+      "excluded_name_changes": 13,
+      "stored_rows": 364
+    },
+    {
+      "year": 2018,
+      "official_rows": 280,
+      "excluded_name_changes": 8,
+      "stored_rows": 272
+    },
+    {
+      "year": 2019,
+      "official_rows": 369,
+      "excluded_name_changes": 9,
+      "stored_rows": 360
+    },
+    {
+      "year": 2020,
+      "official_rows": 739,
+      "excluded_name_changes": 12,
+      "stored_rows": 727
+    },
+    {
+      "year": 2021,
+      "official_rows": 588,
+      "excluded_name_changes": 5,
+      "stored_rows": 583
+    },
+    {
+      "year": 2022,
+      "official_rows": 611,
+      "excluded_name_changes": 7,
+      "stored_rows": 604
+    },
+    {
+      "year": 2023,
+      "official_rows": 616,
+      "excluded_name_changes": 5,
+      "stored_rows": 611
+    },
+    {
+      "year": 2024,
+      "official_rows": 642,
+      "excluded_name_changes": 1,
+      "stored_rows": 641
+    },
+    {
+      "year": 2025,
+      "official_rows": 641,
+      "excluded_name_changes": 3,
+      "stored_rows": 638
+    },
+    {
+      "year": 2026,
+      "official_rows": 559,
+      "excluded_name_changes": 4,
+      "stored_rows": 555
+    }
+  ],
+  "failures": [],
+  "event_types": {
+    "FA 계약": 158,
+    "FA 보상선수": 31,
+    "군보류": 512,
+    "해외 복귀 FA 계약": 2,
+    "임의해지": 72,
+    "자유계약선수": 983,
+    "트레이드": 201,
+    "2차 드래프트": 83,
+    "FA 자격취득": 163,
+    "소속선수 추가 등록": 739,
+    "등번호 변경": 354,
+    "웨이버": 276,
+    "군보류 자유계약선수": 192,
+    "임의해지 복귀": 10,
+    "트레이드(웨이버)": 13,
+    "부상자 명단": 1386,
+    "경조휴가": 45,
+    "치료·재활명단": 110,
+    "자유계약선수 - 참가활동정지": 1,
+    "재활선수(외국인 선수)": 24
+  }
+}

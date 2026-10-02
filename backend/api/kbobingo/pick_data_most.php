@@ -10,16 +10,16 @@
 
     $query = "SELECT 
                 pick.picked, 
-                pl.p_no, 
-                pl.p_name, 
-                pl.p_img,
+                pl.player_id,
+                pl.name,
+                pl.img,
                 (SELECT SUM(picked) 
                 FROM $pickTable 
                 WHERE grid_index = pick.grid_index 
                 AND row_no = pick.row_no 
                 AND col_no = pick.col_no) AS total_picked
             FROM $pickTable pick
-            INNER JOIN $playerlist pl ON pick.p_no = pl.p_no
+            INNER JOIN $playerlist pl ON pick.p_no = pl.player_id
             WHERE pick.grid_index = ?
             AND pick.row_no = ?
             AND pick.col_no = ?
@@ -33,9 +33,9 @@
     if ($result->num_rows > 0) {
         $pickPlayer = $result->fetch_assoc();
         $pick = $pickPlayer['picked'];
-        $p_no = $pickPlayer['p_no'];
-        $p_name = $pickPlayer['p_name'];
-        $p_img = image_exists($p_no) ? $p_no : $pickPlayer['p_img'];
+        $p_no = $pickPlayer['player_id'];
+        $p_name = $pickPlayer['name'];
+        $p_img = image_exists($p_no) ? $p_no : $pickPlayer['img'];
 
         
 

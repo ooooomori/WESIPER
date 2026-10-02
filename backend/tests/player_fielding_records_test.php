@@ -1,0 +1,30 @@
+<?php
+declare(strict_types=1);
+require dirname(__DIR__).'/lib/player-fielding-records.php';
+$row=static fn($year,$team,$position,$ip)=>['p_year'=>$year,'p_team'=>$team,'p_pos'=>$position,'G'=>'20','GS'=>'10','IP'=>$ip,'FPCT'=>'0.99','CS%'=>null];
+$rows=[$row(2001,'SK','유격수','10 1/3'),$row(2001,'SK','2루수','5 2/3'),$row(2001,'LG','3루수','3'),$row(2004,'LG','포수','0')];$rows[3]['CS%']='27.1';
+$result=profileFormatFieldingRecords($rows);
+if(count($result['rows'])!==3||count($result['rows'][0]['positions'])!==2)throw new RuntimeException('Year/team groups mismatch');
+$first=$result['rows'][0]['positions'][0];
+if($first['games']!==20||$first['starts']!==10||$first['innings']!=='10.1'||$first['fieldingPct']!=='0.990'||$first['caughtStealingPct']!==null)throw new RuntimeException('Fielding format mismatch');
+if($result['rows'][2]['positions'][0]['caughtStealingPct']!=='27.1')throw new RuntimeException('CS% already uses percentage units');
+if($result['career']['innings']!=='19'||$result['career']['games']!==null||$result['career']['fieldingPct']!==null)throw new RuntimeException('Overlapping games must not be summed');
+$rows[0]['IP']='-';$rows[0]['G']='-';$missing=profileFormatFieldingRecords($rows);
+if($missing['rows'][0]['positions'][0]['games']!==null||$missing['career']['innings']!==null)throw new RuntimeException('Missing values must stay null');
+if(profileFormatFieldingRecords([])['rows']!==[])throw new RuntimeException('Empty records mismatch');
+echo "PASS: fielding year/team grouping, position rows, fractional innings, percentages, missing values, no overlapping game totals\n";
+
+$schedule=[2001=>['regular'=>['2001-04-01','2001-10-01']],2025=>['regular'=>['2025-04-01','2025-10-01']],2026=>['regular'=>['2026-04-01','2026-10-01']]];
+$event=static fn($id,$date,$team,$pos,$gs)=>['game_id'=>$id,'game_date'=>$date,'team'=>$team,'pos'=>$pos,'is_gs'=>$gs];
+$events=[$event('a','2001-04-02','SSG','지',1),$event('a','2001-04-02','SSG','지三',1),$event('b','2001-04-03','SK','三지',1),$event('c','2001-04-04','SK','타지',0),$event('pre','2001-03-01','SK','지',1),$event('future','2026-04-02','SSG','지',1),$event('d','2025-04-02','LG','D',null)];
+$withDh=profileAddDesignatedHitterRecords($result,$events,$schedule);
+$sk=array_values(array_filter($withDh['rows'],static fn($r)=>$r['year']===2001&&$r['team']==='SK'))[0];
+$dh=$sk['positions'][2];
+if($dh['position']!=='지명타자'||$dh['games']!==3||$dh['starts']!==1||$dh['innings']!==null)throw new RuntimeException('DH dedup, alias merge or starting position mismatch');
+if(count($withDh['rows'])!==4||max(array_column($withDh['rows'],'year'))!==2025)throw new RuntimeException('DH season exclusion mismatch');
+$career=array_column($withDh['careerPositions'],null,'position');
+if($career['지명타자']['games']!==4||$career['지명타자']['starts']!==null||$career['지명타자']['innings']!==null)throw new RuntimeException('DH career or missing starts mismatch');
+$repeat=profileFormatFieldingRecords([$row(2001,'SK','유격수','10 1/3'),$row(2004,'LG','유격수','5 2/3')]);
+$c=$repeat['careerPositions'][0];
+if($c['games']!==40||$c['starts']!==20||$c['innings']!=='16'||$c['fieldingPct']!==null)throw new RuntimeException('Position career aggregation mismatch');
+echo "PASS: DH season restrictions, game deduplication, team aliases, starting positions, per-position careers\n";

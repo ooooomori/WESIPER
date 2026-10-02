@@ -341,11 +341,11 @@ const ResultModal = (props) => {
                                             <span>{game?.answer.Name}</span>{" "}
                                             <a
                                                 href={
-                                                    "https://www.koreabaseball.com/Record/Player/HitterDetail/Basic.aspx?playerId=" +
+                                                    "/?pid=" +
                                                     game?.answer.SporkId
                                                 }
-                                                target="_blank"
-                                                title="KBO 기록실"
+                                                target="_blank" rel="noopener noreferrer"
+                                                title="선수 프로필"
                                                 className="text-blue-600 underline underline-offset-2"
                                             >
                                                 #

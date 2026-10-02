@@ -279,15 +279,7 @@ const GridItem = (props) => {
                 <div
                     className="relative overflow flex justify-center items-center w-full h-full"
                     onClick={() => {
-                        const isBatter = pImg?.split("_")[2] === "b";
-                        const pageType = isBatter
-                            ? "HitterDetail"
-                            : "PitcherDetail";
-                        const isMobile = window.matchMedia?.("(max-width: 767px)").matches || /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
-                        const kboUrl = isMobile
-                            ? `https://m.koreabaseball.com/Kbo/Player/${isBatter ? "Hitter" : "Pitcher"}.aspx?playerId=${item.p_no}`
-                            : `https://www.koreabaseball.com/Record/Player/${pageType}/Total.aspx?playerId=${item.p_no}`;
-                        window.open(kboUrl, "_blank", "noopener,noreferrer");
+                        window.open(`/?pid=${encodeURIComponent(item.p_no)}`, "_blank", "noopener,noreferrer");
                     }}
                 >
                     <div className="absolute top-0 right-0 text-white text-[0.6rem] md:text-xs bg-zinc-800 opacity-95 pl-1.5 pr-1 sm:pr-1.5 py-0.5 rounded-bl-lg">

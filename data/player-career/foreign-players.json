@@ -1,0 +1,2797 @@
+[
+  {
+    "player_id": 31004,
+    "name": "유토",
+    "oldname": null
+  },
+  {
+    "player_id": 31011,
+    "name": "고바야시",
+    "oldname": null
+  },
+  {
+    "player_id": 31012,
+    "name": "홀",
+    "oldname": null
+  },
+  {
+    "player_id": 31017,
+    "name": "오카다",
+    "oldname": null
+  },
+  {
+    "player_id": 31048,
+    "name": "나가",
+    "oldname": null
+  },
+  {
+    "player_id": 50040,
+    "name": "데스파이네",
+    "oldname": "오드리사머 데스파이네"
+  },
+  {
+    "player_id": 50165,
+    "name": "라모스",
+    "oldname": "로베르토 라모스"
+  },
+  {
+    "player_id": 50234,
+    "name": "플렉센",
+    "oldname": "크리스 플렉센"
+  },
+  {
+    "player_id": 50300,
+    "name": "모터",
+    "oldname": "테일러 모터"
+  },
+  {
+    "player_id": 50350,
+    "name": "러셀",
+    "oldname": "에디슨 러셀"
+  },
+  {
+    "player_id": 50404,
+    "name": "뷰캐넌",
+    "oldname": "데이비드 뷰캐넌"
+  },
+  {
+    "player_id": 50468,
+    "name": "살라디노",
+    "oldname": "타일러 살라디노"
+  },
+  {
+    "player_id": 50469,
+    "name": "팔카",
+    "oldname": "다니엘 팔카"
+  },
+  {
+    "player_id": 50506,
+    "name": "마차도",
+    "oldname": "딕슨 마차도"
+  },
+  {
+    "player_id": 50524,
+    "name": "샘슨",
+    "oldname": "아드리안 샘슨"
+  },
+  {
+    "player_id": 50558,
+    "name": "스트레일리",
+    "oldname": "댄 스트레일리"
+  },
+  {
+    "player_id": 50636,
+    "name": "브룩스",
+    "oldname": "애런 브룩스"
+  },
+  {
+    "player_id": 50640,
+    "name": "가뇽",
+    "oldname": "드류 가뇽"
+  },
+  {
+    "player_id": 50730,
+    "name": "반즈",
+    "oldname": "브랜든 반즈"
+  },
+  {
+    "player_id": 50802,
+    "name": "화이트",
+    "oldname": "타일러 화이트"
+  },
+  {
+    "player_id": 50815,
+    "name": "킹엄",
+    "oldname": "닉 킹엄"
+  },
+  {
+    "player_id": 50835,
+    "name": "핀토",
+    "oldname": "리카르도 핀토"
+  },
+  {
+    "player_id": 50912,
+    "name": "라이트",
+    "oldname": "마이크 라이트"
+  },
+  {
+    "player_id": 50923,
+    "name": "알테어",
+    "oldname": "애런 알테어"
+  },
+  {
+    "player_id": 51004,
+    "name": "알몬테",
+    "oldname": "조일로 알몬테"
+  },
+  {
+    "player_id": 51136,
+    "name": "수아레즈",
+    "oldname": "앤드류 수아레즈"
+  },
+  {
+    "player_id": 51144,
+    "name": "보어",
+    "oldname": "저스틴 보어"
+  },
+  {
+    "player_id": 51234,
+    "name": "로켓",
+    "oldname": "워커 로켓"
+  },
+  {
+    "player_id": 51257,
+    "name": "미란다",
+    "oldname": "호세 미란다"
+  },
+  {
+    "player_id": 51309,
+    "name": "크레익",
+    "oldname": "윌 크레익"
+  },
+  {
+    "player_id": 51324,
+    "name": "프레이타스",
+    "oldname": "데이비드 프레이타스"
+  },
+  {
+    "player_id": 51334,
+    "name": "스미스",
+    "oldname": "조쉬 스미스"
+  },
+  {
+    "player_id": 51439,
+    "name": "몽고메리",
+    "oldname": "마이크 몽고메리"
+  },
+  {
+    "player_id": 51463,
+    "name": "피렐라",
+    "oldname": "호세 피렐라"
+  },
+  {
+    "player_id": 51567,
+    "name": "프랑코",
+    "oldname": "앤더슨 프랑코"
+  },
+  {
+    "player_id": 51619,
+    "name": "멩덴",
+    "oldname": "다니엘 멩덴"
+  },
+  {
+    "player_id": 51636,
+    "name": "다카하시",
+    "oldname": "보 다카하시"
+  },
+  {
+    "player_id": 51714,
+    "name": "페레즈",
+    "oldname": "에르난 페레즈"
+  },
+  {
+    "player_id": 51722,
+    "name": "카펜터",
+    "oldname": "라이언 카펜터"
+  },
+  {
+    "player_id": 51725,
+    "name": "힐리",
+    "oldname": "라이온 힐리"
+  },
+  {
+    "player_id": 51833,
+    "name": "가빌리오",
+    "oldname": "샘 가빌리오"
+  },
+  {
+    "player_id": 51834,
+    "name": "르위키",
+    "oldname": "아티 르위키"
+  },
+  {
+    "player_id": 51863,
+    "name": "폰트",
+    "oldname": "윌머 폰트"
+  },
+  {
+    "player_id": 51967,
+    "name": "파슨스",
+    "oldname": "웨스 파슨스"
+  },
+  {
+    "player_id": 52009,
+    "name": "알포드",
+    "oldname": "앤서니 알포드"
+  },
+  {
+    "player_id": 52025,
+    "name": "라모스",
+    "oldname": "헨리 라모스"
+  },
+  {
+    "player_id": 52043,
+    "name": "벤자민",
+    "oldname": "웨스 벤자민"
+  },
+  {
+    "player_id": 52112,
+    "name": "루이즈",
+    "oldname": "리오 루이즈"
+  },
+  {
+    "player_id": 52145,
+    "name": "플럿코",
+    "oldname": "아담 플럿코"
+  },
+  {
+    "player_id": 52234,
+    "name": "스탁",
+    "oldname": "로버트 스탁"
+  },
+  {
+    "player_id": 52257,
+    "name": "브랜든",
+    "oldname": "브랜든 와델"
+  },
+  {
+    "player_id": 52308,
+    "name": "애플러",
+    "oldname": "타일러 애플러"
+  },
+  {
+    "player_id": 52366,
+    "name": "푸이그",
+    "oldname": "야시엘 푸이그"
+  },
+  {
+    "player_id": 52457,
+    "name": "수아레즈",
+    "oldname": "알버트 수아레즈"
+  },
+  {
+    "player_id": 52526,
+    "name": "피터스",
+    "oldname": "DJ 피터스"
+  },
+  {
+    "player_id": 52528,
+    "name": "반즈",
+    "oldname": "찰리 반즈"
+  },
+  {
+    "player_id": 52547,
+    "name": "렉스",
+    "oldname": null
+  },
+  {
+    "player_id": 52557,
+    "name": "스파크맨",
+    "oldname": "글렌 스파크맨"
+  },
+  {
+    "player_id": 52606,
+    "name": "파노니",
+    "oldname": "토마스 파노니"
+  },
+  {
+    "player_id": 52630,
+    "name": "소크라테스",
+    "oldname": "소크라테스 브리토"
+  },
+  {
+    "player_id": 52637,
+    "name": "놀린",
+    "oldname": "션 놀린"
+  },
+  {
+    "player_id": 52645,
+    "name": "로니",
+    "oldname": "제임스 로니"
+  },
+  {
+    "player_id": 52712,
+    "name": "터크먼",
+    "oldname": "마이크 터크먼"
+  },
+  {
+    "player_id": 52720,
+    "name": "페냐",
+    "oldname": null
+  },
+  {
+    "player_id": 52806,
+    "name": "라가레스",
+    "oldname": "후안 라가레스"
+  },
+  {
+    "player_id": 52808,
+    "name": "모리만도",
+    "oldname": "숀 모리만도"
+  },
+  {
+    "player_id": 52827,
+    "name": "크론",
+    "oldname": "케빈 크론"
+  },
+  {
+    "player_id": 52833,
+    "name": "노바",
+    "oldname": "이반 노바"
+  },
+  {
+    "player_id": 52904,
+    "name": "마티니",
+    "oldname": "닉 마티니"
+  },
+  {
+    "player_id": 52950,
+    "name": "더모디",
+    "oldname": "맷 더모디"
+  },
+  {
+    "player_id": 53040,
+    "name": "슐서",
+    "oldname": "보 슐서"
+  },
+  {
+    "player_id": 53123,
+    "name": "오스틴",
+    "oldname": "오스틴 딘"
+  },
+  {
+    "player_id": 53211,
+    "name": "로하스",
+    "oldname": "호세 로하스"
+  },
+  {
+    "player_id": 53233,
+    "name": "딜런",
+    "oldname": "딜런 파일"
+  },
+  {
+    "player_id": 53322,
+    "name": "맥키니",
+    "oldname": "이안 맥키니"
+  },
+  {
+    "player_id": 53327,
+    "name": "도슨",
+    "oldname": "로니 도슨"
+  },
+  {
+    "player_id": 53375,
+    "name": "후라도",
+    "oldname": "아리엘 후라도"
+  },
+  {
+    "player_id": 53506,
+    "name": "구드럼",
+    "oldname": "니코 구드럼"
+  },
+  {
+    "player_id": 53546,
+    "name": "윌커슨",
+    "oldname": "애런 윌커슨"
+  },
+  {
+    "player_id": 53645,
+    "name": "메디나",
+    "oldname": "아도니스 메디나"
+  },
+  {
+    "player_id": 53664,
+    "name": "앤더슨",
+    "oldname": "숀 앤더슨"
+  },
+  {
+    "player_id": 53665,
+    "name": "산체스",
+    "oldname": "마리오 산체스"
+  },
+  {
+    "player_id": 53712,
+    "name": "오그레디",
+    "oldname": "브라이언 오그레디"
+  },
+  {
+    "player_id": 53714,
+    "name": "산체스",
+    "oldname": "리카르도 산체스"
+  },
+  {
+    "player_id": 53716,
+    "name": "윌리엄스",
+    "oldname": "닉 윌리엄스"
+  },
+  {
+    "player_id": 53734,
+    "name": "스미스",
+    "oldname": "버치 스미스"
+  },
+  {
+    "player_id": 53825,
+    "name": "엘리아스",
+    "oldname": "로에니스 엘리아스"
+  },
+  {
+    "player_id": 53827,
+    "name": "에레디아",
+    "oldname": "기예르모 에레디아"
+  },
+  {
+    "player_id": 53833,
+    "name": "맥카티",
+    "oldname": "커크 맥카티"
+  },
+  {
+    "player_id": 53863,
+    "name": "로메로",
+    "oldname": "에니 로메로"
+  },
+  {
+    "player_id": 53909,
+    "name": "태너",
+    "oldname": "태너 털리"
+  },
+  {
+    "player_id": 53913,
+    "name": "페디",
+    "oldname": "에릭 페디"
+  },
+  {
+    "player_id": 53927,
+    "name": "와이드너",
+    "oldname": "테일러 와이드너"
+  },
+  {
+    "player_id": 53955,
+    "name": "마틴",
+    "oldname": "제이슨 마틴"
+  },
+  {
+    "player_id": 54119,
+    "name": "에르난데스",
+    "oldname": "엘리에이저 에르난데스"
+  },
+  {
+    "player_id": 54134,
+    "name": "엔스",
+    "oldname": "디트릭 엔스"
+  },
+  {
+    "player_id": 54243,
+    "name": "발라조빅",
+    "oldname": "브랜든 발라조빅"
+  },
+  {
+    "player_id": 54295,
+    "name": "제러드",
+    "oldname": "제러드 영"
+  },
+  {
+    "player_id": 54354,
+    "name": "헤이수스",
+    "oldname": null
+  },
+  {
+    "player_id": 54400,
+    "name": "디아즈",
+    "oldname": "르윈 디아즈"
+  },
+  {
+    "player_id": 54424,
+    "name": "맥키넌",
+    "oldname": "데이비드 맥키넌"
+  },
+  {
+    "player_id": 54443,
+    "name": "레예스",
+    "oldname": null
+  },
+  {
+    "player_id": 54444,
+    "name": "카디네스",
+    "oldname": "루벤 카디네스"
+  },
+  {
+    "player_id": 54452,
+    "name": "코너",
+    "oldname": "코너 시볼드"
+  },
+  {
+    "player_id": 54529,
+    "name": "레이예스",
+    "oldname": "빅터 레이예스"
+  },
+  {
+    "player_id": 54615,
+    "name": "스타우트",
+    "oldname": "에릭 스타우트"
+  },
+  {
+    "player_id": 54640,
+    "name": "네일",
+    "oldname": "제임스 네일"
+  },
+  {
+    "player_id": 54666,
+    "name": "라우어",
+    "oldname": "에릭 라우어"
+  },
+  {
+    "player_id": 54720,
+    "name": "바리아",
+    "oldname": "하이메 바리아"
+  },
+  {
+    "player_id": 54730,
+    "name": "페라자",
+    "oldname": null
+  },
+  {
+    "player_id": 54755,
+    "name": "와이스",
+    "oldname": null
+  },
+  {
+    "player_id": 54804,
+    "name": "더거",
+    "oldname": "로버트 더거"
+  },
+  {
+    "player_id": 54833,
+    "name": "앤더슨",
+    "oldname": null
+  },
+  {
+    "player_id": 54843,
+    "name": "시라카와",
+    "oldname": "시라카와 케이쇼"
+  },
+  {
+    "player_id": 54920,
+    "name": "카스타노",
+    "oldname": "다니엘 카스타노"
+  },
+  {
+    "player_id": 54930,
+    "name": "하트",
+    "oldname": "카일 하트"
+  },
+  {
+    "player_id": 54944,
+    "name": "데이비슨",
+    "oldname": "맷 데이비슨"
+  },
+  {
+    "player_id": 55032,
+    "name": "패트릭",
+    "oldname": "패트릭 머피"
+  },
+  {
+    "player_id": 55130,
+    "name": "톨허스트",
+    "oldname": "앤더스 톨허스트"
+  },
+  {
+    "player_id": 55138,
+    "name": "코엔 윈",
+    "oldname": null
+  },
+  {
+    "player_id": 55146,
+    "name": "치리노스",
+    "oldname": null
+  },
+  {
+    "player_id": 55208,
+    "name": "케이브",
+    "oldname": null
+  },
+  {
+    "player_id": 55239,
+    "name": "잭로그",
+    "oldname": "잭 로그"
+  },
+  {
+    "player_id": 55257,
+    "name": "콜어빈",
+    "oldname": "콜 어빈"
+  },
+  {
+    "player_id": 55322,
+    "name": "로젠버그",
+    "oldname": "케니 로젠버그"
+  },
+  {
+    "player_id": 55326,
+    "name": "스톤",
+    "oldname": "스톤 개럿"
+  },
+  {
+    "player_id": 55342,
+    "name": "메르세데스",
+    "oldname": "C.C. 메르세데스"
+  },
+  {
+    "player_id": 55348,
+    "name": "웰스",
+    "oldname": "라클란 웰스"
+  },
+  {
+    "player_id": 55460,
+    "name": "가라비토",
+    "oldname": "헤르손 가라비토"
+  },
+  {
+    "player_id": 55532,
+    "name": "감보아",
+    "oldname": "알렉 감보아"
+  },
+  {
+    "player_id": 55536,
+    "name": "데이비슨",
+    "oldname": "터커 데이비슨"
+  },
+  {
+    "player_id": 55633,
+    "name": "올러",
+    "oldname": "애덤 올러"
+  },
+  {
+    "player_id": 55645,
+    "name": "위즈덤",
+    "oldname": "패트릭 위즈덤"
+  },
+  {
+    "player_id": 55730,
+    "name": "폰세",
+    "oldname": "코디 폰세"
+  },
+  {
+    "player_id": 55734,
+    "name": "플로리얼",
+    "oldname": null
+  },
+  {
+    "player_id": 55844,
+    "name": "맥브룸",
+    "oldname": "라이언 맥브룸"
+  },
+  {
+    "player_id": 55855,
+    "name": "화이트",
+    "oldname": "미치 화이트"
+  },
+  {
+    "player_id": 55903,
+    "name": "라일리",
+    "oldname": null
+  },
+  {
+    "player_id": 55912,
+    "name": "로건",
+    "oldname": "로건 앨런"
+  },
+  {
+    "player_id": 56002,
+    "name": "대니엘",
+    "oldname": "데이비스 대니엘"
+  },
+  {
+    "player_id": 56011,
+    "name": "스기모토",
+    "oldname": null
+  },
+  {
+    "player_id": 56034,
+    "name": "힐리어드",
+    "oldname": null
+  },
+  {
+    "player_id": 56036,
+    "name": "보쉴리",
+    "oldname": null
+  },
+  {
+    "player_id": 56146,
+    "name": "리오스",
+    "oldname": "약셀 리오스"
+  },
+  {
+    "player_id": 56168,
+    "name": "케네디",
+    "oldname": "존 케네디"
+  },
+  {
+    "player_id": 56212,
+    "name": "타카다",
+    "oldname": "타카다 타쿠토"
+  },
+  {
+    "player_id": 56218,
+    "name": "타무라",
+    "oldname": null
+  },
+  {
+    "player_id": 56236,
+    "name": "세베리노",
+    "oldname": "유니오 세베리노"
+  },
+  {
+    "player_id": 56251,
+    "name": "카메론",
+    "oldname": null
+  },
+  {
+    "player_id": 56322,
+    "name": "브룩스",
+    "oldname": "트렌턴 브룩스"
+  },
+  {
+    "player_id": 56334,
+    "name": "와일스",
+    "oldname": "네이선 와일스"
+  },
+  {
+    "player_id": 56348,
+    "name": "유토",
+    "oldname": "카나쿠보 유토"
+  },
+  {
+    "player_id": 56402,
+    "name": "보스",
+    "oldname": "오스틴 보스"
+  },
+  {
+    "player_id": 56409,
+    "name": "매닝",
+    "oldname": null
+  },
+  {
+    "player_id": 56415,
+    "name": "미야지",
+    "oldname": null
+  },
+  {
+    "player_id": 56459,
+    "name": "페덱",
+    "oldname": "크리스 페덱"
+  },
+  {
+    "player_id": 56464,
+    "name": "오러클린",
+    "oldname": "잭 오러클린"
+  },
+  {
+    "player_id": 56474,
+    "name": "사토시",
+    "oldname": "미야모리 사토시"
+  },
+  {
+    "player_id": 56503,
+    "name": "이이무라",
+    "oldname": "이이무라 쇼타"
+  },
+  {
+    "player_id": 56523,
+    "name": "비슬리",
+    "oldname": null
+  },
+  {
+    "player_id": 56531,
+    "name": "로드리게스",
+    "oldname": null
+  },
+  {
+    "player_id": 56548,
+    "name": "쿄야마",
+    "oldname": null
+  },
+  {
+    "player_id": 56613,
+    "name": "아데를린",
+    "oldname": null
+  },
+  {
+    "player_id": 56626,
+    "name": "카스트로",
+    "oldname": null
+  },
+  {
+    "player_id": 56632,
+    "name": "데일",
+    "oldname": null
+  },
+  {
+    "player_id": 56712,
+    "name": "에르난데스",
+    "oldname": "윌켈 에르난데스"
+  },
+  {
+    "player_id": 56719,
+    "name": "왕옌청",
+    "oldname": null
+  },
+  {
+    "player_id": 56724,
+    "name": "화이트",
+    "oldname": null
+  },
+  {
+    "player_id": 56760,
+    "name": "쿠싱",
+    "oldname": "잭 쿠싱"
+  },
+  {
+    "player_id": 56799,
+    "name": "짐머맨",
+    "oldname": "브루스 짐머맨"
+  },
+  {
+    "player_id": 56800,
+    "name": "긴지로",
+    "oldname": null
+  },
+  {
+    "player_id": 56801,
+    "name": "아빌라",
+    "oldname": "페드로 아빌라"
+  },
+  {
+    "player_id": 56813,
+    "name": "마드리스",
+    "oldname": "블라이 마드리스"
+  },
+  {
+    "player_id": 56823,
+    "name": "타케다",
+    "oldname": "타케다 쇼타"
+  },
+  {
+    "player_id": 56841,
+    "name": "베니지아노",
+    "oldname": "앤서니 베니지아노"
+  },
+  {
+    "player_id": 56855,
+    "name": "해치",
+    "oldname": "토마스 해치"
+  },
+  {
+    "player_id": 56911,
+    "name": "토다",
+    "oldname": null
+  },
+  {
+    "player_id": 56928,
+    "name": "버하겐",
+    "oldname": null
+  },
+  {
+    "player_id": 56950,
+    "name": "블레인",
+    "oldname": "블레인 크림"
+  },
+  {
+    "player_id": 56966,
+    "name": "테일러",
+    "oldname": null
+  },
+  {
+    "player_id": 60139,
+    "name": "더마트레",
+    "oldname": "필 더마트레"
+  },
+  {
+    "player_id": 60154,
+    "name": "곤잘레스",
+    "oldname": "에드가 곤잘레스"
+  },
+  {
+    "player_id": 60156,
+    "name": "오카모토",
+    "oldname": "오카모토 신야"
+  },
+  {
+    "player_id": 60240,
+    "name": "히메네스",
+    "oldname": "켈빈 히메네스"
+  },
+  {
+    "player_id": 60329,
+    "name": "번사이드",
+    "oldname": "애드리안 번사이드"
+  },
+  {
+    "player_id": 60430,
+    "name": "레딩",
+    "oldname": "팀 레딩"
+  },
+  {
+    "player_id": 60594,
+    "name": "사도스키",
+    "oldname": "라이언 사도스키"
+  },
+  {
+    "player_id": 60649,
+    "name": "라이트",
+    "oldname": "매트 라이트"
+  },
+  {
+    "player_id": 60650,
+    "name": "로드리게스",
+    "oldname": "리카르도 로드리게스"
+  },
+  {
+    "player_id": 60697,
+    "name": "콜론",
+    "oldname": "로만 콜론"
+  },
+  {
+    "player_id": 60726,
+    "name": "카페얀",
+    "oldname": "호세 카페얀"
+  },
+  {
+    "player_id": 60727,
+    "name": "부에노",
+    "oldname": "프랜시슬리 부에노"
+  },
+  {
+    "player_id": 60729,
+    "name": "데폴라",
+    "oldname": "훌리오 데폴라"
+  },
+  {
+    "player_id": 61154,
+    "name": "주키치",
+    "oldname": "벤자민 주키치"
+  },
+  {
+    "player_id": 61158,
+    "name": "리즈",
+    "oldname": "레다메스 리즈"
+  },
+  {
+    "player_id": 61230,
+    "name": "라미레즈",
+    "oldname": "라몬 라미레즈"
+  },
+  {
+    "player_id": 61231,
+    "name": "페르난도",
+    "oldname": "페르난도 니에베"
+  },
+  {
+    "player_id": 61240,
+    "name": "니퍼트",
+    "oldname": "더스틴 니퍼트"
+  },
+  {
+    "player_id": 61332,
+    "name": "알드리지",
+    "oldname": "코리 알드리지"
+  },
+  {
+    "player_id": 61434,
+    "name": "저마노",
+    "oldname": "저스틴 저마노"
+  },
+  {
+    "player_id": 61435,
+    "name": "가코",
+    "oldname": "라이언 가코"
+  },
+  {
+    "player_id": 61444,
+    "name": "매티스",
+    "oldname": "덕 매티스"
+  },
+  {
+    "player_id": 61541,
+    "name": "코리",
+    "oldname": "브라이언 코리"
+  },
+  {
+    "player_id": 61629,
+    "name": "트레비스",
+    "oldname": "트레비스 블랙클리"
+  },
+  {
+    "player_id": 61726,
+    "name": "오넬리",
+    "oldname": "오넬리 페레즈"
+  },
+  {
+    "player_id": 61727,
+    "name": "바티스타",
+    "oldname": "데니 바티스타"
+  },
+  {
+    "player_id": 61854,
+    "name": "매그레인",
+    "oldname": "짐 매그레인"
+  },
+  {
+    "player_id": 61855,
+    "name": "고든",
+    "oldname": "브라이언 고든"
+  },
+  {
+    "player_id": 61897,
+    "name": "부첵",
+    "oldname": "크리스 부첵"
+  },
+  {
+    "player_id": 62230,
+    "name": "프록터",
+    "oldname": "스캇 프록터"
+  },
+  {
+    "player_id": 62322,
+    "name": "밴헤켄",
+    "oldname": "앤디 밴 헤켄"
+  },
+  {
+    "player_id": 62451,
+    "name": "탈보트",
+    "oldname": "미치 탈보트"
+  },
+  {
+    "player_id": 62597,
+    "name": "유먼",
+    "oldname": "쉐인 유먼"
+  },
+  {
+    "player_id": 62644,
+    "name": "앤서니",
+    "oldname": "앤서니 르루"
+  },
+  {
+    "player_id": 62688,
+    "name": "빌로우",
+    "oldname": null
+  },
+  {
+    "player_id": 62698,
+    "name": "소사",
+    "oldname": "헨리 소사"
+  },
+  {
+    "player_id": 62699,
+    "name": "라미레즈",
+    "oldname": null
+  },
+  {
+    "player_id": 62730,
+    "name": "배스",
+    "oldname": "브라이언 배스"
+  },
+  {
+    "player_id": 62731,
+    "name": "션헨",
+    "oldname": null
+  },
+  {
+    "player_id": 62833,
+    "name": "부시",
+    "oldname": "데이브 부시"
+  },
+  {
+    "player_id": 62859,
+    "name": "마리오",
+    "oldname": "마리오 산티아고"
+  },
+  {
+    "player_id": 63229,
+    "name": "핸킨스",
+    "oldname": "데릭 핸킨스"
+  },
+  {
+    "player_id": 63230,
+    "name": "올슨",
+    "oldname": "개릿 올슨"
+  },
+  {
+    "player_id": 63432,
+    "name": "밴덴헐크",
+    "oldname": "릭 밴덴헐크"
+  },
+  {
+    "player_id": 63462,
+    "name": "로드리게스",
+    "oldname": "아네우리 로드리게스"
+  },
+  {
+    "player_id": 63465,
+    "name": "카리대",
+    "oldname": "에스마일린 카리대"
+  },
+  {
+    "player_id": 63737,
+    "name": "이브랜드",
+    "oldname": "대나 이브랜드"
+  },
+  {
+    "player_id": 63810,
+    "name": "세든",
+    "oldname": "크리스 세든"
+  },
+  {
+    "player_id": 63857,
+    "name": "레이예스",
+    "oldname": "조조 레이예스"
+  },
+  {
+    "player_id": 63938,
+    "name": "해커",
+    "oldname": "에릭 해커"
+  },
+  {
+    "player_id": 63939,
+    "name": "찰리",
+    "oldname": "찰리 쉬렉"
+  },
+  {
+    "player_id": 63940,
+    "name": "아담",
+    "oldname": "아담 윌크"
+  },
+  {
+    "player_id": 64020,
+    "name": "마이크",
+    "oldname": null
+  },
+  {
+    "player_id": 64136,
+    "name": "티포드",
+    "oldname": "에버렛 티포드"
+  },
+  {
+    "player_id": 64154,
+    "name": "조쉬벨",
+    "oldname": null
+  },
+  {
+    "player_id": 64157,
+    "name": "리오단",
+    "oldname": "코리 리오단"
+  },
+  {
+    "player_id": 64158,
+    "name": "스나이더",
+    "oldname": "브래드 스나이더"
+  },
+  {
+    "player_id": 64203,
+    "name": "칸투",
+    "oldname": "호르헤 칸투"
+  },
+  {
+    "player_id": 64219,
+    "name": "마야",
+    "oldname": "유네스키 마야"
+  },
+  {
+    "player_id": 64230,
+    "name": "볼스테드",
+    "oldname": null
+  },
+  {
+    "player_id": 64302,
+    "name": "로티노",
+    "oldname": null
+  },
+  {
+    "player_id": 64430,
+    "name": "마틴",
+    "oldname": null
+  },
+  {
+    "player_id": 64440,
+    "name": "나바로",
+    "oldname": null
+  },
+  {
+    "player_id": 64553,
+    "name": "히메네스",
+    "oldname": "루이스 히메네스"
+  },
+  {
+    "player_id": 64641,
+    "name": "어센시오",
+    "oldname": null
+  },
+  {
+    "player_id": 64658,
+    "name": "홀튼",
+    "oldname": null
+  },
+  {
+    "player_id": 64659,
+    "name": "토마스",
+    "oldname": "저스틴 토마스"
+  },
+  {
+    "player_id": 64699,
+    "name": "필",
+    "oldname": "브렛 필"
+  },
+  {
+    "player_id": 64737,
+    "name": "앨버스",
+    "oldname": null
+  },
+  {
+    "player_id": 64746,
+    "name": "피에",
+    "oldname": "펠릭스 피에"
+  },
+  {
+    "player_id": 64761,
+    "name": "클레이",
+    "oldname": "케일럽 클레이"
+  },
+  {
+    "player_id": 64762,
+    "name": "타투스코",
+    "oldname": "라이언 타투스코"
+  },
+  {
+    "player_id": 64824,
+    "name": "울프",
+    "oldname": "로스 울프"
+  },
+  {
+    "player_id": 64864,
+    "name": "스캇",
+    "oldname": "루크 스캇"
+  },
+  {
+    "player_id": 64914,
+    "name": "테임즈",
+    "oldname": "에릭 테임즈"
+  },
+  {
+    "player_id": 64956,
+    "name": "웨버",
+    "oldname": "태드 웨버"
+  },
+  {
+    "player_id": 65005,
+    "name": "마르테",
+    "oldname": "앤디 마르테"
+  },
+  {
+    "player_id": 65036,
+    "name": "어윈",
+    "oldname": "필 어윈"
+  },
+  {
+    "player_id": 65052,
+    "name": "댄블랙",
+    "oldname": null
+  },
+  {
+    "player_id": 65103,
+    "name": "히메네스",
+    "oldname": "루이스 히메네스"
+  },
+  {
+    "player_id": 65104,
+    "name": "한나한",
+    "oldname": "잭 한나한"
+  },
+  {
+    "player_id": 65137,
+    "name": "루카스",
+    "oldname": "루카스 하렐"
+  },
+  {
+    "player_id": 65203,
+    "name": "루츠",
+    "oldname": "잭 루츠"
+  },
+  {
+    "player_id": 65219,
+    "name": "스와잭",
+    "oldname": "앤서니 스와잭"
+  },
+  {
+    "player_id": 65233,
+    "name": "로메로",
+    "oldname": "데이빈슨 로메로"
+  },
+  {
+    "player_id": 65331,
+    "name": "피어밴드",
+    "oldname": "라이언 피어밴드"
+  },
+  {
+    "player_id": 65425,
+    "name": "클로이드",
+    "oldname": null
+  },
+  {
+    "player_id": 65444,
+    "name": "피가로",
+    "oldname": null
+  },
+  {
+    "player_id": 65523,
+    "name": "아두치",
+    "oldname": "짐 아두치"
+  },
+  {
+    "player_id": 65543,
+    "name": "린드블럼",
+    "oldname": "조쉬 린드블럼"
+  },
+  {
+    "player_id": 65546,
+    "name": "레일리",
+    "oldname": "브룩스 레일리"
+  },
+  {
+    "player_id": 65630,
+    "name": "에반",
+    "oldname": "에반 믹"
+  },
+  {
+    "player_id": 65658,
+    "name": "스틴슨",
+    "oldname": "조쉬 스틴슨"
+  },
+  {
+    "player_id": 65659,
+    "name": "험버",
+    "oldname": "필립 험버"
+  },
+  {
+    "player_id": 65733,
+    "name": "모건",
+    "oldname": "나이저 모건"
+  },
+  {
+    "player_id": 65742,
+    "name": "로저스",
+    "oldname": "에스밀 로저스"
+  },
+  {
+    "player_id": 65762,
+    "name": "폭스",
+    "oldname": "제이크 폭스"
+  },
+  {
+    "player_id": 65823,
+    "name": "브라운",
+    "oldname": "앤드류 브라운"
+  },
+  {
+    "player_id": 65856,
+    "name": "켈리",
+    "oldname": "메릴 켈리"
+  },
+  {
+    "player_id": 65931,
+    "name": "스튜어트",
+    "oldname": "재크 스튜어트"
+  },
+  {
+    "player_id": 66032,
+    "name": "피노",
+    "oldname": null
+  },
+  {
+    "player_id": 66049,
+    "name": "마리몬",
+    "oldname": "슈가 레이 마리몬"
+  },
+  {
+    "player_id": 66050,
+    "name": "로위",
+    "oldname": "조쉬 로위"
+  },
+  {
+    "player_id": 66138,
+    "name": "허프",
+    "oldname": "데이비드 허프"
+  },
+  {
+    "player_id": 66154,
+    "name": "코프랜드",
+    "oldname": "스캇 코프랜드"
+  },
+  {
+    "player_id": 66226,
+    "name": "보우덴",
+    "oldname": null
+  },
+  {
+    "player_id": 66244,
+    "name": "에반스",
+    "oldname": null
+  },
+  {
+    "player_id": 66306,
+    "name": "대니돈",
+    "oldname": null
+  },
+  {
+    "player_id": 66323,
+    "name": "코엘로",
+    "oldname": "로버트 코엘로"
+  },
+  {
+    "player_id": 66324,
+    "name": "맥그레거",
+    "oldname": "스캇 맥그레거"
+  },
+  {
+    "player_id": 66402,
+    "name": "웹스터",
+    "oldname": "앨런 웹스터"
+  },
+  {
+    "player_id": 66423,
+    "name": "플란데",
+    "oldname": null
+  },
+  {
+    "player_id": 66440,
+    "name": "벨레스터",
+    "oldname": "콜린 벨레스터"
+  },
+  {
+    "player_id": 66446,
+    "name": "레온",
+    "oldname": "아놀드 레온"
+  },
+  {
+    "player_id": 66452,
+    "name": "발디리스",
+    "oldname": "아롬 발디리스"
+  },
+  {
+    "player_id": 66523,
+    "name": "맥스웰",
+    "oldname": "저스틴 맥스웰"
+  },
+  {
+    "player_id": 66628,
+    "name": "지크",
+    "oldname": "지크 스프루일"
+  },
+  {
+    "player_id": 66643,
+    "name": "헥터",
+    "oldname": "헥터 노에시"
+  },
+  {
+    "player_id": 66740,
+    "name": "로사리오",
+    "oldname": "윌린 로사리오"
+  },
+  {
+    "player_id": 66742,
+    "name": "서캠프",
+    "oldname": "에릭 서캠프"
+  },
+  {
+    "player_id": 66748,
+    "name": "마에스트리",
+    "oldname": null
+  },
+  {
+    "player_id": 66750,
+    "name": "카스티요",
+    "oldname": "파비오 카스티요"
+  },
+  {
+    "player_id": 66805,
+    "name": "고메즈",
+    "oldname": null
+  },
+  {
+    "player_id": 66825,
+    "name": "라라",
+    "oldname": null
+  },
+  {
+    "player_id": 67024,
+    "name": "모넬",
+    "oldname": null
+  },
+  {
+    "player_id": 67025,
+    "name": "로하스",
+    "oldname": "멜 로하스 주니어"
+  },
+  {
+    "player_id": 67033,
+    "name": "로치",
+    "oldname": "돈 로치"
+  },
+  {
+    "player_id": 67134,
+    "name": "로니",
+    "oldname": null
+  },
+  {
+    "player_id": 67312,
+    "name": "오설리반",
+    "oldname": "션 오설리반"
+  },
+  {
+    "player_id": 67313,
+    "name": "브리검",
+    "oldname": null
+  },
+  {
+    "player_id": 67394,
+    "name": "초이스",
+    "oldname": "마이클 초이스"
+  },
+  {
+    "player_id": 67423,
+    "name": "레나도",
+    "oldname": null
+  },
+  {
+    "player_id": 67435,
+    "name": "페트릭",
+    "oldname": null
+  },
+  {
+    "player_id": 67450,
+    "name": "러프",
+    "oldname": "다린 러프"
+  },
+  {
+    "player_id": 67558,
+    "name": "마켈",
+    "oldname": null
+  },
+  {
+    "player_id": 67559,
+    "name": "애디튼",
+    "oldname": null
+  },
+  {
+    "player_id": 67598,
+    "name": "번즈",
+    "oldname": "앤디 번즈"
+  },
+  {
+    "player_id": 67645,
+    "name": "팻딘",
+    "oldname": null
+  },
+  {
+    "player_id": 67650,
+    "name": "버나디나",
+    "oldname": "로저 버나디나"
+  },
+  {
+    "player_id": 67742,
+    "name": "비야누에바",
+    "oldname": null
+  },
+  {
+    "player_id": 67815,
+    "name": "다이아몬드",
+    "oldname": "스캇 다이아몬드"
+  },
+  {
+    "player_id": 67827,
+    "name": "워스",
+    "oldname": null
+  },
+  {
+    "player_id": 67845,
+    "name": "밴와트",
+    "oldname": null
+  },
+  {
+    "player_id": 67872,
+    "name": "로맥",
+    "oldname": "제이미 로맥"
+  },
+  {
+    "player_id": 67935,
+    "name": "스크럭스",
+    "oldname": "재비어 스크럭스"
+  },
+  {
+    "player_id": 67948,
+    "name": "맨쉽",
+    "oldname": "제프 맨쉽"
+  },
+  {
+    "player_id": 68103,
+    "name": "가르시아",
+    "oldname": "아도니스 가르시아"
+  },
+  {
+    "player_id": 68135,
+    "name": "윌슨",
+    "oldname": "타일러 윌슨"
+  },
+  {
+    "player_id": 68240,
+    "name": "후랭코프",
+    "oldname": null
+  },
+  {
+    "player_id": 68244,
+    "name": "파레디스",
+    "oldname": "지미 파레디스"
+  },
+  {
+    "player_id": 68245,
+    "name": "반슬라이크",
+    "oldname": "스캇 반슬라이크"
+  },
+  {
+    "player_id": 68345,
+    "name": "샌즈",
+    "oldname": "제리 샌즈"
+  },
+  {
+    "player_id": 68400,
+    "name": "보니야",
+    "oldname": null
+  },
+  {
+    "player_id": 68435,
+    "name": "아델만",
+    "oldname": null
+  },
+  {
+    "player_id": 68526,
+    "name": "듀브론트",
+    "oldname": null
+  },
+  {
+    "player_id": 68730,
+    "name": "호잉",
+    "oldname": "제라드 호잉"
+  },
+  {
+    "player_id": 68742,
+    "name": "휠러",
+    "oldname": "제이슨 휠러"
+  },
+  {
+    "player_id": 68748,
+    "name": "샘슨",
+    "oldname": "키버스 샘슨"
+  },
+  {
+    "player_id": 68794,
+    "name": "헤일",
+    "oldname": "데이비드 헤일"
+  },
+  {
+    "player_id": 68815,
+    "name": "산체스",
+    "oldname": "앙헬 산체스"
+  },
+  {
+    "player_id": 68948,
+    "name": "왕웨이중",
+    "oldname": null
+  },
+  {
+    "player_id": 68953,
+    "name": "베렛",
+    "oldname": null
+  },
+  {
+    "player_id": 69032,
+    "name": "쿠에바스",
+    "oldname": "윌리엄 쿠에바스"
+  },
+  {
+    "player_id": 69045,
+    "name": "알칸타라",
+    "oldname": "라울 알칸타라"
+  },
+  {
+    "player_id": 69103,
+    "name": "켈리",
+    "oldname": "케이시 켈리"
+  },
+  {
+    "player_id": 69150,
+    "name": "조셉",
+    "oldname": "토미 조셉"
+  },
+  {
+    "player_id": 69165,
+    "name": "페게로",
+    "oldname": "카를로스 페게로"
+  },
+  {
+    "player_id": 69209,
+    "name": "페르난데스",
+    "oldname": "호세 미겔 페르난데스"
+  },
+  {
+    "player_id": 69343,
+    "name": "요키시",
+    "oldname": "에릭 요키시"
+  },
+  {
+    "player_id": 69405,
+    "name": "윌리엄슨",
+    "oldname": null
+  },
+  {
+    "player_id": 69413,
+    "name": "맥과이어",
+    "oldname": "덱 맥과이어"
+  },
+  {
+    "player_id": 69435,
+    "name": "헤일리",
+    "oldname": null
+  },
+  {
+    "player_id": 69439,
+    "name": "라이블리",
+    "oldname": "벤 라이블리"
+  },
+  {
+    "player_id": 69530,
+    "name": "아수아헤",
+    "oldname": null
+  },
+  {
+    "player_id": 69550,
+    "name": "톰슨",
+    "oldname": "제이크 톰슨"
+  },
+  {
+    "player_id": 69569,
+    "name": "윌슨",
+    "oldname": "제이콥 윌슨"
+  },
+  {
+    "player_id": 69605,
+    "name": "해즐베이커",
+    "oldname": "제레미 헤즐베이커"
+  },
+  {
+    "player_id": 69640,
+    "name": "터너",
+    "oldname": "제이콥 터너"
+  },
+  {
+    "player_id": 69652,
+    "name": "터커",
+    "oldname": "프레스턴 터커"
+  },
+  {
+    "player_id": 69656,
+    "name": "윌랜드",
+    "oldname": null
+  },
+  {
+    "player_id": 69744,
+    "name": "서폴드",
+    "oldname": null
+  },
+  {
+    "player_id": 69861,
+    "name": "다익손",
+    "oldname": "브록 다익손"
+  },
+  {
+    "player_id": 69901,
+    "name": "스몰린스키",
+    "oldname": null
+  },
+  {
+    "player_id": 69934,
+    "name": "버틀러",
+    "oldname": null
+  },
+  {
+    "player_id": 69940,
+    "name": "루친스키",
+    "oldname": "드류 루친스키"
+  },
+  {
+    "player_id": 69950,
+    "name": "베탄코트",
+    "oldname": "크리스티안 베탄코트"
+  },
+  {
+    "player_id": 69953,
+    "name": "프리드릭",
+    "oldname": null
+  },
+  {
+    "player_id": 70123,
+    "name": "테이텀",
+    "oldname": null
+  },
+  {
+    "player_id": 70124,
+    "name": "쿡슨",
+    "oldname": null
+  },
+  {
+    "player_id": 70143,
+    "name": "해리거",
+    "oldname": "데니 해리거"
+  },
+  {
+    "player_id": 70220,
+    "name": "파머",
+    "oldname": null
+  },
+  {
+    "player_id": 70309,
+    "name": "윌리엄스",
+    "oldname": null
+  },
+  {
+    "player_id": 70310,
+    "name": "카펜터",
+    "oldname": null
+  },
+  {
+    "player_id": 70317,
+    "name": "퀸란",
+    "oldname": null
+  },
+  {
+    "player_id": 70335,
+    "name": "브링클리",
+    "oldname": null
+  },
+  {
+    "player_id": 70414,
+    "name": "프랑코",
+    "oldname": "훌리오 프랑코"
+  },
+  {
+    "player_id": 70441,
+    "name": "가르시아",
+    "oldname": "마이크 가르시아"
+  },
+  {
+    "player_id": 70503,
+    "name": "우드",
+    "oldname": null
+  },
+  {
+    "player_id": 70542,
+    "name": "화이트",
+    "oldname": "데릭 화이트"
+  },
+  {
+    "player_id": 70640,
+    "name": "포조",
+    "oldname": null
+  },
+  {
+    "player_id": 70641,
+    "name": "타바레스",
+    "oldname": null
+  },
+  {
+    "player_id": 70643,
+    "name": "배스",
+    "oldname": null
+  },
+  {
+    "player_id": 70644,
+    "name": "미첼",
+    "oldname": null
+  },
+  {
+    "player_id": 70831,
+    "name": "뮬렌",
+    "oldname": null
+  },
+  {
+    "player_id": 70834,
+    "name": "브리또",
+    "oldname": "틸슨 브리또"
+  },
+  {
+    "player_id": 70837,
+    "name": "혼즈",
+    "oldname": null
+  },
+  {
+    "player_id": 70840,
+    "name": "콜",
+    "oldname": null
+  },
+  {
+    "player_id": 70865,
+    "name": "풀리엄",
+    "oldname": null
+  },
+  {
+    "player_id": 71123,
+    "name": "발데스",
+    "oldname": null
+  },
+  {
+    "player_id": 71125,
+    "name": "린튼",
+    "oldname": null
+  },
+  {
+    "player_id": 71220,
+    "name": "베넷",
+    "oldname": null
+  },
+  {
+    "player_id": 71299,
+    "name": "니일",
+    "oldname": null
+  },
+  {
+    "player_id": 71325,
+    "name": "필립스",
+    "oldname": null
+  },
+  {
+    "player_id": 71339,
+    "name": "테일러",
+    "oldname": null
+  },
+  {
+    "player_id": 71353,
+    "name": "엔리케스",
+    "oldname": null
+  },
+  {
+    "player_id": 71412,
+    "name": "바에르가",
+    "oldname": null
+  },
+  {
+    "player_id": 71414,
+    "name": "리베라",
+    "oldname": "벤 리베라"
+  },
+  {
+    "player_id": 71419,
+    "name": "마르티네스",
+    "oldname": "매니 마르티네스"
+  },
+  {
+    "player_id": 71441,
+    "name": "토레스",
+    "oldname": "살로몬 토레스"
+  },
+  {
+    "player_id": 71443,
+    "name": "갈베스",
+    "oldname": "발비노 갈베스"
+  },
+  {
+    "player_id": 71522,
+    "name": "칸세코",
+    "oldname": null
+  },
+  {
+    "player_id": 71536,
+    "name": "레이",
+    "oldname": "레이 데이비스"
+  },
+  {
+    "player_id": 71543,
+    "name": "얀",
+    "oldname": null
+  },
+  {
+    "player_id": 71642,
+    "name": "리치",
+    "oldname": null
+  },
+  {
+    "player_id": 71643,
+    "name": "산토스",
+    "oldname": null
+  },
+  {
+    "player_id": 71649,
+    "name": "레스",
+    "oldname": "게리 레스"
+  },
+  {
+    "player_id": 71653,
+    "name": "루이스",
+    "oldname": null
+  },
+  {
+    "player_id": 71663,
+    "name": "젠슨",
+    "oldname": null
+  },
+  {
+    "player_id": 71719,
+    "name": "에반스",
+    "oldname": null
+  },
+  {
+    "player_id": 71720,
+    "name": "워렌",
+    "oldname": null
+  },
+  {
+    "player_id": 71727,
+    "name": "누네스",
+    "oldname": null
+  },
+  {
+    "player_id": 71728,
+    "name": "리스",
+    "oldname": null
+  },
+  {
+    "player_id": 71729,
+    "name": "윈스턴",
+    "oldname": null
+  },
+  {
+    "player_id": 71829,
+    "name": "에르난데스",
+    "oldname": null
+  },
+  {
+    "player_id": 71859,
+    "name": "에레라",
+    "oldname": "호세 에레라"
+  },
+  {
+    "player_id": 72123,
+    "name": "만자니오",
+    "oldname": null
+  },
+  {
+    "player_id": 72124,
+    "name": "케펜",
+    "oldname": null
+  },
+  {
+    "player_id": 72322,
+    "name": "폴",
+    "oldname": "코리 폴"
+  },
+  {
+    "player_id": 72337,
+    "name": "프랭클린",
+    "oldname": null
+  },
+  {
+    "player_id": 72342,
+    "name": "토레스",
+    "oldname": "멜키 토레스"
+  },
+  {
+    "player_id": 72350,
+    "name": "베라스",
+    "oldname": null
+  },
+  {
+    "player_id": 72412,
+    "name": "엘비라",
+    "oldname": null
+  },
+  {
+    "player_id": 72428,
+    "name": "패트릭",
+    "oldname": null
+  },
+  {
+    "player_id": 72444,
+    "name": "루크",
+    "oldname": null
+  },
+  {
+    "player_id": 72513,
+    "name": "매기",
+    "oldname": "대니얼 매기"
+  },
+  {
+    "player_id": 72543,
+    "name": "베로아",
+    "oldname": null
+  },
+  {
+    "player_id": 72553,
+    "name": "해처",
+    "oldname": null
+  },
+  {
+    "player_id": 72650,
+    "name": "펨버튼",
+    "oldname": null
+  },
+  {
+    "player_id": 72653,
+    "name": "키퍼",
+    "oldname": null
+  },
+  {
+    "player_id": 72654,
+    "name": "뉴선",
+    "oldname": null
+  },
+  {
+    "player_id": 72659,
+    "name": "리오스",
+    "oldname": "다니엘 리오스"
+  },
+  {
+    "player_id": 72736,
+    "name": "가르시아",
+    "oldname": null
+  },
+  {
+    "player_id": 72756,
+    "name": "피코타",
+    "oldname": null
+  },
+  {
+    "player_id": 72824,
+    "name": "페르난데스",
+    "oldname": "호세 페르난데스"
+  },
+  {
+    "player_id": 72838,
+    "name": "러핀",
+    "oldname": null
+  },
+  {
+    "player_id": 72859,
+    "name": "잉글린",
+    "oldname": null
+  },
+  {
+    "player_id": 73123,
+    "name": "알칸트라",
+    "oldname": "이지 알칸트라"
+  },
+  {
+    "player_id": 73229,
+    "name": "이리키",
+    "oldname": null
+  },
+  {
+    "player_id": 73233,
+    "name": "쿨바",
+    "oldname": "스캇 쿨바"
+  },
+  {
+    "player_id": 73322,
+    "name": "바워스",
+    "oldname": null
+  },
+  {
+    "player_id": 73324,
+    "name": "브룸바",
+    "oldname": null
+  },
+  {
+    "player_id": 73424,
+    "name": "라이언",
+    "oldname": null
+  },
+  {
+    "player_id": 73503,
+    "name": "보이",
+    "oldname": null
+  },
+  {
+    "player_id": 73553,
+    "name": "모리",
+    "oldname": null
+  },
+  {
+    "player_id": 73559,
+    "name": "페레즈",
+    "oldname": "로베르토 페레즈"
+  },
+  {
+    "player_id": 73653,
+    "name": "존슨",
+    "oldname": "마이크 존슨"
+  },
+  {
+    "player_id": 73746,
+    "name": "에스트라다",
+    "oldname": null
+  },
+  {
+    "player_id": 73747,
+    "name": "메히아",
+    "oldname": null
+  },
+  {
+    "player_id": 73823,
+    "name": "스미스",
+    "oldname": "트래비스 스미스"
+  },
+  {
+    "player_id": 73848,
+    "name": "디아즈",
+    "oldname": "에디 디아즈"
+  },
+  {
+    "player_id": 74123,
+    "name": "후타도",
+    "oldname": null
+  },
+  {
+    "player_id": 74124,
+    "name": "쿠퍼",
+    "oldname": null
+  },
+  {
+    "player_id": 74125,
+    "name": "마틴",
+    "oldname": null
+  },
+  {
+    "player_id": 74336,
+    "name": "피어리",
+    "oldname": null
+  },
+  {
+    "player_id": 74429,
+    "name": "오리어리",
+    "oldname": null
+  },
+  {
+    "player_id": 74430,
+    "name": "로페즈",
+    "oldname": "멘디 로페즈"
+  },
+  {
+    "player_id": 74458,
+    "name": "호지스",
+    "oldname": null
+  },
+  {
+    "player_id": 74534,
+    "name": "라이온",
+    "oldname": null
+  },
+  {
+    "player_id": 74653,
+    "name": "마뇽",
+    "oldname": null
+  },
+  {
+    "player_id": 74723,
+    "name": "엔젤",
+    "oldname": "엔젤 페냐"
+  },
+  {
+    "player_id": 74828,
+    "name": "카브레라",
+    "oldname": null
+  },
+  {
+    "player_id": 75154,
+    "name": "클리어",
+    "oldname": null
+  },
+  {
+    "player_id": 75155,
+    "name": "왈론드",
+    "oldname": null
+  },
+  {
+    "player_id": 75156,
+    "name": "마테오",
+    "oldname": null
+  },
+  {
+    "player_id": 75230,
+    "name": "랜들",
+    "oldname": null
+  },
+  {
+    "player_id": 75245,
+    "name": "스미스",
+    "oldname": "척 스미스"
+  },
+  {
+    "player_id": 75324,
+    "name": "캘러웨이",
+    "oldname": null
+  },
+  {
+    "player_id": 75333,
+    "name": "서튼",
+    "oldname": "래리 서튼"
+  },
+  {
+    "player_id": 75429,
+    "name": "바르가스",
+    "oldname": null
+  },
+  {
+    "player_id": 75443,
+    "name": "하리칼라",
+    "oldname": null
+  },
+  {
+    "player_id": 75444,
+    "name": "해크먼",
+    "oldname": null
+  },
+  {
+    "player_id": 75551,
+    "name": "펠로우",
+    "oldname": null
+  },
+  {
+    "player_id": 75653,
+    "name": "블랭크",
+    "oldname": null
+  },
+  {
+    "player_id": 75659,
+    "name": "그레이싱어",
+    "oldname": null
+  },
+  {
+    "player_id": 75734,
+    "name": "스미스",
+    "oldname": null
+  },
+  {
+    "player_id": 75828,
+    "name": "크루즈",
+    "oldname": null
+  },
+  {
+    "player_id": 75831,
+    "name": "산체스",
+    "oldname": null
+  },
+  {
+    "player_id": 76120,
+    "name": "베로커",
+    "oldname": null
+  },
+  {
+    "player_id": 76154,
+    "name": "텔레마코",
+    "oldname": null
+  },
+  {
+    "player_id": 76156,
+    "name": "아이바",
+    "oldname": null
+  },
+  {
+    "player_id": 76199,
+    "name": "카라이어",
+    "oldname": null
+  },
+  {
+    "player_id": 76410,
+    "name": "세라노",
+    "oldname": null
+  },
+  {
+    "player_id": 76429,
+    "name": "브라운",
+    "oldname": "제이미 브라운"
+  },
+  {
+    "player_id": 76512,
+    "name": "마이로우",
+    "oldname": null
+  },
+  {
+    "player_id": 76525,
+    "name": "존갈",
+    "oldname": null
+  },
+  {
+    "player_id": 76632,
+    "name": "서브넥",
+    "oldname": null
+  },
+  {
+    "player_id": 76633,
+    "name": "스캇",
+    "oldname": "스캇 시볼"
+  },
+  {
+    "player_id": 76810,
+    "name": "시오타니",
+    "oldname": null
+  },
+  {
+    "player_id": 76836,
+    "name": "피커링",
+    "oldname": "켈빈 피커링"
+  },
+  {
+    "player_id": 77157,
+    "name": "발데스",
+    "oldname": null
+  },
+  {
+    "player_id": 77199,
+    "name": "옥스프링",
+    "oldname": "크리스 옥스프링"
+  },
+  {
+    "player_id": 77443,
+    "name": "매존",
+    "oldname": null
+  },
+  {
+    "player_id": 77444,
+    "name": "윌슨",
+    "oldname": null
+  },
+  {
+    "player_id": 77503,
+    "name": "리오스",
+    "oldname": null
+  },
+  {
+    "player_id": 77649,
+    "name": "로드리게스",
+    "oldname": null
+  },
+  {
+    "player_id": 77658,
+    "name": "스코비",
+    "oldname": null
+  },
+  {
+    "player_id": 77659,
+    "name": "에서튼",
+    "oldname": null
+  },
+  {
+    "player_id": 77725,
+    "name": "크루즈",
+    "oldname": null
+  },
+  {
+    "player_id": 77726,
+    "name": "세드릭",
+    "oldname": null
+  },
+  {
+    "player_id": 77860,
+    "name": "레이번",
+    "oldname": "케니 레이번"
+  },
+  {
+    "player_id": 77868,
+    "name": "로마노",
+    "oldname": null
+  },
+  {
+    "player_id": 78129,
+    "name": "페타지니",
+    "oldname": null
+  },
+  {
+    "player_id": 78256,
+    "name": "레이어",
+    "oldname": null
+  },
+  {
+    "player_id": 78333,
+    "name": "다카쓰",
+    "oldname": null
+  },
+  {
+    "player_id": 78430,
+    "name": "션",
+    "oldname": null
+  },
+  {
+    "player_id": 78431,
+    "name": "에니스",
+    "oldname": null
+  },
+  {
+    "player_id": 78435,
+    "name": "오버뮬러",
+    "oldname": null
+  },
+  {
+    "player_id": 78551,
+    "name": "코르테스",
+    "oldname": null
+  },
+  {
+    "player_id": 78574,
+    "name": "매클레리",
+    "oldname": null
+  },
+  {
+    "player_id": 78595,
+    "name": "가르시아",
+    "oldname": "카림 가르시아"
+  },
+  {
+    "player_id": 78627,
+    "name": "리마",
+    "oldname": "호세 리마"
+  },
+  {
+    "player_id": 78648,
+    "name": "데이비스",
+    "oldname": null
+  },
+  {
+    "player_id": 78649,
+    "name": "발데스",
+    "oldname": null
+  },
+  {
+    "player_id": 78665,
+    "name": "디아즈",
+    "oldname": "펠릭스 디아즈"
+  },
+  {
+    "player_id": 78725,
+    "name": "클락",
+    "oldname": "덕 클락"
+  },
+  {
+    "player_id": 78726,
+    "name": "토마스",
+    "oldname": "브래드 토마스"
+  },
+  {
+    "player_id": 78853,
+    "name": "얀",
+    "oldname": "에스테반 얀"
+  },
+  {
+    "player_id": 78868,
+    "name": "쿠비얀",
+    "oldname": null
+  },
+  {
+    "player_id": 78869,
+    "name": "레이",
+    "oldname": "케니 레이"
+  },
+  {
+    "player_id": 79156,
+    "name": "존슨",
+    "oldname": null
+  },
+  {
+    "player_id": 79199,
+    "name": "바우어",
+    "oldname": null
+  },
+  {
+    "player_id": 79225,
+    "name": "왓슨",
+    "oldname": null
+  },
+  {
+    "player_id": 79230,
+    "name": "세데뇨",
+    "oldname": null
+  },
+  {
+    "player_id": 79430,
+    "name": "나이트",
+    "oldname": null
+  },
+  {
+    "player_id": 79435,
+    "name": "크루세타",
+    "oldname": null
+  },
+  {
+    "player_id": 79461,
+    "name": "에르난데스",
+    "oldname": null
+  },
+  {
+    "player_id": 79596,
+    "name": "애킨스",
+    "oldname": "존 애킨스"
+  },
+  {
+    "player_id": 79644,
+    "name": "로페즈",
+    "oldname": "아킬리노 로페즈"
+  },
+  {
+    "player_id": 79650,
+    "name": "구톰슨",
+    "oldname": null
+  },
+  {
+    "player_id": 79725,
+    "name": "디아즈",
+    "oldname": "빅터 디아즈"
+  },
+  {
+    "player_id": 79727,
+    "name": "연지",
+    "oldname": "에릭 연지"
+  },
+  {
+    "player_id": 79854,
+    "name": "카도쿠라",
+    "oldname": "카도쿠라 켄"
+  },
+  {
+    "player_id": 79858,
+    "name": "글로버",
+    "oldname": "게리 글로버"
+  },
+  {
+    "player_id": 79859,
+    "name": "니코스키",
+    "oldname": "C.J. 니코스키"
+  },
+  {
+    "player_id": 80585,
+    "name": "치멜리스",
+    "oldname": null
+  },
+  {
+    "player_id": 80587,
+    "name": "쿨바",
+    "oldname": null
+  },
+  {
+    "player_id": 80614,
+    "name": "헤어",
+    "oldname": "숀 헤어"
+  },
+  {
+    "player_id": 98116,
+    "name": "앤더슨",
+    "oldname": null
+  },
+  {
+    "player_id": 98142,
+    "name": "펠릭스",
+    "oldname": null
+  },
+  {
+    "player_id": 98213,
+    "name": "캐세레스",
+    "oldname": null
+  },
+  {
+    "player_id": 98233,
+    "name": "우즈",
+    "oldname": "타이론 우즈"
+  },
+  {
+    "player_id": 98327,
+    "name": "스트롱",
+    "oldname": null
+  },
+  {
+    "player_id": 98423,
+    "name": "베이커",
+    "oldname": "스캇 베이커"
+  },
+  {
+    "player_id": 98445,
+    "name": "파라",
+    "oldname": null
+  },
+  {
+    "player_id": 98506,
+    "name": "브래디",
+    "oldname": null
+  },
+  {
+    "player_id": 98731,
+    "name": "부시",
+    "oldname": "마이크 부시"
+  },
+  {
+    "player_id": 99145,
+    "name": "대톨라",
+    "oldname": null
+  },
+  {
+    "player_id": 99323,
+    "name": "바워스",
+    "oldname": null
+  },
+  {
+    "player_id": 99324,
+    "name": "카날리",
+    "oldname": null
+  },
+  {
+    "player_id": 99344,
+    "name": "피어슨",
+    "oldname": null
+  },
+  {
+    "player_id": 99408,
+    "name": "홀",
+    "oldname": null
+  },
+  {
+    "player_id": 99433,
+    "name": "스미스",
+    "oldname": null
+  },
+  {
+    "player_id": 99534,
+    "name": "호세",
+    "oldname": "펠릭스 호세"
+  },
+  {
+    "player_id": 99548,
+    "name": "기론",
+    "oldname": "에밀리아노 기론"
+  },
+  {
+    "player_id": 99640,
+    "name": "브릭스",
+    "oldname": null
+  },
+  {
+    "player_id": 99643,
+    "name": "샌더스",
+    "oldname": null
+  },
+  {
+    "player_id": 99724,
+    "name": "로마이어",
+    "oldname": "댄 로마이어"
+  },
+  {
+    "player_id": 99725,
+    "name": "데이비스",
+    "oldname": "제이 데이비스"
+  },
+  {
+    "player_id": 99846,
+    "name": "비아노",
+    "oldname": null
+  }
+]

@@ -1,0 +1,154 @@
+[
+  {
+    "name": "audit_futures_changed_identities.py",
+    "sha256": "437a259540465733d567b2914a994fb3e31dea0fd274a2476a01cce002f85198"
+  },
+  {
+    "name": "audit_futures_history_plans.py",
+    "sha256": "04193348ebac09857b5e17d2a872232354ae0e0ddc1c797721eaec801fc7346a"
+  },
+  {
+    "name": "audit_futures_identity_candidates.py",
+    "sha256": "0d4292bf9b097d667943ee618aec12cf1d1b55a710ebd688424af2b83905342c"
+  },
+  {
+    "name": "backfill_futures_history.py",
+    "sha256": "719626335c83a02f37968bef195e8c723b5720c8c1f88dfe633a787b4efb312f"
+  },
+  {
+    "name": "backup_futures_history.py",
+    "sha256": "4220e43f8cec31d1d53edd868a38a84a614a8bb51a856371fc09600e8a9e4af7"
+  },
+  {
+    "name": "cache_allstar_identity_sources.py",
+    "sha256": "b7090fb994a5f58a4910677f0e44b29f6d5135fd8b809bde8cef552971823c38"
+  },
+  {
+    "name": "cache_futures_historical_aliases.py",
+    "sha256": "9174b14a635993d6595eb0e988bb752a9695d0e4550e2f0642b9c61b822eff40"
+  },
+  {
+    "name": "collect_futures_allstar_identity_questions.py",
+    "sha256": "68dce8cbb413b6887c57943ac20574c7851dd85c87b6449adf8c13d157586ed3"
+  },
+  {
+    "name": "finalize_futures_history.py",
+    "sha256": "f366d0fd1a8d13e3e72a150db1037d6fd5d4427fd988965a3d96925598e47944"
+  },
+  {
+    "name": "futures_allstar_identity_resolutions.json",
+    "sha256": "292be5477f2578eba557d9c5c4e4439c825cbc491293f35081843d3b023e6fca"
+  },
+  {
+    "name": "futures_allstar_rosters.json",
+    "sha256": "3b29535f8ed96254fc738808ded6203695764fe41018bcf9755690119812678b"
+  },
+  {
+    "name": "futures_history_corrections.py",
+    "sha256": "05950b5c325aabbd32b16b9fc28d6ed8491a53f23a9c38766bba1218de9985af"
+  },
+  {
+    "name": "futures_history_parser.py",
+    "sha256": "b3fba20e7b4dae5755058f8915c0362eaf22886467210896d5bd479662acd05e"
+  },
+  {
+    "name": "futures_history_user_corrections.json",
+    "sha256": "e962274827ea953f5393f4ee4ac6311939215d7cee07f3391dec23972f634bcd"
+  },
+  {
+    "name": "inspect_allstar_roster_ties.py",
+    "sha256": "fe5f16e9a5fc616bfb0ee37b14be3ee2cfea8f97ebec6f4ee4802ad550702981"
+  },
+  {
+    "name": "inspect_futures_api.py",
+    "sha256": "b1a9241e99bedef09affd1739301706dbb77606b49ae51934c0ff3438f00ad1a"
+  },
+  {
+    "name": "inspect_futures_daily.py",
+    "sha256": "daea7105bd8bf9c4060e8ae3c0108c2ef07f4cb8055208bdffc7e6e3576ebaf6"
+  },
+  {
+    "name": "inspect_futures_history.py",
+    "sha256": "c05e27fe1145392faffa01f2b7ccda0ca7a2d874d39aba272951cc1b248532df"
+  },
+  {
+    "name": "inspect_futures_identity_changes.py",
+    "sha256": "e01183aee672e5e0b6229b47a876f1eb67f34242ebd8c83d45c51c068f654cb9"
+  },
+  {
+    "name": "inspect_futures_kim_gyeongmin.py",
+    "sha256": "361a137a5d213a4a99f2e737b74281125e4cd12cbc2b1cf6c2e9246202403120"
+  },
+  {
+    "name": "inspect_futures_remaining_ids.py",
+    "sha256": "022e58a91be14ba0ab59a1f086c7c694cdbb34d5fc2f94c914770de433cbc8e4"
+  },
+  {
+    "name": "inspect_futures_runtime.py",
+    "sha256": "5b9a7d3770404d90480ec7654d42855b10c2c4dcbd82fb3078099464f5dee5b3"
+  },
+  {
+    "name": "inspect_futures_user_corrections.py",
+    "sha256": "69c2d2f023da4f2a6f89e75af2beec01b25a2234e08ab8acf1dd37555ff18d5e"
+  },
+  {
+    "name": "inspect_futures_winning_sources.py",
+    "sha256": "fcd645350c9f62bbf6b06798f192c3332f229663b59bf9378199a9e214ac7c4c"
+  },
+  {
+    "name": "kbo_futures_crawl.py",
+    "sha256": "b6bf4a6eaa4114ea4e1d6dcd2dfab67edf1f1feb350aa00adea9546549cda885"
+  },
+  {
+    "name": "normalize_futures_kia_plans.py",
+    "sha256": "8cbe74ace6e56176cd955b328f9f07a67054be5279d90c9737aa45ca10e8630a"
+  },
+  {
+    "name": "normalize_futures_pitcher_results.py",
+    "sha256": "ee8969bfbce0512fd70518c56912e862c8bd11b14f4150a57a330f619047d9fc"
+  },
+  {
+    "name": "probe_futures_failures.py",
+    "sha256": "2131a1cd6f61a09db9ff1959d1d45272a64d5642f7eda8695b7560588065d707"
+  },
+  {
+    "name": "probe_live_from_futures.py",
+    "sha256": "5d5122dde6ea32b22bf84a4c691767c375471cb7625cb385ed42b59c8f104311"
+  },
+  {
+    "name": "promote_futures_identity_plans.py",
+    "sha256": "cbe4b2dca0cced3a48f1602a6ef3460a9c60f89590695eb8d3c7a5f4f06b7b82"
+  },
+  {
+    "name": "propose_futures_missing_pa.py",
+    "sha256": "6e598850c23f3e04f75529fa62d034b6e9be354ccf31fd585c3ce92bb515a41c"
+  },
+  {
+    "name": "recheck_futures_history_failures.py",
+    "sha256": "6b3ed5938f1957df420322cc72137f55afad35c3bf1088f148c9c9d689d7deae"
+  },
+  {
+    "name": "refresh_futures_history_reports.py",
+    "sha256": "befb70376b1c4a8186e47448ca499acb3ff333f8f6d47417f991a1b7f3be9416"
+  },
+  {
+    "name": "render_futures_unresolved_report.py",
+    "sha256": "ccebd9e6d89cac682fa9de7bf9ed640addf60dc990705706d1f8b9e33df4a45b"
+  },
+  {
+    "name": "summarize_futures_failures.py",
+    "sha256": "a1307e3560786a1be9aaaa560b777365b2526034b7e2546d0da67caff923d318"
+  },
+  {
+    "name": "verify_futures_code_sync.py",
+    "sha256": "b1ce6f1e68e656eec3516409a539be587a14360b9cf8b2894620e8f14c0f5cec"
+  },
+  {
+    "name": "verify_futures_user_corrections.py",
+    "sha256": "fb168cbf40781ec515f94ca4402cf073bc6cdd985a6a86f8a57c4ba6e19f6c1a"
+  },
+  {
+    "name": "write_futures_history.py",
+    "sha256": "73419773e9dbd00cc471afb76fe528f62dffa19557662f4296e4355803fa8744"
+  }
+]

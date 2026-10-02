@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "checked_files": [
+    "/opt/bitnami/apache/htdocs/lib/player-year-records.php",
+    "/home/bitnami/wesiper-weather-preview/lib/player-year-records.php",
+    "/home/bitnami/wesiper/verify_official_old_seasons.py",
+    "/opt/bitnami/apache/htdocs/lib/player-season-schedule.php",
+    "/home/bitnami/wesiper-weather-preview/lib/player-season-schedule.php",
+    "/opt/bitnami/apache/htdocs/lib/player-season-totals.php",
+    "/home/bitnami/wesiper-weather-preview/lib/player-season-totals.php",
+    "/opt/bitnami/apache/htdocs/lib/player-overview-cache.php",
+    "/home/bitnami/wesiper-weather-preview/lib/player-overview-cache.php",
+    "/home/bitnami/wesiper/supplement_old_season_rates.py",
+    "/opt/bitnami/apache/htdocs/lib/player-records.php",
+    "/home/bitnami/wesiper-weather-preview/lib/player-records.php",
+    "/opt/bitnami/apache/htdocs/lib/player-year-metrics.php",
+    "/home/bitnami/wesiper-weather-preview/lib/player-year-metrics.php",
+    "/opt/bitnami/apache/htdocs/api/playerProfile.php",
+    "/home/bitnami/wesiper-weather-preview/api/playerProfile.php",
+    "/opt/bitnami/apache/htdocs/lib/player-rankings.php",
+    "/home/bitnami/wesiper-weather-preview/lib/player-rankings.php"
+  ],
+  "candle_files_unchanged": true,
+  "local_other_changes_preserved": [
+    "backend/api/playerProfile.php: league selection for rankings",
+    "backend/lib/player-rankings.php: ERA+ ranking extension"
+  ],
+  "note": "Historical API changes are present locally; separate local ranking extensions were not published by this release."
+}

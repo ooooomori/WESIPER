@@ -1,0 +1,1 @@
+{"validated_rows": 3648, "failures": [], "scope": "regular", "unsupported_postseason": "Basic1 returns regular-season values and Basic2 rejects the old postseason selection; these mismatches are not imported", "legacy_obp": "1982-1985 annual official OBP excludes SF; full-career OBP includes all SF"}

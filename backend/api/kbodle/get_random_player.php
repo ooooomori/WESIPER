@@ -10,8 +10,8 @@ if (!$answerID || $answerID < 1) {
     exit;
 }
 
-// 검색과 달리 드래프트 정보 유무에 관계없이 모든 선수를 대상으로 한다.
-$stmt = $con->prepare("SELECT `playerId`, `name`, `hs`, `hsLoc`, `birth`, `throw`, `bat`, `mainPos`, `subPos`, `draft`, `team`, `backNo` FROM $playerlist WHERE `playerId` <> ? ORDER BY RAND() LIMIT 1");
+// 기존 player_data 선수(1, 2) 중 선택한다. 은퇴 선수(0)는 제외한다.
+$stmt = $con->prepare("SELECT `player_id` AS `playerId`, `name`, `hs`, `hsLoc`, `birth`, `throw`, `bat`, `mainPos`, `subPos`, `draft`, `team`, `backNo` FROM $playerlist WHERE `is_kbodle` IN (1, 2) AND `player_id` <> ? ORDER BY RAND() LIMIT 1");
 $stmt->bind_param('i', $answerID);
 $stmt->execute();
 $row = $stmt->get_result()->fetch_assoc();

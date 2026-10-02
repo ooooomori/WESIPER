@@ -1,0 +1,15 @@
+{
+ "provenance":"User instructions 2026-10-01; missing PA results are user-authorized generic 아웃, not an official recovered event description.",
+ "games":{
+  "20100819LGSK0":{"winning_hit":{"name":"손인호","inning":9,"result":"우중3"}},
+  "20110818LGPL0":{"note_names":{"황성일":"황선일"}},
+  "20130511NCSS0":{"running":[{"label":"도루자","name":"차화준","inning":7,"player_id":79196}]},
+  "20150609OBKT0":{"running":[{"label":"주루사","name":"김민혁","inning":7,"player_id":64004}]},
+  "20150723OBLG0":{"winning_hit":{"name":"양원혁","inning":4,"result":"우안"}},
+  "20160409PLSK0":{"winning_hit":{"name":"이경록","inning":4,"result":"좌2"}},
+  "20200506KTHH0":{"player_ids":{"김경민":50013},"identity_evidence":"Official GetBoxScoreScroll same lineup slot/results/stat totals calls him 김범. Official HitterDaily for 50013 on 2020-05-06 vs 한화 confirms AB=3,H=3,RBI=4,R=2."},
+  "20200911WOSK0":{"running":[{"label":"도루자","name":"김재현","inning":2,"player_id":76869}]},
+  "20210925OBWO0":{"note_names":{"오영진":"오명진"}}
+ },
+ "missing_pa_games":["20100513HHWO0","20100608SKSS0","20100901LGWO0","20110517SSPL0","20110610LTSS0","20110701SKWO0","20120603SKPL0","20120724NCLT0","20120724OBHT0","20120725PLHH0","20130426WOLT0","20130615WOSS2","20130622NCHT0","20130723SSWO0","20140701LTHT0","20150408SKWO0","20150510SMKT0","20150517KTLG0","20150528HTLT0","20150528WOKT0","20150530KTSK0","20150730LTHT0","20150903PLKT2","20150906NCSK0","20160523PLHT0","20160826KTHT0","20170411LGSK0","20190514SSSK0"]
+}

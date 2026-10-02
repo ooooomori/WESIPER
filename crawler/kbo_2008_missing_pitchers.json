@@ -1,0 +1,101 @@
+{
+  "source": "User-supplied historical box scores, 2026-09-29",
+  "games": [
+    {
+      "game_id": "55551021OBSS0",
+      "game_date": "2008-10-21",
+      "away_team": "두산",
+      "home_team": "삼성",
+      "away_innings": [2, 0, 1, 0, 3, 0, 0, 0, 0],
+      "home_innings": [0, 2, 0, 0, 0, 0, 2, 0, 0],
+      "winning_hit": {"team": "두산", "player_name": "김현수", "inning": 3},
+      "pitchers": {
+        "두산": [
+          {"name": "랜들", "inning": "5 1/3", "bf": 24, "pitched": 88, "r": 2, "er": 2, "record": "승"},
+          {"name": "이재우", "inning": "2 2/3", "bf": 17, "pitched": 58, "r": 2, "er": 2, "record": "홀"},
+          {"name": "임태훈", "inning": "1", "bf": 3, "pitched": 14, "r": 0, "er": 0, "record": "세"}
+        ],
+        "삼성": [
+          {"name": "배영수", "inning": "4 2/3", "bf": 21, "pitched": 77, "r": 5, "er": 3, "record": "패"},
+          {"name": "안지만", "inning": "1 1/3", "bf": 6, "pitched": 20, "r": 1, "er": 1, "record": null},
+          {"name": "차우찬", "inning": "1/3", "bf": 3, "pitched": 6, "r": 0, "er": 0, "record": null},
+          {"name": "이상목", "inning": "2 2/3", "bf": 9, "pitched": 28, "r": 0, "er": 0, "record": null}
+        ]
+      }
+    },
+    {
+      "game_id": "55551023SSOB0",
+      "game_date": "2008-10-23",
+      "away_team": "삼성",
+      "home_team": "두산",
+      "away_innings": [0, 0, 0, 1, 1, 0, 0, 0, 0],
+      "home_innings": [2, 0, 0, 2, 0, 0, 0, 1, null],
+      "winning_hit": {"team": "두산", "player_name": "김현수", "inning": 1},
+      "pitchers": {
+        "삼성": [
+          {"name": "윤성환", "inning": "1 1/3", "bf": 10, "pitched": 40, "r": 2, "er": 2, "record": "패"},
+          {"name": "차우찬", "inning": "1", "bf": 2, "pitched": 9, "r": 0, "er": 0, "record": null},
+          {"name": "정현욱", "inning": "1", "bf": 7, "pitched": 36, "r": 2, "er": 2, "record": null},
+          {"name": "권혁", "inning": "1/3", "bf": 2, "pitched": 12, "r": 0, "er": 0, "record": null},
+          {"name": "안지만", "inning": "3 1/3", "bf": 12, "pitched": 56, "r": 0, "er": 0, "record": null},
+          {"name": "조진호", "inning": "1/3", "bf": 3, "pitched": 13, "r": 1, "er": 1, "record": null},
+          {"name": "전병호", "inning": "2/3", "bf": 2, "pitched": 7, "r": 0, "er": 0, "record": null}
+        ],
+        "두산": [
+          {"name": "이혜천", "inning": "4 2/3", "bf": 21, "pitched": 90, "r": 2, "er": 2, "record": null},
+          {"name": "정재훈", "player_id": 73241, "inning": "2", "bf": 10, "pitched": 46, "r": 0, "er": 0, "record": "승"},
+          {"name": "이재우", "inning": "2 1/3", "bf": 7, "pitched": 20, "r": 0, "er": 0, "record": "세"}
+        ]
+      }
+    },
+    {
+      "game_id": "77771026OBSK0",
+      "game_date": "2008-10-26",
+      "away_team": "두산",
+      "home_team": "SK",
+      "away_innings": [0, 0, 0, 0, 1, 2, 1, 0, 1],
+      "home_innings": [0, 1, 0, 0, 0, 0, 1, 0, 0],
+      "winning_hit": {"team": "두산", "player_name": "최준석", "inning": 6},
+      "pitchers": {
+        "두산": [
+          {"name": "랜들", "inning": "5 1/3", "bf": 22, "pitched": 87, "r": 1, "er": 1, "record": "승"},
+          {"name": "이재우", "inning": "3 2/3", "bf": 14, "pitched": 49, "r": 1, "er": 1, "record": "세"}
+        ],
+        "SK": [
+          {"name": "김광현", "inning": "5 2/3", "bf": 25, "pitched": 110, "r": 3, "er": 2, "record": "패"},
+          {"name": "윤길현", "inning": "0", "bf": 1, "pitched": 5, "r": 0, "er": 0, "record": null},
+          {"name": "정우람", "inning": "2/3", "bf": 4, "pitched": 11, "r": 1, "er": 1, "record": null},
+          {"name": "조웅천", "inning": "1", "bf": 5, "pitched": 17, "r": 0, "er": 0, "record": null},
+          {"name": "이승호", "player_id": 70820, "inning": "1 1/3", "bf": 7, "pitched": 31, "r": 1, "er": 1, "record": null},
+          {"name": "이영욱", "player_id": 73825, "inning": "1/3", "bf": 1, "pitched": 4, "r": 0, "er": 0, "record": null}
+        ]
+      }
+    },
+    {
+      "game_id": "77771027OBSK0",
+      "game_date": "2008-10-27",
+      "away_team": "두산",
+      "home_team": "SK",
+      "away_innings": [0, 0, 0, 2, 0, 0, 0, 0, 0],
+      "home_innings": [2, 0, 0, 0, 1, 0, 2, 0, null],
+      "winning_hit": {"team": "SK", "player_name": "정근우", "inning": 5},
+      "pitchers": {
+        "두산": [
+          {"name": "김선우", "inning": "4", "bf": 20, "pitched": 71, "r": 3, "er": 2, "record": "패"},
+          {"name": "정재훈", "player_id": 73241, "inning": "2 1/3", "bf": 9, "pitched": 41, "r": 1, "er": 1, "record": null},
+          {"name": "임태훈", "inning": "0", "bf": 2, "pitched": 8, "r": 1, "er": 1, "record": null},
+          {"name": "김상현", "player_id": 71255, "inning": "2/3", "bf": 1, "pitched": 5, "r": 0, "er": 0, "record": null},
+          {"name": "이승학", "inning": "2/3", "bf": 3, "pitched": 7, "r": 0, "er": 0, "record": null},
+          {"name": "이용찬", "inning": "1/3", "bf": 2, "pitched": 10, "r": 0, "er": 0, "record": null}
+        ],
+        "SK": [
+          {"name": "채병용", "inning": "4", "bf": 18, "pitched": 77, "r": 2, "er": 2, "record": null},
+          {"name": "정우람", "inning": "1", "bf": 3, "pitched": 13, "r": 0, "er": 0, "record": "승"},
+          {"name": "윤길현", "inning": "2", "bf": 6, "pitched": 23, "r": 0, "er": 0, "record": "홀"},
+          {"name": "이승호", "player_id": 70820, "inning": "1", "bf": 3, "pitched": 12, "r": 0, "er": 0, "record": "홀"},
+          {"name": "정대현", "player_id": 71801, "inning": "1", "bf": 3, "pitched": 17, "r": 0, "er": 0, "record": "세"}
+        ]
+      }
+    }
+  ]
+}

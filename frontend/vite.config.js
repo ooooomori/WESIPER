@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import { Agent as HttpAgent } from 'node:http';
 import { createGamesCache } from './dev/todayGamesCache.mjs';
 
 function localTodayGamesApi(todayGamesTarget) {
@@ -40,7 +41,8 @@ function localTodayGamesApi(todayGamesTarget) {
     return {
         name: "local-today-games-api",
         configureServer(server) {
-            server.middlewares.use('/api/teamRank.php', async (_request, response) => {
+            server.middlewares.use('/api/teamRank.php', async (_request, response, next) => {
+                if (todayGamesTarget) return next();
                 response.setHeader('Content-Type', 'application/json; charset=UTF-8');
                 response.setHeader('Cache-Control', 'no-store');
                 try {
@@ -84,7 +86,18 @@ function localTodayGamesApi(todayGamesTarget) {
 
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), 'WESIPER_');
-    const todayGamesTarget = process.env.WESIPER_TODAY_GAMES_PROXY_TARGET || env.WESIPER_TODAY_GAMES_PROXY_TARGET;
+    const apiTarget = process.env.VITE_API_PROXY_TARGET || 'http://127.0.0.1:18766';
+    const todayGamesTarget = process.env.WESIPER_TODAY_GAMES_PROXY_TARGET || env.WESIPER_TODAY_GAMES_PROXY_TARGET || apiTarget;
+    // Windows PHP's development server handles one connection at a time.
+    // Do not leave pooled idle sockets blocking subsequent API requests.
+    const proxyTo = (target) => ({
+        target,
+        changeOrigin: true,
+        ...(target.startsWith('http:') ? {
+            agent: new HttpAgent({ keepAlive: false }),
+            headers: { Connection: 'close' },
+        } : {}),
+    });
     return {
     plugins: [react(), localTodayGamesApi(todayGamesTarget)],
 
@@ -93,13 +106,13 @@ export default defineConfig(({ mode }) => {
         port: 5173,
         strictPort: true,
         proxy: {
-            ...(todayGamesTarget ? { '/api/todayGames.php': { target: todayGamesTarget, changeOrigin: true } } : {}),
-            "/api": {
-                target:
-                    process.env.VITE_API_PROXY_TARGET ||
-                    "https://wesiper.xyz",
-                changeOrigin: true,
-            },
+            ...(todayGamesTarget ? {
+                '/api/todayGames.php': proxyTo(todayGamesTarget),
+                '/api/playerProfile.php': proxyTo(todayGamesTarget),
+                '/api/kbocandle/get_player_list.php': proxyTo(todayGamesTarget),
+                '/api/teamRank.php': proxyTo(todayGamesTarget),
+            } : {}),
+            "/api": proxyTo(apiTarget),
         },
     },
 };

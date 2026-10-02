@@ -15,7 +15,7 @@ function candleRankings(PDO $pdo, string $seasonStart, string $seasonEnd, string
         }
         $sets = ['season' => [], 'period' => []];
         $teamGames = ['season' => [], 'period' => []];
-        $stmt = $pdo->prepare('SELECT player_id,game_id,game_date,pa_result,sb,cs FROM kbo_season_records WHERE game_date BETWEEN :start AND :end');
+        $stmt = $pdo->prepare('SELECT player_id,game_id,game_date,pa_result,sb,cs FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN :start AND :end');
         $stmt->execute(['start' => min($seasonStart, $start), 'end' => max($seasonEnd, $end)]);
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $text = trim($row['pa_result'] ?? '');

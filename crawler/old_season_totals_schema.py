@@ -1,0 +1,15 @@
+"""Typed official season totals; game tables are never used as an import target."""
+COMMON={'year':'SMALLINT UNSIGNED NOT NULL','league_level':'TINYINT UNSIGNED NOT NULL','series_id':'TINYINT UNSIGNED NOT NULL','player_id':'INT NOT NULL','player_name':'VARCHAR(100) NOT NULL','row_scope':"VARCHAR(8) NOT NULL",'filter_team_code':"VARCHAR(20) NOT NULL DEFAULT ''",'team_name':'VARCHAR(100) NOT NULL','source_rank':'VARCHAR(20) NULL','source_url':'VARCHAR(255) NOT NULL','source_file':'VARCHAR(255) NOT NULL','source_sha256':'CHAR(64) NOT NULL','raw_record':'LONGTEXT NOT NULL','collected_at':'DATETIME NOT NULL'}
+HITTER={'AVG':('avg','DECIMAL(6,3) NULL'),'G':('games','INT UNSIGNED NULL'),'PA':('pa','INT UNSIGNED NULL'),'AB':('ab','INT UNSIGNED NULL'),'H':('h','INT UNSIGNED NULL'),'2B':('doubles','INT UNSIGNED NULL'),'3B':('triples','INT UNSIGNED NULL'),'HR':('hr','INT UNSIGNED NULL'),'RBI':('rbi','INT UNSIGNED NULL'),'SB':('sb','INT UNSIGNED NULL'),'CS':('cs','INT UNSIGNED NULL'),'BB':('bb','INT UNSIGNED NULL'),'HBP':('hbp','INT UNSIGNED NULL'),'SO':('so','INT UNSIGNED NULL'),'GDP':('gdp','INT UNSIGNED NULL'),'E':('e','INT UNSIGNED NULL')}
+PITCHER={'ERA':('era','DECIMAL(8,2) NULL'),'G':('games','INT UNSIGNED NULL'),'CG':('cg','INT UNSIGNED NULL'),'SHO':('sho','INT UNSIGNED NULL'),'W':('wins','INT UNSIGNED NULL'),'L':('losses','INT UNSIGNED NULL'),'SV':('saves','INT UNSIGNED NULL'),'HLD':('holds','INT UNSIGNED NULL'),'WPCT':('wpct','DECIMAL(6,3) NULL'),'TBF':('tbf','INT UNSIGNED NULL'),'IP':('innings_text','VARCHAR(30) NULL'),'H':('h','INT UNSIGNED NULL'),'HR':('hr','INT UNSIGNED NULL'),'BB':('bb','INT UNSIGNED NULL'),'HBP':('hbp','INT UNSIGNED NULL'),'SO':('so','INT UNSIGNED NULL'),'R':('r','INT UNSIGNED NULL'),'ER':('er','INT UNSIGNED NULL'),'WHIP':('whip','DECIMAL(8,2) NULL')}
+TABLES={'Hitter':'kbo_player_season_batting_totals','Pitcher':'kbo_player_season_pitching_totals'}
+HITTER.update({'R':('r','INT UNSIGNED NULL'),'SH':('sh','INT UNSIGNED NULL'),'SF':('sf','INT UNSIGNED NULL'),'IBB':('ibb','INT UNSIGNED NULL'),'TB':('tb','INT UNSIGNED NULL'),'OBP':('obp','DECIMAL(6,3) NULL'),'SLG':('slg','DECIMAL(6,3) NULL'),'OPS':('ops','DECIMAL(6,3) NULL')})
+MAPS={'Hitter':HITTER,'Pitcher':PITCHER}
+def columns(role):
+ out=dict(COMMON);out.update({v[0]:v[1] for v in MAPS[role].values()})
+ if role=='Pitcher':out['innings_outs']='INT UNSIGNED NULL'
+ return out
+def ddl(role):
+ definitions=[f'`{key}` {definition}' for key,definition in columns(role).items()]
+ definitions+=['PRIMARY KEY (`league_level`,`year`,`series_id`,`player_id`,`row_scope`,`filter_team_code`)','KEY idx_player_season (`player_id`,`league_level`,`year`,`series_id`)','CHECK (`year` BETWEEN 1982 AND 2000)','CHECK (`league_level`=1)','CHECK (`series_id` IN (0,1,3,4,5,7))',"CHECK (`row_scope` IN ('total','team'))","CHECK ((`row_scope`='total' AND `filter_team_code`='') OR (`row_scope`='team' AND `filter_team_code`<>''))",'CHECK (JSON_VALID(`raw_record`))']
+ return f"CREATE TABLE IF NOT EXISTS `{TABLES[role]}` ("+','.join(definitions)+') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci'

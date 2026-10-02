@@ -1,0 +1,1122 @@
+[
+  {
+    "player_id": 69446,
+    "name": "원태인",
+    "input_name": "원태인",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 75421,
+    "name": "오승환",
+    "input_name": "오승환",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 54424,
+    "name": "맥키넌",
+    "input_name": "맥키넌",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 62234,
+    "name": "류지혁",
+    "input_name": "류지혁",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 52415,
+    "name": "이재현",
+    "input_name": "이재현",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 62404,
+    "name": "구자욱",
+    "input_name": "구자욱",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 51454,
+    "name": "이승현",
+    "input_name": "이승현(51454)",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 50458,
+    "name": "김지찬",
+    "input_name": "김지찬",
+    "team": "삼성",
+    "year": 2024
+  },
+  {
+    "player_id": 54805,
+    "name": "박지환",
+    "input_name": "박지환",
+    "team": "SSG",
+    "year": 2024
+  },
+  {
+    "player_id": 53827,
+    "name": "에레디아",
+    "input_name": "에레디아",
+    "team": "SSG",
+    "year": 2024
+  },
+  {
+    "player_id": 62869,
+    "name": "문승원",
+    "input_name": "문승원",
+    "team": "SSG",
+    "year": 2024
+  },
+  {
+    "player_id": 75847,
+    "name": "최정",
+    "input_name": "최정",
+    "team": "SSG",
+    "year": 2024
+  },
+  {
+    "player_id": 54263,
+    "name": "김택연",
+    "input_name": "김택연",
+    "team": "두산",
+    "year": 2024
+  },
+  {
+    "player_id": 76232,
+    "name": "양의지",
+    "input_name": "양의지",
+    "team": "두산",
+    "year": 2024
+  },
+  {
+    "player_id": 79231,
+    "name": "정수빈",
+    "input_name": "정수빈",
+    "team": "두산",
+    "year": 2024
+  },
+  {
+    "player_id": 66291,
+    "name": "이영하",
+    "input_name": "이영하",
+    "team": "두산",
+    "year": 2024
+  },
+  {
+    "player_id": 64153,
+    "name": "양석환",
+    "input_name": "양석환",
+    "team": "두산",
+    "year": 2024
+  },
+  {
+    "player_id": 52591,
+    "name": "윤동희",
+    "input_name": "윤동희",
+    "team": "롯데",
+    "year": 2024
+  },
+  {
+    "player_id": 50500,
+    "name": "황성빈",
+    "input_name": "황성빈",
+    "team": "롯데",
+    "year": 2024
+  },
+  {
+    "player_id": 64021,
+    "name": "박세웅",
+    "input_name": "박세웅",
+    "team": "롯데",
+    "year": 2024
+  },
+  {
+    "player_id": 62528,
+    "name": "김원중",
+    "input_name": "김원중",
+    "team": "롯데",
+    "year": 2024
+  },
+  {
+    "player_id": 68518,
+    "name": "정보근",
+    "input_name": "정보근",
+    "team": "롯데",
+    "year": 2024
+  },
+  {
+    "player_id": 69032,
+    "name": "쿠에바스",
+    "input_name": "쿠에바스",
+    "team": "KT",
+    "year": 2024
+  },
+  {
+    "player_id": 68043,
+    "name": "김민",
+    "input_name": "김민",
+    "team": "KT",
+    "year": 2024
+  },
+  {
+    "player_id": 78548,
+    "name": "장성우",
+    "input_name": "장성우",
+    "team": "KT",
+    "year": 2024
+  },
+  {
+    "player_id": 67025,
+    "name": "로하스",
+    "input_name": "로하스",
+    "team": "KT",
+    "year": 2024
+  },
+  {
+    "player_id": 76715,
+    "name": "류현진",
+    "input_name": "류현진",
+    "team": "한화",
+    "year": 2024
+  },
+  {
+    "player_id": 65707,
+    "name": "주현상",
+    "input_name": "주현상",
+    "team": "한화",
+    "year": 2024
+  },
+  {
+    "player_id": 54730,
+    "name": "페라자",
+    "input_name": "페라자",
+    "team": "한화",
+    "year": 2024
+  },
+  {
+    "player_id": 78288,
+    "name": "최재훈",
+    "input_name": "최재훈",
+    "team": "한화",
+    "year": 2024
+  },
+  {
+    "player_id": 69737,
+    "name": "노시환",
+    "input_name": "노시환",
+    "team": "한화",
+    "year": 2024
+  },
+  {
+    "player_id": 66609,
+    "name": "전상현",
+    "input_name": "전상현",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 52605,
+    "name": "김도영",
+    "input_name": "김도영",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 64646,
+    "name": "박찬호",
+    "input_name": "박찬호(64646)",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 62947,
+    "name": "나성범",
+    "input_name": "나성범",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 52639,
+    "name": "최지민",
+    "input_name": "최지민",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 63950,
+    "name": "장현식",
+    "input_name": "장현식",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 63260,
+    "name": "이우성",
+    "input_name": "이우성",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 50662,
+    "name": "정해영",
+    "input_name": "정해영",
+    "team": "KIA",
+    "year": 2024
+  },
+  {
+    "player_id": 67304,
+    "name": "김혜성",
+    "input_name": "김혜성",
+    "team": "키움",
+    "year": 2024
+  },
+  {
+    "player_id": 53327,
+    "name": "도슨",
+    "input_name": "도슨",
+    "team": "키움",
+    "year": 2024
+  },
+  {
+    "player_id": 64350,
+    "name": "하영민",
+    "input_name": "하영민",
+    "team": "키움",
+    "year": 2024
+  },
+  {
+    "player_id": 63342,
+    "name": "조상우",
+    "input_name": "조상우",
+    "team": "키움",
+    "year": 2024
+  },
+  {
+    "player_id": 65357,
+    "name": "송성문",
+    "input_name": "송성문",
+    "team": "키움",
+    "year": 2024
+  },
+  {
+    "player_id": 79365,
+    "name": "박동원",
+    "input_name": "박동원",
+    "team": "LG",
+    "year": 2024
+  },
+  {
+    "player_id": 53123,
+    "name": "오스틴",
+    "input_name": "오스틴",
+    "team": "LG",
+    "year": 2024
+  },
+  {
+    "player_id": 50106,
+    "name": "유영찬",
+    "input_name": "유영찬",
+    "team": "LG",
+    "year": 2024
+  },
+  {
+    "player_id": 76290,
+    "name": "김현수",
+    "input_name": "김현수(76290)",
+    "team": "LG",
+    "year": 2024
+  },
+  {
+    "player_id": 66108,
+    "name": "홍창기",
+    "input_name": "홍창기",
+    "team": "LG",
+    "year": 2024
+  },
+  {
+    "player_id": 64580,
+    "name": "김재열",
+    "input_name": "김재열(64580)",
+    "team": "NC",
+    "year": 2024
+  },
+  {
+    "player_id": 68900,
+    "name": "김영규",
+    "input_name": "김영규",
+    "team": "NC",
+    "year": 2024
+  },
+  {
+    "player_id": 68912,
+    "name": "김형준",
+    "input_name": "김형준",
+    "team": "NC",
+    "year": 2024
+  },
+  {
+    "player_id": 69446,
+    "name": "원태인",
+    "input_name": "원태인",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 55455,
+    "name": "배찬승",
+    "input_name": "배찬승",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 74540,
+    "name": "강민호",
+    "input_name": "강민호",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 54400,
+    "name": "디아즈",
+    "input_name": "디아즈(54400)",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 62234,
+    "name": "류지혁",
+    "input_name": "류지혁",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 62404,
+    "name": "구자욱",
+    "input_name": "구자욱",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 50458,
+    "name": "김지찬",
+    "input_name": "김지찬",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 53455,
+    "name": "이호성",
+    "input_name": "이호성(53455)",
+    "team": "삼성",
+    "year": 2025
+  },
+  {
+    "player_id": 69517,
+    "name": "고승민",
+    "input_name": "고승민",
+    "team": "롯데",
+    "year": 2025
+  },
+  {
+    "player_id": 52591,
+    "name": "윤동희",
+    "input_name": "윤동희",
+    "team": "롯데",
+    "year": 2025
+  },
+  {
+    "player_id": 64021,
+    "name": "박세웅",
+    "input_name": "박세웅",
+    "team": "롯데",
+    "year": 2025
+  },
+  {
+    "player_id": 62528,
+    "name": "김원중",
+    "input_name": "김원중",
+    "team": "롯데",
+    "year": 2025
+  },
+  {
+    "player_id": 68205,
+    "name": "전민재",
+    "input_name": "전민재",
+    "team": "롯데",
+    "year": 2025
+  },
+  {
+    "player_id": 54529,
+    "name": "레이예스",
+    "input_name": "레이예스",
+    "team": "롯데",
+    "year": 2025
+  },
+  {
+    "player_id": 78513,
+    "name": "전준우",
+    "input_name": "전준우",
+    "team": "롯데",
+    "year": 2025
+  },
+  {
+    "player_id": 75847,
+    "name": "최정",
+    "input_name": "최정",
+    "team": "SSG",
+    "year": 2025
+  },
+  {
+    "player_id": 53892,
+    "name": "이로운",
+    "input_name": "이로운",
+    "team": "SSG",
+    "year": 2025
+  },
+  {
+    "player_id": 51897,
+    "name": "조병현",
+    "input_name": "조병현",
+    "team": "SSG",
+    "year": 2025
+  },
+  {
+    "player_id": 51865,
+    "name": "조형우",
+    "input_name": "조형우",
+    "team": "SSG",
+    "year": 2025
+  },
+  {
+    "player_id": 54263,
+    "name": "김택연",
+    "input_name": "김택연",
+    "team": "두산",
+    "year": 2025
+  },
+  {
+    "player_id": 67266,
+    "name": "박치국",
+    "input_name": "박치국",
+    "team": "두산",
+    "year": 2025
+  },
+  {
+    "player_id": 50208,
+    "name": "오명진",
+    "input_name": "오명진",
+    "team": "두산",
+    "year": 2025
+  },
+  {
+    "player_id": 51264,
+    "name": "최승용",
+    "input_name": "최승용",
+    "team": "두산",
+    "year": 2025
+  },
+  {
+    "player_id": 52060,
+    "name": "박영현",
+    "input_name": "박영현",
+    "team": "KT",
+    "year": 2025
+  },
+  {
+    "player_id": 73117,
+    "name": "우규민",
+    "input_name": "우규민",
+    "team": "KT",
+    "year": 2025
+  },
+  {
+    "player_id": 78548,
+    "name": "장성우",
+    "input_name": "장성우",
+    "team": "KT",
+    "year": 2025
+  },
+  {
+    "player_id": 51003,
+    "name": "권동진",
+    "input_name": "권동진",
+    "team": "KT",
+    "year": 2025
+  },
+  {
+    "player_id": 64166,
+    "name": "배정대",
+    "input_name": "배정대",
+    "team": "KT",
+    "year": 2025
+  },
+  {
+    "player_id": 52001,
+    "name": "안현민",
+    "input_name": "안현민",
+    "team": "KT",
+    "year": 2025
+  },
+  {
+    "player_id": 55730,
+    "name": "폰세",
+    "input_name": "폰세",
+    "team": "한화",
+    "year": 2025
+  },
+  {
+    "player_id": 67703,
+    "name": "박상원",
+    "input_name": "박상원",
+    "team": "한화",
+    "year": 2025
+  },
+  {
+    "player_id": 53754,
+    "name": "김서현",
+    "input_name": "김서현",
+    "team": "한화",
+    "year": 2025
+  },
+  {
+    "player_id": 79192,
+    "name": "채은성",
+    "input_name": "채은성",
+    "team": "한화",
+    "year": 2025
+  },
+  {
+    "player_id": 53764,
+    "name": "문현빈",
+    "input_name": "문현빈",
+    "team": "한화",
+    "year": 2025
+  },
+  {
+    "player_id": 65703,
+    "name": "이도윤",
+    "input_name": "이도윤",
+    "team": "한화",
+    "year": 2025
+  },
+  {
+    "player_id": 55734,
+    "name": "플로리얼",
+    "input_name": "플로리얼",
+    "team": "한화",
+    "year": 2025
+  },
+  {
+    "player_id": 62415,
+    "name": "박해민",
+    "input_name": "박해민",
+    "team": "LG",
+    "year": 2025
+  },
+  {
+    "player_id": 55167,
+    "name": "김영우",
+    "input_name": "김영우",
+    "team": "LG",
+    "year": 2025
+  },
+  {
+    "player_id": 53139,
+    "name": "박명근",
+    "input_name": "박명근",
+    "team": "LG",
+    "year": 2025
+  },
+  {
+    "player_id": 76290,
+    "name": "김현수",
+    "input_name": "김현수(76290)",
+    "team": "LG",
+    "year": 2025
+  },
+  {
+    "player_id": 53123,
+    "name": "오스틴",
+    "input_name": "오스틴",
+    "team": "LG",
+    "year": 2025
+  },
+  {
+    "player_id": 55633,
+    "name": "올러",
+    "input_name": "올러",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 53613,
+    "name": "윤영철",
+    "input_name": "윤영철",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 54610,
+    "name": "성영탁",
+    "input_name": "성양탁",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 52639,
+    "name": "최지민",
+    "input_name": "최지민",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 78122,
+    "name": "김태군",
+    "input_name": "김태군",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 65653,
+    "name": "김호령",
+    "input_name": "김호령",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 64646,
+    "name": "박찬호",
+    "input_name": "박찬호(64646)",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 52605,
+    "name": "김도영",
+    "input_name": "김도영",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 72443,
+    "name": "최형우",
+    "input_name": "최형우",
+    "team": "KIA",
+    "year": 2025
+  },
+  {
+    "player_id": 62907,
+    "name": "박민우",
+    "input_name": "박민우",
+    "team": "NC",
+    "year": 2025
+  },
+  {
+    "player_id": 79215,
+    "name": "박건우",
+    "input_name": "박건우",
+    "team": "NC",
+    "year": 2025
+  },
+  {
+    "player_id": 64995,
+    "name": "배재환",
+    "input_name": "배재환",
+    "team": "NC",
+    "year": 2025
+  },
+  {
+    "player_id": 68912,
+    "name": "김형준",
+    "input_name": "김형준",
+    "team": "NC",
+    "year": 2025
+  },
+  {
+    "player_id": 51907,
+    "name": "김주원",
+    "input_name": "김주원",
+    "team": "NC",
+    "year": 2025
+  },
+  {
+    "player_id": 65357,
+    "name": "송성문",
+    "input_name": "송성문",
+    "team": "키움",
+    "year": 2025
+  },
+  {
+    "player_id": 50167,
+    "name": "이주형",
+    "input_name": "이주형(50167)",
+    "team": "키움",
+    "year": 2025
+  },
+  {
+    "player_id": 52330,
+    "name": "주승우",
+    "input_name": "주승우",
+    "team": "키움",
+    "year": 2025
+  },
+  {
+    "player_id": 64350,
+    "name": "하영민",
+    "input_name": "하영민",
+    "team": "키움",
+    "year": 2025
+  },
+  {
+    "player_id": 50464,
+    "name": "이승민",
+    "input_name": "이승민",
+    "team": "삼성",
+    "year": 2026
+  },
+  {
+    "player_id": 54400,
+    "name": "디아즈",
+    "input_name": "디아즈(54400)",
+    "team": "삼성",
+    "year": 2026
+  },
+  {
+    "player_id": 62404,
+    "name": "구자욱",
+    "input_name": "구자욱",
+    "team": "삼성",
+    "year": 2026
+  },
+  {
+    "player_id": 72443,
+    "name": "최형우",
+    "input_name": "최형우",
+    "team": "삼성",
+    "year": 2026
+  },
+  {
+    "player_id": 68415,
+    "name": "양창섭",
+    "input_name": "양창섭",
+    "team": "삼성",
+    "year": 2026
+  },
+  {
+    "player_id": 69442,
+    "name": "김도환",
+    "input_name": "김도환",
+    "team": "삼성",
+    "year": 2026
+  },
+  {
+    "player_id": 56460,
+    "name": "장찬희",
+    "input_name": "장찬희",
+    "team": "삼성",
+    "year": 2026
+  },
+  {
+    "player_id": 68220,
+    "name": "곽빈",
+    "input_name": "곽빈",
+    "team": "두산",
+    "year": 2026
+  },
+  {
+    "player_id": 66291,
+    "name": "이영하",
+    "input_name": "이영하",
+    "team": "두산",
+    "year": 2026
+  },
+  {
+    "player_id": 76232,
+    "name": "양의지",
+    "input_name": "양의지",
+    "team": "두산",
+    "year": 2026
+  },
+  {
+    "player_id": 55252,
+    "name": "박준순",
+    "input_name": "박준순",
+    "team": "두산",
+    "year": 2026
+  },
+  {
+    "player_id": 64646,
+    "name": "박찬호",
+    "input_name": "박찬호(64646)",
+    "team": "두산",
+    "year": 2026
+  },
+  {
+    "player_id": 79231,
+    "name": "정수빈",
+    "input_name": "정수빈",
+    "team": "두산",
+    "year": 2026
+  },
+  {
+    "player_id": 75847,
+    "name": "최정",
+    "input_name": "최정",
+    "team": "SSG",
+    "year": 2026
+  },
+  {
+    "player_id": 51867,
+    "name": "김건우",
+    "input_name": "김건우(51867)",
+    "team": "SSG",
+    "year": 2026
+  },
+  {
+    "player_id": 51865,
+    "name": "조형우",
+    "input_name": "조형우",
+    "team": "SSG",
+    "year": 2026
+  },
+  {
+    "player_id": 54812,
+    "name": "정준재",
+    "input_name": "정준재",
+    "team": "SSG",
+    "year": 2026
+  },
+  {
+    "player_id": 60558,
+    "name": "오태곤",
+    "input_name": "오태곤",
+    "team": "SSG",
+    "year": 2026
+  },
+  {
+    "player_id": 51516,
+    "name": "김진욱",
+    "input_name": "김진욱(51516)",
+    "team": "롯데",
+    "year": 2026
+  },
+  {
+    "player_id": 56536,
+    "name": "박정민",
+    "input_name": "박정민",
+    "team": "롯데",
+    "year": 2026
+  },
+  {
+    "player_id": 68260,
+    "name": "현도훈",
+    "input_name": "현도훈",
+    "team": "롯데",
+    "year": 2026
+  },
+  {
+    "player_id": 50500,
+    "name": "황성빈",
+    "input_name": "황성빈",
+    "team": "롯데",
+    "year": 2026
+  },
+  {
+    "player_id": 66606,
+    "name": "최원준",
+    "input_name": "최원준(66606)",
+    "team": "KT",
+    "year": 2026
+  },
+  {
+    "player_id": 69041,
+    "name": "손동현",
+    "input_name": "손동현",
+    "team": "KT",
+    "year": 2026
+  },
+  {
+    "player_id": 69047,
+    "name": "전용주",
+    "input_name": "전용주",
+    "team": "KT",
+    "year": 2026
+  },
+  {
+    "player_id": 55633,
+    "name": "올러",
+    "input_name": "올러",
+    "team": "KIA",
+    "year": 2026
+  },
+  {
+    "player_id": 50662,
+    "name": "정해영",
+    "input_name": "정해영",
+    "team": "KIA",
+    "year": 2026
+  },
+  {
+    "player_id": 54610,
+    "name": "성영탁",
+    "input_name": "성영탁",
+    "team": "KIA",
+    "year": 2026
+  },
+  {
+    "player_id": 52605,
+    "name": "김도영",
+    "input_name": "김도영",
+    "team": "KIA",
+    "year": 2026
+  },
+  {
+    "player_id": 55636,
+    "name": "박재현",
+    "input_name": "박재현",
+    "team": "KIA",
+    "year": 2026
+  },
+  {
+    "player_id": 68646,
+    "name": "한준수",
+    "input_name": "한준수",
+    "team": "KIA",
+    "year": 2026
+  },
+  {
+    "player_id": 53764,
+    "name": "문현빈",
+    "input_name": "문현빈",
+    "team": "한화",
+    "year": 2026
+  },
+  {
+    "player_id": 68050,
+    "name": "강백호",
+    "input_name": "강백호",
+    "team": "한화",
+    "year": 2026
+  },
+  {
+    "player_id": 65703,
+    "name": "이도윤",
+    "input_name": "이도윤",
+    "team": "한화",
+    "year": 2026
+  },
+  {
+    "player_id": 76715,
+    "name": "류현진",
+    "input_name": "류현진",
+    "team": "한화",
+    "year": 2026
+  },
+  {
+    "player_id": 53123,
+    "name": "오스틴",
+    "input_name": "오스틴",
+    "team": "LG",
+    "year": 2026
+  },
+  {
+    "player_id": 62415,
+    "name": "박해민",
+    "input_name": "박해민",
+    "team": "LG",
+    "year": 2026
+  },
+  {
+    "player_id": 51526,
+    "name": "우강훈",
+    "input_name": "우강훈",
+    "team": "LG",
+    "year": 2026
+  },
+  {
+    "player_id": 69100,
+    "name": "구본혁",
+    "input_name": "구본혁",
+    "team": "LG",
+    "year": 2026
+  },
+  {
+    "player_id": 68119,
+    "name": "문성주",
+    "input_name": "문성주",
+    "team": "LG",
+    "year": 2026
+  },
+  {
+    "player_id": 68110,
+    "name": "송찬의",
+    "input_name": "송찬의",
+    "team": "LG",
+    "year": 2026
+  },
+  {
+    "player_id": 62907,
+    "name": "박민우",
+    "input_name": "박민우",
+    "team": "NC",
+    "year": 2026
+  },
+  {
+    "player_id": 51907,
+    "name": "김주원",
+    "input_name": "김주원",
+    "team": "NC",
+    "year": 2026
+  },
+  {
+    "player_id": 65949,
+    "name": "류진욱",
+    "input_name": "류진욱",
+    "team": "NC",
+    "year": 2026
+  },
+  {
+    "player_id": 69969,
+    "name": "전사민",
+    "input_name": "전사민",
+    "team": "NC",
+    "year": 2026
+  },
+  {
+    "player_id": 56318,
+    "name": "박준현",
+    "input_name": "박준현",
+    "team": "키움",
+    "year": 2026
+  },
+  {
+    "player_id": 68341,
+    "name": "안우진",
+    "input_name": "안우진",
+    "team": "키움",
+    "year": 2026
+  },
+  {
+    "player_id": 56348,
+    "name": "유토",
+    "input_name": "유토",
+    "team": "키움",
+    "year": 2026
+  },
+  {
+    "player_id": 53312,
+    "name": "김건희",
+    "input_name": "김건희",
+    "team": "키움",
+    "year": 2026
+  }
+]

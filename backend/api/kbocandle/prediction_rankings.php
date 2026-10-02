@@ -41,9 +41,9 @@ function predictionTeamCodes(PDO $pdo, array $playerIds): array {
 try {
     $revisionPath = getenv('WESIPER_CANDLE_REVISION_FILE') ?: '/tmp/wesiper-candle-data-revision';
     $revision = is_readable($revisionPath) ? trim(file_get_contents($revisionPath)) : 'initial';
-    $stmt = $pdo->prepare("SELECT p.player_id, p.payload, pl.p_name, pl.p_img
+    $stmt = $pdo->prepare("SELECT p.player_id, p.payload, pl.name, pl.img
         FROM kbo_player_predictions p
-        LEFT JOIN kbo_playerlist_20250613 pl ON pl.p_no = p.player_id
+        LEFT JOIN kbo_player_data pl ON pl.player_id = p.player_id
         WHERE p.season_year=2026 AND p.season_type='regular'
           AND p.as_of_date=:as_of AND p.data_version=:data_version
           AND p.source_revision=:revision
@@ -62,7 +62,7 @@ try {
         $homeRun = $payload['probabilities']['home_run'] ?? null;
         if (!is_numeric($hit) || !is_numeric($homeRun)
             || $hit < 0 || $hit > 1 || $homeRun < 0 || $homeRun > 1) continue;
-        $players[$id] = ['player_id' => $id, 'name' => $row['p_name'] ?: "#$id", 'img' => $row['p_img'] ?? '',
+        $players[$id] = ['player_id' => $id, 'name' => $row['name'] ?: "#$id", 'img' => $row['img'] ?? '',
             'avg' => isset($payload['current']['avg']) ? (float)$payload['current']['avg'] : null,
             'hit' => (float)$hit, 'home_run' => (float)$homeRun];
     }
@@ -106,7 +106,7 @@ try {
     }
     $nameStmt = $pdo->prepare("SELECT player_id, MAX(player_name) AS player_name
         FROM kbo_season_records FORCE INDEX (idx_player_date)
-        WHERE player_id IN ($placeholders) AND game_date BETWEEN '2026-03-28' AND ?
+        WHERE league_level=1 AND player_id IN ($placeholders) AND game_date BETWEEN '2026-03-28' AND ?
         GROUP BY player_id");
     $nameStmt->execute([...$shownPlayerIds, $asOf]);
     $seasonNames = [];

@@ -1,0 +1,112 @@
+{
+  "passed": true,
+  "annual": [
+    {
+      "year": 2017,
+      "official_rows": 377,
+      "excluded_name_changes": 13,
+      "stored_rows": 364
+    },
+    {
+      "year": 2018,
+      "official_rows": 280,
+      "excluded_name_changes": 8,
+      "stored_rows": 272
+    },
+    {
+      "year": 2019,
+      "official_rows": 369,
+      "excluded_name_changes": 9,
+      "stored_rows": 360
+    },
+    {
+      "year": 2020,
+      "official_rows": 739,
+      "excluded_name_changes": 12,
+      "stored_rows": 727
+    },
+    {
+      "year": 2021,
+      "official_rows": 588,
+      "excluded_name_changes": 5,
+      "stored_rows": 583
+    },
+    {
+      "year": 2022,
+      "official_rows": 611,
+      "excluded_name_changes": 7,
+      "stored_rows": 604
+    },
+    {
+      "year": 2023,
+      "official_rows": 616,
+      "excluded_name_changes": 5,
+      "stored_rows": 611
+    },
+    {
+      "year": 2024,
+      "official_rows": 642,
+      "excluded_name_changes": 1,
+      "stored_rows": 641
+    },
+    {
+      "year": 2025,
+      "official_rows": 641,
+      "excluded_name_changes": 3,
+      "stored_rows": 638
+    },
+    {
+      "year": 2026,
+      "official_rows": 559,
+      "excluded_name_changes": 4,
+      "stored_rows": 555
+    }
+  ],
+  "movement_rows": 5355,
+  "number_change_rows": 354,
+  "number_updates": 134,
+  "rename_updates": 41,
+  "parent_rows": 6048,
+  "requested_parent_values_verified": true,
+  "external_non_target_column_changes": {
+    "bat": 4021,
+    "throw": 4021,
+    "draft": 2607,
+    "body": 58,
+    "birth": 48
+  },
+  "note": "Importer UPDATE statements set only backNo, name and oldname. Concurrent non-target changes are preserved, never rolled back.",
+  "unresolved_number_identities": [
+    {
+      "source_key": "e40f0ec021df52321bb825e4fd01e4802ca768f2e50417fab9226c0259f138f6",
+      "event_date": "2018-08-12",
+      "team": "LG",
+      "player_text": "김태형(투수)",
+      "note": "120→64",
+      "candidate_player_ids": [
+        9907,
+        55610,
+        62918,
+        67122,
+        90214,
+        91153
+      ]
+    },
+    {
+      "source_key": "a23e549f413938c6767882c09a54fea09169e323df0c63c330370ce9cdb80517",
+      "event_date": "2018-06-15",
+      "team": "LG",
+      "player_text": "김태형(투수)",
+      "note": "122→65",
+      "candidate_player_ids": [
+        9907,
+        55610,
+        62918,
+        67122,
+        90214,
+        91153
+      ]
+    }
+  ],
+  "unresolved_renames": []
+}

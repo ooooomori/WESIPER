@@ -1,0 +1,108 @@
+{
+  "checked_at": "2026-09-28",
+  "titles_through": 2025,
+  "roster_source": "https://namu.wiki/w/울산 웨일즈/선수단",
+  "wiki_access": "https://m.namu.moe/w/울산 웨일즈/선수단",
+  "roster_includes_military": true,
+  "roster_excludes_former_players": true,
+  "corrections": [
+    {
+      "player_id": 82234,
+      "name": "박철순",
+      "type": "평균자책점",
+      "year": 1982,
+      "wiki": "1.82",
+      "official": "1.84"
+    },
+    {
+      "player_id": 94490,
+      "name": "하기룡",
+      "type": "평균자책점",
+      "year": 1983,
+      "wiki": "2.33",
+      "official": "2.34"
+    },
+    {
+      "player_id": 89620,
+      "name": "이강철",
+      "type": "탈삼진",
+      "year": 1992,
+      "wiki": "155",
+      "official": "156"
+    },
+    {
+      "player_id": 85110,
+      "name": "김용수",
+      "type": "세이브포인트",
+      "year": 1989,
+      "wiki": "27",
+      "official": "26"
+    },
+    {
+      "player_id": 82420,
+      "name": "이만수",
+      "type": "타점",
+      "year": 1983,
+      "wiki": "74",
+      "official": "73"
+    },
+    {
+      "player_id": 86724,
+      "name": "이강돈",
+      "type": "득점",
+      "year": 1990,
+      "wiki": "91",
+      "official": "81"
+    },
+    {
+      "player_id": 96480,
+      "name": "백인천",
+      "type": "출루율",
+      "year": 1982,
+      "wiki": "0.497",
+      "official": "0.502"
+    },
+    {
+      "player_id": 83460,
+      "name": "장효조",
+      "type": "출루율",
+      "year": 1983,
+      "wiki": "0.469",
+      "official": "0.475"
+    },
+    {
+      "player_id": 83460,
+      "name": "장효조",
+      "type": "출루율",
+      "year": 1985,
+      "wiki": "0.467",
+      "official": "0.464"
+    },
+    {
+      "player_id": 91803,
+      "name": "김기태",
+      "type": "출루율",
+      "year": 1997,
+      "wiki": "0.453",
+      "official": "0.460"
+    }
+  ],
+  "counts": {
+    "다승": 59,
+    "평균자책점": 44,
+    "탈삼진": 45,
+    "세이브": 46,
+    "홀드": 27,
+    "승률": 48,
+    "세이브포인트": 22,
+    "타율": 44,
+    "안타": 46,
+    "홈런": 46,
+    "타점": 44,
+    "득점": 48,
+    "도루": 44,
+    "출루율": 44,
+    "장타율": 44,
+    "승리타점": 9
+  }
+}

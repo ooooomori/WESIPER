@@ -12,9 +12,9 @@
 
     $playerID = $data["p_no"];
     
-    $sql = "SELECT `playerId`, `name`, `hs`, `hsLoc` ,`team`, `backNo`, `bat`, `throw`, `mainPos`, `subPos`, `birth`, `draft`
+    $sql = "SELECT `player_id` AS `playerId`, `name`, `hs`, `hsLoc` ,`team`, `backNo`, `bat`, `throw`, `mainPos`, `subPos`, `birth`, `draft`
     FROM $playerlist
-    WHERE `playerId` = ?";
+    WHERE `player_id` = ? AND `is_kbodle` IN (1, 2)";
     $stmt = $con->prepare($sql);
     $stmt->bind_param("s", $playerID);
     $stmt->execute();

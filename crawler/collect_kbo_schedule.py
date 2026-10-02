@@ -16,17 +16,20 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = """CREATE TABLE IF NOT EXISTS kbo_schedule (
-    game_code VARCHAR(32) PRIMARY KEY,
+    league_level INTEGER NOT NULL DEFAULT 1,
+    game_code VARCHAR(32) NOT NULL,
     game_date DATE NOT NULL,
     away_team VARCHAR(40) NOT NULL,
     home_team VARCHAR(40) NOT NULL,
     away_score INTEGER NULL,
     home_score INTEGER NULL,
-    tv VARCHAR(255) NOT NULL,
-    stadium VARCHAR(80) NOT NULL
+    tv VARCHAR(255) NULL,
+    stadium VARCHAR(80) NOT NULL,
+    is_allstar INTEGER NOT NULL DEFAULT 0,
+    PRIMARY KEY (league_level, game_code)
 )"""
-COLUMNS = ('game_code', 'game_date', 'away_team', 'home_team',
-           'away_score', 'home_score', 'tv', 'stadium')
+COLUMNS = ('league_level', 'game_code', 'game_date', 'away_team', 'home_team',
+           'away_score', 'home_score', 'tv', 'stadium', 'is_allstar')
 
 
 def text(value):
@@ -76,10 +79,11 @@ def parse_month(payload, year, month):
             raise ValueError('Conflicting game IDs')
         # Offsets relative to the matchup cell do not change when the date is row-spanned.
         games.append(dict(zip(COLUMNS, (
-            next(iter(codes), None), current_date.isoformat(), parts[0], parts[-1],
+            1, next(iter(codes), None), current_date.isoformat(), parts[0], parts[-1],
             int(parts[1]) if len(parts) == 5 else None,
             int(parts[3]) if len(parts) == 5 else None,
             text(cells[play_index + 3]['Text']), text(cells[play_index + 5]['Text']),
+            0,
         ))))
     return games, cancelled
 
@@ -117,12 +121,12 @@ def save(games, year, connection, mysql=False):
     try:
         if not games:
             raise ValueError('Refusing to replace schedule with empty data')
-        cursor.execute(f'DELETE FROM kbo_schedule WHERE game_date >= {placeholder} AND game_date < {placeholder} AND game_code NOT IN ({",".join([placeholder] * len(games))})',
+        cursor.execute(f'DELETE FROM kbo_schedule WHERE league_level=1 AND game_date >= {placeholder} AND game_date < {placeholder} AND game_code NOT IN ({",".join([placeholder] * len(games))})',
                        (f'{year}-03-01', f'{year}-11-01', *[g['game_code'] for g in games]))
         # Update only schedule fields, preserving previously collected inning arrays.
         update = (' ON DUPLICATE KEY UPDATE ' + ','.join(f'{c}=VALUES({c})' for c in COLUMNS[1:])) if mysql else (
-            ' ON CONFLICT(game_code) DO UPDATE SET ' + ','.join(f'{c}=excluded.{c}' for c in COLUMNS[1:]))
-        cursor.executemany(f'INSERT INTO kbo_schedule ({",".join(COLUMNS)}) VALUES ({",".join([placeholder] * 8)})' + update,
+            ' ON CONFLICT(league_level,game_code) DO UPDATE SET ' + ','.join(f'{c}=excluded.{c}' for c in COLUMNS[2:]))
+        cursor.executemany(f'INSERT INTO kbo_schedule ({",".join(COLUMNS)}) VALUES ({",".join([placeholder] * len(COLUMNS))})' + update,
                            [tuple(g[c] for c in COLUMNS) for g in games])
         connection.commit()
     except Exception:

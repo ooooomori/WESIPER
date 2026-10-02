@@ -8,7 +8,7 @@ from pathlib import Path
 from prediction_model import aggregate, regular_bounds
 
 SQL = '''SELECT PK,game_date,game_id,player_id,inning,pa_result
-         FROM kbo_season_records WHERE game_date >= %s AND game_date <= %s
+         FROM kbo_season_records WHERE league_level = 1 AND game_date >= %s AND game_date <= %s
          ORDER BY game_date,game_id,player_id,inning,PK'''
 
 

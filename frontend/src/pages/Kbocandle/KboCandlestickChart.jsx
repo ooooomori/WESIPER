@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import { createChart, createImageWatermark, BarSeries, CandlestickSeries, LineSeries, ColorType, CrosshairMode } from "lightweight-charts";
 import PlayerImg from "./PlayerImg";
 import MetricHelp from "./MetricHelp";
+import RecordMetricTabs from "../PlayerProfile/RecordMetricTabs";
 import PredictionCard from "./PredictionCard";
 import CandleBreakdownTable from "./CandleBreakdownTable";
 import { METRICS, buildBars, metricValue, withCalendarGaps } from "./chartData";
@@ -46,8 +47,10 @@ const derivePeriodStats = data => {
     };
 };
 
-export default function KboCandlestickChart({ kboData, dark, setDark }) {
-    const [metric, setMetric] = useState("ops");
+export default function KboCandlestickChart({ kboData, dark, setDark, profile = false, profileHeading, selectedMetric, onMetricChange }) {
+    const [internalMetric, setInternalMetric] = useState("ops");
+    const metric = selectedMetric ?? internalMetric;
+    const setMetric = onMetricChange || setInternalMetric;
     const [timeframe, setTimeframe] = useState("daily");
     const [showMA, setShowMA] = useState(true);
     const [showExtrema, setShowExtrema] = useState(true);
@@ -60,6 +63,8 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     const [extremaLabels, setExtremaLabels] = useState([]);
     const host = useRef(null);
     const api = useRef(null);
+    const availableMetrics = kboData?.season === "futures" ? METRICS.filter(([id]) => id !== "ops_plus") : METRICS;
+    useEffect(() => { if (kboData?.season === "futures" && metric === "ops_plus") setMetric("ops"); }, [kboData?.season, metric, setMetric]);
     const plus = metric === "ops_plus";
     const lineChart = !plus && chartType === "line";
     const candlePalette = CANDLE_PALETTES.find(palette => palette.id === candlePaletteId) || CANDLE_PALETTES[0];
@@ -73,7 +78,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
         ? `${value >= previousClose ? "+" : ""}${((value - previousClose) / previousClose * 100).toFixed(2)}%` : null;
     const format = value => Number.isFinite(value) ? value.toFixed(plus ? 1 : 3) : "—";
     const metricName = METRICS.find(([id]) => id === metric)?.[1];
-    const seasonLabels = { regular: "정규시즌", preseason: "시범경기", postseason: "포스트시즌" };
+    const seasonLabels = { regular: "정규시즌", preseason: "시범경기", postseason: "포스트시즌", futures: "퓨처스리그" };
     const summaryTitle = kboData?.date_preset === "custom"
         ? "조회 기간 성적"
         : /^\d+$/.test(kboData?.date_preset || "")
@@ -116,14 +121,14 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
     const teamLogoName = teamLogoNames[teamCode];
     const teamLogo = teamLogoName ? defaultTeamLogoFiles[`../../assets/images/logos/${teamLogoName}-logo.svg`] : null;
     const chartTeamLogo = teamLogoName ? smallTeamLogoFiles[`../../assets/images/s-logos/${teamLogoName}-small-logo.svg`] : null;
-    const seasonRankText = seasonRanking?.qualified && seasonRank ? `${isWholeSeason ? "시즌" : "조회 기간"} ${seasonRank}위` : "";
+    const seasonRankText = seasonRanking?.qualified && seasonRank ? (profile ? `${seasonRank}위` : `${isWholeSeason ? "시즌" : "조회 기간"} ${seasonRank}위`) : "";
     const summaryRankKeys = { "타율": "avg", "출루율": "obp", "장타율": "slg", "OPS": "ops", "OPS+": "ops_plus", "안타": "hits", "홈런": "home_runs", "도루": "stolen_bases", "BB/K": "bb_per_k", "BABIP": "babip" };
 
     useEffect(() => {
         if (!host.current || !bars.length) { setRangeInfo(null); setSelected(null); setExtremaLabels([]); return; }
         const chart = createChart(host.current, {
             autoSize: true,
-            layout: { background: { type: ColorType.Solid, color: dark ? "#101722" : "#f8fbff" }, textColor: dark ? "#8593a8" : "#44546a", fontFamily: "NanumSquareNeo, Arial, sans-serif", fontSize: 11, attributionLogo: true },
+            layout: { background: { type: ColorType.Solid, color: dark ? "#101722" : profile ? "#ffffff" : "#f8fbff" }, textColor: dark ? "#8593a8" : "#44546a", fontFamily: "NanumSquareNeo, Arial, sans-serif", fontSize: 11, attributionLogo: true },
             grid: { vertLines: { color: dark ? "#1b2533" : "#dce4ee" }, horzLines: { color: dark ? "#1f2a38" : "#d7e0eb" } },
             rightPriceScale: { autoScale: true, borderColor: dark ? "#283344" : "#c7d2e0", scaleMargins: { top: 0.13, bottom: 0.12 } },
             timeScale: { borderColor: dark ? "#283344" : "#c7d2e0", rightOffset: 3, barSpacing: 10, minBarSpacing: 3, fixLeftEdge: true, fixRightEdge: true },
@@ -217,7 +222,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             api.current = null;
             chart.remove();
         };
-    }, [bars, plus, chartType, metric, timeframe, calendarGaps, dark, chartTeamLogo]);
+    }, [bars, plus, chartType, metric, timeframe, calendarGaps, dark, chartTeamLogo, profile]);
 
     useEffect(() => { api.current?.moving.forEach(series => series.applyOptions({ visible: showMA })); }, [showMA, bars, calendarGaps]);
     useEffect(() => {
@@ -259,19 +264,19 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             bars.map(bar => [bar.time, bar.open, bar.high, bar.low, bar.close, ...(showMA ? [bar.ma7, bar.ma15, bar.ma30] : [])]));
     };
 
-    return <section className={`candle-terminal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 기록 차트">
-        <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span></span><span>{periodLabel || "SEASON"}</span></div>
+    return <section className={`candle-terminal font-family-NaSqNe ${profile ? "profile-candle-terminal" : ""} ${dark ? "theme-dark" : "theme-light"}`} aria-label="KBO 선수 기록 차트">
+        {!profile && <div className="candle-topline"><span><i /> <span className="font-family-kbo">KBO CANDLE</span></span><span>{periodLabel || "SEASON"}</span></div>}
         <header className={`candle-quote ${teamLogo ? "candle-quote-team" : ""}`} style={teamLogo ? { "--candle-team-logo": `url("${teamLogo}")`, "--candle-team-tint": `${teamColors[teamLogoName]}${dark ? "3d" : "1f"}` } : undefined}>
-            <div className="candle-player">
+            {profile ? profileHeading : <div className="candle-player">
                 {latest && <div className="candle-avatar"><PlayerImg p_no={kboData.player_id} p_img={kboData.img || ""} /></div>}
                 <div><div className="candle-eyebrow">{latest && <><span><a className="candle-player-id-link" href={kboPlayerUrl} target="_blank" rel="noreferrer">{`#${kboData.player_id}`}</a>{` · ${metricName}`}</span><MetricHelp metric={metric} /></>}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
-            </div>
+            </div>}
             <div className={`candle-price ${direction}`}>
                 <div className="candle-price-main">{seasonRankText && <small className={`candle-price-rank ${seasonRank <= 5 ? rankBadgeClass(seasonRank) : ""}`}>{seasonTopThree && rankMedal(seasonRank)}{seasonRankText}</small>}<strong>{format(current)}</strong></div>
                 {change !== null && <span className="candle-price-change">{`${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span>}
             </div>
         </header>
-        <nav className="candle-metrics" aria-label="기록 지표">{METRICS.map(([id, name]) => <button key={id} aria-pressed={metric === id} className={metric === id ? "active" : ""} onClick={() => setMetric(id)}>{name}</button>)}</nav>
+        {profile ? <RecordMetricTabs options={availableMetrics} value={metric} onChange={setMetric} /> : <nav className="candle-metrics" aria-label="기록 지표">{availableMetrics.map(([id, name]) => <button key={id} aria-pressed={metric === id} className={metric === id ? "active" : ""} onClick={() => setMetric(id)}>{name}</button>)}</nav>}
         <div className="candle-toolbar">
             <div className="candle-periods" style={{ "--active-index": { daily: 0, weekly: 1, monthly: 2 }[timeframe] }}>{[["daily", "일"], ["weekly", "주"], ["monthly", "월"]].map(([id, label]) => <button key={id} aria-pressed={timeframe === id} className={timeframe === id ? "active" : ""} onClick={() => setTimeframe(id)}>{label}</button>)}</div>
             <div className="candle-options"><button className="candle-chart-settings-icon" aria-label="차트 설정" aria-haspopup="dialog" onClick={() => setChartSettingsOpen(true)}><i className="bi bi-gear" aria-hidden="true" /></button></div>
@@ -283,7 +288,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             : <>선수를 선택하고 조회하기를 눌러보세요!</>}</span></div>}
         <div className="candle-navigation">
 <div><button className="candle-nav-icon" disabled={!latest} onClick={() => move(-1)} aria-label="이전 구간"><i className="bi bi-chevron-left" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => move(1)} aria-label="다음 구간"><i className="bi bi-chevron-right" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => zoom(1.3)} aria-label="차트 축소"><i className="bi bi-dash-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => zoom(0.75)} aria-label="차트 확대"><i className="bi bi-plus-lg" aria-hidden="true" /></button><button className="candle-nav-icon" disabled={!latest} onClick={() => api.current?.recent()} aria-label="차트 초기화" title="초기화"><i className="bi bi-arrow-counterclockwise" aria-hidden="true" /></button></div>
-            <div className="candle-navigation-actions"><details className={`candle-export-menu ${latest ? "" : "disabled"}`}><summary aria-label="차트 저장 메뉴" onClick={event => !latest && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_visible.png`, omitSelectors: [".candle-detail"], rangeText: currentRangeText, getMarkers: () => showExtrema ? api.current?.exportMarkers() || [] : [], afterRestore: () => api.current?.refreshExtrema(), fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_full.png`, omitSelectors: [".candle-detail"], rangeText: exportRangeText, getMarkers: () => showExtrema ? api.current?.exportMarkers() || [] : [], afterRestore: () => api.current?.refreshExtrema(), fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details></div>
+            {!profile && <div className="candle-navigation-actions"><details className={`candle-export-menu ${latest ? "" : "disabled"}`}><summary aria-label="차트 저장 메뉴" onClick={event => !latest && event.preventDefault()}><i className="bi bi-floppy-fill" aria-hidden="true" />저장</summary><div className="candle-export-options"><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; exportCsv(); }}><i className="bi bi-filetype-csv" aria-hidden="true" />CSV</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_visible.png`, omitSelectors: [".candle-detail"], rangeText: currentRangeText, getMarkers: () => showExtrema ? api.current?.exportMarkers() || [] : [], afterRestore: () => api.current?.refreshExtrema(), fitContent: false }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (현재 화면)</button><button disabled={!latest} onClick={event => { event.currentTarget.closest("details").open = false; downloadChartCardPng({ element: event.currentTarget.closest(".candle-terminal"), chart: api.current?.chart, filename: `${exportStem}_full.png`, omitSelectors: [".candle-detail"], rangeText: exportRangeText, getMarkers: () => showExtrema ? api.current?.exportMarkers() || [] : [], afterRestore: () => api.current?.refreshExtrema(), fitContent: true }); }}><i className="bi bi-filetype-png" aria-hidden="true" />PNG (전체 차트)</button></div></details></div>}
         </div>
         {latest && <div className="candle-detail">
             <div className="candle-detail-heading"><strong>{active?.time || "경기 기록"}{timeframe === "weekly" ? " 주" : timeframe === "monthly" ? " 월" : ""}</strong></div>
@@ -291,15 +296,15 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
             {!plus && <div className="candle-moving-summary" aria-label="이동평균값"><span>7경기 평균 <em className="gold">{format(active?.ma7)}</em></span><span>15경기 평균 <em className="mint">{format(active?.ma15)}</em></span><span>30경기 평균 <em className="purple">{format(active?.ma30)}</em></span></div>}
             {timeframe === "daily" && <div className="candle-atbats"><span>타석 결과</span><div>{active?.pa_results?.length ? active.pa_results.map((result, index) => <span className={/^(볼넷|고4|사구|1루타|2루타|3루타|홈런)/.test(result) ? "on-base" : ""} key={index}>{displayPaResult(result)}</span>) : <span>기록 없음</span>}</div></div>}
         </div>}
-        {latest && <div className="candle-period-summary">
+        {!profile && latest && <div className="candle-period-summary">
             <div className="candle-summary-heading"><strong>{isRecentGames ? summaryTitle : periodLabel ? `${periodLabel} 성적` : "기간 미지정 성적"}</strong>{isRecentGames && <span>{recentPeriodLabel}</span>}</div>
             <div className="candle-summary-values">{summaryStats.map(([label, value, type]) => {
                 const rank = kboData?.rankings?.period?.ranks?.[summaryRankKeys[label]];
                 return <div key={label}><span className="candle-summary-stat-label">{label}</span><strong className={rank && rank <= 5 ? "candle-summary-top-five" : ""}>{formatSummary(value, type)}{rank && rank <= 20 ? <small className={`candle-stat-rank ${rank <= 5 ? rankBadgeClass(rank) : ""}`}>{rank <= 3 && rankMedal(rank)}{rank}위</small> : null}</strong></div>;
             })}</div>
         </div>}
-        {latest && kboData?.season === "regular" && <CandleBreakdownTable key={`${kboData.player_id}-${kboData.year}`} year={kboData.year} breakdown={kboData.breakdown} />}
-        {latest && <PredictionCard data={kboData} dark={dark} />}
+        {!profile && latest && kboData?.season === "regular" && <CandleBreakdownTable key={`${kboData.player_id}-${kboData.year}`} year={kboData.year} breakdown={kboData.breakdown} />}
+        {!profile && latest && <PredictionCard data={kboData} dark={dark} />}
         <Modal show={chartSettingsOpen} onHide={() => setChartSettingsOpen(false)} centered className={`candle-settings-modal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} contentClassName="candle-settings-modal-content">
             <Modal.Header closeButton><Modal.Title>차트 설정</Modal.Title></Modal.Header>
             <Modal.Body>
@@ -314,6 +319,6 @@ export default function KboCandlestickChart({ kboData, dark, setDark }) {
                 {!plus && <fieldset className="candle-palette-setting" disabled={lineChart}><legend>차트 색상</legend><div className="candle-palette-options">{CANDLE_PALETTES.map(palette => <label key={palette.id} className={`candle-palette-option ${candlePaletteId === palette.id ? "selected" : ""}`}><input className="candle-palette-input" type="radio" name="candle-palette" value={palette.id} checked={candlePaletteId === palette.id} onChange={() => setCandlePaletteId(palette.id)} /><span className="candle-palette-preview" aria-hidden="true"><i className="candle-palette-up" style={{ "--candle-sample-color": palette.up }} /><i className="candle-palette-down" style={{ "--candle-sample-color": palette.down }} /></span><span>{palette.label}</span></label>)}</div></fieldset>}
             </Modal.Body>
         </Modal>
-        <footer className="candle-footnote"><div className="candle-footnote-copy"><span>기록별 순위는 상위 20위까지 노출됩니다.</span><span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span><a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div><button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button></footer>
+        <footer className="candle-footnote"><div className="candle-footnote-copy">{!profile && <span>기록별 순위는 상위 20위까지 노출됩니다.</span>}{!profile && <span className="candle-update-note">2026년 경기 데이터는 다음날 오전 2시에 일괄 업데이트됩니다.</span>}<a href="https://www.tradingview.com/" target="_blank" rel="noreferrer">TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc.</a></div>{!profile && <button className="theme-toggle" onClick={() => setDark(value => !value)} aria-label={`${dark ? "라이트" : "다크"} 테마로 변경`}>{dark ? "☼ 라이트" : "☾ 다크"}</button>}</footer>
     </section>;
 }

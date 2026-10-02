@@ -1,0 +1,145 @@
+.profile-candle-heading { flex-wrap: wrap; justify-content: flex-start; align-items: center; gap: 10px; margin-bottom: 15px; }
+.profile-candle-heading .profile-game-filter { margin-left: 0; }
+.profile-candle-status { display: flex; min-height: 340px; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; color: #7c8ba0; font-size: 12px; }
+.profile-candle-status p { margin: 0; color: #102746; font-weight: 700; }
+.profile-candle-status > span { font-size: 11px; }
+.profile-candle-status button { padding: 9px 16px; border: 1px solid #e2e9f2; border-radius: 12px; background: #fff; color: var(--team-primary); }
+.player-profile .profile-candle-terminal { margin: 0; padding: 0; border: 0; border-radius: 0; overflow: visible; background: #fff; color: #102746; box-shadow: none; }
+.player-profile .profile-candle-terminal .candle-quote { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 12px; min-height: 0; padding: 0 0 12px; background: transparent; background-image: none; }
+.player-profile .profile-candle-terminal .candle-quote-team::before { display: none; }
+.player-profile .profile-candle-terminal .candle-price strong { font-size: 30px; font-weight: 800; }
+.player-profile .profile-candle-terminal .candle-price.neutral { color: #102746; }
+.player-profile .profile-candle-terminal .candle-metrics { gap: 5px; padding: 10px 14px; background: #fff; border-color: #edf2f8; }
+.player-profile .profile-candle-terminal .candle-metrics button { padding: 8px 12px; min-height: 34px; border: 0; border-radius: 10px; font-size: 12px; color: #7c8ba0; }
+.player-profile .profile-candle-terminal .candle-metrics button.active { color: var(--team-primary); background: color-mix(in srgb, var(--team-primary) 9%, #fff); font-weight: 800; }
+.player-profile .profile-candle-terminal button:hover { background: #f2f5f9; color: #102746; }
+.player-profile .profile-candle-terminal button:focus-visible { outline-color: var(--team-primary); }
+.player-profile .profile-candle-terminal .candle-toolbar { padding: 12px 18px 8px; }
+.player-profile .profile-candle-terminal .candle-periods { background: #f2f5f9; border-radius: 10px; }
+.player-profile .profile-candle-terminal .candle-periods button { border-radius: 8px; }
+.player-profile .profile-candle-terminal .candle-periods button.active { color: var(--team-primary); box-shadow: 0 2px 6px #1027460c; }
+.player-profile .profile-candle-terminal .candle-plot { height: 400px; }
+.player-profile .profile-candle-terminal .candle-extrema-text { border-radius: 6px; background: #ffffffed; box-shadow: 0 2px 8px #10274612; }
+.player-profile .profile-candle-terminal .candle-navigation { border-color: #edf2f8; background: #fff; padding: 10px 16px; }
+.player-profile .profile-candle-terminal .candle-navigation button.candle-nav-icon:hover:not(:disabled) { color: var(--team-primary); }
+.player-profile .profile-candle-terminal .candle-detail { margin: 0; padding: 18px; border-top: 1px solid #edf2f8; background: #f8fafc; }
+.player-profile .profile-candle-terminal .candle-detail-heading strong { font-size: 12px; color: #102746; }
+.player-profile .profile-candle-terminal .candle-values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.player-profile .profile-candle-terminal .candle-values > div { flex-wrap: wrap; gap: 4px 6px; }
+.player-profile .profile-candle-terminal .candle-values strong { font-size: 15px; font-weight: 700; }
+.player-profile .profile-candle-terminal .candle-daily-change { flex-basis: 100%; margin: 0; font-size: 9px; }
+.player-profile .profile-candle-terminal .candle-atbats { border-color: #e5ebf3; }
+.player-profile .profile-candle-terminal .candle-atbats .on-base { background: #d6efe8; color: #076b5b; }
+.player-profile .profile-candle-terminal .candle-footnote { padding: 14px 18px; background: #fff; font-size: 9px; color: #8793a3; }
+@media (max-width: 600px) {
+    .player-profile .profile-candle-terminal { border-radius: 0; }
+    .player-profile .profile-candle-terminal .candle-quote { padding: 0 0 10px; min-height: 0; gap: 8px; }
+    .player-profile .profile-candle-terminal .profile-candle-heading h2 { font-size: 16px; }
+    .player-profile .profile-candle-terminal .candle-price strong { font-size: 27px; }
+    .player-profile .profile-candle-terminal .candle-metrics { padding: 8px; gap: 2px; }
+    .player-profile .profile-candle-terminal .candle-metrics button { padding: 7px 10px; font-size: 11px; }
+    .player-profile .profile-candle-terminal .candle-plot { height: 340px; }
+    .player-profile .profile-candle-terminal .candle-toolbar { padding: 10px 12px 8px; }
+    .player-profile .profile-candle-terminal .candle-detail { padding: 14px 12px; }
+    .player-profile .profile-candle-terminal .candle-values { grid-template-columns: repeat(4, minmax(max-content, 1fr)); gap: 12px; overflow-x: auto; scrollbar-width: thin; }
+    .player-profile .profile-candle-terminal .candle-values > div { flex-wrap: nowrap; gap: 4px; white-space: nowrap; }
+    .player-profile .profile-candle-terminal .candle-values strong { font-size: 12px; }
+    .player-profile .profile-candle-terminal .candle-values .candle-daily-change { flex-basis: auto; font-size: 9px; }
+    .player-profile .profile-candle-terminal .candle-footnote { padding: 12px; }
+}
+.player-profile .profile-candle-terminal .profile-candle-heading { margin: 0; }
+.player-profile .profile-candle-terminal .candle-price { align-self: start; }
+.player-profile .profile-candle-terminal .candle-metrics { padding-left: 0; padding-right: 0; }
+
+.player-profile .profile-candle-terminal .candle-quote { position: relative; z-index: 4; }
+.player-profile .profile-candle-terminal .candle-plot-wrap { z-index: 0; isolation: isolate; }
+
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs button { min-height: 0; padding: 12px 16px; border-bottom: 2px solid transparent; border-radius: 8px 8px 0 0; color: #708198; font-size: 13px; font-weight: 600; }
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs button:hover,
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs button[aria-pressed="true"] { background: transparent; color: var(--team-primary); }
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs button:focus-visible { outline-color: var(--team-primary); outline-offset: -3px; }
+@media (max-width: 600px) { .player-profile .profile-candle-terminal .profile-chart-metric-tabs button { padding: 10px 13px; font-size: 12px; } }
+
+.player-profile .profile-chart-metric-tabs { flex-wrap: nowrap; align-items: flex-start; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs button { flex-shrink: 0; margin-bottom: 0; }
+
+/* ===== 차트 탭 디자인 개선 (선수 프로필 전용, KBO CANDLE 페이지에는 영향 없음) ===== */
+/* 현재 값 · 순위 · 변동 */
+.player-profile .profile-candle-terminal .candle-price strong { font-size: 34px; font-weight: 900; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.player-profile .profile-candle-terminal .candle-price .candle-price-rank:not(.candle-rank-top-five) { padding: 2px 8px; border: 0; border-radius: 999px; background: #eef2f7; color: #4c6b93; font-size: 11.5px; font-weight: 800; }
+.player-profile .profile-candle-terminal .candle-price-change { display: inline-block; margin-top: 4px; padding: 2px 8px; border-radius: 999px; background: #f1f4f8; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.player-profile .profile-candle-terminal .candle-price.up .candle-price-change { background: #fff0f1; color: #cf2437; }
+.player-profile .profile-candle-terminal .candle-price.down .candle-price-change { background: #edf4ff; color: #1769c2; }
+
+/* 지표 탭: 배경 띠를 없애고 밑줄을 굵게 */
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs { margin-bottom: 4px; background: transparent; border-bottom: 1px solid #e6edf6; }
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs button { font-weight: 700; }
+.player-profile .profile-candle-terminal .profile-chart-metric-tabs button[aria-pressed="true"] { font-weight: 900; }
+.player-profile .profile-candle-terminal .profile-year-view-indicator { height: 3px; border-radius: 3px 3px 0 0; }
+
+/* 일·주·월 스위치와 설정 버튼 */
+.player-profile .profile-candle-terminal .candle-toolbar { padding: 14px 2px 8px; }
+.player-profile .profile-candle-terminal .candle-periods { --segment-size: 38px; padding: 4px; border-radius: 12px; background: #eef2f7; box-shadow: inset 0 1px 2px rgba(16,39,70,.06); }
+.player-profile .profile-candle-terminal .candle-periods::before { top: 4px; left: 4px; height: 30px; border-radius: 9px; background: #fff; box-shadow: 0 1px 2px rgba(16,39,70,.1), 0 3px 8px rgba(16,39,70,.08); }
+.player-profile .profile-candle-terminal .candle-periods button { flex-basis: 38px; width: 38px; min-width: 38px; height: 30px; min-height: 30px; border-radius: 9px; color: #7a8798; font-size: 12.5px; font-weight: 700; }
+.player-profile .profile-candle-terminal .candle-periods button:hover { background: transparent; color: #22364f; }
+.player-profile .profile-candle-terminal .candle-periods button.active { color: var(--team-primary); font-weight: 900; box-shadow: none; }
+.player-profile .profile-candle-terminal .candle-chart-settings-icon { width: 36px; min-height: 36px; border: 1px solid #e3e9f2; border-radius: 11px; background: #fff; color: #5b6d84; }
+.player-profile .profile-candle-terminal .candle-chart-settings-icon:hover { border-color: color-mix(in srgb, var(--team-primary) 35%, #e3e9f2); background: #fff; color: var(--team-primary); }
+
+/* 이동평균선 범례: 색 점 + 칩 */
+.player-profile .profile-candle-terminal .candle-legend { gap: 6px; padding: 2px 2px 12px; color: #7c8ba0; font-size: 11.5px; font-weight: 600; }
+.player-profile .profile-candle-terminal .candle-legend > span:not(:first-child) { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 999px; background: #f4f6f9; color: #4c5d73; font-weight: 800; }
+.player-profile .profile-candle-terminal .candle-legend > span.gold::before, .player-profile .profile-candle-terminal .candle-legend > span.mint::before, .player-profile .profile-candle-terminal .candle-legend > span.purple::before { content: ''; width: 10px; height: 3px; border-radius: 2px; background: currentColor; }
+.player-profile .profile-candle-terminal .candle-legend > span.gold { color: #c98a12; }
+.player-profile .profile-candle-terminal .candle-legend > span.mint { color: #0f9f80; }
+.player-profile .profile-candle-terminal .candle-legend > span.purple { color: #7d5bd6; }
+
+/* 차트 영역 */
+.player-profile .profile-candle-terminal .candle-plot-wrap { overflow: hidden; border: 1px solid #edf2f8; border-radius: 16px; }
+
+/* 이동·확대 버튼 */
+.player-profile .profile-candle-terminal .candle-navigation { padding: 12px 2px; border-top: 0; }
+.player-profile .profile-candle-terminal .candle-navigation > div { gap: 6px; }
+.player-profile .profile-candle-terminal .candle-navigation button.candle-nav-icon { width: 36px; min-width: 36px; height: 36px; border: 1px solid #e3e9f2; border-radius: 11px; background: #fff; color: #5b6d84; transition: border-color .15s, color .15s, background .15s; }
+.player-profile .profile-candle-terminal .candle-navigation button.candle-nav-icon:hover:not(:disabled) { border-color: color-mix(in srgb, var(--team-primary) 35%, #e3e9f2); background: #fff; }
+.player-profile .profile-candle-terminal .candle-navigation button.candle-nav-icon:disabled { opacity: .4; }
+
+/* 선택한 날짜 상세 */
+.player-profile .profile-candle-terminal .candle-detail { padding: 16px; border: 1px solid #e8eef6; border-radius: 18px; background: linear-gradient(180deg, #f8fafd, #fff); }
+.player-profile .profile-candle-terminal .candle-detail-heading strong { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--team-primary) 9%, #fff); color: var(--team-primary); font-size: 12.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.player-profile .profile-candle-terminal .candle-values { gap: 8px; margin-top: 12px; }
+.player-profile .profile-candle-terminal .candle-values > div { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; border: 1px solid #edf2f8; border-radius: 13px; background: #fff; }
+.player-profile .profile-candle-terminal .candle-values > div > span { color: #7c8ba0; font-size: 11.5px; font-weight: 700; }
+.player-profile .profile-candle-terminal .candle-values strong { font-size: 18px; font-weight: 900; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.player-profile .profile-candle-terminal .candle-values .candle-daily-change { flex-basis: auto; order: 3; margin: 0; font-size: 10.5px; font-weight: 600; }
+.player-profile .profile-candle-terminal .candle-values > div > span { order: 1; }
+.player-profile .profile-candle-terminal .candle-values strong { order: 2; }
+.player-profile .profile-candle-terminal .candle-moving-summary { gap: 6px; margin-top: 10px; font-size: 11.5px; }
+.player-profile .profile-candle-terminal .candle-moving-summary span { padding: 3px 9px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px #e6edf6; color: #5b6d84; }
+.player-profile .profile-candle-terminal .candle-moving-summary em { font-weight: 800; }
+.player-profile .profile-candle-terminal .candle-moving-summary em.gold { color: #c98a12; }
+.player-profile .profile-candle-terminal .candle-moving-summary em.mint { color: #0f9f80; }
+.player-profile .profile-candle-terminal .candle-moving-summary em.purple { color: #7d5bd6; }
+.player-profile .profile-candle-terminal .candle-atbats { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #e3e9f2; }
+.player-profile .profile-candle-terminal .candle-atbats > span { color: #7c8ba0; font-size: 11.5px; font-weight: 700; }
+.player-profile .profile-candle-terminal .candle-atbats > div > span { padding: 3px 10px; border: 0; border-radius: 999px; background: #eef2f7; color: #4c5d73; font-size: 12px; font-weight: 700; }
+.player-profile .profile-candle-terminal .candle-atbats .on-base { background: #dcf3ea; color: #076b5b; }
+.player-profile .profile-candle-terminal .candle-footnote { padding: 12px 2px 0; background: transparent; }
+
+@media (max-width: 600px) {
+    .player-profile .profile-candle-terminal .candle-price strong { font-size: 28px; }
+    .player-profile .profile-candle-terminal .profile-chart-metric-tabs { scrollbar-width: none; -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent); }
+    .player-profile .profile-candle-terminal .profile-chart-metric-tabs::-webkit-scrollbar { display: none; }
+    .player-profile .profile-candle-terminal .candle-periods { --segment-size: 34px; padding: 3px; }
+    .player-profile .profile-candle-terminal .candle-periods::before { top: 3px; left: 3px; height: 28px; }
+    .player-profile .profile-candle-terminal .candle-periods button { flex-basis: 34px; width: 34px; min-width: 34px; height: 28px; min-height: 28px; font-size: 12px; }
+    .player-profile .profile-candle-terminal .candle-plot-wrap { border-radius: 12px; }
+    .player-profile .profile-candle-terminal .candle-navigation button.candle-nav-icon { width: 34px; min-width: 34px; height: 34px; }
+    .player-profile .profile-candle-terminal .candle-detail { padding: 12px; border-radius: 16px; }
+    .player-profile .profile-candle-terminal .candle-values { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; overflow: visible; }
+    .player-profile .profile-candle-terminal .candle-values > div { flex-direction: column; align-items: flex-start; gap: 1px; padding: 7px 7px 6px; border-radius: 10px; white-space: nowrap; }
+    .player-profile .profile-candle-terminal .candle-values > div > span { font-size: 10.5px; }
+    .player-profile .profile-candle-terminal .candle-values strong { font-size: 14.5px; }
+    .player-profile .profile-candle-terminal .candle-values .candle-daily-change { font-size: 9.5px; }
+}
