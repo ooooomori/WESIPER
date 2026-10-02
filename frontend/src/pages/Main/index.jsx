@@ -414,10 +414,10 @@ export default function Main() {
                         <span className="main-home-hero-search-cta" aria-hidden="true">검색</span>
                     </button>
                     {heroPopular.list.length > 0 && <div className="main-home-hero-popular">
-                        <span className="main-home-hero-chips-label">🔥 인기</span>
+                        <span className="main-home-hero-chips-label" role="img" aria-label="인기 급상승"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg></span>
                         <div className="main-home-hero-chips" aria-label="인기 선수 바로가기">
                         {heroPopular.ranked
-                            ? heroPopular.list.map((player) => <Link key={player.PlayerId} className="main-home-hero-chip" to={`/?pid=${encodeURIComponent(player.PlayerId)}`} state={{ player }} onClick={() => rememberPlayer(player)} style={{ '--chip-color': getPlayerTeamInfo(player).color }}>{player.Name}</Link>)
+                            ? heroPopular.list.map((player) => <Link key={player.PlayerId} className="main-home-hero-chip" to={`/?pid=${encodeURIComponent(player.PlayerId)}`} state={{ player }} onClick={() => rememberPlayer(player)}><span className="main-home-hero-chip-photo"><SearchPlayerPhoto player={player} /></span>{player.Name}</Link>)
                             : heroPopular.list.map((name) => <button key={name} type="button" className="main-home-hero-chip" onClick={() => openSearchWith(name)}>{name}</button>)}
                         </div>
                     </div>}
