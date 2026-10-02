@@ -26,7 +26,7 @@ const PROFILE_TIEBREAKER_GAMES = ['66661031KTSS02021', '66661001SKKT02024'];
  * 크롤러 revision과 무관하게 이 값이 같으면 계속 재사용한다.
  * 지난 시즌 기록을 백필·보정하거나 계산 방식이 바뀌면 이 값을 바꿔 다시 계산하게 한다.
  */
-const PROFILE_HISTORY_VERSION = '2026-10-03';
+const PROFILE_HISTORY_VERSION = '2026-10-03.1';
 function profileIsTiebreakerGame(?string $id): bool { return $id !== null && in_array($id, PROFILE_TIEBREAKER_GAMES, true); }
 function profileNotTiebreakerSql(string $column = 'game_id'): string {
     return ' AND '.$column.' NOT IN (\''.implode('\',\'', PROFILE_TIEBREAKER_GAMES).'\')';
