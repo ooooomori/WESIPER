@@ -85,23 +85,25 @@ function profileExtendStreaks(array $currentRows, array $previousYears, callable
     return $result;
 }
 
-function profileCurrentStreaks(PDO $db, string $pid, array $schedule): ?array {
+function profileCurrentStreaks(PDO $db, string $pid, array $schedule, ?array $currentRows=null): ?array {
     $today = new DateTimeImmutable('today', new DateTimeZone('Asia/Seoul'));
     $year = (int)$today->format('Y');
     [$start, $end] = $schedule[$year]['regular'] ?? ['', ''];
     if (!$start || !$end || $start > $today->format('Y-m-d')) return null;
     $end = min($end, $today->format('Y-m-d'));
-    $stmt = $db->prepare('SELECT game_id,game_date,pa_result,sb,cs FROM kbo_season_records
+    $sql = 'SELECT game_id,game_date,pa_result,sb,cs FROM kbo_season_records
         WHERE league_level=1 AND player_id=? AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().'
-        ORDER BY game_date DESC,game_id DESC,PK DESC');
-    $stmt->execute([$pid, $start, $end]);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        ORDER BY game_date DESC,game_id DESC,PK DESC';
+    $stmt=null;
+    if($currentRows===null){$stmt=$db->prepare($sql);$stmt->execute([$pid,$start,$end]);$rows=$stmt->fetchAll(PDO::FETCH_ASSOC);}
+    else {$rows=array_values(array_filter($currentRows,static fn($r)=>$r['game_date']>=$start&&$r['game_date']<=$end&&!profileIsTiebreakerGame($r['game_id'])));usort($rows,static fn($a,$b)=>strcmp($b['game_date'],$a['game_date'])?:strcmp($b['game_id'],$a['game_id'])?:((int)($b['PK']??0)<=>(int)($a['PK']??0)));}
     if(!$rows)return null;
     $previousYears=array_filter(array_keys($schedule),static fn($y)=>(int)$y<$year);
     rsort($previousYears,SORT_NUMERIC);
-    $loadSeason=static function($y)use($stmt,$pid,$schedule):array {
+    $loadSeason=static function($y)use(&$stmt,$sql,$db,$pid,$schedule):array {
         [$start,$end]=$schedule[$y]['regular']??['',''];
         if(!$start||!$end)return [];
+        $stmt??=$db->prepare($sql);
         $stmt->execute([$pid,$start,$end]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     };

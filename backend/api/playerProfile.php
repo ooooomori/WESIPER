@@ -129,9 +129,10 @@ try {
         if(!in_array($season,['regular','preseason','postseason','futures'],true)||($year!==null&&(!in_array($year,$years,true)||!in_array($season,$availableSeasons[$year],true)))) {
             http_response_code(400);echo json_encode(['error'=>'잘못된 경기 조회 조건입니다.'],JSON_UNESCAPED_UNICODE);exit;
         }
-        $record=$year!==null?profileRecords($pdo,$player,$schedule,$year,$season):null;
+        $streakRows=null;
+        $record=$year!==null?profileRecords($pdo,$player,$schedule,$year,$season,true,$streakRows):null;
         require_once __DIR__.'/../lib/player-streaks.php';
-        echo json_encode(['years'=>$years,'year'=>$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$record['games']??[],'pitcher'=>str_contains((string)$player['Pos'],'투수'),'currentSeasonStreaks'=>str_contains((string)$player['Pos'],'투수')?null:profileCurrentStreaks($pdo,(string)$pid,$schedule)],JSON_UNESCAPED_UNICODE);exit;
+        echo json_encode(['years'=>$years,'year'=>$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$record['games']??[],'pitcher'=>str_contains((string)$player['Pos'],'투수'),'currentSeasonStreaks'=>str_contains((string)$player['Pos'],'투수')?null:profileCurrentStreaks($pdo,(string)$pid,$schedule,$streakRows)],JSON_UNESCAPED_UNICODE);exit;
     }
     if($part==='ranks') {
         require_once __DIR__.'/../lib/player-rankings.php';

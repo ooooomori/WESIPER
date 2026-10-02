@@ -15,7 +15,7 @@ function profileYearTotals(array $rows, bool $pitcher, array $faced, array $leag
     $s=['games'=>count($games),'starts'=>count($knownStarts)<count($games)?null:count($starts)];
     if($pitcher){
         $events=[];$known=true;$outs=0;
-        foreach($rows as $row){$outs+=profileInningOuts($row['inning']);if(!isset($faced[$row['game_id']]))$known=false;else $events=array_merge($events,$faced[$row['game_id']]);}
+        foreach($rows as $row){$outs+=profileInningOuts($row['inning']);if(!isset($faced[$row['game_id']]))$known=false;else foreach($faced[$row['game_id']] as $event)$events[]=$event;}
         foreach(['r','er'] as $key)$s[$key]=profileSum($rows,$key);
         foreach(['so','h','hr','bb','hbp'] as $key)$s[$key]=$known?profileSum($events,$key):null;
         foreach(['wins'=>['승','W','승리'],'losses'=>['패','L','패전'],'saves'=>['세','S','세이브'],'holds'=>['홀','H','홀드']] as $key=>$labels)$s[$key]=count(array_filter($rows,static fn($r)=>in_array($r['record'],$labels,true)));
@@ -128,7 +128,6 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
     $faced=[];
     $pitchContext=[];$leaguePitch=[];
     if($pitcher){$ids=array_values(array_unique(array_column($all,'game_id')));$q=$db->prepare('SELECT game_id,pa_result,sb,cs,run_out,rbi,r FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND pitcher_id=? AND game_id IN ('.implode(',',array_fill(0,count($ids),'?')).')');$q->execute([$pid,...$ids]);while($e=$q->fetch(PDO::FETCH_ASSOC))$faced[$e['game_id']][]=profileAdvancedBatEvent($e);$pitchContext=profilePitcherGameContexts($db,$all,$leagueLevel);$leaguePitch=profileLeaguePitchingContexts($db,$schedule,$leagueLevel);}
-    if(!$pitcher&&$seasonType!=='regular')$leaguePitch=profileLeaguePitchingContexts($db,$schedule,$leagueLevel);
     $out=[];$leagueAll=['cum_ab'=>0,'cum_h'=>0,'cum_ob'=>0,'cum_sf'=>0,'cum_tb'=>0];
     $battingYears=$pitcher?[]:profileBattingLeagueContexts($db,$schedule,$seasonType,$leagueLevel);
     foreach($years as $year=>$rows){

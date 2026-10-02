@@ -72,7 +72,7 @@ function profileGameMeta(array $row, array $stadiums): array {
     }
     return ['gameId'=>$id,'date'=>$row['game_date'],'opponent'=>$opponent,'isAway'=>$isAway,'location'=>$isAway===null?null:($isAway?'원정':'홈'),'stadium'=>is_array($schedule)?$schedule['stadium']:$schedule,'result'=>$result];
 }
-function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedYear=null, string $seasonType='regular'): ?array {
+function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedYear=null, string $seasonType='regular', bool $gamesOnly=false, ?array &$streakRows=null): ?array {
     if($selectedYear!==null&&$selectedYear>=1982&&$selectedYear<=2000)return profileHistoricalOverview($db,$player,$seasonType,$selectedYear);
     $pitcher=str_contains((string)$player['Pos'],'투수');
     $table=$pitcher?'kbo_season_pitch_records':'kbo_season_records';
@@ -94,6 +94,8 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
     // 순위 결정전은 최근 5경기에만 보여주고 시즌 기록·경기 일지·최근 n일 성적에서는 뺀다.
     $rows=array_values(array_filter($rowsAll,static fn($row)=>!profileIsTiebreakerGame($row['game_id'])));
     $groupsAll=[]; foreach ($rowsAll as $row) $groupsAll[$row['game_id']][]=$row;
+    $streakRows=null;
+    if($gamesOnly&&!$pitcher&&$seasonType==='regular'&&$selectedYear===(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y'))$streakRows=$rows;
     $groups=[]; foreach ($rows as $row) $groups[$row['game_id']][]=$row;
     $recent=[];$box=[];$rolling=[];
     $today=new DateTimeImmutable('today',new DateTimeZone('Asia/Seoul'));
@@ -104,6 +106,8 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
     $codes=array_map(static fn($id)=>substr($id,0,13),array_keys($groupsAll));
     $ms=$db->prepare('SELECT game_code,stadium,away_team,home_team,away_score,home_score FROM kbo_schedule WHERE league_level='.$leagueLevel.' AND game_code IN ('.implode(',',array_fill(0,count($codes),'?')).')');$ms->execute($codes);$stadiums=[];foreach($ms->fetchAll(PDO::FETCH_ASSOC) as $scheduled)$stadiums[$scheduled['game_code']]=$scheduled;
     if (!$pitcher) {
+        $league=[];$stats=[];
+        if(!$gamesOnly){
         $leagueTotals=['cum_ab'=>0,'cum_h'=>0,'cum_ob'=>0,'cum_sf'=>0,'cum_tb'=>0];
         $years=array_unique(array_map(static fn($row)=>(int)substr($row['game_date'],0,4),$rows));
         $leagueYears=profileBattingLeagueContexts($db,$schedule,$seasonType,$leagueLevel);
@@ -111,7 +115,8 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
         $ld=$leagueTotals['cum_ab']+$leagueTotals['cum_ob']+$leagueTotals['cum_sf'];
         $league=['obp'=>$ld?($leagueTotals['cum_h']+$leagueTotals['cum_ob'])/$ld:null,'slg'=>$leagueTotals['cum_ab']?$leagueTotals['cum_tb']/$leagueTotals['cum_ab']:null];
         $stats=profileBatStats($rows,$league);
-        foreach([7,15,30] as $count) {
+        }
+        if(!$gamesOnly)foreach([7,15,30] as $count) {
             $window=[];$gameCount=0;$start=$anchor->modify('-'.($count-1).' days')->format('Y-m-d');
             foreach($groups as $events)if($events[0]['game_date']>=$start&&$events[0]['game_date']<=$anchor->format('Y-m-d')){$window=array_merge($window,$events);$gameCount++;}
             $summary=profileBatWindow($window,$league,$count);$summary['games']=$gameCount;$summary['startDate']=$start;$summary['endDate']=$anchor->format('Y-m-d');$rolling[]=$summary;
@@ -128,7 +133,7 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
                 $game['order']=null;foreach($events as $event) if(isset($event['order'])) { $game['order']=$event['order'];break; }
                 $starts=array_values(array_filter(array_column($events,'is_gs'),static fn($value)=>$value!==null));
                 $game['isStarter']=$starts ? in_array(1,array_map('intval',$starts),true) : null;
-                foreach(['pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','sf','sh','sb','cs','gdp'] as $key)$game[$key]=profileSum($parsed,$key);
+                foreach(['pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','so','sf','sh','sb','cs','gdp'] as $key)$game[$key]=profileSum($parsed,$key);
                 $game['position']=profilePosition($events,$game['isStarter']);
                 $notes=[];if($game['h']-$game['doubles']-$game['triples']-$game['hr']>0&&$game['doubles']>0&&$game['triples']>0&&$game['hr']>0)$notes[]='사이클링 히트';
                 if(array_filter($events,static fn($event)=>(int)($event['is_gwrbi']??0)===1))$notes[]='결승타';$game['notes']=implode(', ',$notes);
@@ -153,7 +158,7 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
             $h+=profileSum($f,'h')??0;$bb+=profileSum($f,'bb')??0;$so+=profileSum($f,'so')??0;
         }
         require_once __DIR__.'/player-year-league.php';
-        $eraPlus=profileOverviewEraPlus($rows,profileLeaguePitchingContexts($db,$leagueSchedule,$leagueLevel));
+        $eraPlus=$gamesOnly?null:profileOverviewEraPlus($rows,profileLeaguePitchingContexts($db,$leagueSchedule,$leagueLevel));
         $stats=[['ERA',$outs&&$erKnown?number_format($er*27/$outs,2):null],['승리',$wins],['홀드',$holds],['세이브',$saves],['이닝',profileInningText($outs)],['삼진',$facedKnown?$so:null],['WHIP',$outs&&$facedKnown?number_format(($h+$bb)*3/$outs,2):null],['ERA+',$eraPlus]];
         foreach($rowsAll as $row) {
             $f=$faced[$row['game_id']]??[];
@@ -171,10 +176,10 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
             $summaries[]=$game;
             if((int)substr($game['date'],0,4)===$year)$box[]=$game;
         }
-        foreach([7,15,30] as $count){$start=$anchor->modify('-'.($count-1).' days')->format('Y-m-d');$window=array_values(array_filter($summaries,static fn($game)=>$game['date']>=$start&&$game['date']<=$anchor->format('Y-m-d')));$summary=profilePitchWindow($window,$count);$summary['games']=count($window);$summary['startDate']=$start;$summary['endDate']=$anchor->format('Y-m-d');$rolling[]=$summary;}
+        if(!$gamesOnly)foreach([7,15,30] as $count){$start=$anchor->modify('-'.($count-1).' days')->format('Y-m-d');$window=array_values(array_filter($summaries,static fn($game)=>$game['date']>=$start&&$game['date']<=$anchor->format('Y-m-d')));$summary=profilePitchWindow($window,$count);$summary['games']=count($window);$summary['startDate']=$start;$summary['endDate']=$anchor->format('Y-m-d');$rolling[]=$summary;}
     }
     $historicalIncluded=false;
-    if($retired&&$leagueLevel===1&&profileHistoricalRows($db,(string)$player['PlayerId'],$pitcher)){
+    if(!$gamesOnly&&$retired&&$leagueLevel===1&&profileHistoricalRows($db,(string)$player['PlayerId'],$pitcher)){
         require_once __DIR__.'/player-year-records.php';$totals=profileYearRecords($db,(string)$player['PlayerId'],$pitcher,$schedule);
         $stats=profileSeasonDisplayStats($totals['career'],$pitcher);$historicalIncluded=true;
     }
