@@ -356,6 +356,10 @@
 .profile-year-views button:focus-visible { outline: 2px solid var(--team-primary); outline-offset: -3px; }
 @media (max-width: 600px) { .profile-year-views { gap: 0 4px; }.profile-year-views button { padding: 10px 13px; font-size: 12px; } }
 .profile-year-table-wrap { position: relative; min-width: 0; width: 100%; max-width: 100%; }
+/* 연도별 기록·경기 일지: 아래로 내려도 컬럼명이 보이도록 축약 헤더 아래에 붙는 머리글 */
+.profile-table-sticky-head { position: sticky; top: calc(var(--profile-nav-height, 0px) + var(--profile-compact-height, 0px) - 1px); z-index: 6; height: 0; visibility: hidden; }
+.profile-table-sticky-head.is-stuck { visibility: visible; }
+.profile-table-sticky-head > div { position: absolute; top: 0; left: 0; right: 0; overflow: hidden; box-shadow: 0 6px 10px -6px rgba(16,39,70,.22); }
 .profile-season-games td.profile-year-loading-space { height: 200px; }
 .profile-year-table-loading, .profile-year-empty-message { position: absolute; inset: 40px 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
 .profile-season-games td.profile-year-empty-space { height: 80px; }

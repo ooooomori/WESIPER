@@ -10,6 +10,7 @@ import PlayerCompare from './PlayerCompare';
 import ProfileLoading from './ProfileLoading';
 import { getCachedProfileData, loadProfileData } from './profileDataCache';
 import useTableDrag from './useTableDrag';
+import useStickyTableHead from './useStickyTableHead';
 import { recordColumnWidth } from './recordTableLayout';
 import { loadYearRecords } from './yearRecordsCache';
 import { teamFullName } from '../../lib/teamFullName';
@@ -426,6 +427,7 @@ const heroIntroPlayed = new Set();
 export default function PlayerProfile({ pid }) {
     const rollingScrollRef = useTableDrag();
     const gameScrollRef = useTableDrag();
+    const gameStickyRef = useStickyTableHead(true);
     const location = useLocation();
     const navigate = useNavigate();
     const tabNames = ['', 'record', 'game', 'chart', 'compare'];
@@ -497,11 +499,14 @@ export default function PlayerProfile({ pid }) {
         const hero = heroRef.current;
         const shell = hero.closest('.player-profile-shell');
         const nav = shell?.querySelector('.site-navbar');
+        const compactHeader = shell?.querySelector('.profile-compact-header');
         let frame = 0;
         const update = () => {
             frame = 0;
             const navHeight = window.innerWidth < 800 ? 0 : nav?.getBoundingClientRect().height || 0;
             shell?.style.setProperty('--profile-nav-height', `${navHeight}px`);
+            // 표 머리글을 축약 헤더 바로 아래에 붙이기 위한 높이(연도별 기록)
+            shell?.style.setProperty('--profile-compact-height', `${compactHeader?.getBoundingClientRect().height || 0}px`);
             const rect = hero.getBoundingClientRect();
             setCompact(rect.bottom <= navHeight + 52);
         };
@@ -509,6 +514,7 @@ export default function PlayerProfile({ pid }) {
         const observer = new ResizeObserver(schedule);
         observer.observe(hero);
         if (nav) observer.observe(nav);
+        if (compactHeader) observer.observe(compactHeader);
         window.addEventListener('scroll', schedule, { passive: true });
         window.addEventListener('resize', schedule);
         update();
@@ -518,6 +524,7 @@ export default function PlayerProfile({ pid }) {
             window.removeEventListener('scroll', schedule);
             window.removeEventListener('resize', schedule);
             shell?.style.removeProperty('--profile-nav-height');
+            shell?.style.removeProperty('--profile-compact-height');
         };
     }, [player]);
     useEffect(() => {
@@ -661,7 +668,7 @@ export default function PlayerProfile({ pid }) {
                 {result ? <span className={`profile-recent-score is-${result.tone}`}><b>{result.label}</b>{result.score ? result.score.join(':') : result.text}</span> : <span />}
             </li>; })}</ol> : <p className="profile-games-empty">최근 경기 기록이 없습니다.</p>}</section>}
             {tab === 2 && <StreakRecords streaks={gameLog.currentSeasonStreaks} pitcher={isPitcher} />}
-            {tab === 2 && <section><div className="profile-heading profile-game-heading"><h2>경기 일지</h2><GameLogFilter years={gameLog.years} year={gameYear || gameLog.year} season={gameSeason || gameLog.season || 'regular'} availableSeasons={gameLog.availableSeasons} onYearChange={value => { setGameYear(value); const available = gameLog.availableSeasons?.[value] || []; setGameSeason(available.includes(gameSeason || gameLog.season) ? gameSeason || gameLog.season : available[0] || ''); }} onSeasonChange={value => { setGameYear(String(gameYear || gameLog.year)); setGameSeason(value); }} /><div className="profile-game-switches"><div className={`profile-game-switch ${gameLogPitcher ? 'is-detailed' : ''}`} role="group" aria-label="타자 투수 기록 선택">{['타자','투수'].map((label,i)=><button key={label} type="button" className={gameLogPitcher === Boolean(i) ? 'active' : ''} aria-pressed={gameLogPitcher === Boolean(i)} onClick={()=>{ if (gameLogPitcher === Boolean(i)) return; setGamePitcher(Boolean(i)); setGameYear(''); setGameSeason(''); }}>{label}</button>)}</div><div className={`profile-game-switch ${detailedGames ? 'is-detailed' : ''}`} role="group" aria-label="경기 기록 표시 방식">{['간략히','자세히'].map((label,i)=><button key={label} type="button" className={detailedGames === Boolean(i) ? 'active' : ''} aria-pressed={detailedGames === Boolean(i)} onClick={()=>setDetailedGames(Boolean(i))}>{label}</button>)}</div></div></div>{!gameLogLoading && gameLog.games?.length ? <div className="profile-game-scroll" ref={gameScrollRef}><table className="profile-season-games"><caption className="sr-only">시즌 전체 경기 기록</caption><thead><tr>{gameColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{gameLog.games.map(game=><tr key={game.gameId}>{gameColumns.map(([,key])=><td key={key} className={key === 'summary' || key === 'badge' ? 'profile-record-cell' : undefined}>{gameCell(game,key)}</td>)}</tr>)}</tbody></table></div> : gameLogLoading ? <ProfileLoading>경기 일지를 불러오는 중이에요.</ProfileLoading> : <p className="profile-games-empty">{gameLogError || '경기 기록이 없습니다.'}</p>}</section>}
+            {tab === 2 && <section><div className="profile-heading profile-game-heading"><h2>경기 일지</h2><GameLogFilter years={gameLog.years} year={gameYear || gameLog.year} season={gameSeason || gameLog.season || 'regular'} availableSeasons={gameLog.availableSeasons} onYearChange={value => { setGameYear(value); const available = gameLog.availableSeasons?.[value] || []; setGameSeason(available.includes(gameSeason || gameLog.season) ? gameSeason || gameLog.season : available[0] || ''); }} onSeasonChange={value => { setGameYear(String(gameYear || gameLog.year)); setGameSeason(value); }} /><div className="profile-game-switches"><div className={`profile-game-switch ${gameLogPitcher ? 'is-detailed' : ''}`} role="group" aria-label="타자 투수 기록 선택">{['타자','투수'].map((label,i)=><button key={label} type="button" className={gameLogPitcher === Boolean(i) ? 'active' : ''} aria-pressed={gameLogPitcher === Boolean(i)} onClick={()=>{ if (gameLogPitcher === Boolean(i)) return; setGamePitcher(Boolean(i)); setGameYear(''); setGameSeason(''); }}>{label}</button>)}</div><div className={`profile-game-switch ${detailedGames ? 'is-detailed' : ''}`} role="group" aria-label="경기 기록 표시 방식">{['간략히','자세히'].map((label,i)=><button key={label} type="button" className={detailedGames === Boolean(i) ? 'active' : ''} aria-pressed={detailedGames === Boolean(i)} onClick={()=>setDetailedGames(Boolean(i))}>{label}</button>)}</div></div></div>{!gameLogLoading && gameLog.games?.length ? <><div className="profile-table-sticky-head" ref={gameStickyRef} aria-hidden="true"><div><table className="profile-season-games"><thead><tr>{gameColumns.map(([label,key])=><th key={key}>{label}</th>)}</tr></thead></table></div></div><div className="profile-game-scroll" ref={gameScrollRef}><table className="profile-season-games"><caption className="sr-only">시즌 전체 경기 기록</caption><thead><tr>{gameColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{gameLog.games.map(game=><tr key={game.gameId}>{gameColumns.map(([,key])=><td key={key} className={key === 'summary' || key === 'badge' ? 'profile-record-cell' : undefined}>{gameCell(game,key)}</td>)}</tr>)}</tbody></table></div></> : gameLogLoading ? <ProfileLoading>경기 일지를 불러오는 중이에요.</ProfileLoading> : <p className="profile-games-empty">{gameLogError || '경기 기록이 없습니다.'}</p>}</section>}
             {tab === 0 && <PlayerMovements key={`movements-${pid}`} movements={player.Movements} />}
             {tab === 0 && awards.length > 0 && <section><div className="profile-heading"><h2>수상 경력</h2></div><div className="profile-honors">{awards.map(award => { const clickable = award.name !== '신인왕'; const Tag = clickable ? 'button' : 'div'; return <Tag key={award.name} {...(clickable ? { type: 'button', 'aria-label': `${award.name} 상세 내역`, onClick: () => setSelectedCareer({ item: award, kind: 'award' }) } : {})} className={`profile-honor${['MVP', '우승', '골든글러브'].includes(award.name) ? ' is-premium' : ''}`}>
                 <span className="profile-honor-icon">{awardImages[award.name] ? <img src={awardImages[award.name]} alt="" loading="lazy" /> : <b>{award.name.slice(0, 1)}</b>}</span>

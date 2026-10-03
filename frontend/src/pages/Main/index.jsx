@@ -123,7 +123,8 @@ function SearchPlayerRow({ player, keyword = '', rank }) {
         fragments.push(name.slice(start,match),<mark key={match}>{name.slice(match,match+query.length)}</mark>);start=match+query.length;
     }
     fragments.push(name.slice(start));
-    return <div className={`main-home-search-player${active || numberRetired ? '' : ' is-retired'}${fullLogo ? ' has-team-logo' : ''}`} style={{'--search-team-color':color, ...(fullLogo ? { '--search-team-logo': `url("${fullLogo}")` } : {})}}>
+    // 팀 색 배경은 현역·영구결번 모두, 오른쪽의 큰 팀 로고는 영구결번 선수만
+    return <div className={`main-home-search-player${active || numberRetired ? '' : ' is-retired'}${fullLogo ? ' has-team-logo' : ''}`} style={{'--search-team-color':color, ...(fullLogo && numberRetired ? { '--search-team-logo': `url("${fullLogo}")` } : {})}}>
         {rank != null && <span className={`main-home-search-rank${rank <= 3 ? ' is-top' : ''}`}>{rank}</span>}
         <div className="main-home-search-photo"><SearchPlayerPhoto player={player} />{logo && <img className="main-home-search-photo-logo" src={logo} alt="" />}</div>
         <div className="main-home-search-identity">
