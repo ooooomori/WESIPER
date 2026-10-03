@@ -5,10 +5,13 @@ from decimal import Decimal
 from pathlib import Path
 import hashlib
 import runpy
+import sys
 from datetime import date
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / '.contract-enrichment'
+sys.path.insert(0,str(ROOT/'crawler'))
+from contract_text import contract_text
 OFFICIAL_URL = 'https://6ptotvmi5753.edge.naverncp.com/KBO_FILE/ebook/pdf/2026_%EC%97%B0%EA%B0%90.pdf'
 
 def money(text):
@@ -64,7 +67,7 @@ def run():
         source=options[0]
         term=source['term'].replace('년+','+')
         total=money(source['amount'])
-        details='KBO 연감 계약서 금액 기준(2019년 이후). 연장 조건 및 인센티브는 별도 확정 지급액이 아니며 원문 표기 기준. 총액: '+source['amount'].split(',')[0]
+        details=contract_text(term,total,'KRW',source['amount'])
         plan.append({'id':item['id'],'identity':{k:item[k] for k in ['event_date','event_type','team','player_id','player_name']},'contract_years':sum(map(int,re.findall(r'\d+',term))),'contract_term':term,'contract_total_amount':total,'contract_registered_amount':total,'contract_currency':'KRW','contract_details':details,'contract_source_url':OFFICIAL_URL+'#page='+str(source['page']),'evidence':source})
     remaining=[]
     for row in unresolved:
@@ -90,6 +93,11 @@ def run():
         raw={'player_id':pid,'player_name':name,'team':club,'event_date':event_date,'term':term,'amount':amount,'source_url':url,'details':details,'amount_basis':'announced_maximum_including_options'}
         raw_json=json.dumps(raw,ensure_ascii=False,separators=(',',':'))
         inserts.append({'source_key':source_key,'year':int(event_date[:4]),'event_date':event_date,'event_type':kind,'team':club,'player_id':pid,'player_name':name,'player_text':name+'('+p['pos']+')','note':details,'old_back_no':None,'new_back_no':None,'source_url':url,'source_file':'movement-contract-research.py','source_page':0,'source_row':len(inserts)+1,'source_sha256':hashlib.sha256(raw_json.encode()).hexdigest(),'raw_json':raw_json,'contract_years':sum(map(int,re.findall(r'\d+',term))),'contract_term':term,'contract_total_amount':money(amount),'contract_registered_amount':None,'contract_currency':'KRW','contract_details':details,'contract_source_url':url})
+    for row in plan:
+        row['contract_details']=contract_text(row['contract_term'],row['contract_total_amount'],row['contract_currency'],row['contract_details'])
+    for row in inserts:
+        row['contract_details']=contract_text(row['contract_term'],row['contract_total_amount'],row['contract_currency'],row['contract_details'])
+        row['note']=row['contract_details']
     assert len(plan)==160 and not remaining
     assert all(r['identity']['player_id'] is not None for r in plan)
     (CACHE/'plan.json').write_text(json.dumps({'updates':plan,'unresolved':remaining,'inserts':inserts},ensure_ascii=False,indent=2),encoding='utf-8')

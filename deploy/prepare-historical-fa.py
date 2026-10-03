@@ -5,9 +5,12 @@ import re
 from collections import Counter
 from pathlib import Path
 import runpy
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / '.contract-enrichment'
+sys.path.insert(0,str(ROOT/'crawler'))
+from contract_text import contract_text,normalize_term
 BASE_URL = 'https://6ptotvmi5753.edge.naverncp.com/KBO_FILE/ebook/pdf/2026_%EC%97%B0%EA%B0%90.pdf'
 money = runpy.run_path(str(ROOT/'deploy/prepare-movement-contracts.py'))['money']
 
@@ -36,7 +39,7 @@ def extract():
                 for name,position,team in zip(names,positions,teams):
                     if team=='미계약':
                         unsigned.append(dict(year=year,name=name));continue
-                    term=None if (year==2007 and name=='이병규(74)') else terms[n]
+                    term=None if (year==2007 and name=='이병규(74)') else normalize_term(terms[n])
                     amount=amounts[n];n+=1
                     rows.append(dict(year=year,name=re.sub(r'\([^)]*\)|\s+','',name),source_name=name,position=position.replace(' ',''),team=team.split(' → ')[-1],original_team=team,term=term,amount=amount,page=page['page']+1))
                 assert n==len(amounts) and len(terms)==n-(year==2007),(year,n,len(terms),len(amounts))
@@ -81,11 +84,8 @@ def build():
             if r['year']==2006 and r['name']=='박재홍':total*=2
             # A yearly salary does not establish the complete contract total.
             if r['year']==2004 and r['name']=='이승엽':total=None
-        details=f"KBO 2026 연감: {r['year']}년 FA 적용 연도. 계약 체결일 미기재. 구단 발표액 기준. 원문: {r['term'] or '기간 비공개'}, {r['amount']}"
-        if r['original_team']!=r['team']:details+='; 이적: '+r['original_team']
-        if r['name']=='황재균' and r['year']==2017:details+='; 스플릿 계약, MLB 기준 150만 달러+인센티브 최대 160만 달러.'
-        if r['year']==2006 and r['name']=='박재홍':details+='; 2년씩 각각 15억원, 조건부 4년 합계 최대 30억원.'
-        if r['year']==2004 and r['name']=='이승엽':details+='; 원문은 연봉 2억엔만 기재, 계약금 등 전체 총액 미기재로 총액 NULL. 인센티브 제외.'
+        details=contract_text(r['term'],total,currency,r['amount'])
+        if r['year']==2004 and r['name']=='이승엽':details='2년 · 연봉 2억엔 (인센티브 제외)'
         raw=json.dumps(r,ensure_ascii=False,separators=(',',':'))
         url=BASE_URL+'#page='+str(r['page'])
         plan.append(dict(source_key=hashlib.sha256(('kbo-yearbook-fa|'+str(r['year'])+'|'+str(pid)+'|'+r['team']).encode()).hexdigest(),year=r['year'],event_date=None,event_type='FA 계약',team=r['team'],player_id=pid,player_name=r['name'],player_text=r['name']+'('+r['position']+')',note=details,old_back_no=None,new_back_no=None,source_url=url,source_file='2026_연감.pdf',source_page=r['page'],source_row=len(plan)+1,source_sha256=hashlib.sha256((CACHE/'kbo-2026.pdf').read_bytes()).hexdigest(),raw_json=raw,contract_years=sum(map(int,re.findall(r'\d+',r['term']))) if r['term'] else None,contract_term=r['term'],contract_total_amount=total,contract_registered_amount=None,contract_currency=currency,contract_details=details,contract_source_url=url))

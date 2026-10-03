@@ -14,6 +14,8 @@ from collect_player_movements import clean,atomic,URL
 from movement_identity import resolved_movement_id
 from player_identity_corrections import kim_taeuk_id
 from player_ingest import parse_profile,FIELDS as PLAYER_FIELDS
+from contract_text import contract_text
+from movement_player_state import plan_state_updates,plan_number_updates,apply_state_updates
 
 OFFICIAL='https://www.koreabaseball.com/Player/Trade.aspx'
 NEWS='https://www.koreabaseball.com/MediaNews/News/KboPhoto/List.aspx'
@@ -54,7 +56,7 @@ def official_rows(session,year):
     return output
 def parent_index(connection):
     with connection.cursor() as c:
-        c.execute('SELECT player_id,name,oldname,birth,pos,team,draft,backNo FROM kbo_player_data');cols=[d[0] for d in c.description];parents={int(r[0]):dict(zip(cols,r)) for r in c.fetchall()}
+        c.execute('SELECT player_id,name,oldname,birth,pos,team,draft,backNo,is_kbodle FROM kbo_player_data');cols=[d[0] for d in c.description];parents={int(r[0]):dict(zip(cols,r)) for r in c.fetchall()}
     names=defaultdict(set)
     for pid,p in parents.items():
         if pid<10000:continue
@@ -133,7 +135,9 @@ def announcement(title,paragraphs,parents,names):
         team=club(teams[0]);choices=[p for p in names[name] if club(parents[p]['team'])==team]
         if len(choices)!=1:continue
         years=list(map(int,re.findall(r'\d+',term[1])));total=amount(cash[1]);assert 0<total<100_000_000_000
-        return dict(player_id=choices[0],player_name=name,team=team,contract_years=sum(years),contract_term='+'.join(map(str,years))+'년',contract_total_amount=total,contract_registered_amount=None,contract_currency='KRW',contract_details=paragraph,event_type='비FA 다년계약' if re.search(r'비\s*FA|다년',paragraph+title) and not re.search(r'(?<!비)FA\s*계약',paragraph) else 'FA 계약')
+        parts=re.findall(r'(?:계약금|연봉(?: 총액)?|인센티브|옵션)\s*(?:총액|최대|총)?\s*(?:'+money+')',paragraph)
+        summary=contract_text('+'.join(map(str,years))+'년',total,'KRW',', '.join(parts))
+        return dict(player_id=choices[0],player_name=name,team=team,contract_years=sum(years),contract_term='+'.join(map(str,years))+'년',contract_total_amount=total,contract_registered_amount=None,contract_currency='KRW',contract_details=summary,event_type='비FA 다년계약' if re.search(r'비\s*FA|다년',paragraph+title) and not re.search(r'(?<!비)FA\s*계약',paragraph) else 'FA 계약')
     return None
 def news_pages(session,today,lookback):
     page=get(session,NEWS);start=today-timedelta(days=lookback)
@@ -161,7 +165,7 @@ def run(write=False,lookback=14):
     with con.cursor() as c:
         c.execute('SHOW COLUMNS FROM kbo_player_movements');assert required<={r[0] for r in c.fetchall()},'Contract schema missing'
     with con.cursor() as c:
-        c.execute('SELECT source_key,id,player_id,player_name,event_date,team,event_type,contract_term,contract_total_amount FROM kbo_player_movements');cols=[d[0] for d in c.description];existing={r[0]:dict(zip(cols,r)) for r in c.fetchall()}
+        c.execute('SELECT source_key,id,player_id,player_name,event_date,team,event_type,note,old_back_no,new_back_no,contract_term,contract_total_amount FROM kbo_player_movements');cols=[d[0] for d in c.description];existing={r[0]:dict(zip(cols,r)) for r in c.fetchall()}
     try:
         rows=[]
         for year in sorted({today.year,(today-timedelta(days=lookback)).year}):rows.extend(official_rows(session,year))
@@ -183,6 +187,7 @@ def run(write=False,lookback=14):
                     statistics['ids_filled']+=1
                     if write:
                         with con.cursor() as c:c.execute('UPDATE kbo_player_movements SET player_id=%s WHERE id=%s AND player_id IS NULL',(row['player_id'],old['id']))
+                    old['player_id']=row['player_id']
             else:
                 # A researched announcement may precede the official trade post.
                 # Promote it to official provenance, keeping enriched contract fields.
@@ -238,11 +243,20 @@ def run(write=False,lookback=14):
                 if write:
                     with con.cursor() as c:c.execute('INSERT INTO kbo_player_movements (`'+'`,`'.join(fields+cf)+'`) VALUES ('+','.join(['%s']*len(fields+cf))+')',tuple(row[f] for f in fields+cf))
                 existing[key]=row
+        state_updates,state_pending=plan_state_updates(existing.values(),parents,today,start_date(today,lookback))
+        apply_state_updates(con,parents,state_updates,write)
+        pending.extend(state_pending)
+        statistics['player_teams_updated']=sum('team' in r['changes'] for r in state_updates)
+        statistics['player_kbodle_flags_updated']=sum('is_kbodle' in r['changes'] for r in state_updates)
+        number_updates,number_pending=plan_number_updates(existing.values(),parents,today,start_date(today,lookback))
+        apply_state_updates(con,parents,number_updates,write)
+        pending.extend(number_pending)
+        statistics['player_numbers_updated']=len(number_updates)
         if write:con.commit()
         else:con.rollback()
     except Exception:con.rollback();raise
     finally:con.close()
-    result={'date':today.isoformat(),'write':write,'counts':dict(statistics),'pending_review':pending,'source':'KBO Trade API and independently searched KBO news'}
+    result={'date':today.isoformat(),'write':write,'counts':dict(statistics),'player_state_updates':state_updates,'player_number_updates':number_updates,'pending_review':pending,'source':'KBO Trade API and independently searched KBO news'}
     atomic(ROOT/'last-run.json',result);print(json.dumps({k:v for k,v in result.items() if k!='pending_review'},ensure_ascii=False));print('pending_review',len(pending))
 def start_date(today,lookback):return today-timedelta(days=lookback)
 if __name__=='__main__':
