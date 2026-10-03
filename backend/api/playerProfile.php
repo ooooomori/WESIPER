@@ -66,6 +66,12 @@ try {
         error_log('Player movements unavailable: ' . $movementError->getMessage());
         $player['Movements'] = [];
     }
+    // 입단(kbo_player_data.draft, 예: "22 KIA 1차")도 가장 오래된 이동 내역으로 붙인다.
+    if (preg_match('/^(\d{2})\s+(\S+)(?:\s+(.+))?$/u', (string)$player['Draft'], $draft)) {
+        // "07 해외진출선수 특별지명"은 지명 구단이 없으므로 팀을 MLB로 두고 문구 전체를 비고로 쓴다.
+        $overseas = $draft[2] === '해외진출선수';
+        $player['Movements'][] = ['date' => (string)(((int)$draft[1] >= 82 ? 1900 : 2000) + (int)$draft[1]), 'type' => '입단', 'team' => $overseas ? 'MLB' : $draft[2], 'note' => $overseas ? trim($draft[2] . ' ' . ($draft[3] ?? '')) : ($draft[3] ?? ''), 'oldBackNo' => null, 'newBackNo' => null];
+    }
     // 가족관계: 한 쌍은 한 방향으로만 저장되므로, 상대 쪽에서 조회할 때는 관계를 뒤집어 보여준다.
     try {
         $family = $pdo->prepare('SELECT f.player_id AS OwnerId, f.relationship AS Relationship, p.player_id AS PlayerId, p.name AS Name, p.birth AS Birth, p.is_kbodle AS IsKbodle, p.team AS Team

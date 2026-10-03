@@ -134,7 +134,7 @@ function TeamLogo({ team, className = '', small = false }) {
     return code ? <img className={className} src={src} alt="" /> : null;
 }
 const movementCategories = [
-    ['move', '이적·계약', ['트레이드', '트레이드(웨이버)', 'FA 자격취득', 'FA 계약', '비FA 다년계약', '자유계약', '해외 복귀 FA 계약', 'FA 보상선수', '2차 드래프트', '소속선수 추가 등록']],
+    ['move', '이적·계약', ['입단', '트레이드', '트레이드(웨이버)', 'FA 자격취득', 'FA 계약', '비FA 다년계약', '자유계약', '해외 복귀 FA 계약', 'FA 보상선수', '2차 드래프트', '소속선수 추가 등록']],
     ['release', '방출', ['자유계약선수', '웨이버', '임의해지', '군보류 자유계약선수', '자유계약선수 - 참가활동정지']],
     ['injury', '부상', ['부상자 명단', '치료·재활명단', '재활선수(외국인 선수)']],
     ['military', '군보류', ['군보류']],
@@ -150,6 +150,7 @@ const legacyMovementTeams = { 넥센: 'nex', SK: 'sk' };
 const legacyTeamColors = { 넥센: '#820024', SK: '#ea002c' };
 const compareTeamColor = team => teams[team]?.[1] || legacyTeamColors[team] || null;
 function movementLogo(team) {
+    if (team === 'MLB' || team?.startsWith('美')) return logos['../../assets/images/logos/mlb-logo.svg'] || null;
     const code = teams[team]?.[0] || legacyMovementTeams[team];
     if (!code) return null;
     if (code === 'ulsan') return ulsanSmallLogo;
@@ -166,6 +167,7 @@ function MovementTeam({ team, withName = false }) {
 function formatContractAmount(amount, currency = 'KRW') {
     const value = Number(amount);
     if (!value) return null;
+    if (currency === 'USD') return `$${value.toLocaleString('ko-KR')}`;
     if (currency && currency !== 'KRW') return `${value.toLocaleString('ko-KR')} ${currency}`;
     if (value >= 1e8) { const eok = value / 1e8; return `${Number.isInteger(eok) ? eok : eok.toFixed(1).replace(/\.0$/, '')}억`; }
     return `${Math.round(value / 1e4).toLocaleString('ko-KR')}만`;
@@ -628,7 +630,7 @@ export default function PlayerProfile({ pid }) {
             {tabs}
         </section>
         <div className={`profile-compact-header ${compact ? 'is-visible' : ''}`} aria-hidden={!compact} inert={!compact ? '' : undefined}>
-            <div className="profile-compact-identity"><Link className="profile-compact-back" to="/?search=1" aria-label="선수 검색으로 돌아가기"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>{compactWatermark}<div className="profile-photo">{photo}</div><div><strong>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</strong><p>{retired || numberRetired ? heroSummary : [team[3], heroPosition].filter(Boolean).join(' · ')}</p></div></div>
+            <div className="profile-compact-identity"><Link className="profile-compact-back" to="/?search=1" aria-label="선수 검색으로 돌아가기"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>{compactWatermark}<div className="profile-photo">{photo}</div><div><strong>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</strong><p>{retired || numberRetired ? heroSummary : [team[3], heroPosition].filter(Boolean).join(' | ')}</p></div></div>
             <div className="profile-compact-tabs">{tabs}</div>
         </div>
         <div ref={contentRef} className="profile-content">
