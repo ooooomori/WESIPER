@@ -31,12 +31,14 @@ import olympicLogo from '../../assets/images/logos/olympic.svg';
 const awardImages = { MVP: mvpAward, '골든글러브': goldenGloveAward, '수비상': defenseAward, '신인왕': rookieAward, '월간 MVP': monthlyMvpAward, '올스타': allStarAward, '우승': championshipAward };
 const nationalImages = { WBC: wbcLogo, '프리미어12': premier12Logo, APBC: apbcLogo, '아시안게임': asianGamesLogo, '올림픽': olympicLogo };
 const nationalTeamLogos = import.meta.glob('../../assets/images/logos/*.{svg,webp,png,jpg}', { eager: true, query: '?url', import: 'default' });
-// 국가대표팀 로고와 헤더 색. 파일은 logos 폴더의 <code>.<ext> / <code>-small.<ext>, 5번째 값은 흰색 로고 여부
+// 국가대표팀 로고와 헤더 색. 파일은 logos 폴더의 <code>.<ext> / <code>-small.<ext>, 5번째 값은 흰색 로고 여부,
+// 6번째 값은 큰 로고가 어두운 단색이라 헤더 배경에서는 흰색으로 바꿔 깔아야 하는지 여부
 const nationalTeams = {
     한국: ['korea', '대한민국', '#0d2a5c', '#c8102e', true], 대한민국: ['korea', '대한민국', '#0d2a5c', '#c8102e', true],
-    일본: ['japan', '일본', '#0b1f4b', '#2c4f9e'], 대만: ['taiwan', '대만', '#0b3270', '#2f6fd0'], 중국: ['china', '중국', '#8f0d1d', '#d62a2a'],
+    일본: ['japan', '일본', '#1c262d', '#918049', false, true], 대만: ['taiwan', '대만', '#0b3270', '#2f6fd0'], 중국: ['china', '중국', '#8f0d1d', '#d62a2a'],
     미국: ['usa', '미국', '#0a3161', '#b31942'], 캐나다: ['canada', '캐나다', '#7a0c1c', '#d52b1e'], 멕시코: ['mexico', '멕시코', '#004d35', '#ce1126'],
     호주: ['australia', '호주', '#00573a', '#d4a300'], 이스라엘: ['israel', '이스라엘', '#0b2f8a', '#3a6fe0'],
+    파나마: ['panama', '파나마', '#0c2a55', '#c41e2a'], 베네수엘라: ['venezuela', '베네수엘라', '#5e1410', '#e0a916'],
 };
 const nationalTeam = country => nationalTeams[String(country || '한국').trim()] || null;
 const nationalTeamLogo = (country, small = false) => {
@@ -139,7 +141,8 @@ const movementCategories = [
     ['number', '등번호', ['등번호 변경']],
     ['etc', '기타', []],
 ];
-const movementCategory = type => movementCategories.find(([, , types]) => types.includes(type))?.[0] || 'etc';
+// 군보류 해제로 다시 등록된 경우(소속선수 추가 등록 + 비고 '군보류 해제')는 군보류로 묶는다.
+const movementCategory = movement => (movement.note || '').includes('군보류 해제') ? 'military' : movementCategories.find(([, , types]) => types.includes(movement.type))?.[0] || 'etc';
 const MOVEMENT_PREVIEW_COUNT = 6;
 const movementRoute = movement => movement.type === '등번호 변경' ? null : (movement.note || '').trim().match(/^([^→\s]+)\s*→\s*([^→\s]+)$/);
 // 이동 현황 전용: 현재 팀 + 옛 팀명(넥센·SK) 작은 로고
@@ -167,16 +170,12 @@ function formatContractAmount(amount, currency = 'KRW') {
     if (value >= 1e8) { const eok = value / 1e8; return `${Number.isInteger(eok) ? eok : eok.toFixed(1).replace(/\.0$/, '')}억`; }
     return `${Math.round(value / 1e4).toLocaleString('ko-KR')}만`;
 }
-function contractSourceLabel(url) {
-    if (/KBO_FILE|연감/.test(decodeURIComponent(url))) return 'KBO 연감';
-    try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return '출처'; }
-}
 function hasContract(movement) { return Boolean(movement.contractTerm || movement.contractTotal); }
 function MovementLine({ movement, open = false, onToggle }) {
     const route = movementRoute(movement);
     const note = (movement.note || '').trim();
     const contract = hasContract(movement);
-    const expandable = contract && Boolean(movement.contractDetails || movement.contractSources || (movement.contractRegistered && movement.contractRegistered !== movement.contractTotal));
+    const expandable = contract && Boolean(movement.contractDetails);
     let detail = null;
     if (route) {
         detail = <span className="profile-movement-route" aria-label={`${route[1]}에서 ${route[2]}로`}><MovementTeam team={route[1]} withName /><i aria-hidden="true">→</i><MovementTeam team={route[2]} withName /></span>;
@@ -197,18 +196,18 @@ function MovementLine({ movement, open = false, onToggle }) {
     </div>;
 }
 function MovementContractDetail({ movement }) {
-    const sources = (movement.contractSources || '').split(/\s*\n\s*/).filter(Boolean);
-    const registered = movement.contractRegistered && movement.contractRegistered !== movement.contractTotal ? formatContractAmount(movement.contractRegistered, movement.contractCurrency) : null;
     return <div className="profile-movement-contract-detail">
         {movement.contractDetails && <p>{movement.contractDetails}</p>}
-        {registered && <p className="profile-movement-registered">KBO 등록 금액 <b>{registered}</b></p>}
-        {sources.length > 0 && <div className="profile-movement-sources"><span>출처</span>{sources.map(url => <a key={url} href={url} target="_blank" rel="noopener noreferrer">{contractSourceLabel(url)}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></a>)}</div>}
     </div>;
 }
+// 원형 마커 전용 시각 보정: 로고는 상자 기준으로 가운데지만 모양이 비대칭이라 쏠려 보인다.
+// 면적 중심이 원 가운데에 가까워지도록 로고 상자 크기 대비 [가로%, 세로%]만큼 민다.
+const markerLogoShift = { kia: [0, 8], ssg: [7, -6], nex: [6.5, -2], lg: [2.5, 5.5], lot: [3.5, 0], nc: [-3, 0], sk: [3.5, 0], kiw: [3, 0], doo: [0, 2.5] };
 function MovementMarker({ team }) {
     const src = movementLogo(team);
+    const shift = markerLogoShift[teams[team]?.[0] || legacyMovementTeams[team]];
     return <span className="profile-movement-marker" title={team || undefined} aria-label={team || undefined} role={team ? 'img' : undefined}>
-        {src ? <img className="profile-movement-marker-logo" src={src} alt="" /> : team ? <b>{team.slice(0, 2)}</b> : null}
+        {src ? <img className="profile-movement-marker-logo" src={src} alt="" style={shift && { transform: `translate(${shift[0]}%, ${shift[1]}%)` }} /> : team ? <b>{team.slice(0, 2)}</b> : null}
     </span>;
 }
 function PlayerMovements({ movements = [] }) {
@@ -216,9 +215,9 @@ function PlayerMovements({ movements = [] }) {
     const [expanded, setExpanded] = useState(false);
     const [openRows, setOpenRows] = useState({});
     if (!movements.length) return null;
-    const counts = movements.reduce((map, movement) => map.set(movementCategory(movement.type), (map.get(movementCategory(movement.type)) || 0) + 1), new Map());
+    const counts = movements.reduce((map, movement) => map.set(movementCategory(movement), (map.get(movementCategory(movement)) || 0) + 1), new Map());
     const filters = movementCategories.filter(([id]) => counts.has(id));
-    const filtered = filter === 'all' ? movements : movements.filter(movement => movementCategory(movement.type) === filter);
+    const filtered = filter === 'all' ? movements : movements.filter(movement => movementCategory(movement) === filter);
     const visible = expanded ? filtered : filtered.slice(0, MOVEMENT_PREVIEW_COUNT);
     const choose = id => { setFilter(id); setExpanded(false); };
     return <section className="profile-movements-section">
@@ -231,7 +230,7 @@ function PlayerMovements({ movements = [] }) {
             </div>}
         </div>
         <ol className="profile-movements">
-            {visible.map((movement, index) => { const rowKey = `${movement.date}-${movement.type}-${movement.team}-${index}`; const open = Boolean(openRows[rowKey]); return <li key={rowKey} className={`is-${movementCategory(movement.type)}${hasContract(movement) ? ' has-contract' : ''}`}>
+            {visible.map((movement, index) => { const rowKey = `${movement.date}-${movement.type}-${movement.team}-${index}`; const open = Boolean(openRows[rowKey]); return <li key={rowKey} className={`is-${movementCategory(movement)}${hasContract(movement) ? ' has-contract' : ''}`}>
                 <MovementMarker team={movement.team} />
                 <div className="profile-movement-body">
                     <time dateTime={movement.date}>{movement.date.replaceAll('-', '.')}</time>
@@ -248,16 +247,27 @@ function PlayerMovements({ movements = [] }) {
 }
 const careerResultTone = note => /금메달|^우승$/.test(note || '') ? 'gold' : /은메달|준우승/.test(note || '') ? 'silver' : /동메달|^3위$/.test(note || '') ? 'bronze' : 'plain';
 const recentWeekday = date => ['일', '월', '화', '수', '목', '금', '토'][new Date(`${date}T12:00:00+09:00`).getDay()] || '';
-// 최근 경기 결과: 점수는 원정-홈 순서이고, 내 팀 점수만 승(빨강)·패(파랑) 색을 입힌다.
+// 최근 경기 결과: 점수는 원정-홈 순서. 선수 기록이 주인공이라 결과는 승·패 글자에만 옅은 색을 준다.
 const recentResult = game => {
     const match = game.result?.match(/^([WLD])\s+(.+)$/);
     if (!match) return null;
     const [label, tone] = { W: ['승', 'win'], L: ['패', 'loss'], D: ['무', 'draw'] }[match[1]];
     const score = match[2].match(/^(\d+)\s*[-:]\s*(\d+)$/);
-    return { label, tone, text: match[2], score: score ? [score[1], score[2]] : null, ownIndex: game.isAway ? 0 : 1 };
+    return { label, tone, text: match[2], score: score ? [score[1], score[2]] : null };
 };
 // 기록 문장에서 홈런과 의미 있는 기록(안타·타점 등)을 굵게 강조한다.
-const recentLine = text => String(text || '—').split(' ').map((token, index) => <span key={index} className={/^[1-9]\d*홈런$/.test(token) ? 'is-hr' : /^[1-9]\d*(안타|타점|득점|도루|볼넷|삼진|이닝)$/.test(token) ? 'is-key' : /^0/.test(token) ? 'is-zero' : undefined}>{token}</span>);
+const recentLine = text => String(text || '—').split(' ').map((token, index) => <span key={index} className={/^[1-9]\d*홈런$/.test(token) ? 'is-hr' : /^[1-9]\d*(안타|타점|득점|도루|볼넷|삼진|이닝)$/.test(token) ? 'is-key' : undefined}>{token}</span>);
+const positionSymbols = { '투수': 'P', '포수': 'C', '1루': '1B', '2루': '2B', '3루': '3B', '유격': 'SS', '좌익': 'LF', '중견': 'CF', '우익': 'RF', '지명': 'DH' };
+const substituteRoles = ['대타', '대주자', '교체', '대수비'];
+const positionNames = { '투수': '투수', '포수': '포수', '1루': '1루수', '2루': '2루수', '3루': '3루수', '유격': '유격수', '좌익': '좌익수', '중견': '중견수', '우익': '우익수', '지명': '지명타자' };
+// 최근 경기의 타순·선발 포지션. 교체 출장이면 포지션 없이 대타·대수비·대주자만 보여준다.
+const recentRole = game => {
+    const parts = (game.position || '').split(' · ');
+    if (substituteRoles.includes(parts[0])) return { label: parts[0], position: '' };
+    if (game.isStarter === false) return { label: '', position: '' };
+    const position = (game.position || '').split('-')[0];
+    return { label: game.order != null ? `${game.order}번` : '', position: positionNames[position] || position };
+};
 const bestNationalResult = rows => {
     const order = ['gold', 'silver', 'bronze'];
     return rows.map(row => ({ tone: careerResultTone(row.note), note: row.note })).filter(row => row.tone !== 'plain').sort((a, b) => order.indexOf(a.tone) - order.indexOf(b.tone))[0] || null;
@@ -343,7 +353,7 @@ function CareerModal({ item, kind, onClose }) {
     const count = item.name === '우승' ? `V${item.rows.length}` : `${item.rows.length}회`;
     return <dialog ref={dialog} className={`profile-career-modal${expanded ? ' is-expanded' : ''}`} aria-labelledby="profile-career-title" onClose={onClose} onClick={e => { if (e.target !== e.currentTarget || justDragged.current) return; const box = e.currentTarget.getBoundingClientRect(); if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) close(); }}>
         <header className={`profile-career-modal-head${national && team ? ' is-national' : ''}`} style={headStyle} onPointerDown={dragStart} onPointerMove={dragMove} onPointerUp={dragEnd} onPointerCancel={dragEnd}>
-            {national && countryLogo && <img className="profile-career-watermark" src={countryLogo} alt="" aria-hidden="true" />}
+            {national && countryLogo && <img className={`profile-career-watermark${team?.[5] ? ' is-dark-logo' : ''}`} src={countryLogo} alt="" aria-hidden="true" />}
             <div className={`profile-career-emblem${combined && countryMark ? ' is-country' : ''}${combined && team?.[4] ? ' is-light-logo' : ''}`}>{image ? <img src={image} alt="" /> : <span aria-hidden="true">{combined ? countryName.slice(0, 2) : item.name.slice(0, 1)}</span>}</div>
             <div className="profile-career-title">
                 {!combined && <small>{national ? `${countryName} 국가대표` : '수상 경력'}</small>}
@@ -411,6 +421,8 @@ export default function PlayerProfile({ pid }) {
     const [detailedGames, setDetailedGames] = useState(false);
     const [gameYear, setGameYear] = useState('');
     const [gameSeason, setGameSeason] = useState('');
+    // 경기 일지 타자·투수 선택. null이면 서버가 등록 포지션을 따른다.
+    const [gamePitcher, setGamePitcher] = useState(null);
     const [gameLog, setGameLog] = useState({ years: [], games: [] });
     const [gameLogLoading, setGameLogLoading] = useState(false);
     const [gameLogError, setGameLogError] = useState('');
@@ -432,7 +444,7 @@ export default function PlayerProfile({ pid }) {
     }, [pid]);
     const contentRef = useRef(null);
     useEffect(() => { setTab(tabFromUrl()); }, [location.search]);
-    useEffect(() => { setGameYear(''); setGameSeason(''); setGameLog({ years: [], games: [] }); }, [pid]);
+    useEffect(() => { setGameYear(''); setGameSeason(''); setGamePitcher(null); setGameLog({ years: [], games: [] }); }, [pid]);
     useEffect(() => {
         // 인기 선수 집계용 조회 기록. 같은 탭에서 같은 선수를 다시 열면 보내지 않는다(서버도 하루 1회로 거른다).
         const key = `wesiper-viewed-${pid}`;
@@ -445,6 +457,7 @@ export default function PlayerProfile({ pid }) {
         const query = new URLSearchParams({ pid, part: 'games' });
         if (gameSeason) query.set('season', gameSeason);
         if (gameYear) query.set('year', gameYear);
+        if (gamePitcher !== null) query.set('type', gamePitcher ? 'pitcher' : 'batter');
         const url = `/api/playerProfile.php?${query}`;
         const cached = getCachedProfileData(url);
         setGameLogError('');
@@ -455,7 +468,7 @@ export default function PlayerProfile({ pid }) {
             .catch(() => { if (active) { setGameLog(previous => ({ ...previous, games: [] })); setGameLogError('경기 기록을 불러오지 못했습니다.'); } })
             .finally(() => { if (active) setGameLogLoading(false); });
         return () => { active = false; };
-    }, [pid, tab, gameYear, gameSeason]);
+    }, [pid, tab, gameYear, gameSeason, gamePitcher]);
     useEffect(() => {
         if (!player) return;
         const hero = heroRef.current;
@@ -546,6 +559,7 @@ export default function PlayerProfile({ pid }) {
     const awards = groupCareer(player.Awards).sort((a,b)=>(awardOrder.indexOf(a.name) < 0 ? 99 : awardOrder.indexOf(a.name))-(awardOrder.indexOf(b.name) < 0 ? 99 : awardOrder.indexOf(b.name)));
     const national = groupCareer(player.National).sort((a, b) => nationalOrder.indexOf(a.name) - nationalOrder.indexOf(b.name));
     const info = [['이름', Number(player.IsForeign) === 1 ? player.FullName || player.Name : player.Name], ['개명', player.OldName ? `${player.OldName} → ${player.Name}` : null], ['등번호', numberRetired ? null : player.BackNo], ['소속팀', retired || numberRetired ? null : team[3]], ['영구결번', numberRetired ? `${team[3]}${player.BackNo != null ? ` No.${player.BackNo}` : ''}` : null], ['포지션', detailedPosition], ['투타', handedness], ['생년월일', birthday], ['신체', player.Body], ['학력', player.School], ['입단', player.Draft], ['은퇴', retired && retirementYear ? `${retirementYear}년` : null], ['별명', player.Nicknames?.join(', ')], ['가족', player.Family?.length ? <span className="profile-family">{player.Family.map(member => <Link key={`${member.PlayerId}-${member.Relationship}`} className="profile-family-link" to={`/?pid=${encodeURIComponent(member.PlayerId)}`} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}><small>{member.Relationship}</small><b>{member.Name}</b><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>)}</span> : null]].filter(([, value]) => value !== null && value !== undefined && String(value).trim() !== '');
+    const gameLogPitcher = gamePitcher ?? gameLog.pitcher ?? isPitcher;
     const gameColumns = [['날짜','date'],['상대','opponent'],['구장','stadium'],['경기 결과','result'],['선발','isStarter'],...((gameLog.pitcher ?? records?.pitcher) ? (detailedGames ? [['기록','badge'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp']] : [['기록','summary']]) : [['포지션','position'],['타순','order'],...(detailedGames ? [['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['삼진','so'],['병살','gdp'],['희플','sf'],['희생번트','sh'],['도루','sb'],['도루실패','cs']] : [['기록','summary']])]),['비고','notes']];
     const rollingColumns = [['기간','label'],['경기','games'],...(records?.pitcher ? [['선발','starts'],['ERA','era'],['승리','wins'],['패전','losses'],['세이브','saves'],['홀드','holds'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp'],['WHIP','whip']] : [['타석','pa'],['타율','avg'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['희플','sf'],['희생번트','sh'],['병살','gdp'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['OPS+','opsPlus']])];
     const futuresCaption = overviewLeagueCaption(records, Number(dateValue('year')));
@@ -553,11 +567,10 @@ export default function PlayerProfile({ pid }) {
     const rollingMobileWidths = rollingColumns.map(([label, key]) => key === 'label' ? 64 : recordColumnWidth(label, key, true));
     const gameCell = (game, key) => {
         const positionParts = (game.position || '').split(' · ');
-        const substituteRole = ['대타', '대주자', '교체', '대수비'].includes(positionParts[0]) ? positionParts[0] : null;
+        const substituteRole = substituteRoles.includes(positionParts[0]) ? positionParts[0] : null;
         if (key === 'position') {
             const position = substituteRole ? positionParts.slice(1).join(' · ') : game.position;
-            const symbols = { '투수': 'P', '포수': 'C', '1루': '1B', '2루': '2B', '3루': '3B', '유격': 'SS', '좌익': 'LF', '중견': 'CF', '우익': 'RF', '지명': 'DH' };
-            return position ? position.split('-').map(value => symbols[value] || value).join('-') : '—';
+            return position ? position.split('-').map(value => positionSymbols[value] || value).join('-') : '—';
         }
         if (key === 'isStarter' && !(gameLog.pitcher ?? records?.pitcher) && game.isStarter === false) return substituteRole || '';
         if (key === 'notes') return game.notes || '';
@@ -615,14 +628,13 @@ export default function PlayerProfile({ pid }) {
                 const rank = value != null && Number(value) !== 0 ? ranks[label] : null;
                 return <div key={label} className={rank >= 1 && rank <= 5 ? 'profile-stat-top-five' : undefined}>{tab === 0 ? <><div className="profile-stat-header"><span>{label}</span>{rank != null && <small className={`profile-stat-rank ${rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : rank <= 5 ? 'is-top' : ''}${rank >= 100 ? ' is-long' : ''}`}>{rank}위</small>}</div><strong style={{ '--value-chars': String(value ?? '—').length }}>{value ?? '—'}</strong></> : <><span>{label}</span><strong>{value ?? '—'}</strong>{<small>{rank != null ? `${rank}위` : ''}</small>}</>}</div>;
             })}</div></section>}
-            {records && tab === 0 && !retired && !numberRetired && <section><div className="profile-heading"><h2>최근 5경기</h2>{records.recent.length > 0 && <span className="profile-recent-form" aria-label="최근 경기 팀 결과">{[...records.recent].reverse().map((game, i) => { const result = recentResult(game); return <i key={i} className={result ? `is-${result.tone}` : ''} title={result?.label} />; })}</span>}{recentCaption && <small className="profile-season-caption">{recentCaption}</small>}</div>{records.recent.length ? <ol className="profile-recent-list">{records.recent.map((game, i) => { const result = recentResult(game); const logo = movementLogo(game.opponent); return <li key={`${game.date}-${i}`}>
+            {records && tab === 0 && !retired && !numberRetired && <section><div className="profile-heading"><h2>최근 5경기</h2>{recentCaption && <small className="profile-season-caption">{recentCaption}</small>}</div>{records.recent.length ? <ol className="profile-recent-list">{records.recent.map((game, i) => { const result = recentResult(game); const logo = movementLogo(game.opponent); const role = recentRole(game); return <li key={`${game.date}-${i}`}>
                 <span className="profile-recent-date"><b>{game.date.slice(5).replace('-', '.')}</b><small>{recentWeekday(game.date)}</small></span>
-                <span className="profile-recent-opp" aria-hidden="true">{logo ? <img src={logo} alt="" /> : <i>{game.opponent?.slice(0, 1) || '—'}</i>}</span>
-                <span className="profile-recent-main"><span className="profile-recent-vs">{game.opponent ? <>{game.isAway ? '@' : 'vs'} <strong>{game.opponent}</strong></> : '—'}{game.stadium && <small>{game.stadium}</small>}</span><span className="profile-recent-line">{recentLine(game.text)}<GameBadge value={game.badge} /></span></span>
-                {result ? <span className={`profile-recent-score is-${result.tone}`}><b>{result.label}</b>{result.score ? <span>{result.score.map((value, index) => <em key={index} className={index === result.ownIndex ? 'is-own' : undefined}>{value}</em>).reduce((parts, part, index) => index ? [...parts, <i key={`s${index}`}>:</i>, part] : [part], [])}</span> : <span>{result.text}</span>}</span> : <span />}
+                <span className="profile-recent-main"><span className="profile-recent-line">{role.label && <span className="profile-recent-role">{role.label}</span>}{recentLine(game.text)}<GameBadge value={game.badge} /></span><span className="profile-recent-vs">{!records.pitcher && <b>{role.position}</b>}{logo &&<img src={logo} alt="" />}{game.opponent ? `${game.isAway ? '@' : 'vs'} ${game.opponent}` : '—'}{game.stadium && <small>{game.stadium}</small>}</span></span>
+                {result ? <span className={`profile-recent-score is-${result.tone}`}><b>{result.label}</b>{result.score ? result.score.join(':') : result.text}</span> : <span />}
             </li>; })}</ol> : <p className="profile-games-empty">최근 경기 기록이 없습니다.</p>}</section>}
-            {tab === 2 && <StreakRecords streaks={gameLog.currentSeasonStreaks} pitcher={(player.Pos || '').includes('투수') || gameLog.pitcher === true} />}
-            {tab === 2 && <section><div className="profile-heading profile-game-heading"><h2>경기 일지</h2><GameLogFilter years={gameLog.years} year={gameYear || gameLog.year} season={gameSeason || gameLog.season || 'regular'} availableSeasons={gameLog.availableSeasons} onYearChange={value => { setGameYear(value); const available = gameLog.availableSeasons?.[value] || []; setGameSeason(available.includes(gameSeason || gameLog.season) ? gameSeason || gameLog.season : available[0] || ''); }} onSeasonChange={value => { setGameYear(String(gameYear || gameLog.year)); setGameSeason(value); }} /><div className={`profile-game-switch ${detailedGames ? 'is-detailed' : ''}`} role="group" aria-label="경기 기록 표시 방식">{['간략히','자세히'].map((label,i)=><button key={label} type="button" className={detailedGames === Boolean(i) ? 'active' : ''} aria-pressed={detailedGames === Boolean(i)} onClick={()=>setDetailedGames(Boolean(i))}>{label}</button>)}</div></div>{!gameLogLoading && gameLog.games?.length ? <div className="profile-game-scroll" ref={gameScrollRef}><table className="profile-season-games"><caption className="sr-only">시즌 전체 경기 기록</caption><thead><tr>{gameColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{gameLog.games.map(game=><tr key={game.gameId}>{gameColumns.map(([,key])=><td key={key} className={key === 'summary' || key === 'badge' ? 'profile-record-cell' : undefined}>{gameCell(game,key)}</td>)}</tr>)}</tbody></table></div> : gameLogLoading ? <ProfileLoading>경기 일지를 불러오는 중이에요.</ProfileLoading> : <p className="profile-games-empty">{gameLogError || '경기 기록이 없습니다.'}</p>}</section>}
+            {tab === 2 && <StreakRecords streaks={gameLog.currentSeasonStreaks} pitcher={isPitcher} />}
+            {tab === 2 && <section><div className="profile-heading profile-game-heading"><h2>경기 일지</h2><GameLogFilter years={gameLog.years} year={gameYear || gameLog.year} season={gameSeason || gameLog.season || 'regular'} availableSeasons={gameLog.availableSeasons} onYearChange={value => { setGameYear(value); const available = gameLog.availableSeasons?.[value] || []; setGameSeason(available.includes(gameSeason || gameLog.season) ? gameSeason || gameLog.season : available[0] || ''); }} onSeasonChange={value => { setGameYear(String(gameYear || gameLog.year)); setGameSeason(value); }} /><div className="profile-game-switches"><div className={`profile-game-switch ${gameLogPitcher ? 'is-detailed' : ''}`} role="group" aria-label="타자 투수 기록 선택">{['타자','투수'].map((label,i)=><button key={label} type="button" className={gameLogPitcher === Boolean(i) ? 'active' : ''} aria-pressed={gameLogPitcher === Boolean(i)} onClick={()=>{ if (gameLogPitcher === Boolean(i)) return; setGamePitcher(Boolean(i)); setGameYear(''); setGameSeason(''); }}>{label}</button>)}</div><div className={`profile-game-switch ${detailedGames ? 'is-detailed' : ''}`} role="group" aria-label="경기 기록 표시 방식">{['간략히','자세히'].map((label,i)=><button key={label} type="button" className={detailedGames === Boolean(i) ? 'active' : ''} aria-pressed={detailedGames === Boolean(i)} onClick={()=>setDetailedGames(Boolean(i))}>{label}</button>)}</div></div></div>{!gameLogLoading && gameLog.games?.length ? <div className="profile-game-scroll" ref={gameScrollRef}><table className="profile-season-games"><caption className="sr-only">시즌 전체 경기 기록</caption><thead><tr>{gameColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{gameLog.games.map(game=><tr key={game.gameId}>{gameColumns.map(([,key])=><td key={key} className={key === 'summary' || key === 'badge' ? 'profile-record-cell' : undefined}>{gameCell(game,key)}</td>)}</tr>)}</tbody></table></div> : gameLogLoading ? <ProfileLoading>경기 일지를 불러오는 중이에요.</ProfileLoading> : <p className="profile-games-empty">{gameLogError || '경기 기록이 없습니다.'}</p>}</section>}
             {tab === 0 && <PlayerMovements key={`movements-${pid}`} movements={player.Movements} />}
             {tab === 0 && awards.length > 0 && <section><div className="profile-heading"><h2>수상 경력</h2></div><div className="profile-honors">{awards.map(award => { const clickable = award.name !== '신인왕'; const Tag = clickable ? 'button' : 'div'; return <Tag key={award.name} {...(clickable ? { type: 'button', 'aria-label': `${award.name} 상세 내역`, onClick: () => setSelectedCareer({ item: award, kind: 'award' }) } : {})} className={`profile-honor${['MVP', '우승', '골든글러브'].includes(award.name) ? ' is-premium' : ''}`}>
                 <span className="profile-honor-icon">{awardImages[award.name] ? <img src={awardImages[award.name]} alt="" loading="lazy" /> : <b>{award.name.slice(0, 1)}</b>}</span>

@@ -133,14 +133,15 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
             foreach(['hr'=>'홈런','rbi'=>'타점','sb'=>'도루'] as $key=>$label) { $value=profileSum($parsed,$key); if($value>0) $text.=' '.$value.$label; }
             $game=profileGameMeta($events[0],$stadiums);
             $game['text']=$text;$game['badge']=null;
+            // 타순·선발 여부·포지션은 최근 5경기에서도 보여준다.
+            $game['order']=null;foreach($events as $event) if(isset($event['order'])) { $game['order']=$event['order'];break; }
+            $starts=array_values(array_filter(array_column($events,'is_gs'),static fn($value)=>$value!==null));
+            $game['isStarter']=$starts ? in_array(1,array_map('intval',$starts),true) : null;
+            $game['position']=profilePosition($events,$game['isStarter']);
             if(count($recent)<5)$recent[]=$game;
             if(profileIsTiebreakerGame($id))continue;
             if((int)substr($game['date'],0,4)===$year) {
-                $game['order']=null;foreach($events as $event) if(isset($event['order'])) { $game['order']=$event['order'];break; }
-                $starts=array_values(array_filter(array_column($events,'is_gs'),static fn($value)=>$value!==null));
-                $game['isStarter']=$starts ? in_array(1,array_map('intval',$starts),true) : null;
                 foreach(['pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','so','sf','sh','sb','cs','gdp'] as $key)$game[$key]=profileSum($parsed,$key);
-                $game['position']=profilePosition($events,$game['isStarter']);
                 $notes=[];if($game['h']-$game['doubles']-$game['triples']-$game['hr']>0&&$game['doubles']>0&&$game['triples']>0&&$game['hr']>0)$notes[]='사이클링 히트';
                 if(array_filter($events,static fn($event)=>(int)($event['is_gwrbi']??0)===1))$notes[]='결승타';$game['notes']=implode(', ',$notes);
                 $box[]=$game;

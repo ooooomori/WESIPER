@@ -36,9 +36,9 @@
 @keyframes profile-accent-flow { from { background-position: 0 0; } to { background-position: 0 56px; } }
 .profile-awards button { display: grid; place-items: center; padding: 0; border: 0; background: transparent; color: #7188a6; height: 18px; min-height: 18px; cursor: pointer; }
 .profile-games-empty { display: grid; place-items: center; min-height: 60px; margin: 0; color: #8793a3; font-size: 13px; }
-.profile-game-badge { display: inline-block; padding: 2px 6px; border-radius: 5px; background: #fff0ed; color: #ce5550; font-size: 10px; font-weight: 700; vertical-align: middle; }
+.profile-game-badge { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 999px; background: #fff2f0; box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 16%, transparent); color: #d2504c; font-size: 10.5px; font-weight: 700; line-height: 1; letter-spacing: -.01em; white-space: nowrap; vertical-align: middle; }
 .profile-games td .profile-game-badge { margin-left: 7px; }
-.profile-game-badge.loss { background: #edf4ff; color: #4677bd; }
+.profile-game-badge.loss { background: #eef4ff; color: #3f72c4; }
 .profile-season-games { width: max-content; min-width: 100%; border-collapse: collapse; font-size: 12px; white-space: nowrap; }
 .profile-season-games th, .profile-season-games td { padding: 10px 6px; text-align: center; border-bottom: 1px solid #e8eef5; }
 .profile-season-games th { color: #607a9a; background: #f5f8fb; }
@@ -248,12 +248,12 @@
 .player-profile .profile-stats-ranked > div, .player-profile .profile-stats-retired > div { text-align: center; align-items: center; }
 .player-profile .profile-stats-retired strong { font-size: 25px; }
 .player-profile .profile-bio h1, .player-profile .profile-compact-identity strong { font-weight: 800; }
-.profile-games td .profile-game-badge, .profile-season-games td .profile-game-badge { display: inline-block; width: auto; white-space: nowrap; line-height: 1.4; }
-.profile-game-badge.hold { background: #eef8df; color: #668f2d; }
-.profile-game-badge.save { background: #f1eaff; color: #8354bb; }
+.profile-games td .profile-game-badge, .profile-season-games td .profile-game-badge { width: auto; }
+.profile-game-badge.hold { background: #f0f8e4; color: #5a8a24; }
+.profile-game-badge.save { background: #f4eeff; color: #7a4cc0; }
 .profile-games td { line-height: 20px; }
 .profile-games td .profile-recent-result { display: flex; align-items: center; min-height: 20px; gap: 0; }
-.profile-games td .profile-game-badge { flex: 0 0 auto; height: 18px; padding-block: 0; line-height: 18px; }
+.profile-games td .profile-game-badge { flex: 0 0 auto; }
 .profile-rolling-table th:first-child, .profile-rolling-table td:first-child { position: sticky; left: 0; z-index: 1; box-shadow: 1px 0 #e8eef5; }
 .profile-rolling-table td:first-child { background: white; }
 .profile-rolling-table th:first-child { z-index: 2; }
@@ -311,7 +311,7 @@
     .profile-award-years { white-space: normal; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
 }
 .profile-game-heading { flex-wrap: wrap; justify-content: flex-start; }
-.profile-game-heading .profile-game-switch { margin-left: auto; }
+.profile-game-switches { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .profile-game-filter { position: relative; }
 .profile-heading .profile-game-filter-trigger { display: flex; align-items: center; gap: 8px; padding: 7px 11px; border: 1px solid #d6dee8; border-radius: 13px; color: #253347; background: #fff; font-size: 12px; white-space: nowrap; }
 .profile-game-filter-trigger:disabled { opacity: .5; cursor: default; }
@@ -678,13 +678,14 @@
 /* ===== 국가대표 경력 모달: 국가대표팀 로고/색 ===== */
 .profile-career-modal-head.is-national { background: linear-gradient(130deg, var(--career-head-a) 0%, color-mix(in srgb, var(--career-head-a) 70%, var(--career-head-b)) 72%, var(--career-head-b) 150%); }
 .profile-career-modal-head.is-national::after { right: auto; left: -60px; top: -80px; }
-.profile-career-watermark { position: absolute; right: -34px; top: 50%; width: 170px; height: 150px; object-fit: contain; opacity: .16; transform: translateY(-50%) rotate(-12deg); filter: grayscale(.15) brightness(1.4); pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent, #000 45%); mask-image: linear-gradient(90deg, transparent, #000 45%); }
+.profile-career-watermark { position: absolute; right: -34px; top: 50%; width: 280px; height: 150px; object-fit: contain; object-position: right center; opacity: .16; transform: translateY(-50%) rotate(-12deg); filter: grayscale(.15) brightness(1.4); pointer-events: none; -webkit-mask-image: linear-gradient(90deg, transparent, #000 45%); mask-image: linear-gradient(90deg, transparent, #000 45%); }
+.profile-career-watermark.is-dark-logo { filter: brightness(0) invert(1); }
 .profile-career-modal-head.is-national > :not(.profile-career-watermark) { position: relative; z-index: 1; }
 .profile-career-emblem.is-country img { width: 46px; height: 46px; }
 .profile-career-country { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px 3px 5px; }
 .profile-career-country img { width: 18px; height: 18px; object-fit: contain; border-radius: 4px; }
 @media (max-width: 600px) {
-    .profile-career-watermark { right: -30px; width: 140px; height: 124px; }
+    .profile-career-watermark { right: -30px; width: 230px; height: 124px; }
     .profile-career-emblem.is-country img { width: 40px; height: 40px; }
 }
 .profile-career-emblem.is-country img { width: 42px; height: 42px; }
@@ -696,39 +697,27 @@
 @media (min-width: 601px) { .profile-career-modal.is-expanded { height: 90vh; } }
 
 /* ===== 개요 탭: 최근 5경기 ===== */
-.profile-recent-form { display: inline-flex; gap: 4px; margin-left: auto; }
-.profile-recent-form i { width: 8px; height: 8px; border-radius: 50%; background: #d6dee9; }
-.profile-recent-form i.is-win { background: #e5484d; }
-.profile-recent-form i.is-loss { background: #3a78d8; }
-.profile-recent-form i.is-draw { background: #9aa8ba; }
-.profile-recent-form + .profile-season-caption { margin-left: 8px; }
-.profile-recent-list { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.profile-recent-list li { display: grid; grid-template-columns: 46px 38px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 11px 14px 11px 12px; border: 1px solid #e8eef6; border-radius: 16px; background: #fff; box-shadow: 0 1px 2px rgba(16,39,70,.03); }
-.profile-recent-date { display: flex; flex-direction: column; align-items: center; line-height: 1.15; }
-.profile-recent-date b { color: #22364f; font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
-.profile-recent-date small { margin-top: 2px; color: #8a9bb1; font-size: 11px; font-weight: 700; }
-.profile-recent-opp { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #f3f6fa; }
-.profile-recent-opp img { width: 26px; height: 26px; object-fit: contain; }
-.profile-recent-opp i { color: #5b6d84; font-size: 14px; font-style: normal; font-weight: 800; }
-.profile-recent-main { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.profile-recent-vs { display: flex; align-items: baseline; gap: 6px; color: #7d8ea5; font-size: 12.5px; font-weight: 600; }
-.profile-recent-vs strong { color: #22364f; font-size: 14px; font-weight: 800; }
-.profile-recent-vs small { color: #a1afc1; font-size: 11.5px; font-weight: 600; }
-.profile-recent-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; color: #5b6d84; font-size: 13px; }
-.profile-recent-line .is-key { color: #22364f; font-weight: 800; }
-.profile-recent-line .is-hr { color: var(--team-primary); font-weight: 900; }
-.profile-recent-line .is-zero { color: #9aa8ba; }
+.profile-recent-list { margin: 0; padding: 0; list-style: none; }
+.profile-recent-list li { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 0; }
+.profile-recent-list li + li { border-top: 1px solid #eef2f7; }
+.profile-recent-date { display: flex; flex-direction: column; align-items: center; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.profile-recent-date b { color: #5b6d84; font-size: 12.5px; font-weight: 700; letter-spacing: -.02em; }
+.profile-recent-date small { color: #a1afc1; font-size: 11px; font-weight: 600; }
+.profile-recent-main { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.profile-recent-line { display: flex; flex-wrap: wrap; align-items: center; gap: 0 4px; color: #33475f; font-size: 14px; }
+.profile-recent-role { box-sizing: border-box; min-width: 47px; margin-right: 4px; padding: 1px 6px; text-align: center; border-radius: 6px; background: #f1f4f8; color: #6b7d93; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
+.profile-recent-line .is-key { color: #102746; font-weight: 700; }
+.profile-recent-line .is-hr { color: var(--team-primary); font-weight: 800; }
 .profile-recent-line .profile-game-badge { margin-left: 2px; }
-.profile-recent-score { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px 6px 6px; border-radius: 999px; background: #f3f6fa; font-variant-numeric: tabular-nums; }
-.profile-recent-score b { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #9aa8ba; color: #fff; font-size: 12px; font-weight: 800; }
-.profile-recent-score.is-win b { background: #e5484d; }
-.profile-recent-score.is-loss b { background: #3a78d8; }
-.profile-recent-score span { display: inline-flex; align-items: center; gap: 3px; color: #8a9bb1; font-size: 14px; font-weight: 700; }
-.profile-recent-score em { font-style: normal; }
-.profile-recent-score i { font-style: normal; color: #b4c0cf; }
-.profile-recent-score.is-win em.is-own { color: #e5484d; font-weight: 900; }
-.profile-recent-score.is-loss em.is-own { color: #3a78d8; font-weight: 900; }
-.profile-recent-score.is-draw em.is-own { color: #22364f; font-weight: 900; }
+.profile-recent-vs { display: flex; align-items: center; gap: 4px; min-width: 0; color: #8a9bb1; font-size: 11.5px; font-weight: 500; white-space: nowrap; }
+.profile-recent-vs b { flex: none; width: 47px; color: #6b7d93; font-weight: 600; text-align: center; }
+.profile-recent-vs img { flex: none; width: 16px; height: 16px; object-fit: contain; }
+.profile-recent-vs small { overflow: hidden; color: #a1afc1; font-size: 11px; text-overflow: ellipsis; }
+.profile-recent-vs small::before { content: '· '; }
+.profile-recent-score { display: inline-flex; align-items: baseline; gap: 4px; color: #8a9bb1; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.profile-recent-score b { font-weight: 700; }
+.profile-recent-score.is-win b { color: #d8686b; }
+.profile-recent-score.is-loss b { color: #5b8ad6; }
 
 /* ===== 개요 탭: 수상·국가대표 경력 카드 ===== */
 .profile-honor-total { color: #8a9bb1; font-size: 12.5px; font-weight: 700; }
@@ -765,17 +754,12 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
 .profile-facts dd { margin: 0; color: #102746; font-size: 14.5px; font-weight: 700; letter-spacing: -.01em; overflow-wrap: anywhere; }
 
 @media (max-width: 600px) {
-    .profile-recent-list { gap: 6px; }
-    .profile-recent-list li { grid-template-columns: 38px 32px minmax(0, 1fr) auto; gap: 9px; padding: 10px 10px 10px 8px; border-radius: 14px; }
-    .profile-recent-date b { font-size: 13px; }
-    .profile-recent-opp { width: 32px; height: 32px; }
-    .profile-recent-opp img { width: 22px; height: 22px; }
-    .profile-recent-vs { font-size: 12px; }
-    .profile-recent-vs strong { font-size: 13px; }
-    .profile-recent-line { font-size: 12px; }
-    .profile-recent-score { gap: 5px; padding: 4px 8px 4px 4px; }
-    .profile-recent-score b { width: 21px; height: 21px; font-size: 11px; }
-    .profile-recent-score span { font-size: 12.5px; }
+    .profile-recent-list li { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; padding: 9px 0; }
+    .profile-recent-date b { font-size: 12px; }
+    .profile-recent-line { font-size: 13px; }
+    .profile-recent-vs { font-size: 11px; }
+    .profile-recent-vs small { font-size: 10.5px; }
+    .profile-recent-score { font-size: 12px; }
     .profile-honors { grid-template-columns: minmax(0, 1fr); gap: 7px; }
     .profile-honor { min-height: 60px; gap: 10px; padding: 10px 12px 10px 10px; border-radius: 14px; }
     .profile-honor-icon { width: 40px; height: 40px; border-radius: 12px; }
@@ -791,23 +775,6 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
     .profile-facts > div.fill-d2 { grid-column: span 2; }
 }
 @media (max-width: 600px) { .profile-facts > div.fill-m { grid-column: 1 / -1; } }
-/* 최근 5경기 카드 높이 살짝 낮춤 */
-.profile-recent-list { gap: 6px; }
-.profile-recent-list li { padding-block: 8px; }
-.profile-recent-opp { width: 34px; height: 34px; }
-.profile-recent-opp img { width: 23px; height: 23px; }
-.profile-recent-main { gap: 1px; }
-.profile-recent-date small { margin-top: 1px; }
-.profile-recent-score { padding-block: 4px; }
-.profile-recent-score b { width: 22px; height: 22px; }
-@media (max-width: 600px) {
-    .profile-recent-list { gap: 5px; }
-    .profile-recent-list li { padding-block: 7px; }
-    .profile-recent-opp { width: 30px; height: 30px; }
-    .profile-recent-opp img { width: 20px; height: 20px; }
-    .profile-recent-score { padding-block: 3px; }
-    .profile-recent-score b { width: 20px; height: 20px; }
-}
 /* 모바일: 브라우저 하단 UI(맨 위로 버튼·툴바 등)가 마지막 항목을 가리지 않도록 바닥 여백 확보 */
 @media (max-width: 600px) {
     .profile-career-list { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }

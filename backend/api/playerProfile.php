@@ -125,6 +125,12 @@ try {
     if($part==='games') {
         $schedule=profileSchedule();
         require_once __DIR__.'/../lib/player-game-seasons.php';
+        // 경기 일지의 타자·투수 선택: 지정하지 않으면 등록 포지션을 따른다.
+        $basePitcher=str_contains((string)$player['Pos'],'투수');
+        $type=$_GET['type']??($basePitcher?'pitcher':'batter');
+        if(!in_array($type,['pitcher','batter'],true)){http_response_code(400);echo json_encode(['error'=>'잘못된 기록 종류입니다.'],JSON_UNESCAPED_UNICODE);exit;}
+        $gamePitcher=$type==='pitcher';
+        if($gamePitcher!==$basePitcher)$player['Pos']=$gamePitcher?'투수':'타자';
         $availableSeasons=profilePlayerGameSeasons($pdo,$player,$schedule);
         $years=array_keys($availableSeasons);
         $year=isset($_GET['year'])?filter_var($_GET['year'],FILTER_VALIDATE_INT):($years[0]??null);
@@ -135,7 +141,7 @@ try {
         $streakRows=null;
         $record=$year!==null?profileRecords($pdo,$player,$schedule,$year,$season,true,$streakRows):null;
         require_once __DIR__.'/../lib/player-streaks.php';
-        echo json_encode(['years'=>$years,'year'=>$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$record['games']??[],'pitcher'=>str_contains((string)$player['Pos'],'투수'),'currentSeasonStreaks'=>str_contains((string)$player['Pos'],'투수')?null:profileCurrentStreaks($pdo,(string)$pid,$schedule,$streakRows)],JSON_UNESCAPED_UNICODE);exit;
+        echo json_encode(['years'=>$years,'year'=>$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$record['games']??[],'pitcher'=>$gamePitcher,'currentSeasonStreaks'=>$basePitcher?null:profileCurrentStreaks($pdo,(string)$pid,$schedule,$streakRows)],JSON_UNESCAPED_UNICODE);exit;
     }
     if($part==='ranks') {
         require_once __DIR__.'/../lib/player-rankings.php';

@@ -28,7 +28,7 @@ function profileOverviewRecords(PDO $db, array $player, array $schedule): ?array
     // Rolling windows change at KST midnight; successful crawls change the revision.
     $day=(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y-m-d');
     $key=hash('sha256',json_encode([$player['PlayerId'],$player['Pos'],$player['IsKbodle'],$player['Team']??null,$day,$schedule],JSON_THROW_ON_ERROR));
-    $path="$dir/v7-$key.json";
+    $path="$dir/v8-$key.json";
     $read=static function()use($path){if(!is_file($path))return null;$cached=json_decode((string)@file_get_contents($path),true);return is_array($cached)?profileOverviewCacheRead($cached,profileRankingRevision(),time()):null;};
     if(($cached=$read())!==null)return $cached['records'];
     $lock=fopen($path.'.lock','c');
