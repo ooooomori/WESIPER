@@ -15,6 +15,7 @@ import { addRecentPlayer } from '../../lib/recentPlayers';
 import kboSmallLogo from '../../assets/images/s-logos/kbo-white-small.svg';
 import ulsanLogo from '../../assets/images/logos/ulsan-logo.png';
 import ulsanSmallLogo from '../../assets/images/s-logos/ulsan-small-logo.png';
+import npbLogo from '../../assets/images/logos/npb-logo.png';
 import mvpAward from '../../assets/images/awards/mvp-transparent.png';
 import goldenGloveAward from '../../assets/images/awards/golden-glove.png';
 import defenseAward from '../../assets/images/awards/defense-transparent.png';
@@ -151,6 +152,7 @@ const legacyTeamColors = { 넥센: '#820024', SK: '#ea002c' };
 const compareTeamColor = team => teams[team]?.[1] || legacyTeamColors[team] || null;
 function movementLogo(team) {
     if (team === 'MLB' || team?.startsWith('美')) return logos['../../assets/images/logos/mlb-logo.svg'] || null;
+    if (team?.startsWith('日')) return npbLogo;
     const code = teams[team]?.[0] || legacyMovementTeams[team];
     if (!code) return null;
     if (code === 'ulsan') return ulsanSmallLogo;
@@ -168,6 +170,7 @@ function formatContractAmount(amount, currency = 'KRW') {
     const value = Number(amount);
     if (!value) return null;
     if (currency === 'USD') return `$${value.toLocaleString('ko-KR')}`;
+    if (currency === 'JPY') return `¥${value.toLocaleString('ko-KR')}`;
     if (currency && currency !== 'KRW') return `${value.toLocaleString('ko-KR')} ${currency}`;
     if (value >= 1e8) { const eok = value / 1e8; return `${Number.isInteger(eok) ? eok : eok.toFixed(1).replace(/\.0$/, '')}억`; }
     return `${Math.round(value / 1e4).toLocaleString('ko-KR')}만`;
