@@ -27,13 +27,13 @@ const Nav = () => {
     const pages = [
         {id: "kbodle", name: "KBODLE: 크보들", href: "/kbodle"},
         {id: "bingo", name: "KBO BINGO", href: "/bingo"},
-        {id: "kbocandle", name: "KBO CANDLE", href: "/kbocandle"},
         {id: "contact", name: "문의하기", href:"mailto:godmascotvic@gmail.com"},
-        {id:"donate", name: "후원하기", href:"https://toss.me/tulowitzki/1000"}
     ];
+    // 탭에는 없지만 주소로는 들어올 수 있는 페이지의 제목
+    const hiddenPages = [{name: "KBO CANDLE", href: "/kbocandle"}];
 
     useEffect(() => {
-        document.title = "WESIPER - " + (pages.find(p => p.href === location.pathname )?.name ?? "웨시퍼");
+        document.title = "WESIPER - " + ([...pages, ...hiddenPages].find(p => p.href === location.pathname )?.name ?? "웨시퍼");
     }, [location]);
     return (
         <>
