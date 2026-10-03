@@ -3,13 +3,15 @@ declare(strict_types=1);
 require_once __DIR__.'/player-season-schedule.php';
 
 /**
- * 퓨처스리그 기록은 옛 시즌도 지금 구단 이름으로 저장돼 있다(2010년 경기도 'SSG', '키움').
- * 그 해의 실제 구단 이름으로 되돌린다.
+ * 마지막 경기가 퓨처스리그일 때의 팀 이름을 그 해의 1군 구단 이름으로 바꾼다.
+ * - 퓨처스 기록의 SK는 옛 시즌도 'SSG'로 저장돼 있다(2010년 경기도 'SSG').
+ * - 퓨처스 팀 이름이 따로 있는 구단: 고양(2015~2018년 NC, 2019년부터 키움), 화성(2014~2018년 넥센)
  */
 function searchEraTeamName(string $team,int $year): string {
     $name=trim($team);
     if ($name==='SSG'&&$year>0&&$year<2021) return 'SK';
-    if ($name==='키움'&&$year>0&&$year<2019) return $year>=2010?'넥센':'히어로즈';
+    if ($name==='고양'&&$year>0) return $year<=2018?'NC':'키움';
+    if ($name==='화성') return '넥센';
     return $team;
 }
 
