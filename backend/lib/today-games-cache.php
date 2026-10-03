@@ -17,10 +17,14 @@ function todayGamesExpiry(array $games, int $now): int {
     return $expires;
 }
 
+function todayGamesCacheDirectory(): string {
+    return getenv('WESIPER_GAMES_CACHE_DIR') ?: sys_get_temp_dir() . '/wesiper-today-games-' . (function_exists('posix_geteuid') ? posix_geteuid() : 'php');
+}
+
 function cachedTodayGames(string $key, callable $fetch, ?int $now = null, ?string $directory = null): array {
     $now = $now ?? time();
     $day = (new DateTimeImmutable('@' . $now))->setTimezone(new DateTimeZone('Asia/Seoul'))->format('Ymd');
-    $directory = $directory ?? (getenv('WESIPER_GAMES_CACHE_DIR') ?: sys_get_temp_dir() . '/wesiper-today-games-' . (function_exists('posix_geteuid') ? posix_geteuid() : 'php'));
+    $directory = $directory ?? todayGamesCacheDirectory();
     if (!is_dir($directory) && !@mkdir($directory, 0700, true) && !is_dir($directory)) throw new RuntimeException('Cannot create games cache');
     $path = $directory . '/' . hash('sha256', $key) . '.json';
     $lock = fopen($path . '.lock', 'c');

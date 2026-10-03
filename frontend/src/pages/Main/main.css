@@ -69,7 +69,6 @@
 .main-home-recent-results .is-win { color: #d32f3b; background: #fff0f1; }
 .main-home-recent-results .is-loss { color: #2468cf; background: #edf4ff; }
 .main-home-recent-results .is-draw { color: #748093; background: #f0f2f5; }
-.main-home-ranking-caption { margin: 12px 0 0; color: #64748b; font-size: 11px; text-align: center; }
 .main-home-rank-remark { display: inline-block; padding: 4px 7px; border-radius: 6px; font-size: 11px; font-weight: 700; }
 .main-home-rank-remark.is-secured { color: #087f68; background: #e9f8f2; }
 .main-home-rank-remark.is-out { color: #7a8290; background: #f0f2f5; }
@@ -359,7 +358,6 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
     .main-home-ranking-table tr > :nth-child(3) { padding-left: 12px; }
     .main-home-recent-results { gap: 2px; }
     .main-home-recent-results > span { width: 19px; height: 22px; font-size: 11px; }
-    .main-home-ranking-caption { font-size: 10.5px; }
     /* 미니게임: 가로형 카드로 높이를 줄인다 */
     .main-home-mini-card { display: grid; grid-template-columns: minmax(0, 1fr) 116px; grid-template-areas: "title art" "desc art"; align-items: center; column-gap: 14px; padding: 14px 16px; min-height: 84px; }
     .main-home-mini-card .main-home-mini-art { grid-area: art; height: auto; }

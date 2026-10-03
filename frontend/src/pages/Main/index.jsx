@@ -138,6 +138,9 @@ export default function Main() {
     const [league, setLeague] = useState("kbo");
     const [rankingTab, setRankingTab] = useState(0);
     const [ranking, setRanking] = useState({ state: "loading", rows: [], title: "" });
+    // 오늘 경기가 새로 끝나면 순위를 다시 불러온다.
+    const [rankingReload, setRankingReload] = useState(0);
+    const finishedGameCount = useRef(null);
     useEffect(() => {
         const controller = new AbortController();
         const loadRanking = async () => {
@@ -157,7 +160,7 @@ export default function Main() {
         loadRanking();
         const timer = window.setInterval(loadRanking, 300000);
         return () => { controller.abort(); window.clearInterval(timer); };
-    }, []);
+    }, [rankingReload]);
     const [search, setSearch] = useState("");
     const searchDialog = useRef(null);
     const searchInput = useRef(null);
@@ -309,6 +312,9 @@ export default function Main() {
 
                 setGameLists({ kbo: kboGames, futures: futuresGames });
                 setGameState("ready");
+                const finished = kboGames.filter((game) => game.isGameFinished).length;
+                if (finishedGameCount.current !== null && finished > finishedGameCount.current) setRankingReload((count) => count + 1);
+                finishedGameCount.current = finished;
             } catch (error) {
                 if (error.name !== "AbortError") {
                     console.error("오늘의 경기 조회 오류:", error);
@@ -495,7 +501,6 @@ export default function Main() {
                             </tr>)}</tbody>
                         </table></div> : <p>표시할 팀 순위가 없습니다.</p>)}
                     </>
-                    <p className="main-home-ranking-caption">매일 오전 2시에 업데이트됩니다.</p>
                 </section>
 
                 <section className="main-home-section main-home-games-section" aria-labelledby="preview-mini-title">

@@ -5,6 +5,7 @@ header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json; charset=UTF-8');
 header('Cache-Control: no-store');
 require_once __DIR__ . '/../lib/today-games-cache.php';
+require_once __DIR__ . '/../lib/kbo-live-results.php';
 require_once __DIR__ . '/../lib/game-weather.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -23,42 +24,6 @@ function respond($result, $statusCode = 200)
 
 if (!function_exists('curl_init')) {
     respond(array('success' => false, 'error' => '서버에서 cURL을 사용할 수 없습니다.'), 500);
-}
-
-function fetchGames($leagueId, $seriesIds, $day)
-{
-    $postData = array('leId' => $leagueId, 'srId' => $seriesIds, 'date' => $day);
-    $ch = curl_init('https://www.koreabaseball.com/ws/Main.asmx/GetKboGameList');
-    curl_setopt_array($ch, array(
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => http_build_query($postData),
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CONNECTTIMEOUT => 5,
-        CURLOPT_TIMEOUT => 15,
-        CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V4,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; WESIPER/1.0; +https://wesiper.xyz)',
-        CURLOPT_HTTPHEADER => array(
-            'Accept: application/json, text/plain, */*',
-            'Content-Type: application/x-www-form-urlencoded; charset=UTF-8',
-            'Origin: https://www.koreabaseball.com',
-            'Referer: https://www.koreabaseball.com/',
-            'X-Requested-With: XMLHttpRequest',
-        ),
-    ));
-    $rawResponse = curl_exec($ch);
-    $curlError = curl_error($ch);
-    $httpStatus = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($rawResponse === false) throw new RuntimeException('KBO 경기 정보를 불러오지 못했습니다: ' . $curlError);
-    if ($httpStatus < 200 || $httpStatus >= 300) throw new RuntimeException('KBO 서버가 HTTP ' . $httpStatus . ' 상태를 반환했습니다.');
-
-    $response = json_decode($rawResponse, true);
-    if (!is_array($response) || !isset($response['game']) || !is_array($response['game'])) {
-        throw new RuntimeException('KBO 경기 정보의 응답 형식이 올바르지 않습니다.');
-    }
-    return $response['game'];
 }
 
 function normalizeGame($game, $weather = null)
@@ -91,13 +56,16 @@ function normalizeGame($game, $weather = null)
 
 try {
     $requestTime = time();
-    $kboCache = cachedTodayGames('1:0,1,3,4,5,7,9', fn($day) => fetchGames('1', '0,1,3,4,5,7,9', $day), $requestTime);
-    $futuresCache = cachedTodayGames('2:0,1,9,10,15', fn($day) => fetchGames('2', '0,1,9,10,15', $day), $requestTime);
+    $kboCache = cachedTodayGames(KBO_TODAY_GAMES_KEY, fn($day) => fetchKboGameList('1', KBO_TODAY_GAMES_SERIES, $day), $requestTime);
+    $futuresCache = cachedTodayGames('2:0,1,9,10,15', fn($day) => fetchKboGameList('2', '0,1,9,10,15', $day), $requestTime);
     $kboRawGames = $kboCache['games'];
     $futuresRawGames = $futuresCache['games'];
 } catch (RuntimeException $error) {
     respond(array('success' => false, 'error' => $error->getMessage()), 502);
 }
+// 종료된 정규시즌 경기는 팀 순위에 바로 반영되도록 결과를 남긴다. 실패해도 경기 응답은 그대로 보낸다.
+try { recordLiveResults(liveResultsFromGames($kboRawGames), $requestTime); }
+catch (Throwable $error) { error_log('Live results not recorded: ' . $error->getMessage()); }
 
 $weatherProvider = null;
 try { $weatherProvider = new KmaGameWeather(kmaServiceKey()); }
