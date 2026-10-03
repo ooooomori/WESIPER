@@ -1085,7 +1085,7 @@ a.profile-alumni-row:focus-visible { outline: 2px solid var(--team-primary); out
 
 /* 선수 정보: 값 옆의 작은 버튼(같은 생일, 입단 동기) */
 .profile-fact-action { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
-.profile-fact-action button { flex: none; padding: 2px 9px; border: 1px solid color-mix(in srgb, var(--team-primary) 22%, #e3e9f2); border-radius: 999px; background: #fff; color: var(--team-primary); font: inherit; font-size: 11.5px; font-weight: 800; letter-spacing: -.01em; cursor: pointer; transition: background .15s, border-color .15s; }
+.profile-fact-action button { flex: none; display: inline-flex; align-items: center; gap: 1px; padding: 2px 5px 2px 9px; border: 1px solid color-mix(in srgb, var(--team-primary) 22%, #e3e9f2); border-radius: 999px; background: #fff; color: var(--team-primary); font: inherit; font-size: 11.5px; font-weight: 800; letter-spacing: -.01em; cursor: pointer; transition: background .15s, border-color .15s; }
 .profile-fact-action button:hover { background: color-mix(in srgb, var(--team-primary) 8%, #fff); border-color: color-mix(in srgb, var(--team-primary) 45%, #e3e9f2); }
 .profile-fact-action button:focus-visible { outline: 2px solid var(--team-primary); outline-offset: 2px; }
 
