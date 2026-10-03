@@ -195,7 +195,7 @@ function contractSourceLabel(url) {
     return source.hostname.replace(/^www\./, '');
 }
 function hasContract(movement) { return Boolean(movement.contractTerm || movement.contractTotal || contractSources(movement).length); }
-function MovementLine({ movement, open = false, onToggle }) {
+function MovementLine({ movement, open = false, onToggle, onDraftClass }) {
     const route = movementRoute(movement);
     const note = (movement.note || '').trim();
     const contract = hasContract(movement);
@@ -217,6 +217,10 @@ function MovementLine({ movement, open = false, onToggle }) {
         {detail}
         {expandable && <button type="button" className="profile-movement-toggle" aria-expanded={open} aria-label={open ? `${toggleName} 접기` : `${toggleName} 보기`} onClick={onToggle}>
             <span>{open ? '접기' : '상세'}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>}
+        {/* 입단: 같은 해 입단 동기 모달을 연다 */}
+        {movement.type === '입단' && onDraftClass && movementYear(movement) && <button type="button" className="profile-movement-toggle" aria-label={`${movementYear(movement)}년 입단 동기 보기`} onClick={() => onDraftClass(movementYear(movement))}>
+            <span>입단 동기</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>}
     </div>;
 }
@@ -267,7 +271,7 @@ function MovementMarker({ team, year }) {
         {src ? <img className="profile-movement-marker-logo" src={src} alt="" style={shift && { transform: `translate(${shift[0]}%, ${shift[1]}%)` }} /> : team ? <b>{team.slice(0, 2)}</b> : null}
     </span>;
 }
-function PlayerMovements({ movements = [], pid }) {
+function PlayerMovements({ movements = [], pid, onDraftClass }) {
     const [filter, setFilter] = useState('all');
     const [expanded, setExpanded] = useState(false);
     const [openRows, setOpenRows] = useState({});
@@ -291,7 +295,7 @@ function PlayerMovements({ movements = [], pid }) {
                 <MovementMarker team={movement.team} year={movementYear(movement)} />
                 <div className="profile-movement-body">
                     <time dateTime={movement.date}>{movement.date.replaceAll('-', '.')}</time>
-                    <MovementLine movement={movement} open={open} onToggle={() => setOpenRows(rows => ({ ...rows, [rowKey]: !rows[rowKey] }))} />
+                    <MovementLine movement={movement} open={open} onToggle={() => setOpenRows(rows => ({ ...rows, [rowKey]: !rows[rowKey] }))} onDraftClass={onDraftClass} />
                     {open && (movement.trade ? <MovementTradeDetail movement={movement} pid={pid} /> : <MovementContractDetail movement={movement} />)}
                 </div>
             </li>; })}
@@ -653,7 +657,7 @@ export default function PlayerProfile({ pid }) {
             </li>; })}</ol> : <p className="profile-games-empty">최근 경기 기록이 없습니다.</p>}</section>}
             {tab === 2 && <StreakRecords streaks={gameLog.currentSeasonStreaks} pitcher={isPitcher} />}
             {tab === 2 && <section><div className="profile-heading profile-game-heading"><h2>경기 일지</h2><GameLogFilter years={gameLog.years} year={gameYear || gameLog.year} season={gameSeason || gameLog.season || 'regular'} availableSeasons={gameLog.availableSeasons} onYearChange={value => { setGameYear(value); const available = gameLog.availableSeasons?.[value] || []; setGameSeason(available.includes(gameSeason || gameLog.season) ? gameSeason || gameLog.season : available[0] || ''); }} onSeasonChange={value => { setGameYear(String(gameYear || gameLog.year)); setGameSeason(value); }} /><div className="profile-game-switches"><div className={`profile-game-switch ${gameLogPitcher ? 'is-detailed' : ''}`} role="group" aria-label="타자 투수 기록 선택">{['타자','투수'].map((label,i)=><button key={label} type="button" className={gameLogPitcher === Boolean(i) ? 'active' : ''} aria-pressed={gameLogPitcher === Boolean(i)} onClick={()=>{ if (gameLogPitcher === Boolean(i)) return; setGamePitcher(Boolean(i)); setGameYear(''); setGameSeason(''); }}>{label}</button>)}</div><div className={`profile-game-switch ${detailedGames ? 'is-detailed' : ''}`} role="group" aria-label="경기 기록 표시 방식">{['간략히','자세히'].map((label,i)=><button key={label} type="button" className={detailedGames === Boolean(i) ? 'active' : ''} aria-pressed={detailedGames === Boolean(i)} onClick={()=>setDetailedGames(Boolean(i))}>{label}</button>)}</div></div></div>{!gameLogLoading && gameLog.games?.length ? <><div className="profile-table-sticky-head" ref={gameStickyRef} aria-hidden="true"><div><table className="profile-season-games"><thead><tr>{gameColumns.map(([label,key])=><th key={key}>{label}</th>)}</tr></thead></table></div></div><div className="profile-game-scroll" ref={gameScrollRef}><table className="profile-season-games"><caption className="sr-only">시즌 전체 경기 기록</caption><thead><tr>{gameColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{gameLog.games.map(game=><tr key={game.gameId}>{gameColumns.map(([,key])=><td key={key} className={key === 'summary' || key === 'badge' ? 'profile-record-cell' : undefined}>{gameCell(game,key)}</td>)}</tr>)}</tbody></table></div></> : gameLogLoading ? <ProfileLoading>경기 일지를 불러오는 중이에요.</ProfileLoading> : <p className="profile-games-empty">{gameLogError || '경기 기록이 없습니다.'}</p>}</section>}
-            {tab === 0 && <PlayerMovements key={`movements-${pid}`} movements={player.Movements} pid={pid} />}
+            {tab === 0 && <PlayerMovements key={`movements-${pid}`} movements={player.Movements} pid={pid} onDraftClass={year => setPlayerGroup({ type: 'draft', value: String(year) })} />}
             {tab === 0 && awards.length > 0 && <section><div className="profile-heading"><h2>수상 경력</h2></div><div className="profile-honors">{awards.map(award => { const clickable = award.name !== '신인왕'; const Tag = clickable ? 'button' : 'div'; return <Tag key={award.name} {...(clickable ? { type: 'button', 'aria-label': `${award.name} 상세 내역`, onClick: () => setSelectedCareer({ item: award, kind: 'award' }) } : {})} className={`profile-honor${['MVP', '우승', '골든글러브'].includes(award.name) ? ' is-premium' : ''}`}>
                 <span className="profile-honor-icon">{awardImages[award.name] ? <img src={awardImages[award.name]} alt="" loading="lazy" /> : <b>{award.name.slice(0, 1)}</b>}</span>
                 <span className="profile-honor-text"><strong>{award.name}</strong><small>{[...new Set(award.rows.map(row => row.year).filter(Boolean))].join(' · ')}</small></span>
