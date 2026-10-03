@@ -335,7 +335,7 @@ const GridCond = (props) => {
                     <div className="px-1 break-keep text-xs sm:text-base font-bold">
                         {text} 출장
                         <div className="text-gray-600 text-[0.625rem] sm:text-sm">
-                            '01년 ~ 25년
+                            2001년 이후
                         </div>
                     </div>,
                 );

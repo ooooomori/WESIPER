@@ -91,7 +91,7 @@ const Playerlist = (props) => {
                 show={props.show}
                 onHide={handleClose}
                 centered
-                className="font-family-NaBaGo"
+                className="game-modal font-family-NaBaGo"
             >
                 <Modal.Header style={{ border: "none" }} closeButton>
                     <span className="font-family-kbo text-xl font-bold">

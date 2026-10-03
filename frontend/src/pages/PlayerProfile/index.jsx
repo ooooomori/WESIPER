@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './player-profile.css';
+import PlayerSilhouette from '../../components/PlayerSilhouette';
+import { legacyTeams, legacyTeamColor, teamCapByCode, eraTeamCode, teamCapLogoByCode, teamLogoByCode, teamSmallLogoByCode } from '../../lib/teamAssets';
 import YearRecords from './YearRecords';
 import GameLogFilter from './GameLogFilter';
 import ProfileCandleChart from './ProfileCandleChart';
@@ -135,32 +137,35 @@ function TeamLogo({ team, className = '', small = false }) {
     return code ? <img className={className} src={src} alt="" /> : null;
 }
 const movementCategories = [
-    ['move', '이적·계약', ['입단', '트레이드', '트레이드(웨이버)', 'FA 자격취득', 'FA 계약', '비FA 다년계약', '자유계약', '해외 복귀 FA 계약', 'FA 보상선수', '2차 드래프트', '소속선수 추가 등록']],
-    ['release', '방출', ['자유계약선수', '웨이버', '임의해지', '군보류 자유계약선수', '자유계약선수 - 참가활동정지']],
+    ['move', '이적·계약', ['입단', '트레이드', '트레이드(웨이버)', 'FA 자격취득', 'FA 계약', '비FA 다년계약', '자유계약', '해외 복귀 FA 계약', 'FA 보상선수', '2차 드래프트', '소속선수 추가 등록', '임의해지 복귀']],
+    ['release', '방출·은퇴', ['자유계약선수', '웨이버', '임의해지', '임의탈퇴', '은퇴', '군보류 자유계약선수', '자유계약선수 - 참가활동정지']],
     ['injury', '부상', ['부상자 명단', '치료·재활명단', '재활선수(외국인 선수)']],
     ['military', '군보류', ['군보류']],
     ['number', '등번호', ['등번호 변경']],
     ['etc', '기타', []],
 ];
 // 군보류 해제로 다시 등록된 경우(소속선수 추가 등록 + 비고 '군보류 해제')는 군보류로 묶는다.
-const movementCategory = movement => (movement.note || '').includes('군보류 해제') ? 'military' : movementCategories.find(([, , types]) => types.includes(movement.type))?.[0] || 'etc';
+// 임의해지에서 복귀한 경우(종류나 비고에 '임의해지 복귀')는 방출이 아니라 이적·계약으로 본다.
+const movementCategory = movement => (movement.note || '').includes('군보류 해제') ? 'military' : /임의해지\s*복귀/.test(`${movement.type || ''} ${movement.note || ''}`) ? 'move' : movementCategories.find(([, , types]) => types.includes(movement.type))?.[0] || 'etc';
 const MOVEMENT_PREVIEW_COUNT = 6;
+const movementYear = movement => Number(String(movement.date || '').slice(0, 4)) || undefined;
 const movementRoute = movement => movement.type === '등번호 변경' ? null : (movement.note || '').trim().match(/^([^→\s]+)\s*→\s*([^→\s]+)$/);
-// 이동 현황 전용: 현재 팀 + 옛 팀명(넥센·SK) 작은 로고
-const legacyMovementTeams = { 넥센: 'nex', SK: 'sk' };
-const legacyTeamColors = { 넥센: '#820024', SK: '#ea002c' };
-const compareTeamColor = team => teams[team]?.[1] || legacyTeamColors[team] || null;
-function movementLogo(team) {
+// 현재 팀 + 옛 팀(해태·OB·넥센·SK 등)의 작은 로고와 색. 옛 팀 목록은 lib/teamAssets.js에 있다.
+const legacyMovementTeams = Object.fromEntries(Object.entries(legacyTeams).map(([name, [code]]) => [name, code]));
+const compareTeamColor = team => teams[team]?.[1] || legacyTeamColor(team);
+// 시대에 따라 로고가 다른 팀(2000~2005년 SK 등)은 연도를 주면 그때 로고를 쓴다.
+const movementTeamCode = (team, year) => eraTeamCode(team, year) || teams[team]?.[0] || legacyMovementTeams[team];
+function movementLogo(team, year) {
     if (team === 'MLB' || team?.startsWith('美')) return logos['../../assets/images/logos/mlb-logo.svg'] || null;
     if (team?.startsWith('日')) return npbLogo;
-    const code = teams[team]?.[0] || legacyMovementTeams[team];
+    const code = movementTeamCode(team, year);
     if (!code) return null;
     if (code === 'ulsan') return ulsanSmallLogo;
-    return smallLogos[`../../assets/images/s-logos/${code}-small-logo.svg`] || logos[`../../assets/images/logos/${code}-logo.svg`] || null;
+    return teamSmallLogoByCode(code) || teamLogoByCode(code);
 }
-function MovementTeam({ team, withName = false }) {
+function MovementTeam({ team, year, withName = false }) {
     // 기본은 로고만, 팀 간 이동 경로(트레이드 등)는 로고와 팀 이름을 함께 보여준다. 로고가 없으면 이름만 쓴다.
-    const src = movementLogo(team);
+    const src = movementLogo(team, year);
     if (src && withName) return <span className="profile-movement-team is-named"><img className="profile-movement-logo" src={src} alt="" />{team}</span>;
     return src ? <span className="profile-movement-team" title={team} role="img" aria-label={team}><img className="profile-movement-logo" src={src} alt="" /></span>
         : <span className="profile-movement-team is-text">{team}</span>;
@@ -194,7 +199,7 @@ function MovementLine({ movement, open = false, onToggle }) {
     const expandable = contract && Boolean(movement.contractDetails || contractSources(movement).length);
     let detail = null;
     if (route) {
-        detail = <span className="profile-movement-route" aria-label={`${route[1]}에서 ${route[2]}로`}><MovementTeam team={route[1]} withName /><i aria-hidden="true">→</i><MovementTeam team={route[2]} withName /></span>;
+        detail = <span className="profile-movement-route" aria-label={`${route[1]}에서 ${route[2]}로`}><MovementTeam team={route[1]} year={movementYear(movement)} withName /><i aria-hidden="true">→</i><MovementTeam team={route[2]} year={movementYear(movement)} withName /></span>;
     } else if (contract && (movement.contractTerm || movement.contractTotal)) {
         const amount = formatContractAmount(movement.contractTotal, movement.contractCurrency);
         detail = <span className="profile-movement-contract">{movement.contractTerm && <b>{movement.contractTerm}</b>}{movement.contractTerm && amount && <i aria-hidden="true">·</i>}{amount && <b className="is-amount">{amount}</b>}</span>;
@@ -221,9 +226,9 @@ function MovementContractDetail({ movement }) {
 // 원형 마커 전용 시각 보정: 로고는 상자 기준으로 가운데지만 모양이 비대칭이라 쏠려 보인다.
 // 면적 중심이 원 가운데에 가까워지도록 로고 상자 크기 대비 [가로%, 세로%]만큼 민다.
 const markerLogoShift = { kia: [0, 8], ssg: [7, -6], nex: [6.5, -2], lg: [2.5, 5.5], lot: [3.5, 0], nc: [-3, 0], sk: [3.5, 0], kiw: [3, 0], doo: [0, 2.5] };
-function MovementMarker({ team }) {
-    const src = movementLogo(team);
-    const shift = markerLogoShift[teams[team]?.[0] || legacyMovementTeams[team]];
+function MovementMarker({ team, year }) {
+    const src = movementLogo(team, year);
+    const shift = markerLogoShift[movementTeamCode(team, year)];
     return <span className="profile-movement-marker" title={team || undefined} aria-label={team || undefined} role={team ? 'img' : undefined}>
         {src ? <img className="profile-movement-marker-logo" src={src} alt="" style={shift && { transform: `translate(${shift[0]}%, ${shift[1]}%)` }} /> : team ? <b>{team.slice(0, 2)}</b> : null}
     </span>;
@@ -249,7 +254,7 @@ function PlayerMovements({ movements = [] }) {
         </div>
         <ol className="profile-movements">
             {visible.map((movement, index) => { const rowKey = `${movement.date}-${movement.type}-${movement.team}-${index}`; const open = Boolean(openRows[rowKey]); return <li key={rowKey} className={`is-${movementCategory(movement)}${hasContract(movement) ? ' has-contract' : ''}`}>
-                <MovementMarker team={movement.team} />
+                <MovementMarker team={movement.team} year={movementYear(movement)} />
                 <div className="profile-movement-body">
                     <time dateTime={movement.date}>{movement.date.replaceAll('-', '.')}</time>
                     <MovementLine movement={movement} open={open} onToggle={() => setOpenRows(rows => ({ ...rows, [rowKey]: !rows[rowKey] }))} />
@@ -290,9 +295,9 @@ const bestNationalResult = rows => {
     const order = ['gold', 'silver', 'bronze'];
     return rows.map(row => ({ tone: careerResultTone(row.note), note: row.note })).filter(row => row.tone !== 'plain').sort((a, b) => order.indexOf(a.tone) - order.indexOf(b.tone))[0] || null;
 };
-function CareerTeam({ team }) {
+function CareerTeam({ team, year }) {
     if (!team) return null;
-    const src = movementLogo(team);
+    const src = movementLogo(team, Number(year) || undefined);
     return <span className="profile-career-team">{src && <img src={src} alt="" />}{team}</span>;
 }
 function CareerModal({ item, kind, onClose }) {
@@ -387,7 +392,7 @@ function CareerModal({ item, kind, onClose }) {
                     {combined && <span className="profile-career-tournament">{nationalImages[row.type] && <img src={nationalImages[row.type]} alt="" />}{row.type}</span>}
                     {national
                         ? <>{(multiCountry || !combined) && <span className={`profile-career-chip profile-career-country${nationalTeam(row.country)?.[4] ? ' is-light-logo' : ''}`} style={nationalTeam(row.country) ? { '--country-color': nationalTeam(row.country)[2] } : undefined}>{nationalTeamLogo(row.country, true) && <img src={nationalTeamLogo(row.country, true)} alt="" />}{nationalTeam(row.country)?.[1] || row.country || '한국'}</span>}<span className={`profile-career-result is-${careerResultTone(row.note)}`}>{careerResultTone(row.note) !== 'plain' && <i aria-hidden="true" />}{row.note || '대표 선발'}</span></>
-                        : <><CareerTeam team={row.team} />{row.pos && <span className="profile-career-chip">{row.pos}</span>}{row.note && <span className="profile-career-note">{row.note}</span>}</>}
+                        : <><CareerTeam team={row.team} year={row.year} />{row.pos && <span className="profile-career-chip">{row.pos}</span>}{row.note && <span className="profile-career-note">{row.note}</span>}</>}
                 </span>
             </li>)}
         </ol>
@@ -562,7 +567,7 @@ export default function PlayerProfile({ pid }) {
     const heroPosition = positionText(mainPosition) || player.Pos;
     const retirementYear = player.Retire || records?.year;
     const formerTeam = player.FormerTeam ? teamFullName(player.FormerTeam) : null;
-    const heroSummary = [retired || numberRetired ? '은퇴' : team[3], heroPosition].filter(Boolean).join(' | ');
+    const heroSummary = [retired || numberRetired ? '은퇴' : team[3], heroPosition].filter(Boolean).join(' · ');
     const handedness = [player.Throws, player.Bat].filter(Boolean).join('');
     const birth = player.Birth;
     const birthMatch = birth?.match(/^(\d{4})[-.](\d{2})[-.](\d{2})$/);
@@ -617,7 +622,11 @@ export default function PlayerProfile({ pid }) {
         return key === 'date' ? game.date.slice(5) : key === 'opponent' ? (game.opponent ? `${game.isAway ? '@' : ''}${game.opponent}` : '—') : key === 'isStarter' ? (game.isStarter === null || game.isStarter === undefined ? '—' : game.isStarter ? <span aria-label="선발">✓</span> : '') : game[key] ?? '—';
     };
     const photos = [`/assets/images/player/kbo/${encodeURIComponent(player.PlayerId)}.jpg`, `/assets/images/player/kbo/${encodeURIComponent(player.PlayerId)}.png`];
-    const photo = photoIndex >= photos.length ? <img className="profile-photo-fallback" src="/wesiper-favicon.png" alt="" /> : <img src={photos[photoIndex]} alt={player.Name} onError={() => setPhotoIndex(i => i + 1)} />;
+    // 사진이 없으면 실루엣에 팀 모자를 씌운다. 은퇴 선수는 마지막 소속팀 모자를 쓴다.
+    const capTeam = String((retiredTheme ? player.FormerTeam : teamCode) || '').toUpperCase();
+    const capCode = movementTeamCode(capTeam, retiredTheme ? Number(retirementYear) : undefined);
+    const cap = teamCapByCode(capCode);
+    const photo = photoIndex >= photos.length ? <PlayerSilhouette className="profile-photo-fallback" logo={cap?.noLogo ? null : capCode === 'ulsan' ? movementLogo(capTeam) : teamCapLogoByCode(capCode)} cap={cap} /> : <img src={photos[photoIndex]} alt={player.Name} onError={() => setPhotoIndex(i => i + 1)} />;
     const watermark = retiredTheme ? <img className="profile-watermark" src={kboSmallLogo} alt="" /> : <TeamLogo team={teamCode} className="profile-watermark" />;
     const compactWatermark = retiredTheme ? <img className="profile-watermark" src={kboSmallLogo} alt="" /> : <TeamLogo small team={teamCode} className="profile-watermark" />;
     const tabs = <div className="profile-tabs" style={{ '--active-tab': tab }} role="group" aria-label="선수 정보 보기"><span className="profile-tab-indicator" aria-hidden="true" />{['개요', '기록', '경기', '차트', '비교'].map((name, i) => <button key={name} type="button" aria-pressed={tab === i} className={tab === i ? 'active' : ''} onClick={() => { setTab(i); const params = new URLSearchParams(location.search); if (i === 0) params.delete('tab'); else params.set('tab', tabNames[i]); navigate(`${location.pathname}?${params.toString()}`, { state: location.state }); window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }}>{name}</button>)}</div>;
@@ -633,7 +642,7 @@ export default function PlayerProfile({ pid }) {
             {tabs}
         </section>
         <div className={`profile-compact-header ${compact ? 'is-visible' : ''}`} aria-hidden={!compact} inert={!compact ? '' : undefined}>
-            <div className="profile-compact-identity"><Link className="profile-compact-back" to="/?search=1" aria-label="선수 검색으로 돌아가기"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>{compactWatermark}<div className="profile-photo">{photo}</div><div><strong>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</strong><p>{retired || numberRetired ? heroSummary : [team[3], heroPosition].filter(Boolean).join(' | ')}</p></div></div>
+            <div className="profile-compact-identity"><Link className="profile-compact-back" to="/?search=1" aria-label="선수 검색으로 돌아가기"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 5-7 7 7 7M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>{compactWatermark}<div className="profile-photo">{photo}</div><div><strong>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</strong><p>{retired || numberRetired ? heroSummary : [team[3], heroPosition].filter(Boolean).join(' · ')}</p></div></div>
             <div className="profile-compact-tabs">{tabs}</div>
         </div>
         <div ref={contentRef} className="profile-content">

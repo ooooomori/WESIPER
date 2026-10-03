@@ -1,0 +1,146 @@
+/* 크보들·크보빙고 모달 공통 디자인. 모달은 body로 포털되므로 .modal.game-modal 기준으로 꾸민다. */
+.modal.game-modal { --game-accent: #0b5fc7; color: #102746; }
+.modal.game-modal .modal-content { overflow: hidden; border: 0; border-radius: 20px; background: #fff; color: #102746; box-shadow: 0 24px 60px rgba(16,39,70,.22); }
+
+.modal.game-modal .modal-header { display: flex; align-items: center; gap: 8px; padding: 18px 20px 10px; border: 0; }
+.modal.game-modal .modal-header > span:first-child { color: #102746; font-size: 17px; font-weight: 800; letter-spacing: -.01em; line-height: 1.3; }
+/* 제목 옆 회차 번호(#123) */
+.modal.game-modal .modal-header > span:nth-child(2):not(:empty) { margin: 0; padding: 2px 8px; border-radius: 999px; background: #f1f4f8; color: #6b7d93; font-size: 12px; font-weight: 700; }
+.modal.game-modal .modal-header > span:nth-child(2):empty { display: none; }
+.modal.game-modal .btn-close { box-sizing: border-box; flex: none; width: 28px; height: 28px; margin: 0 -5px 0 auto; padding: 0; border: 0; border-radius: 50%; background-color: transparent; background-position: center; background-size: 10px; filter: none; opacity: .5; box-shadow: none; transition: background-color .15s, opacity .15s; }
+.modal.game-modal .btn-close:hover { background-color: #f1f4f8; opacity: .85; }
+.modal.game-modal .btn-close:focus { box-shadow: none; }
+.modal.game-modal .btn-close:focus-visible { box-shadow: 0 0 0 2px var(--game-accent); opacity: .85; }
+
+.modal.game-modal .modal-body { padding: 6px 20px 16px; }
+.modal.game-modal .modal-footer { gap: 10px; padding: 6px 20px 20px; border: 0; color: #6b7d93; font-size: 12.5px; line-height: 1.5; }
+.modal.game-modal .modal-footer > * { margin: 0; }
+
+/* 결과 안내 띠: 왼쪽 굵은 선 대신 옅은 배경의 둥근 상자 */
+.modal.game-modal .callout { margin: 0 20px 4px; padding: 10px 14px; border: 0; border-radius: 12px; font-size: 13.5px; font-weight: 700; letter-spacing: -.01em; }
+.modal.game-modal .modal-body .callout { margin-inline: 0; }
+.modal.game-modal .callout-info { background: #eaf3ff; color: #0b5fc7; }
+.modal.game-modal .callout-warning { background: #fff4e0; color: #a35a00; }
+
+/* 버튼: 채운 버튼은 사이트 강조색, 보조 버튼은 옅은 회색 */
+.modal.game-modal .btn { padding: 9px 18px; border-radius: 12px; font-size: 13.5px; font-weight: 700; letter-spacing: -.01em; box-shadow: none; transition: background-color .15s, border-color .15s, color .15s, transform .1s; }
+.modal.game-modal .btn:active { transform: scale(.98); }
+.modal.game-modal .btn:focus-visible { outline: 2px solid var(--game-accent); outline-offset: 2px; box-shadow: none; }
+.modal.game-modal .btn-primary, .modal.game-modal .btn-success { border-color: var(--game-accent); background: var(--game-accent); color: #fff; }
+.modal.game-modal .btn-primary:hover, .modal.game-modal .btn-success:hover, .modal.game-modal .btn-primary:active, .modal.game-modal .btn-success:active { border-color: #0a52ad; background: #0a52ad; color: #fff; }
+.modal.game-modal .btn-outline-primary, .modal.game-modal .btn-secondary, .modal.game-modal .btn-outline-secondary { border-color: #f1f4f8; background: #f1f4f8; color: #33475f; }
+.modal.game-modal .btn-outline-primary:hover, .modal.game-modal .btn-secondary:hover, .modal.game-modal .btn-outline-secondary:hover,
+.modal.game-modal .btn-outline-primary:active, .modal.game-modal .btn-secondary:active, .modal.game-modal .btn-outline-secondary:active { border-color: #e6ebf2; background: #e6ebf2; color: #102746; }
+.modal.game-modal .modal-footer .btn.mb-3 { margin-bottom: 0 !important; }
+
+/* ===== 크보들 결과 모달 ===== */
+.modal.game-modal .kbodle-result-body { padding: 4px 20px 8px; }
+.kbodle-result-hero { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 16px; background: #eaf3ff; }
+.kbodle-result-hero.is-fail { background: #f1f4f8; }
+.kbodle-result-score { display: flex; flex: none; align-items: baseline; gap: 2px; color: #0b5fc7; font-variant-numeric: tabular-nums; }
+.kbodle-result-score b { font-size: 34px; font-weight: 900; letter-spacing: -.04em; line-height: 1; }
+.kbodle-result-score span { color: color-mix(in srgb, currentColor 55%, #fff); font-size: 15px; font-weight: 800; }
+.kbodle-result-hero.is-fail .kbodle-result-score { color: #5b6d84; }
+.kbodle-result-message { flex: 1; min-width: 0; }
+.kbodle-result-message strong { display: block; overflow: hidden; color: #102746; font-size: 15.5px; font-weight: 800; letter-spacing: -.02em; text-overflow: ellipsis; white-space: nowrap; }
+.kbodle-result-message p { margin: 2px 0 0; color: #5b6d84; font-size: 12.5px; }
+.kbodle-result-streak { flex: none; padding: 4px 9px; border-radius: 999px; background: #fff; color: #c2410c; font-size: 12px; font-weight: 800; white-space: nowrap; }
+
+.modal-player.kbodle-result-answer { align-items: center; gap: 14px; margin-top: 10px; padding: 14px 16px; overflow: hidden; border-radius: 16px; color: #fff; }
+.modal-player.kbodle-result-answer::before { opacity: .14; background-position: right -18px center; background-size: auto 115%; pointer-events: none; }
+.kbodle-result-photo { position: relative; z-index: 1; flex: none; }
+.kbodle-result-photo img { display: block; width: 64px; height: 80px; border-radius: 12px; background: #fff; object-fit: cover; object-position: top; box-shadow: 0 6px 16px rgba(0,0,0,.2); }
+.kbodle-result-player { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; }
+.kbodle-result-team { display: inline-flex; align-items: center; gap: 5px; color: rgba(255,255,255,.82); font-size: 12px; font-weight: 700; }
+.kbodle-result-team img { width: 18px; height: 18px; padding: 2px; border-radius: 50%; background: #fff; object-fit: contain; }
+.kbodle-result-player > strong { display: flex; align-items: baseline; gap: 6px; font-size: 21px; font-weight: 800; letter-spacing: -.03em; line-height: 1.25; }
+.kbodle-result-player > strong small { color: rgba(255,255,255,.75); font-size: 12.5px; font-weight: 700; letter-spacing: 0; }
+.kbodle-result-player > a { display: inline-flex; align-items: center; gap: 2px; margin-top: 4px; padding: 3px 6px 3px 9px; border-radius: 999px; background: rgba(255,255,255,.18); color: #fff; font-size: 11.5px; font-weight: 700; text-decoration: none; transition: background-color .15s; }
+.kbodle-result-player > a:hover { background: rgba(255,255,255,.28); color: #fff; }
+.modal.game-modal .kbodle-result-hide { display: flex; align-items: center; gap: 6px; min-height: 0; margin: 8px 2px 0; padding-left: 0; color: #8a9bb1; font-size: 12px; }
+.modal.game-modal .kbodle-result-hide .form-check-input { float: none; margin: 0; cursor: pointer; }
+.modal.game-modal .kbodle-result-hide .form-check-input:checked { border-color: var(--game-accent); background-color: var(--game-accent); }
+.modal.game-modal .kbodle-result-hide .form-check-label { cursor: pointer; }
+
+.kbodle-result-section { margin-top: 16px; padding-top: 14px; border-top: 1px solid #eef2f7; }
+.kbodle-result-section > h3 { margin: 0 0 10px; color: #22364f; font-size: 13.5px; font-weight: 800; letter-spacing: -.02em; }
+.kbodle-result-share { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
+.kbodle-result-tiles { min-width: 128px; padding: 10px 12px; border-radius: 12px; background: #f6f9fc; font-size: 10px; line-height: 1.6; text-align: center; white-space: nowrap; }
+.kbodle-result-actions { display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
+.kbodle-result-icons { display: flex; justify-content: center; gap: 10px; }
+.kbodle-result-icons > button { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; overflow: hidden; border: 0; border-radius: 50%; background: transparent; }
+.kbodle-result-icon img { width: 100%; height: 100%; object-fit: cover; }
+.kbodle-result-icon.is-system { background: #f1f4f8; color: #33475f; font-size: 15px; transition: background-color .15s; }
+.kbodle-result-icon.is-system:hover { background: #e6ebf2; }
+.kbodle-result-previous { display: flex; gap: 6px; padding-bottom: 4px; overflow-x: auto; scrollbar-width: thin; }
+.kbodle-result-previous button { flex: none; padding: 6px 12px; border: 1px solid #e3e9f2; border-radius: 999px; background: #fff; color: #33475f; font-size: 12.5px; font-weight: 700; white-space: nowrap; transition: border-color .15s, color .15s; }
+.kbodle-result-previous button:hover { border-color: color-mix(in srgb, var(--game-accent) 40%, #e3e9f2); color: var(--game-accent); }
+.modal.game-modal .kbodle-result-custom { width: 100%; margin-top: 10px; }
+.modal.game-modal .kbodle-result-footer { display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; border-top: 1px solid #eef2f7; }
+.kbodle-result-countdown { display: flex; flex-direction: column; color: #8a9bb1; font-size: 11.5px; line-height: 1.35; }
+.kbodle-result-countdown > span:last-child { color: #22364f; font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+    .modal.game-modal .kbodle-result-body { padding: 2px 16px 6px; }
+    .kbodle-result-score b { font-size: 30px; }
+    .kbodle-result-tiles { min-width: 116px; padding: 8px 10px; font-size: 9px; }
+    .kbodle-result-share { gap: 10px; }
+}
+
+/* ===== 도움말(게임 방법): 넘기는 슬라이드 대신 한 번에 읽는 안내문 ===== */
+.modal.game-help .modal-dialog { max-width: 480px; }
+.modal.game-help .game-help-body { padding: 4px 20px 6px; color: #33475f; font-size: 13.5px; line-height: 1.6; word-break: keep-all; }
+.game-help-lead { margin: 0 0 16px; color: #102746; font-size: 15px; font-weight: 700; letter-spacing: -.02em; line-height: 1.5; }
+.game-help-section { padding: 16px 0; border-top: 1px solid #eef2f7; }
+.game-help-section > h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 12px; color: #102746; font-size: 14.5px; font-weight: 800; letter-spacing: -.02em; }
+.game-help-section > h3 > span { padding: 2px 6px; border-radius: 6px; background: #eaf3ff; color: var(--game-accent); font-size: 11px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.game-help-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.game-help-list li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 12px; border-radius: 12px; background: #f6f9fc; }
+.game-help-list li > b { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 7px; background: #dfe7f1; color: #5b6d84; font-size: 12px; font-weight: 800; line-height: 1; }
+.game-help-list li > b.is-red { background: #e5484d; color: #fff; }
+.game-help-list li > b.is-orange { background: #f08c00; color: #fff; }
+.game-help-list li > b.is-green { background: #2f9e44; color: #fff; }
+.game-help-list strong { color: #22364f; font-weight: 700; }
+.game-help-list div > strong { display: block; font-size: 13.5px; }
+.game-help-list p { margin: 1px 0 0; color: #6b7d93; font-size: 12.5px; line-height: 1.5; }
+.game-help-list p.game-help-rule { margin: 0; color: #33475f; font-size: 13px; }
+.game-help-list small { display: block; margin-top: 3px; color: #8a9bb1; font-size: 11.5px; line-height: 1.45; }
+.game-help-list small.game-help-caution { color: #a35a00; }
+.game-help-figure { margin: 0 0 10px; padding: 12px; border-radius: 14px; background: #f6f9fc; text-align: center; }
+.game-help-figure img { display: inline-block; width: min(240px, 80%); max-height: 170px; object-fit: contain; }
+.game-help-notes { display: grid; gap: 8px; margin: 0; padding: 0 0 0 16px; color: #5b6d84; font-size: 12.5px; line-height: 1.55; list-style: disc; }
+.game-help-notes li::marker { color: #b4c0cf; }
+.game-help-notes strong { color: #22364f; font-weight: 700; }
+
+/* 크보들 단서 예시: 게임 화면의 단서 색과 같다 */
+.game-help-clues { display: grid; grid-template-columns: 1.15fr 1.15fr .72fr .72fr .85fr 1.15fr 1.35fr; gap: 3px; }
+.game-help-clue { display: grid; place-items: center; min-width: 0; height: 34px; border-radius: 7px; background: #eef2f7; color: #8a9bb1; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.game-help-clue.is-green, .game-help-legend i.is-green { background: #20d35c; color: #092e15; }
+.game-help-clue.is-orange, .game-help-legend i.is-orange { background: #f5a51c; color: #4a2b00; }
+.game-help-clue.is-wrong, .game-help-legend i.is-wrong { background: #282c34; color: #fff; }
+.game-help-legend { display: grid; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
+.game-help-legend li { display: grid; grid-template-columns: 12px 48px minmax(0, 1fr); gap: 8px; align-items: center; font-size: 13px; }
+.game-help-legend i { width: 12px; height: 12px; border-radius: 4px; }
+.game-help-legend strong { color: #22364f; font-weight: 700; }
+.game-help-legend span { color: #6b7d93; }
+.game-help-reading { margin: 12px 0 0; padding: 10px 12px; border-radius: 12px; background: #f6f9fc; color: #5b6d84; font-size: 12.5px; line-height: 1.55; }
+.game-help-reading strong { color: #22364f; font-weight: 700; }
+.game-help-terms { display: grid; gap: 6px; margin: 0; }
+.game-help-terms > div { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 10px; align-items: start; padding: 9px 12px; border-radius: 12px; background: #f6f9fc; }
+.game-help-terms dt { padding: 2px 0; border-radius: 6px; background: #fff1d6; color: #8a5300; font-size: 11.5px; font-weight: 800; text-align: center; }
+.game-help-terms dd { margin: 0; color: #33475f; font-size: 13px; line-height: 1.5; }
+.game-help-terms small { display: block; margin-top: 2px; color: #8a9bb1; font-size: 11.5px; line-height: 1.45; }
+.modal.game-help .modal-footer { padding-top: 12px; border-top: 1px solid #eef2f7; }
+.modal.game-help .modal-footer .btn { width: 100%; }
+
+@media (max-width: 600px) {
+    .modal.game-help .game-help-body { padding: 2px 16px 4px; }
+    .game-help-lead { font-size: 14.5px; }
+    .game-help-clue { height: 32px; font-size: 9.5px; }
+    .game-help-terms > div { grid-template-columns: 52px minmax(0, 1fr); }
+    .modal.game-modal .modal-content { border-radius: 18px; }
+    .modal.game-modal .modal-header { padding: 16px 16px 8px; }
+    .modal.game-modal .modal-header > span:first-child { font-size: 16px; }
+    .modal.game-modal .modal-body { padding: 4px 16px 14px; }
+    .modal.game-modal .modal-footer { padding: 4px 16px 16px; }
+    .modal.game-modal .callout { margin-inline: 16px; }
+}

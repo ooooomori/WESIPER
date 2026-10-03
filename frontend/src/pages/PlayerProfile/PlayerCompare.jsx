@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { loadProfileData } from './profileDataCache';
 import { loadYearRecords } from './yearRecordsCache';
 import './player-compare.css';
+import PlayerSilhouette from '../../components/PlayerSilhouette';
+import { teamCapByName } from '../../lib/teamAssets';
 
 const MAX_PLAYERS = 5;
 // 탭을 옮겨도 비교 설정이 유지되도록 선수(pid)별로 기억한다. 새로고침하면 초기화된다.
@@ -33,10 +35,11 @@ const display = (format, value) => {
 };
 const isPitcherPos = pos => String(pos || '').includes('투수');
 
-function PlayerPhoto({ pid }) {
+// 사진이 없으면 팀(은퇴 선수는 마지막 소속팀) 모자를 쓴 실루엣을 보여준다.
+function PlayerPhoto({ pid, team, year }) {
     const [step, setStep] = useState(0);
     useEffect(() => setStep(0), [pid]);
-    if (step >= 2) return <span className="compare-photo-empty" aria-hidden="true" />;
+    if (step >= 2) return <PlayerSilhouette className="compare-photo-empty" cap={teamCapByName(team, year)} />;
     return <img src={`/assets/images/player/kbo/${encodeURIComponent(pid)}.${step === 0 ? 'jpg' : 'png'}`} alt="" onError={() => setStep(value => value + 1)} />;
 }
 
@@ -72,7 +75,7 @@ function PlayerSearch({ onSelect, open, setOpen }) {
         {results.list.length > 0 && <ul className="compare-search-results">{results.list.map(player => {
             const active = player.IsActive !== false && player.Team !== '은퇴';
             return <li key={player.PlayerId}><button type="button" onClick={() => { onSelect(player); close(); }}>
-                <span className="compare-search-photo"><PlayerPhoto pid={player.PlayerId} /></span>
+                <span className="compare-search-photo"><PlayerPhoto pid={player.PlayerId} team={active ? player.Team : player.NumberRetiredTeam || player.FormerTeam} year={active ? undefined : player.Retire || player.LastRecordYear} /></span>
                 <strong>{player.Name}</strong>
                 <small>{[active ? player.Team : player.FormerTeam ? `前 ${player.FormerTeam}` : '은퇴', player.MainPos || player.Pos].filter(Boolean).join(' · ')}</small>
             </button></li>;
@@ -87,11 +90,13 @@ function CompareColumnHead({ entry, data, kind, mode, onYear, onRemove, getTeamL
     const year = entry.year ?? years[0] ?? null;
     const season = rows.find(row => row.year === year);
     const team = mode === 'season' ? season?.team || profile?.Team : (profile?.IsKbodle === 0 || profile?.IsKbodle === '0' ? profile?.FormerTeam : profile?.Team);
-    const logo = team ? getTeamLogo(team) : null;
+    // 시즌 비교는 그 연도의 로고·모자를, 통산은 은퇴 연도 기준을 쓴다(2000~2005년 SK는 그때 로고).
+    const teamYear = mode === 'season' ? year : Number(profile?.Retire) || undefined;
+    const logo = team ? getTeamLogo(team, teamYear) : null;
     return <th scope="col" style={{ '--compare-color': getTeamColor(team) || '#60758c' }}>
         <div className="compare-head">
             {onRemove && <button type="button" className="compare-remove" aria-label={`${profile?.Name || '선수'} 비교에서 빼기`} onClick={onRemove}>×</button>}
-            <span className="compare-head-photo"><PlayerPhoto pid={entry.pid} />{logo && <img className="compare-head-logo" src={logo} alt="" />}</span>
+            <span className="compare-head-photo"><PlayerPhoto pid={entry.pid} team={team} year={teamYear} />{logo && <img className="compare-head-logo" src={logo} alt="" />}</span>
             <strong>{profile?.Name || '…'}</strong>
             <small>{team || (data.status === 'error' ? '불러오기 실패' : '')}</small>
             {mode === 'season' && <select value={year ?? ''} onChange={event => onYear(Number(event.target.value))} aria-label={`${profile?.Name || '선수'} 비교 연도`} disabled={!years.length}>

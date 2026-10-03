@@ -11,7 +11,8 @@ require_once __DIR__.'/player-search-stats.php';
  * the response shape (SporkId, Season, Total, Team, Profile, ...) is unchanged.
  */
 const BINGO_PLAYER_SOURCE = 'db-v4';
-// kbo_fielding_2001_2025 covers through this season; later positions come from game records.
+// Official fielding rows (kbo_fielding_records, 2001-) give positions; seasons after this year also read
+// game records, which add designated hitters and games the nightly fielding crawl has not picked up yet.
 const BINGO_FIELDING_LAST_YEAR = 2025;
 
 function bingoPdo(): PDO {
@@ -26,9 +27,13 @@ function bingoPdo(): PDO {
     return $pdo;
 }
 
-/** Cache key part: changes when the crawler publishes new data. */
+/**
+ * Cache key part shared by every player: payload format, historical data version, and the year
+ * (active players' End and the season bounds follow the current year).
+ * Per-player changes are tracked by bingoPlayerCacheKey() in api/kbobingo/player_cache.php.
+ */
 function bingoPlayerCacheVersion(): string {
-    return BINGO_PLAYER_SOURCE.'|'.profileRankingRevision();
+    return BINGO_PLAYER_SOURCE.'|'.PROFILE_HISTORY_VERSION.'|'.(new DateTimeImmutable('now', new DateTimeZone('Asia/Seoul')))->format('Y');
 }
 
 /** Team names/codes stored in record tables -> bingo team codes (ssg, kia, hyd, ...). */
@@ -200,10 +205,10 @@ function bingoBuildPlayer(PDO $db, array $player): ?array {
 
     // Positions: official fielding table, then game-record positions for later seasons.
     $names = ['포수'=>'C','1루수'=>'1B','2루수'=>'2B','3루수'=>'3B','유격수'=>'SS','좌익수'=>'LF','중견수'=>'CF','우익수'=>'RF','지명타자'=>'DH','투수'=>'P'];
-    $q = $db->prepare('SELECT p_team, p_pos FROM kbo_fielding_2001_2025 WHERE p_no=?');
+    $q = $db->prepare('SELECT DISTINCT team, position FROM kbo_fielding_records WHERE player_id=?');
     $q->execute([$pid]);
     foreach ($q->fetchAll() as $f) {
-        $code = bingoTeamCode($f['p_team']); $pos = $names[trim((string)$f['p_pos'])] ?? null;
+        $code = bingoTeamCode($f['team']); $pos = $names[trim((string)$f['position'])] ?? null;
         if ($code === null || $pos === null) continue;
         $teams[$code] = true;
         bingoAddPosition($season, $code, $pos);

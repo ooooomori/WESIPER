@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { addRecentPlayer, readRecentPlayers, removeRecentPlayer } from '../../lib/recentPlayers';
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import "./main.css";
+import PlayerSilhouette from '../../components/PlayerSilhouette';
+import { teamCapByName } from '../../lib/teamAssets';
 import { gameParticipants } from '../../lib/gameParticipants';
 import GameWeather from './GameWeather';
 import ulsanLogo from '../../assets/images/logos/ulsan-logo.png';
@@ -76,7 +78,12 @@ function SearchPlayerPhoto({ player }) {
     const [photoIndex, setPhotoIndex] = useState(0);
     useEffect(() => setPhotoIndex(0), [player.PlayerId]);
     const missing = photoIndex >= 2;
-    if (missing) return <svg className="main-home-search-photo-placeholder" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="15" r="5.5" /><path d="M9.5 34.5 10.5 29c.8-4 6-5.5 11.5-5.5s10.7 1.5 11.5 5.5l1 5.5Z" /></svg>;
+    // 사진이 없는 선수: 팀 색이 옅게 도는 바탕에 모자를 쓴 선수 실루엣
+    // 모자는 소속팀 색, 은퇴 선수는 마지막 소속팀 색으로 칠한다(로고는 작아서 넣지 않는다).
+    if (missing) {
+        const capTeam = String((player.IsActive !== false && player.Team !== '은퇴' ? player.Team : player.NumberRetiredTeam || player.FormerTeam) || '').trim();
+        return <PlayerSilhouette className="main-home-search-photo-placeholder" cap={teamCapByName(capTeam, player.Retire || player.LastRecordYear)} />;
+    }
     return <img src={`/assets/images/player/kbo/${encodeURIComponent(player.PlayerId)}.${photoIndex === 0 ? 'jpg' : 'png'}`} alt="" onError={() => setPhotoIndex(index => index + 1)} />;
 }
 // 조회수 집계가 부족할 때 쓰는 기본 추천 목록
@@ -105,7 +112,7 @@ function SearchPlayerRow({ player, keyword = '', rank }) {
     // 데뷔 연도: 실제 첫 출전 기록(경기 기록·연도별 통산 기록)이 있으면 우선, 없으면 드래프트 연도
     const debutYear = Number(player.FirstRecordYear) || draftDebutYear;
     const retirementYear = player.Retire || player.LastRecordYear;
-    const careerYears = !active && (debutYear || retirementYear) ? `${debutYear || '?'} - ${retirementYear || '?'}` : null;
+    const careerYears = !active && (debutYear || retirementYear) ? `${debutYear || '?'}–${retirementYear || '?'}` : null;
     // 현역과 영구결번 선수는 등번호를 보여준다.
     const backNo = (active || numberRetired) && player.BackNo != null && String(player.BackNo).trim() ? `#${player.BackNo}` : null;
     const query = keyword.trim().toLocaleLowerCase();
@@ -116,13 +123,12 @@ function SearchPlayerRow({ player, keyword = '', rank }) {
         fragments.push(name.slice(start,match),<mark key={match}>{name.slice(match,match+query.length)}</mark>);start=match+query.length;
     }
     fragments.push(name.slice(start));
-    const meta = [position, careerYears].filter(Boolean);
     return <div className={`main-home-search-player${active || numberRetired ? '' : ' is-retired'}${fullLogo ? ' has-team-logo' : ''}`} style={{'--search-team-color':color, ...(fullLogo ? { '--search-team-logo': `url("${fullLogo}")` } : {})}}>
         {rank != null && <span className={`main-home-search-rank${rank <= 3 ? ' is-top' : ''}`}>{rank}</span>}
         <div className="main-home-search-photo"><SearchPlayerPhoto player={player} />{logo && <img className="main-home-search-photo-logo" src={logo} alt="" />}</div>
         <div className="main-home-search-identity">
             <div className="main-home-search-name"><strong>{fragments}</strong>{backNo && <span className="main-home-search-backno">{backNo}</span>}</div>
-            <div className="main-home-search-position">{teamLabel && <span className="main-home-search-team">{teamLabel}</span>}{meta.length > 0 && <span>{meta.join(' · ')}</span>}</div>
+            <div className="main-home-search-position">{teamLabel && <span className="main-home-search-team">{teamLabel}</span>}{position && <span className="main-home-search-role">{position}</span>}{careerYears && <span className="main-home-search-years">{careerYears}</span>}</div>
         </div>
         <svg className="main-home-search-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
     </div>;
@@ -135,6 +141,7 @@ function pickPopularPlayer(list, name) {
 
 export default function Main() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [league, setLeague] = useState("kbo");
     const [rankingTab, setRankingTab] = useState(0);
     const [ranking, setRanking] = useState({ state: "loading", rows: [], title: "" });
@@ -348,9 +355,15 @@ export default function Main() {
                         <button type="button" className="main-home-search-back" aria-label="검색 닫기" onClick={() => searchDialog.current.close()}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7" /></svg>
                         </button>
-                        <form className="main-home-search" role="search" onSubmit={(event) => event.preventDefault()}>
+                        <form className="main-home-search" role="search" onSubmit={(event) => {
+                                event.preventDefault();
+                                // 검색 결과가 한 명뿐이면 엔터로 바로 그 선수 페이지로 간다.
+                                if (playerSearchState !== "ready" || players.length !== 1) return;
+                                rememberPlayer(players[0]);
+                                navigate(`/?pid=${encodeURIComponent(players[0].PlayerId)}`, { state: { player: players[0] } });
+                            }}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 5 5" /></svg>
-                            <input ref={searchInput} type="search" aria-label="선수 이름" placeholder="선수 이름을 검색해 보세요" value={search} onChange={(event) => setSearch(event.target.value)} autoComplete="off" enterKeyHint="search" />
+                            <input ref={searchInput} type="search" aria-label="선수 이름" placeholder="선수 이름을 검색해 보세요!" value={search} onChange={(event) => setSearch(event.target.value)} autoComplete="off" enterKeyHint="search" />
                             {search && <button type="button" className="main-home-search-clear" aria-label="검색어 지우기" onClick={() => { setSearch(""); searchInput.current.focus(); }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg></button>}
                         </form>
                     </header>
@@ -416,7 +429,7 @@ export default function Main() {
                     </div>
                     <button type="button" className="main-home-search main-home-hero-search" onClick={openSearch} aria-haspopup="dialog" aria-label="선수 검색 화면 열기">
                         <span className="main-home-hero-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.6 15.6 4.4 4.4" /></svg></span>
-                        <span className="main-home-hero-search-text">{search || "선수 이름을 검색해 보세요"}</span>
+                        <span className="main-home-hero-search-text">{search || "선수 이름을 검색해 보세요!"}</span>
                         <span className="main-home-hero-search-cta" aria-hidden="true">검색</span>
                     </button>
                     {heroPopular.list.length > 0 && <div className="main-home-hero-popular">

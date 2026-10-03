@@ -7,7 +7,7 @@ export PYTHONUNBUFFERED=1
 root="${WESIPER_CRAWLER_ROOT:-/home/bitnami/wesiper}"
 env_file="${WESIPER_CRAWLER_ENV:-/home/bitnami/.config/wesiper/crawler.env}"
 job="${1:-}"
-case "$job" in candle|futures|movements) ;; *) echo 'Usage: run_daily_kbo.sh candle|futures|movements [crawler options]' >&2; exit 2 ;; esac
+case "$job" in candle|futures|movements|fielding) ;; *) echo 'Usage: run_daily_kbo.sh candle|futures|movements|fielding [crawler options]' >&2; exit 2 ;; esac
 shift
 mkdir -p "$root/logs" "$root/locks"
 exec >> "$root/logs/$job-$(date +%F).log" 2>&1
@@ -28,6 +28,9 @@ if [[ "$job" == candle ]]; then
 elif [[ "$job" == futures ]]; then
     if [[ $# == 0 ]]; then set -- --write; fi
     "$python" "$root/kbo_futures_crawl.py" --year "$(date +%Y)" --daily "$@"
+elif [[ "$job" == fielding ]]; then
+    if [[ $# == 0 ]]; then set -- --write; fi
+    "$python" "$root/kbo_fielding_crawl.py" --year "$(date +%Y)" "$@"
 else
     if [[ $# == 0 ]]; then set -- --write; fi
     "$python" "$root/daily_movement_contracts.py" "$@"

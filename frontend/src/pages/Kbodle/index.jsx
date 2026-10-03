@@ -1,4 +1,5 @@
 import "./kbodle.css";
+import "../game-modal.css";
 import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import ResultModal from "./components/ResultModal.jsx";
@@ -132,6 +133,12 @@ const Header = ({
     );
 };
 
+// 입력이 멈춘 뒤 검색을 보내기까지 기다리는 시간. 한글 조합 중 불필요한 요청만 걸러낼 정도로 짧게 둔다.
+const SEARCH_DEBOUNCE_MS = 150;
+// 같은 검색어의 결과를 다시 쓰는 시간(지웠다 다시 치는 경우 즉시 표시)
+const SEARCH_CACHE_MS = 10 * 60 * 1000;
+const recentSearches = new Map();
+
 const Search = (props) => {
     const [searchList, setSearchList] = useState([]);
     const [debounceTimer, setDebounceTimer] = useState(null);
@@ -140,15 +147,25 @@ const Search = (props) => {
     const randomPending = useRef(false);
 
     const cancelTokenRef = useRef(null);
+    const lastKeyword = useRef("");
 
     const onSearch = (event) => {
         if (randomPending.current || props.mode.startsWith("finished")) return;
         const keyword = event.target.value.trim();
+        // 방향키·Shift처럼 글자가 바뀌지 않는 키 입력으로는 다시 검색하지 않는다.
+        if (keyword === lastKeyword.current && props.mode.startsWith("search")) return;
+        lastKeyword.current = keyword;
         props.setMode("search");
         clearTimeout(debounceTimer);
         cancelTokenRef.current?.cancel();
         // 두 글자 이상 또는 외자 이름 '홀'·'필'·'얀'만 검색
         if (keyword.length >= 2 || ["홀", "필", "얀"].includes(keyword)) {
+            // 조금 전에 받은 결과는 서버에 다시 묻지 않고 바로 보여준다.
+            const cached = recentSearches.get(keyword);
+            if (cached && Date.now() - cached.at < SEARCH_CACHE_MS) {
+                setSearchList(cached.list);
+                return;
+            }
             props.setMode("search-ing");
             // 디바운싱을 적용하여 일정 시간 후에 검색을 실행
             const newDebounceTimer = setTimeout(() => {
@@ -157,7 +174,7 @@ const Search = (props) => {
                 }
                 cancelTokenRef.current = axios.CancelToken.source();
                 playerSearch(keyword);
-            }, 500); // 500ms 디바운싱 지연 시간
+            }, SEARCH_DEBOUNCE_MS);
             setDebounceTimer(newDebounceTimer);
         } else {
             setSearchList([]);
@@ -172,6 +189,7 @@ const Search = (props) => {
             return { ...previous, game: { ...previous.game, board, count: previous.game.count + 1 } };
         });
         setInputValue("");
+        lastKeyword.current = "";
         setSearchList([]);
         props.setMode("main");
     };
@@ -212,6 +230,7 @@ const Search = (props) => {
             .then((response) => {
                 const result = response.data;
                 if (result.success) {
+                    recentSearches.set(keyword, { list: result.list, at: Date.now() });
                     props.setMode("search");
                     setSearchList(result.list);
                 }

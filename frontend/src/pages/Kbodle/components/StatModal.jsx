@@ -61,7 +61,7 @@ const StatModal = (props) => {
                 show={props.show}
                 onHide={handleClose}
                 centered
-                className="font-family-NaSqNe"
+                className="game-modal font-family-NaSqNe"
             >
                 <Modal.Header style={{ border: "none" }} closeButton>
                     <span className="font-family-kbo text-xl font-bold">

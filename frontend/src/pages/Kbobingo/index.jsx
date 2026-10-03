@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import wspImg from "../../assets/images/wsp.png";
 import Button from "react-bootstrap/Button";
 import "./kbobingo.css";
+import "../game-modal.css";
 import axios from "axios";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Search from "./components/Search.jsx";
@@ -480,7 +481,7 @@ const GridCond = (props) => {
                     <div className="px-1 break-keep text-sm md:text-xl font-bold">
                         {text} 출장
                         <div className="text-gray-600 text-[0.625rem] md:text-base">
-                            '01년 ~ '25년
+                            2001년 이후
                         </div>
                     </div>,
                 );

@@ -2,6 +2,12 @@ import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { Spinner } from "flowbite-react";
 
+// 입력이 멈춘 뒤 검색을 보내기까지 기다리는 시간. 한글 조합 중 불필요한 요청만 걸러낼 정도로 짧게 둔다.
+const SEARCH_DEBOUNCE_MS = 150;
+// 같은 검색어의 결과를 다시 쓰는 시간(지웠다 다시 치는 경우 즉시 표시)
+const SEARCH_CACHE_MS = 10 * 60 * 1000;
+const recentSearches = new Map();
+
 const Search = (props) => {
     const [fadeClass, setFadeClass] = useState(false);
     const [fadeInput, setFadeInput] = useState("opacity-0");
@@ -10,13 +16,24 @@ const Search = (props) => {
     const [inputValue, setInputValue] = useState("");
 
     const cancelTokenRef = useRef(null);
+    // 방향키·Shift처럼 글자가 바뀌지 않는 키 입력으로는 다시 검색하지 않는다.
+    const lastKeyword = useRef("");
 
     const onSearch = (event) => {
         const keyword = event.target.value.trim();
+        if (keyword === lastKeyword.current) return;
+        lastKeyword.current = keyword;
         clearTimeout(debounceTimer);
         cancelTokenRef.current?.cancel();
         // 두 글자 이상 또는 외자 이름 '홀'·'필'·'얀'만 검색
         if (keyword.length >= 2 || ["홀", "필", "얀"].includes(keyword)) {
+            // 조금 전에 받은 결과는 서버에 다시 묻지 않고 바로 보여준다.
+            const cached = recentSearches.get(keyword);
+            if (cached && Date.now() - cached.at < SEARCH_CACHE_MS) {
+                props.setMode("search");
+                setSearchList(cached.list);
+                return;
+            }
             // 디바운싱을 적용하여 일정 시간 후에 검색을 실행
             const newDebounceTimer = setTimeout(() => {
                 props.setMode("searching");
@@ -28,7 +45,7 @@ const Search = (props) => {
                 cancelTokenRef.current = axios.CancelToken.source();
 
                 playerSearch(keyword);
-            }, 500); // 500ms 디바운싱 지연 시간
+            }, SEARCH_DEBOUNCE_MS);
             setDebounceTimer(newDebounceTimer);
         } else {
             setSearchList([]);
@@ -46,6 +63,7 @@ const Search = (props) => {
             .then((response) => {
                 const result = response.data;
                 if (result.success) {
+                    recentSearches.set(keyword, { list: result.list, at: Date.now() });
                     props.setMode("search");
                     setSearchList(result.list);
                 } else {
@@ -78,6 +96,7 @@ const Search = (props) => {
             }
             setSearchList([]);
             setInputValue("");
+            lastKeyword.current = "";
             props.setSelected(null);
             setFadeClass("opacity-0");
             setFadeInput("opacity-0 scale-95");
@@ -281,8 +300,8 @@ const SearchResultDiv = (props) => {
                         {/* 메인페이지 선수 검색 규칙 + 현역은 올해까지 (End = 올해), 모르는 값은 ? */}
                         {(player.Debut || player.End) && (
                             <>
-                                {`${player.Debut || "?"} - ${player.End || "?"}`}
-                                <span className="mx-1">|</span>
+                                {`${player.Debut || "?"}–${player.End || "?"}`}
+                                <span className="mx-1 text-gray-300">·</span>
                             </>
                         )}
                         {player.Pos}

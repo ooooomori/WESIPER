@@ -30,60 +30,64 @@ const ResultSquare = (props) => {
         });
     }, [props]);
 
+    const [copied, setCopied] = useState(false);
+    useEffect(() => {
+        if (!copied) return undefined;
+        const timer = setTimeout(() => setCopied(false), 2000);
+        return () => clearTimeout(timer);
+    }, [copied]);
+
     return (
-        <div className="text-center">
-            <div className="modal-result">
-                <div className="modal-result-tiles flex items-center justify-center">
-                    {props.tiles
-                        ?.filter((row) => row.length > 0)
-                        .map((row, index) => (
-                            <React.Fragment key={index}>
-                                {row.join(" ")}
-                                <br />
-                            </React.Fragment>
-                        ))}
-                </div>
-                <div className="modal-result-right flex items-center flex-col justify-center">
-                    <Button
-                        variant="primary"
-                        size="sm"
-                        className="!rounded-full !px-2.5"
-                        onClick={(event) => props.handleShare(event, "copy")}
+        <div className="kbodle-result-share">
+            <div className="kbodle-result-tiles" aria-label="내 풀이 결과">
+                {props.tiles
+                    ?.filter((row) => row.length > 0)
+                    .map((row, index) => (
+                        <React.Fragment key={index}>
+                            {row.join(" ")}
+                            <br />
+                        </React.Fragment>
+                    ))}
+            </div>
+            <div className="kbodle-result-actions">
+                <Button
+                    variant="primary"
+                    onClick={(event) => {
+                        props.handleShare(event, "copy");
+                        setCopied(true);
+                    }}
+                >
+                    {copied ? "복사했어요" : "결과 복사하기"}
+                </Button>
+                <div className="kbodle-result-icons">
+                    <TwitterShareButton
+                        url={props.handleShare(null, "text")}
+                        aria-label="X에 공유"
                     >
-                        결과 복사하기
-                    </Button>
-                    <div className="flex justify-evenly w-full">
-                        <TwitterShareButton
-                            url={props.handleShare(null, "text")}
-                        >
-                            <XIcon
-                                size={30}
-                                round={true}
-                                borderRadius={30}
-                            ></XIcon>
-                        </TwitterShareButton>
+                        <XIcon size={36} round={true}></XIcon>
+                    </TwitterShareButton>
+                    <button
+                        id="kakaotalk-sharing-btn"
+                        type="button"
+                        className="kbodle-result-icon"
+                        aria-label="카카오톡 공유"
+                    >
+                        <img
+                            src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+                            alt=""
+                        />
+                    </button>
+                    {typeof navigator !== "undefined" && navigator.canShare && (
                         <button
-                            id="kakaotalk-sharing-btn"
-                            style={{
-                                border: "none",
-                                background: "transparent",
-                                padding: "0",
-                                width: "30px",
-                                height: "30px",
-                            }}
+                            type="button"
+                            className="kbodle-result-icon is-system"
+                            aria-label="다른 앱으로 공유"
+                            title="공유하기"
+                            onClick={(event) => props.handleShare(event, "share")}
                         >
-                            <img
-                                src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-                                alt="카카오톡 공유"
-                                style={{
-                                    borderRadius: "50%",
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                }}
-                            />
+                            <i className="bi-box-arrow-up" aria-hidden="true"></i>
                         </button>
-                    </div>
+                    )}
                 </div>
             </div>
         </div>
@@ -194,6 +198,9 @@ const ResultModal = (props) => {
     };
 
     const stats = JSON.parse(localStorage.getItem("kbodle-stats"));
+    // 마지막으로 고른 선수가 정답이면 성공. 판을 알 수 없으면 공유 문구와 같은 기준(연속 기록 0 = 실패)을 쓴다.
+    const lastPick = game?.board?.[(game?.count ?? 0) - 1];
+    const solved = lastPick ? String(lastPick.SporkId) === String(game?.answer?.SporkId) : stats?.winStreak !== 0;
 
     const handleShare = (event, type) => {
         let shareText = "";
@@ -243,7 +250,7 @@ const ResultModal = (props) => {
                 show={show}
                 onHide={handleClose}
                 centered
-                className="font-family-NaSqNe"
+                className="game-modal font-family-NaSqNe"
                 scrollable
             >
                 <Modal.Header style={{ border: "none" }} closeButton>
@@ -255,167 +262,136 @@ const ResultModal = (props) => {
                     </span>
                 </Modal.Header>
 
-                <Modal.Body className="!p-0">
-                    {custom === "" && stats?.winStreak !== 0 && (
-                        <div className="callout callout-info mb-0">
-                            <span>오늘의 크보들을 클리어하셨어요 🎉</span>
-                            {stats && stats.winStreak > 1 && (
-                                <>
-                                    <br />
-                                    <span>
-                                        🔥{" "}
-                                        <strong>
-                                            {stats.winStreak}일 연속
-                                        </strong>
-                                        으로 크보들 클리어중 🔥
-                                    </span>
-                                </>
-                            )}
+                <Modal.Body className="kbodle-result-body">
+                    {/* 결과 요약: 몇 번 만에 맞혔는지 + 연속 기록 */}
+                    <div className={`kbodle-result-hero ${solved ? "is-win" : "is-fail"}`}>
+                        <div className="kbodle-result-score" aria-label={solved ? `9번 중 ${game?.count}번 만에 성공` : "실패"}>
+                            <b>{solved ? game?.count : "X"}</b>
+                            <span>/9</span>
                         </div>
-                    )}
-                    {custom === "" && stats?.winStreak === 0 && (
-                        <div className="callout callout-warning mb-0">
-                            <span>아쉬워요! 내일 다시 도전해봐요 🔥</span>
+                        <div className="kbodle-result-message">
+                            <strong>
+                                {custom !== ""
+                                    ? `크보들 - ${custom}`
+                                    : solved
+                                      ? "오늘의 크보들 클리어!"
+                                      : "아쉬워요!"}
+                            </strong>
+                            <p>
+                                {solved
+                                    ? `${game?.count}번 만에 맞혔어요.`
+                                    : custom === ""
+                                      ? "내일 다시 도전해봐요."
+                                      : "정답은 아래 선수였어요."}
+                            </p>
                         </div>
-                    )}
-                    <div className="!p-[1rem]">
-                        <span className="font-family-NaSqNe font-bold">
-                            ⚾
-                            {custom === ""
-                                ? " 오늘의 크보들"
-                                : ` 크보들 - ${custom}`}
-                        </span>
-                        <a
-                            id="share-icon"
-                            className="icon-link mx-2"
-                            href=""
-                            onClick={(event) => handleShare(event, "share")}
-                            title="공유하기"
-                        >
-                            <i className="bi-box-arrow-up"></i>
-                        </a>
-                        <div className="my-3">
-                            <ResultSquare
-                                tiles={props.tiles}
-                                handleShare={handleShare}
-                            />
-                        </div>
-                        <div>
-                            <Collapse in={!hideAnswer}>
-                                <div className="m-0 p-0">
-                                    <div
-                                        className={
-                                            "my-2 modal-player bg-" +
-                                            teamCode(game?.answer.Team)
-                                        }
-                                    >
-                                        <div className="modal-player-img">
-                                            {game && (
-                                                <PlayerImg
-                                                    img={game?.answer.SporkId}
-                                                    name={game?.answer.Name}
-                                                    className=""
-                                                />
-                                            )}
-                                        </div>
-                                        <div className="modal-player-text font-family-kbo">
-                                            <div className="mb-2">
-                                                <img
-                                                    src={
-                                                        game &&
-                                                        game.answer.Team &&
-                                                        getTeamLogo(game?.answer.Team)
-                                                    }
-                                                    alt={game?.answer.Team}
-                                                    className="h-6 inline mr-1"
-                                                ></img>
-                                                <span>
-                                                    {teamFull(
-                                                        game?.answer.Team,
-                                                    )}
-                                                </span>
-                                            </div>
-                                            <span>
-                                                No.{game?.answer.BackNo}
-                                            </span>{" "}
-                                            <span>{game?.answer.Name}</span>{" "}
-                                            <a
-                                                href={
-                                                    "/?pid=" +
-                                                    game?.answer.SporkId
-                                                }
-                                                target="_blank" rel="noopener noreferrer"
-                                                title="선수 프로필"
-                                                className="text-blue-600 underline underline-offset-2"
-                                            >
-                                                #
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Collapse>
-                            <Form.Check
-                                type="switch"
-                                id="switch-modal-player"
-                                label="정답 숨기기 (스크린샷용)"
-                                className="mx-2 text-gray-500"
-                                style={{ fontSize: "14px" }}
-                                checked={hideAnswer}
-                                onChange={() => setHideAnswer(!hideAnswer)}
-                            />
-                        </div>
-                        <div className="my-5">
-                            <span className="font-family-NaSqNe font-bold">
-                                ⚜️ 지나간 크보들 풀기
+                        {custom === "" && stats && stats.winStreak > 1 && (
+                            <span className="kbodle-result-streak">
+                                🔥 {stats.winStreak}일 연속
                             </span>
-                            <div className="mt-3 flex gap-2 overflow-x-scroll">
-                                {prevKbodle &&
-                                    prevKbodle.map((e, index) => (
-                                        <Button
-                                            key={e.PK}
-                                            variant="secondary"
-                                            size="sm"
-                                            className="!rounded-full !px-2.5 whitespace-nowrap"
-                                            onClick={() => {
-                                                window.location.href =
-                                                    "https://wesiper.xyz/kbodle/?code=" +
-                                                    Base64.encode(
-                                                        e.playerID +
-                                                            "_#" +
-                                                            e.PK,
-                                                        true,
-                                                    );
-                                            }}
-                                        >
-                                            {index + 1}일 전
-                                        </Button>
-                                    ))}
+                        )}
+                    </div>
+
+                    {/* 정답 선수 */}
+                    <Collapse in={!hideAnswer}>
+                        <div>
+                            <div
+                                className={
+                                    "modal-player kbodle-result-answer bg-" +
+                                    teamCode(game?.answer.Team)
+                                }
+                            >
+                                <div className="kbodle-result-photo">
+                                    {game && (
+                                        <PlayerImg
+                                            img={game?.answer.SporkId}
+                                            name={game?.answer.Name}
+                                            className=""
+                                        />
+                                    )}
+                                </div>
+                                <div className="kbodle-result-player">
+                                    <span className="kbodle-result-team">
+                                        <img
+                                            src={
+                                                game &&
+                                                game.answer.Team &&
+                                                getTeamLogo(game?.answer.Team)
+                                            }
+                                            alt=""
+                                        ></img>
+                                        {teamFull(game?.answer.Team)}
+                                    </span>
+                                    <strong>
+                                        {game?.answer.Name}
+                                        <small>No.{game?.answer.BackNo}</small>
+                                    </strong>
+                                    <a
+                                        href={"/?pid=" + game?.answer.SporkId}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        선수 프로필 보기
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                    </Collapse>
+                    <Form.Check
+                        type="switch"
+                        id="switch-modal-player"
+                        label="정답 숨기기 (스크린샷용)"
+                        className="kbodle-result-hide"
+                        checked={hideAnswer}
+                        onChange={() => setHideAnswer(!hideAnswer)}
+                    />
 
-                        <div className="flex justify-center mt-5">
-                            <Button
-                                variant="outline-primary"
-                                onClick={() => {
-                                    handleClose();
-                                    props.setKbodleMode("make-kbodle");
-                                }}
-                            >
-                                나만의 크보들 만들기
-                            </Button>
+                    <section className="kbodle-result-section">
+                        <h3>결과 공유</h3>
+                        <ResultSquare
+                            tiles={props.tiles}
+                            handleShare={handleShare}
+                        />
+                    </section>
+
+                    <section className="kbodle-result-section">
+                        <h3>지나간 크보들 풀기</h3>
+                        <div className="kbodle-result-previous">
+                            {prevKbodle &&
+                                prevKbodle.map((e, index) => (
+                                    <button
+                                        type="button"
+                                        key={e.PK}
+                                        onClick={() => {
+                                            window.location.href =
+                                                "https://wesiper.xyz/kbodle/?code=" +
+                                                Base64.encode(
+                                                    e.playerID + "_#" + e.PK,
+                                                    true,
+                                                );
+                                        }}
+                                    >
+                                        {index + 1}일 전
+                                    </button>
+                                ))}
                         </div>
-                    </div>
+                        <Button
+                            variant="outline-primary"
+                            className="kbodle-result-custom"
+                            onClick={() => {
+                                handleClose();
+                                props.setKbodleMode("make-kbodle");
+                            }}
+                        >
+                            나만의 크보들 만들기
+                        </Button>
+                    </section>
                 </Modal.Body>
-                <Modal.Footer
-                    style={{ border: "none" }}
-                    className="flex justify-evenly"
-                >
-                    <div className="text-center">
-                        <span>
-                            다음 크보들까지
-                            <br />
-                            <CountdownTimer />
-                        </span>
+                <Modal.Footer className="kbodle-result-footer">
+                    <div className="kbodle-result-countdown">
+                        <span>다음 크보들까지</span>
+                        <CountdownTimer />
                     </div>
 
                     <Button

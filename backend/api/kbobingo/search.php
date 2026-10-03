@@ -28,7 +28,7 @@ require_once dirname(__DIR__, 2) . '/lib/bingo-player.php';
     foreach ($playerRows as $row) {
         $kbodata = cachedBingoPlayer($con, $row['player_id'], function () use ($row) {
             return bingoBuildPlayer(bingoPdo(), $row);
-        }, $cacheVersion);
+        }, bingoPlayerCacheKey($con, $row, $cacheVersion));
         if(!empty($kbodata) && !isset($kbodata['error'])) {
             unset($kbodata['Source']);
             $kbodata = applyPlayerCareerProfile($kbodata, $careerProfiles[(int)$row['player_id']]);

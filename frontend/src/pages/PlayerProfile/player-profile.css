@@ -6,7 +6,15 @@
 .profile-identity { position: relative; display: flex; align-items: center; gap: 26px; padding: 27px 0; }
 .profile-photo { width: 150px; height: 176px; flex: none; display: grid; place-items: center; overflow: hidden; border-radius: 22px; background: #fff; color: var(--team-primary); font-size: 48px; }
 .profile-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.profile-photo img.profile-photo-fallback { object-fit: contain; object-position: center; padding: 16%; }
+/* 사진 없는 선수: 팀 색이 옅게 도는 바탕에 모자 쓴 실루엣(검색 목록과 같은 그림) */
+.profile-photo svg.profile-photo-fallback { display: block; width: 100%; height: 100%; background: linear-gradient(160deg, color-mix(in srgb, var(--team-primary) 8%, #f6f8fb), color-mix(in srgb, var(--team-primary) 18%, #e6ebf2)); }
+.profile-photo-fallback .is-body { fill: color-mix(in srgb, var(--team-primary) 18%, #b9c3d0); }
+/* 큰 헤더에서는 실루엣을 조금 확대해 얼굴과 모자를 키운다(어깨는 아래에 붙인 채로). */
+.profile-hero .profile-photo svg.profile-photo-fallback { transform: translateY(9%) scale(1.2); transform-origin: 50% 100%; }
+/* 팀을 아는 선수는 실루엣 컴포넌트가 그 팀의 홈 모자 색과 로고를 직접 칠한다. 아래는 팀을 모를 때의 기본 모자 색. */
+.profile-photo-fallback .is-cap { fill: color-mix(in srgb, var(--team-primary) 55%, #8f9bab); }
+/* 축약 헤더의 작은 원형 사진에서는 로고가 점처럼 보여서 뺀다. */
+.profile-compact-identity .profile-photo-fallback .is-cap-logo { display: none; }
 .profile-bio { min-width: 0; }
 .profile-bio h1 { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 14px; font-size: 36px; font-weight: 900; }
 .profile-bio h1 span { padding: 6px 12px; border-radius: 12px; background: #ffffff20; font-size: 18px; }
@@ -1002,4 +1010,26 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
     .profile-career-year { font-size: 15px; }
     .profile-career-team, .profile-career-tournament { font-size: 14.5px; }
     .profile-career-list .profile-career-chip, .profile-career-list .profile-career-result { font-size: 11.5px; }
+}
+
+/* ===== 축약 헤더: 사진·이름·팀을 한 줄로 줄여 고정 영역의 높이를 낮춘다 ===== */
+.player-profile .profile-compact-identity { gap: 10px; padding: 7px 20px; }
+.player-profile .profile-compact-identity > .profile-photo { flex: none; width: 34px; height: 34px; border-radius: 50%; box-shadow: 0 0 0 1.5px rgba(255,255,255,.55); }
+.player-profile .profile-compact-identity > div:last-child { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+.player-profile .profile-compact-identity strong { flex: none; gap: 6px; font-size: 17px; letter-spacing: -.02em; }
+.player-profile .profile-compact-identity strong span { font-size: 12.5px; }
+.player-profile .profile-compact-identity p { min-width: 0; margin: 0; overflow: hidden; color: rgba(255,255,255,.78); font-size: 12.5px; text-overflow: ellipsis; white-space: nowrap; }
+.player-profile .profile-compact-identity p::before { content: '·'; margin-right: 8px; color: rgba(255,255,255,.45); }
+.profile-compact-back { min-height: 34px; }
+@media (max-width: 600px) {
+    .player-profile .profile-compact-identity { gap: 9px; padding: 6px 16px; }
+    .player-profile .profile-compact-identity > .profile-photo { width: 30px; height: 30px; }
+    .player-profile .profile-compact-identity strong { font-size: 16px; }
+    .player-profile .profile-compact-identity strong span, .player-profile .profile-compact-identity p { font-size: 12px; }
+}
+/* 넓은 화면에서는 탭을 선수 정보와 같은 줄 오른쪽에 올려 고정 영역을 한 줄로 만든다. */
+@media (min-width: 720px) {
+    .player-profile .profile-compact-identity { padding-right: 372px; }
+    .player-profile .profile-compact-identity > .profile-watermark { display: none; }
+    .player-profile .profile-compact-header .profile-compact-tabs { position: absolute; top: 50%; right: 16px; width: 340px; padding: 0; background: transparent; transform: translateY(-50%); }
 }

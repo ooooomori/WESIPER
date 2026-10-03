@@ -15,6 +15,9 @@ try {
     $finalResults = [];
     $needsTeam=array_filter($results,static fn($row)=>(string)$row['is_kbodle']==='0');
     $lastTeams=searchPlayerLastTeams($pdo,array_column($needsTeam,'player_id'));
+    // 경기 기록의 팀도, 프로필에 저장된 팀도 없는 옛 선수는 연도별 공식 기록의 마지막 팀으로 채운다.
+    $needsHistory=array_filter($needsTeam,static fn($row)=>!isset($lastTeams[$row['player_id']])&&trim((string)($row['stored_team']??''))==='');
+    $historicalTeams=$needsHistory?searchPlayerHistoricalTeams($pdo,array_column($needsHistory,'player_id')):[];
 
     foreach ($results as $row) {
         $player_id = $row['player_id'];
@@ -23,7 +26,7 @@ try {
         $firstRecordYear = null;
         if ((string)$row['is_kbodle'] === '0') {
             // Recent first-team/futures records take priority over stored profile teams.
-            $formerTeam = $lastTeams[$player_id] ?? (trim((string)($row['stored_team'] ?? '')) ?: null);
+            $formerTeam = $lastTeams[$player_id] ?? (trim((string)($row['stored_team'] ?? '')) ?: null) ?? ($historicalTeams[$player_id] ?? null);
             $lastRecordYear = empty($row['retire']) ? $row['last_record_year'] : null;
             $firstRecordYear = $row['first_record_year'] ?? null;
             if ($formerTeam) $formerTeam = trim($formerTeam);

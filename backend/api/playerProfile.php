@@ -37,6 +37,18 @@ try {
         $lastTeam->execute([$pid,$pid,$pid,$pid]);
         $player['FormerTeam'] = $lastTeam->fetchColumn() ?: null;
         }
+        // 경기별 기록이 없는 1982~2000년 선수는 연도별 공식 기록의 마지막 시즌 팀을 쓴다.
+        if ($player['FormerTeam'] === null) {
+            try {
+                $historicalTeam = $pdo->prepare("SELECT team_name FROM (
+                        SELECT year, games, team_name FROM kbo_player_season_batting_totals WHERE league_level=1 AND series_id=0 AND player_id=?
+                        UNION ALL SELECT year, games, team_name FROM kbo_player_season_pitching_totals WHERE league_level=1 AND series_id=0 AND player_id=?
+                    ) seasons WHERE team_name IS NOT NULL AND team_name<>'' AND team_name NOT LIKE '%/%' AND team_name NOT LIKE '%,%'
+                    ORDER BY year DESC, games DESC LIMIT 1");
+                $historicalTeam->execute([$pid, $pid]);
+                $player['FormerTeam'] = $historicalTeam->fetchColumn() ?: null;
+            } catch (Throwable $historicalTeamError) { error_log('Historical former team unavailable: ' . $historicalTeamError->getMessage()); }
+        }
     }
     unset($player['StoredTeam']);
     $career=[];

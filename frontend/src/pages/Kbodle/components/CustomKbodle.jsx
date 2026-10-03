@@ -300,7 +300,7 @@ const MakeKbodle = (props) => {
                 show={show}
                 onHide={handleClose}
                 centered
-                className="font-family-NaSqNe"
+                className="game-modal font-family-NaSqNe"
                 scrollable
             >
                 <Modal.Header style={{ border: "none" }} closeButton>

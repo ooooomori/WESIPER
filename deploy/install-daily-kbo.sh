@@ -5,7 +5,7 @@ stage="${1:?release directory required}"
 root=/home/bitnami/wesiper
 backup="/home/bitnami/deploy-backups/daily-kbo-$(date +%Y%m%d-%H%M%S)"
 mkdir -p "$backup"
-files=(kbo_candle_crawl.py kbo_futures_crawl.py player_ingest.py run_daily_kbo.sh update_kbo_scoreboard.py kbo_futures_player_overrides.json prediction_data.py daily_movement_contracts.py movement_identity.py movement_identity_overrides.json player_identity_corrections.py collect_player_movements.py)
+files=(kbo_candle_crawl.py kbo_futures_crawl.py player_ingest.py run_daily_kbo.sh update_kbo_scoreboard.py kbo_futures_player_overrides.json prediction_data.py daily_movement_contracts.py movement_identity.py movement_identity_overrides.json player_identity_corrections.py collect_player_movements.py kbo_fielding_crawl.py)
 for file in "${files[@]}"; do
     [[ ! -f "$root/$file" ]] || cp -p "$root/$file" "$backup/$file"
     cp "$stage/$file" "$root/$file.daily-release"
@@ -24,6 +24,7 @@ lines=[line for line in source.splitlines() if not any(name in line for name in 
 lines += ['# Daily KBO ingestion: independent jobs at 02:00 KST (host Asia/Seoul).',
           '0 2 * * * /home/bitnami/wesiper/run_daily_kbo.sh candle',
           '0 2 * * * /home/bitnami/wesiper/run_daily_kbo.sh futures',
+          '10 2 * * * /home/bitnami/wesiper/run_daily_kbo.sh fielding',
           '30 2 * * * /home/bitnami/wesiper/run_daily_kbo.sh movements']
 Path(sys.argv[2]).write_text('\n'.join(lines)+'\n')
 PY

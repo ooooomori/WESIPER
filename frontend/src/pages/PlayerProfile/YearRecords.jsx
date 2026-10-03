@@ -12,7 +12,7 @@ export const yearRecordColumns = {
         basic: [['경기','games'],['선발','starts'],['타율','avg'],['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['삼진','so'],['병살','gdp'],['희플','sf'],['희생번트','sh'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['실질OPS','effectiveOps'],['OPS+','opsPlus']],
         advanced: [['경기','games'],['타석','pa'],['wOBA','woba'],['순출루율','isoObp'],['순장타율','isoSlg'],['BABIP','babip'],['땅볼/뜬공','groundFly'],['BB%','bbPct'],['K%','kPct'],['BB/K','bbK']],
         special: [['경기','games'],['Spd','spd'],['도루시도','sbAttempts'],['도루','sb'],['도루자','cs'],['도루성공률','sbPct'],['주루사','runOut']],
-        fielding: [['포지션','position'],['경기','games'],['선발','starts'],['이닝','innings'],['수비율','fieldingPct'],['도루저지율','caughtStealingPct']],
+        fielding: [['포지션','position'],['경기','games'],['선발','starts'],['이닝','innings'],['실책','errors'],['자살','putouts'],['보살','assists'],['병살','doublePlays'],['수비율','fieldingPct'],['견제사','pickoffs'],['포일','passedBalls'],['도루허용','stolenBases'],['도루저지','caughtStealing'],['도루저지율','caughtStealingPct']],
     },
     pitcher: {
         basic: [['경기','games'],['선발','starts'],['ERA','era'],['승리','wins'],['패전','losses'],['세이브','saves'],['홀드','holds'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp'],['승률','winPct'],['WHIP','whip'],['FIP','fip'],['ERA+','eraPlus']],
@@ -96,6 +96,16 @@ export default function YearRecords({ pid, position, teams, titles = [], awards 
             .finally(() => { if (active) setLoading(false); });
         return () => { active = false; };
     }, [pid]);
+    // 처음 보여줄 시즌 종류: 정규시즌 기록이 없으면 퓨처스리그 → 포스트시즌 → 시범경기 순으로 기록이 있는 것을 고른다.
+    // 사용자가 직접 고른 뒤에는 바꾸지 않는다.
+    const seasonChosen = useRef(false);
+    useEffect(() => { seasonChosen.current = false; }, [pid]);
+    useEffect(() => {
+        if (!allData || seasonChosen.current) return;
+        const kind = pitcher ? 'pitcher' : 'batter';
+        const hasRows = key => Boolean((key === 'regular' ? allData : allData.seasons?.[key])?.[kind]?.rows?.length);
+        setSeason(['regular', 'futures', 'postseason', 'preseason'].find(hasRows) || 'regular');
+    }, [allData, pitcher]);
     const currentView = (pitcher || season !== 'regular') && view === 'fielding' ? 'basic' : view;
     useLayoutEffect(() => {
         const tabs = viewsRef.current;
@@ -196,17 +206,17 @@ export default function YearRecords({ pid, position, teams, titles = [], awards 
             </button>;
         })}</span>}</td>;
     };
-    const teamLabel = (name, color) => {
-        const logo = getTeamLogo?.(name);
+    const teamLabel = (name, color, year) => {
+        const logo = getTeamLogo?.(name, year);
         return logo ? <span className="profile-year-team-logo" title={name}><img src={logo} alt="" /><span>{name}</span></span> : <span style={{ color }}>{name}</span>;
     };
     const identityCells = (row, expandable = false) => <>
         <td className="profile-year-cell">{expandable && row.teams.length ? <button className="profile-year-expand" type="button" aria-expanded={!!expanded[row.year]} onClick={() => setExpanded(previous => ({ ...previous, [row.year]: !previous[row.year] }))}>{row.year}<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ transform: expanded[row.year] ? 'rotate(180deg)' : undefined }}><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" /></svg></button> : row.year}</td>
-        <td className="profile-year-team-cell" style={{ '--row-team-color': teamColor(row.team) }}>{expandable && row.teams.length ? <span className="profile-year-multi-team">{row.team}</span> : teamLabel(row.team, teamColor(row.team))}</td>
+        <td className="profile-year-team-cell" style={{ '--row-team-color': teamColor(row.team) }}>{expandable && row.teams.length ? <span className="profile-year-multi-team">{row.team}</span> : teamLabel(row.team, teamColor(row.team), row.year)}</td>
         {showAge && <td className="profile-year-age-cell">{row.age ?? ''}</td>}{showPosition && <td className="profile-year-position-cell">{row.position || ''}</td>}
     </>;
     return <section>
-        <div className="profile-heading profile-year-heading"><h2>연도별 기록</h2><GameLogFilter seasonOnly season={season} disabled={loading} availableSeasons={['regular','preseason','postseason','futures'].filter(key => (key === 'regular' ? allData : allData?.seasons?.[key])?.[pitcher ? 'pitcher' : 'batter']?.rows?.length)} onSeasonChange={value => { setSeason(value); setExpanded({}); }} /><div className={`profile-game-switch ${pitcher ? 'is-detailed' : ''}`} role="group" aria-label="타자 투수 기록 선택">{['타자', '투수'].map((label, index) => <button type="button" key={label} className={pitcher === Boolean(index) ? 'active' : ''} aria-pressed={pitcher === Boolean(index)} onClick={() => setPitcher(Boolean(index))}>{label}</button>)}</div></div>
+        <div className="profile-heading profile-year-heading"><h2>연도별 기록</h2><GameLogFilter seasonOnly season={season} disabled={loading} availableSeasons={['regular','preseason','postseason','futures'].filter(key => (key === 'regular' ? allData : allData?.seasons?.[key])?.[pitcher ? 'pitcher' : 'batter']?.rows?.length)} onSeasonChange={value => { seasonChosen.current = true; setSeason(value); setExpanded({}); }} /><div className={`profile-game-switch ${pitcher ? 'is-detailed' : ''}`} role="group" aria-label="타자 투수 기록 선택">{['타자', '투수'].map((label, index) => <button type="button" key={label} className={pitcher === Boolean(index) ? 'active' : ''} aria-pressed={pitcher === Boolean(index)} onClick={() => setPitcher(Boolean(index))}>{label}</button>)}</div></div>
         <div className="profile-year-views" ref={viewsRef} role="group" aria-label="연도별 기록 종류">{[['basic','기본'],['advanced','심화'],['special',pitcher ? '이닝' : '주루'],...(!pitcher && season === 'regular' ? [['fielding','수비']] : [])].map(([key, label]) => <button key={key} type="button" aria-pressed={currentView === key} onClick={() => setView(key)}>{label}</button>)}{sort && <button type="button" className="profile-year-sort-reset" aria-label="표 정렬 초기화" title="정렬 초기화" onClick={() => setSort(null)}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></button>}{indicator && <span className="profile-year-view-indicator" aria-hidden="true" style={indicator} />}</div>
         <div className="profile-year-table-wrap">
             <div className="profile-game-scroll" ref={scrollRef}><table className="profile-season-games profile-year-records" aria-busy={loading} style={{ '--record-table-width': `${widths.reduce((sum, width) => sum + width, 0)}px`, '--record-table-mobile-width': `${mobileWidths.reduce((sum, width) => sum + width, 0)}px` }}>
@@ -215,11 +225,11 @@ export default function YearRecords({ pid, position, teams, titles = [], awards 
                 <thead><tr><th className="profile-year-cell" scope="col">연도</th><th className="profile-year-team-cell" scope="col">팀</th>{showAge && sortableHeading('나이', 'age', 'profile-year-age-cell')}{showPosition && sortableHeading('포지션', 'position', 'profile-year-position-cell')}{columns.map(([label,key]) => sortableHeading(label, key, key === 'position' ? 'profile-year-position-cell' : undefined))}{showAwards && <th className="profile-year-award-cell" scope="col">수상</th>}</tr></thead>
                 <tbody>{loading ? <tr aria-hidden="true"><td className="profile-year-loading-space" colSpan={columnCount} /></tr> : error || !data.rows.length ? <tr aria-hidden="true"><td className="profile-year-empty-space" colSpan={columnCount} /></tr> : displayedRows.map((row, index) => <Fragment key={isFielding ? `${row.year}-${row.team}-${index}` : row.year}>
                     {!sort && index > 0 && Math.abs(Number(row.year) - Number(displayedRows[index - 1].year)) > 1 && <tr aria-hidden="true" className="profile-year-gap"><td colSpan={columnCount} /></tr>}
-                    {isFielding ? row.positions.map((stats, index) => <tr key={index}>{index === 0 && <><td className="profile-year-cell" rowSpan={row.positions.length}>{row.year}</td><td className="profile-year-team-cell" rowSpan={row.positions.length} style={{ '--row-team-color': teamColor(row.team) }}>{teamLabel(row.team, teamColor(row.team))}</td></>}{statCells(stats)}</tr>) : <><tr>{identityCells(row, true)}{statCells(row.stats, row.year)}{awardCell(row.year)}</tr>{expanded[row.year] && row.teams.map(child => <tr className="profile-year-team-row" key={child.team}>{identityCells(child)}{statCells(child.stats)}{awardCell(null)}</tr>)}</>}
+                    {isFielding ? row.positions.map((stats, index) => <tr key={index}>{index === 0 && <><td className="profile-year-cell" rowSpan={row.positions.length}>{row.year}</td><td className="profile-year-team-cell" rowSpan={row.positions.length} style={{ '--row-team-color': teamColor(row.team) }}>{teamLabel(row.team, teamColor(row.team), row.year)}</td></>}{statCells(stats)}</tr>) : <><tr>{identityCells(row, true)}{statCells(row.stats, row.year)}{awardCell(row.year)}</tr>{expanded[row.year] && row.teams.map(child => <tr className="profile-year-team-row" key={child.team}>{identityCells(child)}{statCells(child.stats)}{awardCell(null)}</tr>)}</>}
                 </Fragment>)}</tbody>
                 <tfoot>{isFielding ? (!loading && !error ? [...(data.careerPositions || [])].sort(compareFieldingPositions) : []).map((stats, index, positions) => <tr key={stats.position}>{index === 0 && <th className="profile-year-career-cell" colSpan={2} rowSpan={positions.length} scope="rowgroup">통산</th>}{statCells(stats)}</tr>) : <>
                     <tr><th className="profile-year-career-cell" colSpan={2} scope="row">{careerTeams.length > 1 ? <button className="profile-year-expand profile-year-career-toggle" type="button" aria-expanded={careerExpanded} onClick={() => setCareerExpanded(open => !open)}>통산<svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ transform: careerExpanded ? 'rotate(180deg)' : undefined }}><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" /></svg></button> : '통산'}</th>{showAge && <td />}{showPosition && <td className="profile-year-position-cell">{!loading && !error ? data.career?.position || '' : ''}</td>}{statCells(!loading && !error ? data.career : null)}{awardCell(null)}</tr>
-                    {careerExpanded && careerTeams.map(item => <tr key={item.team} className="profile-year-career-team-row"><th className="profile-year-career-cell" colSpan={2} scope="row" title={`${item.team} ${item.firstYear}${item.lastYear !== item.firstYear ? `–${item.lastYear}` : ''}`}>{teamLabel(item.team, teamColor(item.team))}</th>{showAge && <td />}{showPosition && <td className="profile-year-position-cell">{item.stats?.position || ''}</td>}{statCells(item.stats)}{awardCell(null)}</tr>)}
+                    {careerExpanded && careerTeams.map(item => <tr key={item.team} className="profile-year-career-team-row"><th className="profile-year-career-cell" colSpan={2} scope="row" title={`${item.team} ${item.firstYear}${item.lastYear !== item.firstYear ? `–${item.lastYear}` : ''}`}>{teamLabel(item.team, teamColor(item.team), item.lastYear)}</th>{showAge && <td />}{showPosition && <td className="profile-year-position-cell">{item.stats?.position || ''}</td>}{statCells(item.stats)}{awardCell(null)}</tr>)}
                 </>}</tfoot>
             </table></div>
             {loading && <div className="profile-year-table-loading"><Spinner size="lg" className="fill-blue-600" aria-label="연도별 기록 불러오는 중" /></div>}

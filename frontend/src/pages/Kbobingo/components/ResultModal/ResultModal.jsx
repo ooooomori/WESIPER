@@ -197,7 +197,7 @@ const ResultModal = (props) => {
             show={props.show}
             onHide={handleClose}
             centered
-            className="font-family-NaSqNe"
+            className="game-modal font-family-NaSqNe"
             scrollable={false}
         >
             <Modal.Header style={{ border: "none" }} closeButton>

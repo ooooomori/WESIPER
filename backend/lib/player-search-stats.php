@@ -20,6 +20,29 @@ function searchPlayerLastTeams(PDO $db,array $ids): array {
     return $teams;
 }
 
+/**
+ * 경기별 기록이 없는 1982~2000년 선수의 마지막 팀: 연도별 공식 기록의 마지막 시즌 팀.
+ * 경기 기록의 팀이나 프로필에 저장된 팀이 없을 때만 쓴다.
+ */
+function searchPlayerHistoricalTeams(PDO $db,array $ids): array {
+    $teams=[];
+    foreach (array_chunk(array_values(array_unique(array_map('intval',$ids))),200) as $chunk) {
+        $marks=implode(',',array_fill(0,count($chunk),'?'));
+        $filter="league_level=1 AND series_id=0 AND player_id IN ($marks) AND team_name IS NOT NULL AND team_name<>'' AND team_name NOT LIKE '%/%' AND team_name NOT LIKE '%,%'";
+        try {
+            $q=$db->prepare("SELECT player_id,year,games,team_name FROM kbo_player_season_batting_totals WHERE $filter
+                UNION ALL SELECT player_id,year,games,team_name FROM kbo_player_season_pitching_totals WHERE $filter");
+            $q->execute([...$chunk,...$chunk]);
+            $latest=[];
+            foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $row) {
+                $rank=[(int)$row['year'],(int)$row['games']];
+                if (!isset($latest[$row['player_id']])||$rank>$latest[$row['player_id']]) { $latest[$row['player_id']]=$rank; $teams[$row['player_id']]=$row['team_name']; }
+            }
+        } catch (Throwable $error) { error_log('Historical last teams unavailable: '.$error->getMessage()); }
+    }
+    return $teams;
+}
+
 /** Batch only matching players, never scan all careers for every keystroke. */
 function searchPlayerRecordStats(PDO $db, array $ids, bool $useCache=true): array {
     $ids=array_values(array_unique(array_map('intval',$ids)));

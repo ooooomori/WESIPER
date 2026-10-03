@@ -75,7 +75,8 @@
 .main-home-rank-remark.is-unreachable { color: #d32f3b; background: #fff0f1; }
 .main-home-rank-remark.is-possible { color: #64748b; background: #f0f2f5; }
 .main-home-ranking-table th, .main-home-ranking-table td { height: 44px; padding: 6px 5px; vertical-align: middle; text-align: center; border-bottom: 1px solid #edf1f6; white-space: nowrap; }
-.main-home-ranking-table thead th { color: #738297; font-size: 11px; font-weight: 500; white-space: pre-line; line-height: 1.5; }
+/* 두 줄 제목(가을야구 탭)도 44px 안에 들어오도록 위아래 여백을 줄인다. 탭을 바꿔도 표 높이가 같다. */
+.main-home-ranking-table thead th { padding-block: 4px; color: #738297; font-size: 11px; font-weight: 500; white-space: pre-line; line-height: 1.5; }
 .main-home-ranking-table th div { display: flex; align-items: center; gap: 3px; font-size: 14px; }
 .main-home-ranking-table .main-home-team-logo { width: 26px; height: 26px; }
 .main-home-ranking-placeholder { display: inline-block; width: 28px; max-width: 100%; height: 12px; border-radius: 4px; background: #edf1f6; vertical-align: middle; }
@@ -232,8 +233,9 @@
 .main-home-player-link:active .main-home-search-player { transform: scale(.99); }
 .main-home-search-photo { position: relative; width: 54px; height: 54px; flex: none; border-radius: 16px; background: #eef2f6; box-shadow: 0 0 0 2px #fff, 0 0 0 4px color-mix(in srgb, var(--c) 60%, #fff); }
 .main-home-search-photo > img:not(.main-home-search-photo-logo), .main-home-search-photo-placeholder { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: cover; object-position: top; }
-.main-home-search-photo-placeholder { background: #e9edef; fill: #a5abb4; }
-.main-home-search-photo-logo { position: absolute; right: -7px; bottom: -7px; width: 24px; height: 24px; padding: 3px; border-radius: 50%; background: #fff; box-shadow: 0 1px 5px rgba(16,39,70,.2); object-fit: contain; }
+.main-home-search-photo-placeholder { background: linear-gradient(160deg, color-mix(in srgb, var(--c) 7%, #f6f8fb), color-mix(in srgb, var(--c) 16%, #e8edf3)); }
+.main-home-search-photo-placeholder .is-body { fill: color-mix(in srgb, var(--c) 18%, #b9c3d0); }
+.main-home-search-photo-placeholder .is-cap { fill: color-mix(in srgb, var(--c) 55%, #8f9bab); }.main-home-search-photo-logo { position: absolute; right: -7px; bottom: -7px; width: 24px; height: 24px; padding: 3px; border-radius: 50%; background: #fff; box-shadow: 0 1px 5px rgba(16,39,70,.2); object-fit: contain; }
 .main-home-search-identity { flex: 1; min-width: 0; }
 .main-home-search-name { display: flex; align-items: baseline; gap: 7px; min-width: 0; }
 .main-home-search-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #0b1b30; font-size: 17px; font-weight: 800; letter-spacing: -.03em; }
@@ -476,3 +478,8 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
 /* 팀 색 살짝: 오른쪽으로 갈수록 팀 색이 은은하게 번지고, 테두리에도 팀 색 기운 */
 .main-home-search-player.has-team-logo { border-color: color-mix(in srgb, var(--c) 16%, #edf1f6); background: linear-gradient(100deg, #fff 30%, color-mix(in srgb, var(--c) 7%, #fff) 70%, color-mix(in srgb, var(--c) 13%, #fff)); }
 .main-home-player-link:hover .main-home-search-player.has-team-logo { border-color: color-mix(in srgb, var(--c) 30%, #e3e9f2); background: linear-gradient(100deg, #fbfcfe 30%, color-mix(in srgb, var(--c) 9%, #fff) 70%, color-mix(in srgb, var(--c) 16%, #fff)); }
+/* 선수 검색 행의 보조 줄: 팀 칩과 굵기·크기를 맞추고, 활동 연도는 한 단계 옅게 둔다. */
+.main-home-search-position { gap: 6px; color: #5b6d84; font-size: 12px; font-weight: 600; letter-spacing: -.01em; }
+.main-home-search-role { flex: none; }
+.main-home-search-years { min-width: 0; overflow: hidden; color: #9aa8ba; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: 0; text-overflow: ellipsis; }
+.main-home-search-years::before { content: '·'; margin-right: 6px; color: #c2cad5; }
