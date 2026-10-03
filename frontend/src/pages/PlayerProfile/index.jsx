@@ -138,16 +138,16 @@ function TeamLogo({ team, className = '', small = false }) {
     return code ? <img className={className} src={src} alt="" /> : null;
 }
 const movementCategories = [
-    ['move', '이적·계약', ['입단', '트레이드', '트레이드(웨이버)', 'FA 자격취득', 'FA 계약', '비FA 다년계약', '자유계약', '해외 복귀 FA 계약', 'FA 보상선수', '2차 드래프트', '소속선수 추가 등록', '임의해지 복귀']],
-    ['release', '방출·은퇴', ['자유계약선수', '웨이버', '임의해지', '임의탈퇴', '은퇴', '군보류 자유계약선수', '자유계약선수 - 참가활동정지']],
+    ['move', '이적·계약', ['입단', '트레이드', '트레이드(웨이버)', 'FA 자격취득', 'FA 계약', '비FA 다년계약', '자유계약', '해외 복귀 FA 계약', 'FA 보상선수', '2차 드래프트', '소속선수 추가 등록']],
+    ['release', '방출·은퇴', ['자유계약선수', '웨이버', '은퇴', '군보류 자유계약선수', '자유계약선수 - 참가활동정지']],
     ['injury', '부상', ['부상자 명단', '치료·재활명단', '재활선수(외국인 선수)']],
     ['military', '군보류', ['군보류']],
     ['number', '등번호', ['등번호 변경']],
     ['etc', '기타', []],
 ];
 // 군보류 해제로 다시 등록된 경우(소속선수 추가 등록 + 비고 '군보류 해제')는 군보류로 묶는다.
-// 임의해지에서 복귀한 경우(종류나 비고에 '임의해지 복귀')는 방출이 아니라 이적·계약으로 본다.
-const movementCategory = movement => (movement.note || '').includes('군보류 해제') ? 'military' : /임의해지\s*복귀/.test(`${movement.type || ''} ${movement.note || ''}`) ? 'move' : movementCategories.find(([, , types]) => types.includes(movement.type))?.[0] || 'etc';
+// 임의해지(옛 임의탈퇴)와 임의해지 복귀(종류나 비고에 '임의해지 복귀')는 기타로 본다.
+const movementCategory = movement => (movement.note || '').includes('군보류 해제') ? 'military' : /임의해지\s*복귀/.test(`${movement.type || ''} ${movement.note || ''}`) ? 'etc' : movementCategories.find(([, , types]) => types.includes(movement.type))?.[0] || 'etc';
 const MOVEMENT_PREVIEW_COUNT = 6;
 const movementYear = movement => Number(String(movement.date || '').slice(0, 4)) || undefined;
 const movementRoute = movement => movement.type === '등번호 변경' ? null : (movement.note || '').trim().match(/^([^→\s]+)\s*→\s*([^→\s]+)$/);
