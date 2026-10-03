@@ -11,7 +11,8 @@ require_once dirname(__DIR__, 2) . '/lib/bingo-player.php';
     // SQL 인젝션 방지를 위해 prepared statement 사용
     $sql = "SELECT `player_id`, `name`, `img`, `pos`, `is_MLB`, `draft`, `backNo`, `bat`, `throw`, `team`, `is_kbodle`, `retire`
             FROM $playerlist 
-            WHERE (`name` LIKE ? OR `oldname` LIKE ? OR `fullname` LIKE ?)
+            WHERE COALESCE(`pos`, '') <> '코치'
+                AND (`name` LIKE ? OR `oldname` LIKE ? OR `fullname` LIKE ?)
             ORDER BY LENGTH(name) ASC, `name` ASC LIMIT 15";
     $stmt = $con->prepare($sql);
     $searchName = "%$searchName%"; // 와일드카드 추가

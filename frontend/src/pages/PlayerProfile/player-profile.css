@@ -970,7 +970,7 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
 .profile-year-award-icon img { width: 20px; height: 20px; object-fit: contain; }
 .profile-year-award-icon small { position: absolute; right: -8px; top: -3px; padding: 0 3px; border-radius: 6px; background: #22364f; color: #fff; font-size: 8.5px; font-weight: 800; line-height: 13px; }
 .profile-year-award-name { color: #5b6d84; font-size: 9.5px; font-weight: 800; line-height: 1.1; letter-spacing: -.03em; white-space: nowrap; }
-.profile-year-award-tip { position: fixed; z-index: 50; display: flex; flex-direction: column; gap: 2px; min-width: 120px; max-width: 220px; padding: 8px 11px; border-radius: 10px; background: #102746; color: #fff; font-size: 12px; font-weight: 600; line-height: 1.4; box-shadow: 0 8px 24px rgba(16,39,70,.25); transform: translateX(-50%); pointer-events: auto; }
+.profile-year-award-tip { position: fixed; z-index: 50; display: flex; flex-direction: column; gap: 2px; min-width: 0; max-width: none; padding: 8px 11px; white-space: nowrap; border-radius: 10px; background: #102746; color: #fff; font-size: 12px; font-weight: 600; line-height: 1.4; box-shadow: 0 8px 24px rgba(16,39,70,.25); transform: translateX(-50%); pointer-events: auto; }
 .profile-year-award-tip strong { font-size: 12.5px; font-weight: 800; }
 .profile-year-award-tip span { color: #cfdbea; }
 @media (max-width: 600px) {
@@ -1037,3 +1037,82 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
     .player-profile .profile-compact-identity > .profile-watermark { display: none; }
     .player-profile .profile-compact-header .profile-compact-tabs { position: absolute; top: 50%; right: 16px; width: 340px; padding: 0; background: transparent; transform: translateY(-50%); }
 }
+
+/* 이동 현황: 트레이드 상세(팀별로 내준 선수·현금·지명권) */
+.profile-movement-trade { gap: 10px; }
+.profile-trade-side { display: flex; flex-direction: column; gap: 6px; }
+.profile-trade-side + .profile-trade-side { padding-top: 10px; border-top: 1px dashed #dbe4ef; }
+.profile-trade-assets { display: flex; flex-wrap: wrap; gap: 6px; }
+.profile-trade-asset { display: inline-flex; align-items: center; gap: 4px; min-height: 26px; padding: 2px 10px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px #dfe7f1; color: #3d5069; font-size: 12.5px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.profile-trade-asset.is-player { color: #102746; font-weight: 800; }
+a.profile-trade-asset { padding-right: 7px; transition: box-shadow .15s, color .15s; }
+a.profile-trade-asset svg, .profile-trade-asset a svg { color: #a9b6c7; }
+a.profile-trade-asset:hover { color: var(--team-primary); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--team-primary) 45%, #dfe7f1); }
+a.profile-trade-asset:hover svg, .profile-trade-asset a:hover svg { color: var(--team-primary); }
+.profile-trade-asset.is-self { background: color-mix(in srgb, var(--team-primary) 10%, #fff); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--team-primary) 30%, #fff); color: var(--team-primary); }
+.profile-trade-asset.is-cash { color: #8a6412; background: #fff8e6; box-shadow: inset 0 0 0 1px #f0deb0; }
+.profile-trade-asset.is-pick { white-space: normal; }
+.profile-trade-asset.is-pick a { display: inline-flex; align-items: center; gap: 2px; margin-left: 2px; padding-left: 7px; border-left: 1px solid #dfe7f1; color: #102746; font-weight: 800; text-decoration: none; }
+.profile-trade-asset.is-pick a:hover { color: var(--team-primary); }
+.profile-trade-asset:focus-visible, .profile-trade-asset a:focus-visible { outline: 2px solid var(--team-primary); outline-offset: 2px; }
+@media (max-width: 600px) { .profile-trade-asset { min-height: 24px; padding: 2px 9px; font-size: 12px; } a.profile-trade-asset { padding-right: 6px; } }
+
+/* 선수 정보: 학력의 학교(초·중·고·대)·리틀야구단 이름을 누르면 동문 선수 모달이 열린다 */
+.profile-schools i { margin: 0 .3em; color: #9aa7b8; font-style: normal; }
+.profile-school-link { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--team-primary) 45%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 3px; transition: color .15s; }
+.profile-school-link:hover { color: var(--team-primary); }
+.profile-school-link:focus-visible { outline: 2px solid var(--team-primary); outline-offset: 2px; border-radius: 4px; }
+.profile-alumni-modal .profile-career-emblem { color: var(--team-primary, #476582); }
+.profile-alumni-body { flex: 1; min-height: 0; padding: 0 20px 20px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.profile-alumni-body h3 { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; gap: 6px; margin: 0 -20px; padding: 12px 20px 8px; background: #fff; box-shadow: 0 6px 8px -7px rgba(16,39,70,.22); color: #5b6d84; font-size: 12.5px; font-weight: 800; }
+.profile-alumni-body h3 span { padding: 1px 7px; border-radius: 999px; background: #eef3fa; color: #5b6d84; font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.profile-alumni-body ul { margin: 0; padding: 0; list-style: none; }
+.profile-alumni-body li + li { border-top: 1px solid #eef2f7; }
+.profile-alumni-row { display: grid; grid-template-columns: 30px minmax(0, 1fr) 14px; grid-template-areas: 'logo name arrow' 'logo meta arrow'; align-items: center; column-gap: 10px; padding: 8px 4px; border-radius: 10px; color: #102746; text-decoration: none; transition: background .15s; }
+a.profile-alumni-row:hover { background: #f6f9fd; }
+a.profile-alumni-row:focus-visible { outline: 2px solid var(--team-primary); outline-offset: -2px; }
+.profile-alumni-logo { grid-area: logo; display: grid; place-items: center; width: 30px; height: 30px; }
+.profile-alumni-logo img { width: 26px; height: 26px; object-fit: contain; }
+.profile-alumni-logo b { color: #8a9bb1; font-size: 11px; font-weight: 800; }
+.profile-alumni-name { grid-area: name; display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+.profile-alumni-name strong { font-size: 14.5px; font-weight: 800; letter-spacing: -.02em; }
+.profile-alumni-name small { color: #8a9bb1; font-size: 12px; font-weight: 700; }
+.profile-alumni-name em { padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--team-primary) 10%, #fff); color: var(--team-primary); font-size: 11px; font-style: normal; font-weight: 800; }
+.profile-alumni-meta { grid-area: meta; overflow: hidden; color: #7b8ba0; font-size: 12px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.profile-alumni-row > svg { grid-area: arrow; color: #b6c1cf; }
+.profile-alumni-empty { margin: 0; padding: 36px 0; color: #8a9bb1; font-size: 13.5px; text-align: center; }
+@media (max-width: 600px) { .profile-alumni-body { padding: 0 16px calc(16px + env(safe-area-inset-bottom)); } }
+
+/* 선수 정보: 값 옆의 작은 버튼(같은 생일, 입단 동기) */
+.profile-fact-action { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.profile-fact-action button { flex: none; padding: 2px 9px; border: 1px solid color-mix(in srgb, var(--team-primary) 22%, #e3e9f2); border-radius: 999px; background: #fff; color: var(--team-primary); font: inherit; font-size: 11.5px; font-weight: 800; letter-spacing: -.01em; cursor: pointer; transition: background .15s, border-color .15s; }
+.profile-fact-action button:hover { background: color-mix(in srgb, var(--team-primary) 8%, #fff); border-color: color-mix(in srgb, var(--team-primary) 45%, #e3e9f2); }
+.profile-fact-action button:focus-visible { outline: 2px solid var(--team-primary); outline-offset: 2px; }
+
+/* 같은 생일 모달: 머리 부분의 전날·다음 날 버튼과 월·일 선택 */
+.profile-alumni-modal .profile-career-title p select, .profile-alumni-modal .profile-career-title p .profile-birthday-step { border: 0; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: background .15s; }
+.profile-alumni-modal .profile-career-title p select { -webkit-appearance: none; appearance: none; padding-right: 9px; text-align: center; }
+.profile-alumni-modal .profile-career-title p select option { background: #fff; color: #102746; }
+.profile-alumni-modal .profile-career-title p .profile-birthday-step { display: inline-grid; place-items: center; width: 26px; height: 24px; padding: 0; }
+.profile-alumni-modal .profile-career-title p select:hover, .profile-alumni-modal .profile-career-title p .profile-birthday-step:hover { background: rgba(255,255,255,.3); }
+.profile-alumni-modal .profile-career-title p select:focus-visible, .profile-alumni-modal .profile-career-title p .profile-birthday-step:focus-visible { outline: 2px solid rgba(255,255,255,.8); outline-offset: 1px; }
+.profile-alumni-body.is-loading { opacity: .45; pointer-events: none; transition: opacity .15s; }
+
+/* 선수 정보: 주포지션·부포지션 구분 */
+.profile-positions { display: flex; flex-wrap: wrap; gap: 4px 10px; }
+.profile-positions > span { display: inline-flex; align-items: center; gap: 5px; }
+.profile-positions small { display: inline-grid; place-items: center; min-width: 20px; height: 18px; padding: 0 5px; border-radius: 6px; background: color-mix(in srgb, var(--team-primary) 10%, #fff); color: var(--team-primary); font-size: 11px; font-weight: 800; }
+.profile-positions > span + span small { background: #eef2f7; color: #6b7c92; }
+
+/* 입단 동기 모달: 라운드로 바로 가는 탭(옆으로 넘겨 본다) */
+.profile-alumni-tabs { flex: none; display: flex; gap: 6px; padding: 10px 20px; overflow-x: auto; border-bottom: 1px solid #eef2f7; background: #fff; scrollbar-width: none; overscroll-behavior-x: contain; }
+.profile-alumni-tabs::-webkit-scrollbar { display: none; }
+.profile-alumni-tabs button { flex: none; display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 11px; border: 1px solid #e3e9f2; border-radius: 999px; background: #fff; color: #5b6d84; font: inherit; font-size: 12.5px; font-weight: 700; white-space: nowrap; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+.profile-alumni-tabs button span { color: #9aa7b8; font-size: 11.5px; font-variant-numeric: tabular-nums; }
+.profile-alumni-tabs button:hover { background: #f6f9fd; }
+.profile-alumni-tabs button[aria-pressed="true"] { border-color: var(--team-primary); background: var(--team-primary); color: #fff; }
+.profile-alumni-tabs button[aria-pressed="true"] span { color: rgba(255,255,255,.75); }
+.profile-alumni-tabs button:focus-visible { outline: 2px solid var(--team-primary); outline-offset: 2px; }
+@media (max-width: 600px) { .profile-alumni-tabs { padding: 9px 16px; } .profile-alumni-tabs button { height: 28px; padding: 0 10px; font-size: 12px; } }
+@media (max-width: 600px) { .profile-alumni-body h3 { margin: 0 -16px; padding: 12px 16px 8px; } }
+.profile-alumni-modal .profile-career-title p .profile-birthday-step:disabled { opacity: .4; cursor: default; }

@@ -78,6 +78,11 @@ try {
         error_log('Player movements unavailable: ' . $movementError->getMessage());
         $player['Movements'] = [];
     }
+    // 트레이드 상세(주고받은 선수·현금·지명권). 표가 없거나 실패해도 기본 이동 현황은 그대로 보여준다.
+    try {
+        require_once __DIR__ . '/../lib/player-trades.php';
+        $player['Movements'] = profileAttachTrades($pdo, (string)$pid, $player['Movements']);
+    } catch (Throwable $tradeError) { error_log('Player trades unavailable: ' . $tradeError->getMessage()); }
     // 입단(kbo_player_data.draft, 예: "22 KIA 1차")도 가장 오래된 이동 내역으로 붙인다.
     if (preg_match('/^(\d{2})\s+(\S+)(?:\s+(.+))?$/u', (string)$player['Draft'], $draft)) {
         // "07 해외진출선수 특별지명"은 지명 구단이 없으므로 팀을 MLB로 두고 문구 전체를 비고로 쓴다.

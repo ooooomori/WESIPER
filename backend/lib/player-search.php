@@ -15,8 +15,9 @@ function searchKboPlayers(PDO $db, string $keyword, bool $useStatsCache=true): a
             CASE WHEN p.name LIKE :rank_name THEN 0 WHEN p.fullname LIKE :rank_fullname THEN 1 WHEN p.oldname LIKE :rank_oldname THEN 2 ELSE 3 END AS match_field,
             CASE WHEN p.name=:exact_name THEN 0 WHEN p.name LIKE :prefix_name THEN 1 ELSE 2 END AS match_name
         FROM kbo_player_data p
-        WHERE p.name LIKE :name OR p.fullname LIKE :fullname OR p.oldname LIKE :oldname
-            OR EXISTS (SELECT 1 FROM kbo_player_nicknames n WHERE n.player_id=p.player_id AND REGEXP_REPLACE(n.nickname, '[[:space:]]+', '') LIKE :nickname)
+        WHERE COALESCE(p.pos, '') <> '코치'
+            AND (p.name LIKE :name OR p.fullname LIKE :fullname OR p.oldname LIKE :oldname
+            OR EXISTS (SELECT 1 FROM kbo_player_nicknames n WHERE n.player_id=p.player_id AND REGEXP_REPLACE(n.nickname, '[[:space:]]+', '') LIKE :nickname))
         ORDER BY match_field,match_name,
             p.name,
             CASE WHEN p.img REGEXP '^[0-9]{4}_' THEN CAST(SUBSTRING_INDEX(p.img, '_', 1) AS UNSIGNED) ELSE 0 END DESC,

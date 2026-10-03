@@ -7,7 +7,8 @@ $keyword = '%' . ($data['keyword'] ?? '') . '%';
 $sql = "SELECT `player_id` AS `playerId`, `name`, `hs`, `hsLoc`, `birth`, `throw`, `bat`,
         `mainPos`, `subPos`, `draft`, `team`, `backNo`
     FROM $playerlist
-    WHERE `is_kbodle` IN (1, 2) AND (`name` LIKE ? OR `oldname` LIKE ? OR `fullname` LIKE ?)
+    WHERE `is_kbodle` IN (1, 2) AND COALESCE(`pos`, '') <> '코치'
+        AND (`name` LIKE ? OR `oldname` LIKE ? OR `fullname` LIKE ?)
     ORDER BY `name` ASC";
 $stmt = $con->prepare($sql);
 $stmt->bind_param('sss', $keyword, $keyword, $keyword);

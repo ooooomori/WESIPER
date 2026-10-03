@@ -3,13 +3,15 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './player-profile.css';
 import PlayerSilhouette from '../../components/PlayerSilhouette';
 import { legacyTeams, legacyTeamColor, teamCapByCode, eraTeamCode, teamCapLogoByCode, teamLogoByCode, teamSmallLogoByCode } from '../../lib/teamAssets';
-import YearRecords from './YearRecords';
+import YearRecords, { allStarSide } from './YearRecords';
 import GameLogFilter from './GameLogFilter';
 import ProfileCandleChart from './ProfileCandleChart';
 import PlayerCompare from './PlayerCompare';
+import PlayerGroupModal, { alumniSchoolChunks, parseDraft } from './PlayerGroupModal';
 import ProfileLoading from './ProfileLoading';
 import { getCachedProfileData, loadProfileData } from './profileDataCache';
 import useTableDrag from './useTableDrag';
+import useSheetDrag from './useSheetDrag';
 import useStickyTableHead from './useStickyTableHead';
 import { recordColumnWidth } from './recordTableLayout';
 import { loadYearRecords } from './yearRecordsCache';
@@ -139,9 +141,9 @@ function TeamLogo({ team, className = '', small = false }) {
 }
 const movementCategories = [
     ['move', '이적·계약', ['입단', '트레이드', '트레이드(웨이버)', 'FA 자격취득', 'FA 계약', '비FA 다년계약', '자유계약', '해외 복귀 FA 계약', 'FA 보상선수', '2차 드래프트', '소속선수 추가 등록']],
-    ['release', '방출·은퇴', ['자유계약선수', '웨이버', '은퇴', '군보류 자유계약선수', '자유계약선수 - 참가활동정지']],
+    ['release', '방출·은퇴', ['자유계약선수', '웨이버', '은퇴', '자유계약선수 - 참가활동정지']],
     ['injury', '부상', ['부상자 명단', '치료·재활명단', '재활선수(외국인 선수)']],
-    ['military', '군보류', ['군보류']],
+    ['military', '군보류', ['군보류', '군보류 자유계약선수']],
     ['number', '등번호', ['등번호 변경']],
     ['etc', '기타', []],
 ];
@@ -197,7 +199,8 @@ function MovementLine({ movement, open = false, onToggle }) {
     const route = movementRoute(movement);
     const note = (movement.note || '').trim();
     const contract = hasContract(movement);
-    const expandable = contract && Boolean(movement.contractDetails || contractSources(movement).length);
+    const expandable = Boolean(movement.trade) || (contract && Boolean(movement.contractDetails || contractSources(movement).length));
+    const toggleName = movement.trade ? '트레이드 상세' : '계약 상세';
     let detail = null;
     if (route) {
         detail = <span className="profile-movement-route" aria-label={`${route[1]}에서 ${route[2]}로`}><MovementTeam team={route[1]} year={movementYear(movement)} withName /><i aria-hidden="true">→</i><MovementTeam team={route[2]} year={movementYear(movement)} withName /></span>;
@@ -212,7 +215,7 @@ function MovementLine({ movement, open = false, onToggle }) {
     return <div className="profile-movement-line">
         <span className="profile-movement-type">{movement.type}</span>
         {detail}
-        {expandable && <button type="button" className="profile-movement-toggle" aria-expanded={open} aria-label={open ? '계약 상세 접기' : '계약 상세 보기'} onClick={onToggle}>
+        {expandable && <button type="button" className="profile-movement-toggle" aria-expanded={open} aria-label={open ? `${toggleName} 접기` : `${toggleName} 보기`} onClick={onToggle}>
             <span>{open ? '접기' : '상세'}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
         </button>}
     </div>;
@@ -222,6 +225,36 @@ function MovementContractDetail({ movement }) {
     return <div className="profile-movement-contract-detail">
         {movement.contractDetails && <p>{movement.contractDetails}</p>}
         {sources.length > 0 && <div className="profile-movement-sources"><span>출처</span>{sources.map(url => <a key={url} href={url} target="_blank" rel="noopener noreferrer">{contractSourceLabel(url)}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></a>)}</div>}
+    </div>;
+}
+// 트레이드 상세: 팀별로 내준 선수·현금·지명권. 다른 선수는 그 선수 페이지로 이어진다.
+function MovementTradeDetail({ movement, pid }) {
+    const { trade } = movement;
+    const year = movementYear(movement);
+    const sides = [];
+    for (const asset of trade.assets || []) {
+        const key = `${asset.from}→${asset.to}`;
+        let side = sides.find(item => item.key === key);
+        if (!side) sides.push(side = { key, from: asset.from, to: asset.to, assets: [] });
+        side.assets.push(asset);
+    }
+    const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    const chevron = <svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+    const assetChip = (asset, index) => {
+        if (asset.type === 'player') {
+            const name = asset.playerName || asset.text;
+            if (asset.playerId && String(asset.playerId) !== String(pid)) return <Link key={index} className="profile-trade-asset is-player" to={`/?pid=${encodeURIComponent(asset.playerId)}`} onClick={toTop}>{name}{chevron}</Link>;
+            return <span key={index} className={`profile-trade-asset is-player${asset.playerId ? ' is-self' : ''}`}>{name}</span>;
+        }
+        if (asset.type === 'cash') return <span key={index} className="profile-trade-asset is-cash">현금 {asset.text}</span>;
+        if (asset.type === 'draft_pick') return <span key={index} className="profile-trade-asset is-pick">{asset.text}{asset.drafteeId && asset.drafteeName && <Link to={`/?pid=${encodeURIComponent(asset.drafteeId)}`} onClick={toTop} title="이 지명권으로 뽑힌 선수">{asset.drafteeName}{chevron}</Link>}</span>;
+        return <span key={index} className="profile-trade-asset">{asset.text}</span>;
+    };
+    return <div className="profile-movement-contract-detail profile-movement-trade">
+        {sides.map(side => <div key={side.key} className="profile-trade-side">
+            <span className="profile-movement-route" aria-label={`${side.from}에서 ${side.to}로`}><MovementTeam team={side.from} year={year} withName /><i aria-hidden="true">→</i><MovementTeam team={side.to} year={year} withName /></span>
+            <div className="profile-trade-assets">{side.assets.map(assetChip)}</div>
+        </div>)}
     </div>;
 }
 // 원형 마커 전용 시각 보정: 로고는 상자 기준으로 가운데지만 모양이 비대칭이라 쏠려 보인다.
@@ -234,7 +267,7 @@ function MovementMarker({ team, year }) {
         {src ? <img className="profile-movement-marker-logo" src={src} alt="" style={shift && { transform: `translate(${shift[0]}%, ${shift[1]}%)` }} /> : team ? <b>{team.slice(0, 2)}</b> : null}
     </span>;
 }
-function PlayerMovements({ movements = [] }) {
+function PlayerMovements({ movements = [], pid }) {
     const [filter, setFilter] = useState('all');
     const [expanded, setExpanded] = useState(false);
     const [openRows, setOpenRows] = useState({});
@@ -259,7 +292,7 @@ function PlayerMovements({ movements = [] }) {
                 <div className="profile-movement-body">
                     <time dateTime={movement.date}>{movement.date.replaceAll('-', '.')}</time>
                     <MovementLine movement={movement} open={open} onToggle={() => setOpenRows(rows => ({ ...rows, [rowKey]: !rows[rowKey] }))} />
-                    {open && <MovementContractDetail movement={movement} />}
+                    {open && (movement.trade ? <MovementTradeDetail movement={movement} pid={pid} /> : <MovementContractDetail movement={movement} />)}
                 </div>
             </li>; })}
         </ol>
@@ -302,65 +335,7 @@ function CareerTeam({ team, year }) {
     return <span className="profile-career-team">{src && <img src={src} alt="" />}{team}</span>;
 }
 function CareerModal({ item, kind, onClose }) {
-    const dialog = useRef(null);
-    const drag = useRef(null);
-    const justDragged = useRef(false);
-    const [expanded, setExpanded] = useState(false);
-    useEffect(() => { dialog.current.showModal(); }, []);
-    const close = () => dialog.current.close();
-    // 머리 부분을 잡고 아래로 끌면 닫히고, 위로 끌면 손가락을 따라 시트가 늘어나 화면 가득 펼쳐진다.
-    const maxSheetHeight = () => window.innerHeight * (window.innerWidth > 600 ? .9 : .94);
-    const dragStart = event => {
-        if (event.button > 0 || event.target.closest('button')) return;
-        drag.current = { y: event.clientY, dy: 0, height: dialog.current.getBoundingClientRect().height };
-        event.currentTarget.setPointerCapture?.(event.pointerId);
-        dialog.current.style.transition = 'none';
-    };
-    const dragMove = event => {
-        if (!drag.current) return;
-        const raw = event.clientY - drag.current.y;
-        // 살짝 움직인 정도(10px 이내)는 무시해서 탭·미세한 흔들림에 시트가 반응하지 않게 한다.
-        const dy = Math.abs(raw) < 10 ? 0 : raw - Math.sign(raw) * 10;
-        drag.current.dy = dy;
-        const element = dialog.current;
-        if (dy < 0) {
-            const max = maxSheetHeight();
-            const grown = drag.current.height - dy;
-            // 최대 높이를 넘기면 살짝만 따라오게 해서 끝에 닿은 느낌을 준다.
-            element.style.maxHeight = 'none';
-            element.style.height = `${Math.min(grown, max + (grown - max) / 4)}px`;
-            element.style.transform = '';
-        } else {
-            element.style.height = `${drag.current.height}px`;
-            element.style.transform = `translateY(${dy}px)`;
-        }
-    };
-    const dragEnd = () => {
-        if (!drag.current) return;
-        const { dy, height: startHeight } = drag.current;
-        drag.current = null;
-        // 드래그를 놓을 때 생기는 click이 바깥(배경) 클릭으로 처리되지 않게 막는다.
-        if (Math.abs(dy) > 5) { justDragged.current = true; window.setTimeout(() => { justDragged.current = false; }, 0); }
-        const element = dialog.current;
-        element.style.transition = 'transform .2s ease, height .25s ease';
-        // 살짝 스와이프하면 제자리로 돌아오고, 충분히 끌었을 때만 닫히거나 펼쳐진다.
-        const remaining = maxSheetHeight() - startHeight;
-        if (dy > (expanded ? 320 : 170)) { element.style.transform = 'translateY(110%)'; window.setTimeout(close, 180); return; }
-        element.style.transform = '';
-        const next = dy < -Math.max(110, Math.min(remaining, 400) * .4) ? true : expanded && dy > 130 ? false : expanded;
-        setExpanded(next);
-        // 목표 높이로 부드럽게 옮긴 뒤 인라인 스타일을 걷어내 CSS가 다시 높이를 맡게 한다.
-        const natural = element.style.height || `${element.getBoundingClientRect().height}px`;
-        element.classList.toggle('is-expanded', next);
-        element.style.height = '';
-        element.style.maxHeight = '';
-        const target = next ? maxSheetHeight() : Math.min(element.getBoundingClientRect().height, maxSheetHeight());
-        element.style.height = natural;
-        requestAnimationFrame(() => {
-            element.style.height = `${target}px`;
-            window.setTimeout(() => { element.style.height = ''; element.style.maxHeight = ''; element.style.transition = ''; }, 260);
-        });
-    };
+    const { dialog, expanded, close, justDragged, handlers: dragHandlers } = useSheetDrag();
     const combined = kind === 'national-all';
     const national = kind === 'national' || combined;
     const countries = [...new Set(item.rows.map(row => row.country || '한국'))];
@@ -376,7 +351,7 @@ function CareerModal({ item, kind, onClose }) {
     const span = years.length ? (Math.min(...years) === Math.max(...years) ? `${Math.min(...years)}` : `${Math.min(...years)} – ${Math.max(...years)}`) : null;
     const count = item.name === '우승' ? `V${item.rows.length}` : `${item.rows.length}회`;
     return <dialog ref={dialog} className={`profile-career-modal${expanded ? ' is-expanded' : ''}`} aria-labelledby="profile-career-title" onClose={onClose} onClick={e => { if (e.target !== e.currentTarget || justDragged.current) return; const box = e.currentTarget.getBoundingClientRect(); if (e.clientX < box.left || e.clientX > box.right || e.clientY < box.top || e.clientY > box.bottom) close(); }}>
-        <header className={`profile-career-modal-head${national && team ? ' is-national' : ''}`} style={headStyle} onPointerDown={dragStart} onPointerMove={dragMove} onPointerUp={dragEnd} onPointerCancel={dragEnd}>
+        <header className={`profile-career-modal-head${national && team ? ' is-national' : ''}`} style={headStyle} {...dragHandlers}>
             {national && countryLogo && <img className={`profile-career-watermark${team?.[5] ? ' is-dark-logo' : ''}`} src={countryLogo} alt="" aria-hidden="true" />}
             <div className={`profile-career-emblem${combined && countryMark ? ' is-country' : ''}${combined && team?.[4] ? ' is-light-logo' : ''}`}>{image ? <img src={image} alt="" /> : <span aria-hidden="true">{combined ? countryName.slice(0, 2) : item.name.slice(0, 1)}</span>}</div>
             <div className="profile-career-title">
@@ -393,7 +368,7 @@ function CareerModal({ item, kind, onClose }) {
                     {combined && <span className="profile-career-tournament">{nationalImages[row.type] && <img src={nationalImages[row.type]} alt="" />}{row.type}</span>}
                     {national
                         ? <>{(multiCountry || !combined) && <span className={`profile-career-chip profile-career-country${nationalTeam(row.country)?.[4] ? ' is-light-logo' : ''}`} style={nationalTeam(row.country) ? { '--country-color': nationalTeam(row.country)[2] } : undefined}>{nationalTeamLogo(row.country, true) && <img src={nationalTeamLogo(row.country, true)} alt="" />}{nationalTeam(row.country)?.[1] || row.country || '한국'}</span>}<span className={`profile-career-result is-${careerResultTone(row.note)}`}>{careerResultTone(row.note) !== 'plain' && <i aria-hidden="true" />}{row.note || '대표 선발'}</span></>
-                        : <><CareerTeam team={row.team} year={row.year} />{row.pos && <span className="profile-career-chip">{row.pos}</span>}{row.note && <span className="profile-career-note">{row.note}</span>}</>}
+                        : <><CareerTeam team={row.team} year={row.year} />{row.type === '올스타' && allStarSide(row.team, row.year) && <span className="profile-career-chip">{allStarSide(row.team, row.year)} 올스타</span>}{row.pos && <span className="profile-career-chip">{row.pos}</span>}{row.note && <span className="profile-career-note">{row.type === '올스타' && row.note === 'MVP' ? '미스터 올스타' : row.note}</span>}</>}
                 </span>
             </li>)}
         </ol>
@@ -434,6 +409,8 @@ export default function PlayerProfile({ pid }) {
     const tabFromUrl = () => Math.max(0, tabNames.indexOf(new URLSearchParams(location.search).get('tab') || ''));
     const initial = String(location.state?.player?.PlayerId) === String(pid) ? location.state.player : null;
     const [selectedCareer, setSelectedCareer] = useState(null);
+    // 선수 묶음 모달: 같은 학교·리틀야구단, 같은 해 입단, 같은 생일 ({ type, value })
+    const [playerGroup, setPlayerGroup] = useState(null);
     const [player, setPlayer] = useState(initial ? { ...initial, IsKbodle: initial.IsActive === false ? 0 : 1 } : null);
     const [records, setRecords] = useState(null);
     const [recordLoading, setRecordLoading] = useState(true);
@@ -570,7 +547,12 @@ export default function PlayerProfile({ pid }) {
     const isPitcher = (player.Pos || '').includes('투수');
     const mainPosition = player.MainPos?.trim();
     const positionText = value => isPitcher && value && !value.endsWith('투수') ? `${value}투수` : value;
-    const detailedPosition = mainPosition ? extraPositions.map(positionText).join(', ') : player.Pos;
+    // 부포지션이 있으면 주포지션과 나눠서 보여준다.
+    const positionList = value => [...new Set((value || '').split(',').map(item => item.trim()).filter(Boolean))].map(positionText);
+    const subPositions = positionList(player.SubPos).filter(item => !positionList(player.MainPos).includes(item));
+    const detailedPosition = mainPosition && subPositions.length
+        ? <span className="profile-positions"><span><small>주</small>{positionList(player.MainPos).join(', ')}</span><span><small>부</small>{subPositions.join(', ')}</span></span>
+        : mainPosition ? extraPositions.map(positionText).join(', ') : player.Pos;
     const heroPosition = positionText(mainPosition) || player.Pos;
     const retirementYear = player.Retire || records?.year;
     const formerTeam = player.FormerTeam ? teamFullName(player.FormerTeam) : null;
@@ -588,7 +570,9 @@ export default function PlayerProfile({ pid }) {
     const groupCareer = rows => Object.entries((rows || []).reduce((groups, row) => { (groups[row.type] ||= []).push(row); return groups; }, {})).map(([name, rows]) => ({ name, rows: rows.sort((a, b) => Number(a.year) - Number(b.year) || Number(a.month) - Number(b.month)) }));
     const awards = groupCareer(player.Awards).sort((a,b)=>(awardOrder.indexOf(a.name) < 0 ? 99 : awardOrder.indexOf(a.name))-(awardOrder.indexOf(b.name) < 0 ? 99 : awardOrder.indexOf(b.name)));
     const national = groupCareer(player.National).sort((a, b) => nationalOrder.indexOf(a.name) - nationalOrder.indexOf(b.name));
-    const info = [['이름', Number(player.IsForeign) === 1 ? player.FullName || player.Name : player.Name], ['개명', player.OldName ? `${player.OldName} → ${player.Name}` : null], ['등번호', numberRetired ? null : player.BackNo], ['소속팀', retired || numberRetired ? null : team[3]], ['영구결번', numberRetired ? `${team[3]}${player.BackNo != null ? ` No.${player.BackNo}` : ''}` : null], ['포지션', detailedPosition], ['투타', handedness], ['생년월일', birthday], ['신체', player.Body], ['학력', player.School], ['입단', player.Draft], ['은퇴', retired && retirementYear ? `${retirementYear}년` : null], ['별명', player.Nicknames?.join(', ')], ['가족', player.Family?.length ? <span className="profile-family">{player.Family.map(member => <Link key={`${member.PlayerId}-${member.Relationship}`} className="profile-family-link" to={`/?pid=${encodeURIComponent(member.PlayerId)}`} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}><small>{member.Relationship}</small><b>{member.Name}</b><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>)}</span> : null]].filter(([, value]) => value !== null && value !== undefined && String(value).trim() !== '');
+    const birthMonthDay = /^\d{4}-\d{2}-\d{2}/.test(String(player.Birth || '')) ? String(player.Birth).slice(5, 10) : null;
+    const draftYear = parseDraft(player.Draft)?.year;
+    const info = [['이름', Number(player.IsForeign) === 1 ? player.FullName || player.Name : player.Name], ['개명', player.OldName ? `${player.OldName} → ${player.Name}` : null], ['등번호', numberRetired ? null : player.BackNo], ['소속팀', retired || numberRetired ? null : team[3]], ['영구결번', numberRetired ? `${team[3]}${player.BackNo != null ? ` No.${player.BackNo}` : ''}` : null], ['투타', handedness], ['포지션', detailedPosition], ['생년월일', birthday && birthMonthDay ? <span className="profile-fact-action">{birthday}<button type="button" onClick={() => setPlayerGroup({ type: 'birthday', value: birthMonthDay })}>같은 생일</button></span> : birthday], ['신체', player.Body], ['학력', player.School ? <span className="profile-schools">{String(player.School).split('-').map((part, index) => <span key={index}>{index > 0 && <i aria-hidden="true">-</i>}{alumniSchoolChunks(part).map((chunk, order) => chunk.name ? <button key={order} type="button" className="profile-school-link" title={`${chunk.name} ${/리틀$/.test(chunk.name) ? '출신' : '동문'} 선수 보기`} onClick={() => setPlayerGroup({ type: 'school', value: chunk.name })}>{chunk.text}</button> : chunk.text)}</span>)}</span> : null], ['입단', player.Draft && draftYear ? <span className="profile-fact-action">{player.Draft}<button type="button" onClick={() => setPlayerGroup({ type: 'draft', value: String(draftYear) })}>입단 동기</button></span> : player.Draft], ['은퇴', retired && retirementYear ? `${retirementYear}년` : null], ['별명', player.Nicknames?.join(', ')], ['가족', player.Family?.length ? <span className="profile-family">{player.Family.map(member => <Link key={`${member.PlayerId}-${member.Relationship}`} className="profile-family-link" to={`/?pid=${encodeURIComponent(member.PlayerId)}`} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}><small>{member.Relationship}</small><b>{member.Name}</b><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>)}</span> : null]].filter(([, value]) => value !== null && value !== undefined && String(value).trim() !== '');
     const gameLogPitcher = gamePitcher ?? gameLog.pitcher ?? isPitcher;
     const gameColumns = [['날짜','date'],['상대','opponent'],['구장','stadium'],['경기 결과','result'],['선발','isStarter'],...((gameLog.pitcher ?? records?.pitcher) ? (detailedGames ? [['기록','badge'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp']] : [['기록','summary']]) : [['포지션','position'],['타순','order'],...(detailedGames ? [['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['삼진','so'],['병살','gdp'],['희플','sf'],['희생번트','sh'],['도루','sb'],['도루실패','cs']] : [['기록','summary']])]),['비고','notes']];
     const rollingColumns = [['기간','label'],['경기','games'],...(records?.pitcher ? [['선발','starts'],['ERA','era'],['승리','wins'],['패전','losses'],['세이브','saves'],['홀드','holds'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp'],['WHIP','whip']] : [['타석','pa'],['타율','avg'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['희플','sf'],['희생번트','sh'],['병살','gdp'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['OPS+','opsPlus']])];
@@ -669,7 +653,7 @@ export default function PlayerProfile({ pid }) {
             </li>; })}</ol> : <p className="profile-games-empty">최근 경기 기록이 없습니다.</p>}</section>}
             {tab === 2 && <StreakRecords streaks={gameLog.currentSeasonStreaks} pitcher={isPitcher} />}
             {tab === 2 && <section><div className="profile-heading profile-game-heading"><h2>경기 일지</h2><GameLogFilter years={gameLog.years} year={gameYear || gameLog.year} season={gameSeason || gameLog.season || 'regular'} availableSeasons={gameLog.availableSeasons} onYearChange={value => { setGameYear(value); const available = gameLog.availableSeasons?.[value] || []; setGameSeason(available.includes(gameSeason || gameLog.season) ? gameSeason || gameLog.season : available[0] || ''); }} onSeasonChange={value => { setGameYear(String(gameYear || gameLog.year)); setGameSeason(value); }} /><div className="profile-game-switches"><div className={`profile-game-switch ${gameLogPitcher ? 'is-detailed' : ''}`} role="group" aria-label="타자 투수 기록 선택">{['타자','투수'].map((label,i)=><button key={label} type="button" className={gameLogPitcher === Boolean(i) ? 'active' : ''} aria-pressed={gameLogPitcher === Boolean(i)} onClick={()=>{ if (gameLogPitcher === Boolean(i)) return; setGamePitcher(Boolean(i)); setGameYear(''); setGameSeason(''); }}>{label}</button>)}</div><div className={`profile-game-switch ${detailedGames ? 'is-detailed' : ''}`} role="group" aria-label="경기 기록 표시 방식">{['간략히','자세히'].map((label,i)=><button key={label} type="button" className={detailedGames === Boolean(i) ? 'active' : ''} aria-pressed={detailedGames === Boolean(i)} onClick={()=>setDetailedGames(Boolean(i))}>{label}</button>)}</div></div></div>{!gameLogLoading && gameLog.games?.length ? <><div className="profile-table-sticky-head" ref={gameStickyRef} aria-hidden="true"><div><table className="profile-season-games"><thead><tr>{gameColumns.map(([label,key])=><th key={key}>{label}</th>)}</tr></thead></table></div></div><div className="profile-game-scroll" ref={gameScrollRef}><table className="profile-season-games"><caption className="sr-only">시즌 전체 경기 기록</caption><thead><tr>{gameColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{gameLog.games.map(game=><tr key={game.gameId}>{gameColumns.map(([,key])=><td key={key} className={key === 'summary' || key === 'badge' ? 'profile-record-cell' : undefined}>{gameCell(game,key)}</td>)}</tr>)}</tbody></table></div></> : gameLogLoading ? <ProfileLoading>경기 일지를 불러오는 중이에요.</ProfileLoading> : <p className="profile-games-empty">{gameLogError || '경기 기록이 없습니다.'}</p>}</section>}
-            {tab === 0 && <PlayerMovements key={`movements-${pid}`} movements={player.Movements} />}
+            {tab === 0 && <PlayerMovements key={`movements-${pid}`} movements={player.Movements} pid={pid} />}
             {tab === 0 && awards.length > 0 && <section><div className="profile-heading"><h2>수상 경력</h2></div><div className="profile-honors">{awards.map(award => { const clickable = award.name !== '신인왕'; const Tag = clickable ? 'button' : 'div'; return <Tag key={award.name} {...(clickable ? { type: 'button', 'aria-label': `${award.name} 상세 내역`, onClick: () => setSelectedCareer({ item: award, kind: 'award' }) } : {})} className={`profile-honor${['MVP', '우승', '골든글러브'].includes(award.name) ? ' is-premium' : ''}`}>
                 <span className="profile-honor-icon">{awardImages[award.name] ? <img src={awardImages[award.name]} alt="" loading="lazy" /> : <b>{award.name.slice(0, 1)}</b>}</span>
                 <span className="profile-honor-text"><strong>{award.name}</strong><small>{[...new Set(award.rows.map(row => row.year).filter(Boolean))].join(' · ')}</small></span>
@@ -692,6 +676,7 @@ export default function PlayerProfile({ pid }) {
             {(chartVisited || tab === 3) && <ProfileCandleChart key={`candle-chart-${pid}`} pid={pid} player={player} active={tab === 3} />}
             {tab === 4 && <PlayerCompare key={`compare-${pid}`} pid={pid} player={player} getTeamLogo={movementLogo} getTeamColor={compareTeamColor} />}
         </div>
+        {playerGroup && <PlayerGroupModal key={`${playerGroup.type}-${playerGroup.value}`} group={playerGroup} currentPid={pid} getLogo={movementLogo} onClose={() => setPlayerGroup(null)} />}
         {selectedCareer && <CareerModal item={selectedCareer.item} kind={selectedCareer.kind} onClose={() => setSelectedCareer(null)} />}
     </main>;
 }

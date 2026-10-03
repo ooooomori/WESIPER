@@ -62,6 +62,38 @@ const yearAwardOrder = ['MVP', '골든글러브', '수비상', '신인왕', '올
 const awardShortNames = { MVP: 'MVP', 골든글러브: 'GG', 수비상: '수비상', 신인왕: '신인왕', 올스타: '올스타', '월간 MVP': '월간', 우승: '우승' };
 // 포지션이 있는 상(골든글러브 등)은 '외야수 골든글러브'처럼 포지션을 앞에 쓴다.
 const awardLabel = award => [award.pos || '', award.type, award.month ? `${award.month}월` : '', award.note || ''].filter(Boolean).join(' ');
+// 수상 툴팁: 내용 없이 제목 한 줄로 쓴다("2023 유격수 수비상", "2026년 4월 월간 MVP").
+// 우승만 제목은 "2017 한국시리즈 우승"(1985년은 한국시리즈가 없어 "통합 우승")으로 두고 내용에 "한국시리즈 MVP" 같은 비고를 넣는다.
+// 올스타전 소속: 2014년까지는 동군·서군(1999·2000년은 드림·매직), 2015년부터는 드림·나눔. 팀 이름은 수상 당시 이름이다.
+const allStarEast = ['삼성', '롯데', 'OB', '두산', '쌍방울', 'SK', 'SSG', 'KT'];
+const allStarWest = ['MBC', 'LG', '해태', 'KIA', '삼미', '청보', '태평양', '현대', '빙그레', '한화', '히어로즈', '우리', '넥센', '키움', 'NC'];
+// 양대리그였던 1999·2000년 올스타전은 드림리그 대 매직리그로 치렀다.
+const allStarLeagues = {
+    1999: { 드림: ['두산', '롯데', '현대', '해태'], 매직: ['삼성', 'LG', '한화', '쌍방울'] },
+    2000: { 드림: ['현대', '두산', '삼성', '해태'], 매직: ['LG', '롯데', '한화', 'SK'] },
+};
+export const allStarSide = (team, year) => {
+    const leagues = allStarLeagues[Number(year)];
+    if (leagues) return Object.keys(leagues).find(name => leagues[name].includes(team)) || '';
+    const east = allStarEast.includes(team) ? true : allStarWest.includes(team) ? false : null;
+    if (east === null) return '';
+    return Number(year) >= 2015 ? (east ? '드림' : '나눔') : (east ? '동군' : '서군');
+};
+const awardTipText = (year, group) => {
+    const rows = group.rows;
+    // 올스타: "2011 동군 올스타". 올스타전 MVP는 제목에 넣지 않고 내용에 "미스터 올스타"로 쓴다.
+    if (group.type === '올스타') {
+        const side = allStarSide(rows.find(row => row.team)?.team, year);
+        return { title: [year, side, '올스타'].filter(Boolean).join(' '), lines: rows.some(row => row.note === 'MVP') ? ['미스터 올스타'] : [] };
+    }
+    if (group.type === '우승') return { title: Number(year) === 1985 ? '1985 통합 우승' : `${year} 한국시리즈 우승`, lines: [...new Set(rows.map(row => row.note).filter(Boolean))] };
+    if (group.type === '월간 MVP') {
+        const months = [...new Set(rows.map(row => row.month).filter(Boolean))];
+        return { title: months.length ? `${year}년 ${months.join('·')}월 월간 MVP` : `${year} 월간 MVP`, lines: [] };
+    }
+    const labels = [...new Set(rows.map(row => [row.pos || '', row.type, row.note || ''].filter(Boolean).join(' ')))];
+    return labels.length === 1 ? { title: `${year} ${labels[0]}`, lines: [] } : { title: `${year} ${group.type}`, lines: labels };
+};
 
 export default function YearRecords({ pid, position, teams, titles = [], awards = [], awardImages = {}, getTeamLogo, initialView = 'basic' }) {
     const [pitcher, setPitcher] = useState((position || '').includes('투수'));
@@ -201,7 +233,7 @@ export default function YearRecords({ pid, position, teams, titles = [], awards 
             return <button type="button" key={group.type} className={`profile-year-award${open ? ' is-open' : ''}`} aria-label={`${year} ${group.rows.map(awardLabel).join(', ')}`} aria-expanded={open} onClick={event => {
                 if (open) { setAwardTip(null); return; }
                 const box = event.currentTarget.getBoundingClientRect();
-                setAwardTip({ id, title: `${year} ${group.type}${group.rows.length > 1 ? ` ${group.rows.length}회` : ''}`, lines: group.rows.map(awardLabel).filter(line => line !== group.type), x: box.left + box.width / 2, y: box.bottom + 6 });
+                setAwardTip({ id, ...awardTipText(year, group), x: box.left + box.width / 2, y: box.bottom + 6 });
             }}>
                 <span className="profile-year-award-icon">{awardImages[group.type] ? <img src={awardImages[group.type]} alt="" /> : <b>{group.type.slice(0, 2)}</b>}{group.rows.length > 1 && <small>×{group.rows.length}</small>}</span>
                 <span className="profile-year-award-name">{awardShortNames[group.type] || group.type}</span>

@@ -1,6 +1,7 @@
 {
   "short_name": "React App",
   "name": "Create React App Sample",
+  "description": "KBO 경기 일정과 기록, 선수 정보부터 야구 미니게임까지, 웨시퍼에서 만나보세요!",
   "icons": [
     {
       "src": "favicon.ico",
