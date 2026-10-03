@@ -95,7 +95,7 @@ function BatterCandleChart({ pid, player, active }) {
     const hasChart = !loading && !error && data?.success && data.data.length > 0;
     return <section className="profile-candle-section" aria-busy={loading} hidden={!active}>
         {!hasChart && heading}
-        {loading ? <ProfileLoading>차트 기록을 불러오는 중이에요.</ProfileLoading>
+        {loading ? <ProfileLoading><span>차트를 만드는 중이에요!<br />조금 시간이 걸릴 수 있어요.</span></ProfileLoading>
             : error ? <div className="profile-candle-status" role="alert"><p>{error}</p><button type="button" onClick={() => setRetry(value => value + 1)}>다시 시도</button></div>
             : !data?.success || !data.data.length ? <div className="profile-candle-status"><p>이 시즌에는 차트로 표시할 타격 기록이 없습니다.</p><span>타석별 기록이 있는 시즌에서 캔들 차트를 볼 수 있습니다.</span></div>
             : <KboCandlestickChart kboData={data} dark={false} profile profileHeading={heading} selectedMetric={metric} onMetricChange={setMetricId} />}

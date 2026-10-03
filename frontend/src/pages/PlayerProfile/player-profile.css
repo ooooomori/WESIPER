@@ -649,11 +649,12 @@
 .player-profile .profile-stats-overview > div::after { content: ''; position: absolute; left: 14px; bottom: 0; width: 22px; height: 3px; border-radius: 3px 3px 0 0; background: color-mix(in srgb, var(--team-primary) 55%, #fff); }
 .player-profile .profile-stats-overview .profile-stat-header { margin-top: 0; align-items: center; }
 .player-profile .profile-stats-overview .profile-stat-header span { color: #5b6d84; font-size: 13px; font-weight: 700; letter-spacing: -.01em; }
-.player-profile .profile-stats-overview .profile-stat-rank { padding: 2px 7px; border-radius: 999px; background: #eef2f7; color: #6a7d95; font-size: 10.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
-.player-profile .profile-stats-overview .profile-stat-rank.is-top { background: color-mix(in srgb, var(--team-primary) 14%, #fff); color: var(--team-primary); }
-.player-profile .profile-stats-overview .profile-stat-rank.is-gold { background: linear-gradient(135deg, #ffe58a, #f0b400); color: #6b4a00; box-shadow: 0 1px 3px rgba(240,180,0,.35); }
-.player-profile .profile-stats-overview .profile-stat-rank.is-silver { background: linear-gradient(135deg, #f1f4f8, #b9c4d2); color: #3e4c5e; }
-.player-profile .profile-stats-overview .profile-stat-rank.is-bronze { background: linear-gradient(135deg, #f6d2b4, #c9844e); color: #5d3214; }
+.player-profile .profile-stats-overview .profile-stat-rank { padding: 2px 0; border-radius: 6px; background: transparent; color: #8a9bb1; font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.player-profile .profile-stats-overview .profile-stat-rank.is-top, .player-profile .profile-stats-overview .profile-stat-rank.is-gold, .player-profile .profile-stats-overview .profile-stat-rank.is-silver, .player-profile .profile-stats-overview .profile-stat-rank.is-bronze { padding: 2px 6px; font-weight: 800; }
+.player-profile .profile-stats-overview .profile-stat-rank.is-top { background: color-mix(in srgb, var(--team-primary) 10%, #fff); color: var(--team-primary); }
+.player-profile .profile-stats-overview .profile-stat-rank.is-gold { background: #fff4d1; color: #8a6200; }
+.player-profile .profile-stats-overview .profile-stat-rank.is-silver { background: #eef1f5; color: #55657a; }
+.player-profile .profile-stats-overview .profile-stat-rank.is-bronze { background: #fbeee4; color: #8a4b1c; }
 .player-profile .profile-stats-overview strong { flex: 1; display: flex; align-items: flex-end; justify-content: flex-start; place-items: end start; color: var(--team-primary); font-size: 34px; font-weight: 900; letter-spacing: -.04em; line-height: 1; font-variant-numeric: tabular-nums; }
 /* 이닝처럼 긴 숫자는 카드 폭에 맞춰 글자 크기를 줄인다. */
 .player-profile .profile-stats-overview > div { container-type: inline-size; }
@@ -667,7 +668,8 @@
     .player-profile .profile-stats-overview > div::after { left: 8px; width: 16px; }
     .player-profile .profile-stats-overview .profile-stat-header { flex-direction: row; flex-wrap: nowrap; justify-content: space-between; align-items: center; gap: 2px; }
     .player-profile .profile-stats-overview .profile-stat-header span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; letter-spacing: -.03em; }
-    .player-profile .profile-stats-overview .profile-stat-rank { flex: none; padding: 1px 4px; font-size: 9px; letter-spacing: -.03em; }
+    .player-profile .profile-stats-overview .profile-stat-rank { flex: none; padding: 1px 0; border-radius: 5px; font-size: 9.5px; letter-spacing: -.03em; }
+    .player-profile .profile-stats-overview .profile-stat-rank.is-top, .player-profile .profile-stats-overview .profile-stat-rank.is-gold, .player-profile .profile-stats-overview .profile-stat-rank.is-silver, .player-profile .profile-stats-overview .profile-stat-rank.is-bronze { padding: 1px 4px; }
     .player-profile .profile-stats-overview strong { font-size: clamp(18px, calc(5.6vw - 1px), 23px); }
     .player-profile .profile-stats-overview .profile-stat-header { flex-wrap: wrap; row-gap: 3px; }
     .player-profile .profile-stats-overview .profile-stat-header span { overflow: visible; text-overflow: clip; }

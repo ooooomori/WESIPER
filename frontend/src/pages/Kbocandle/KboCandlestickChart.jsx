@@ -52,10 +52,12 @@ export default function KboCandlestickChart({ kboData, dark, setDark, profile = 
     const metric = selectedMetric ?? internalMetric;
     const setMetric = onMetricChange || setInternalMetric;
     const [timeframe, setTimeframe] = useState("daily");
-    const [showMA, setShowMA] = useState(true);
+    const [showMA, setShowMA] = useState(false);
     const [showExtrema, setShowExtrema] = useState(true);
     const [calendarGaps, setCalendarGaps] = useState(false);
     const [chartSettingsOpen, setChartSettingsOpen] = useState(false);
+    // 설정 모달은 body로 포털되어 선수 페이지의 팀 색 변수를 물려받지 못하므로, 열 때 읽어서 넘긴다.
+    const [settingsAccent, setSettingsAccent] = useState("");
     const [candlePaletteId, setCandlePaletteId] = useState("kbo");
     const [chartType, setChartType] = useState("candle");
     const [selected, setSelected] = useState(null);
@@ -196,7 +198,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark, profile = 
             return labels;
         };
         const recent = () => {
-            const count = host.current.clientWidth < 600 ? 36 : 60;
+            const count = host.current.clientWidth < 600 ? 24 : 40;
             chart.timeScale().setVisibleLogicalRange({ from: Math.max(-0.5, points.length - count), to: points.length + 2 });
             chart.priceScale("right").applyOptions({ autoScale: true });
         };
@@ -272,14 +274,14 @@ export default function KboCandlestickChart({ kboData, dark, setDark, profile = 
                 <div><div className="candle-eyebrow">{latest && <><span><a className="candle-player-id-link" href={kboPlayerUrl} target="_blank" rel="noreferrer">{`#${kboData.player_id}`}</a>{` · ${metricName}`}</span><MetricHelp metric={metric} /></>}</div><h2>{kboData?.name || "선수를 선택해주세요"}</h2></div>
             </div>}
             <div className={`candle-price ${direction}`}>
-                <div className="candle-price-main">{seasonRankText && <small className={`candle-price-rank ${seasonRank <= 5 ? rankBadgeClass(seasonRank) : ""}`}>{seasonTopThree && rankMedal(seasonRank)}{seasonRankText}</small>}<strong>{format(current)}</strong></div>
+                <div className="candle-price-main">{seasonRankText && <small className={`candle-price-rank ${seasonRank <= 5 ? rankBadgeClass(seasonRank) : ""}`}>{seasonTopThree && !profile && rankMedal(seasonRank)}{seasonRankText}</small>}<strong>{format(current)}</strong></div>
                 {change !== null && <span className="candle-price-change">{`${change > 0 ? "▲" : change < 0 ? "▼" : "−"} ${format(Math.abs(change))}${previous ? ` (${change > 0 ? "+" : ""}${(change / Math.abs(previous) * 100).toFixed(2)}%)` : ""}`}</span>}
             </div>
         </header>
         {profile ? <RecordMetricTabs options={availableMetrics} value={metric} onChange={setMetric} /> : <nav className="candle-metrics" aria-label="기록 지표">{availableMetrics.map(([id, name]) => <button key={id} aria-pressed={metric === id} className={metric === id ? "active" : ""} onClick={() => setMetric(id)}>{name}</button>)}</nav>}
         <div className="candle-toolbar">
             <div className="candle-periods" style={{ "--active-index": { daily: 0, weekly: 1, monthly: 2 }[timeframe] }}>{[["daily", "일"], ["weekly", "주"], ["monthly", "월"]].map(([id, label]) => <button key={id} aria-pressed={timeframe === id} className={timeframe === id ? "active" : ""} onClick={() => setTimeframe(id)}>{label}</button>)}</div>
-            <div className="candle-options"><button className="candle-chart-settings-icon" aria-label="차트 설정" aria-haspopup="dialog" onClick={() => setChartSettingsOpen(true)}><i className="bi bi-gear" aria-hidden="true" /></button></div>
+            <div className="candle-options"><button className="candle-chart-settings-icon" aria-label="차트 설정" aria-haspopup="dialog" onClick={event => { setSettingsAccent(getComputedStyle(event.currentTarget).getPropertyValue("--heading-primary").trim()); setChartSettingsOpen(true); }}><i className="bi bi-gear" aria-hidden="true" /></button></div>
         </div>
         <div className="candle-legend">{plus ? <><span className="mint">● {metricName}</span><span>● {metric === "ops_plus" ? "실질OPS+" : "OPS+"}</span></> : showMA && <><span>이동평균선</span><span className="gold">7</span><span className="mint">15</span><span className="purple">30</span></>}</div>
         <div className="candle-plot-wrap"><div className="candle-plot" ref={host} role="img" aria-label={`${metricName} 차트. 좌우로 이동하거나 확대해 기록을 탐색하세요.`} />{showExtrema && extremaLabels.map(label => <div key={label.kind} className={`candle-extrema-label ${label.kind} ${label.side || ""}`} style={{ left: label.x, top: label.y }} aria-hidden="true">{label.kind === "low" && <span className="candle-extrema-arrow">↑</span>}<span className="candle-extrema-text">{label.text}</span>{label.kind === "high" && <span className="candle-extrema-arrow">↓</span>}</div>)}</div>
@@ -305,7 +307,7 @@ export default function KboCandlestickChart({ kboData, dark, setDark, profile = 
         </div>}
         {!profile && latest && kboData?.season === "regular" && <CandleBreakdownTable key={`${kboData.player_id}-${kboData.year}`} year={kboData.year} breakdown={kboData.breakdown} />}
         {!profile && latest && <PredictionCard data={kboData} dark={dark} />}
-        <Modal show={chartSettingsOpen} onHide={() => setChartSettingsOpen(false)} centered className={`candle-settings-modal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"}`} contentClassName="candle-settings-modal-content">
+        <Modal show={chartSettingsOpen} onHide={() => setChartSettingsOpen(false)} centered className={`candle-settings-modal font-family-NaSqNe ${dark ? "theme-dark" : "theme-light"} ${profile ? "is-profile" : ""}`} style={profile && settingsAccent ? { "--settings-accent": settingsAccent } : undefined} contentClassName="candle-settings-modal-content">
             <Modal.Header closeButton><Modal.Title>차트 설정</Modal.Title></Modal.Header>
             <Modal.Body>
                 {!plus && <label className="candle-settings-switch-row"><span className="candle-settings-copy"><span>이동평균선 표시</span><small>최근 7, 15, 30경기의 평균값을 선으로 표시합니다.</small></span><input type="checkbox" value="" className="sr-only peer candle-settings-switch-input" checked={showMA} onChange={event => setShowMA(event.target.checked)} /><span className="candle-settings-switch" aria-hidden="true" /></label>}
