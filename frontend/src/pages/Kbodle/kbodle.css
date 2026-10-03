@@ -320,6 +320,13 @@
     max-width: 4rem;
     background-color: white;
 }
+/* 사진 없는 선수의 실루엣 */
+.modal-player-img svg {
+    display: block;
+    width: 4rem;
+    height: 5rem;
+    border-radius: 0.8rem;
+}
 
 .modal-player-text {
     padding-left: 16px;

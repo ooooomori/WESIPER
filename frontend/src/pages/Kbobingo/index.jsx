@@ -283,7 +283,7 @@ const GridItem = (props) => {
                         window.open(`/?pid=${encodeURIComponent(item.p_no)}`, "_blank", "noopener,noreferrer");
                     }}
                 >
-                    <div className="absolute top-0 right-0 text-white text-[0.6rem] md:text-xs bg-zinc-800 opacity-95 pl-1.5 pr-1 sm:pr-1.5 py-0.5 rounded-bl-lg">
+                    <div className="absolute z-10 top-0 right-0 text-white text-[0.6rem] md:text-xs bg-zinc-800 opacity-95 pl-1.5 pr-1 sm:pr-1.5 py-0.5 rounded-bl-lg">
                         {rate}%
                     </div>
                     <PlayerImg p_no={item.p_no} p_img={pImg} />

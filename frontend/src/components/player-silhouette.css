@@ -1,0 +1,4 @@
+/* 실루엣 기본 색. 쓰는 화면이 따로 색을 정하면 그쪽이 우선하도록 :where()로 우선순위를 낮춘다. */
+:where(.player-silhouette) { background: linear-gradient(160deg, #f6f8fb, #e8edf3); }
+:where(.player-silhouette) .is-body { fill: #b9c3d0; }
+:where(.player-silhouette) .is-cap { fill: #8f9bab; }

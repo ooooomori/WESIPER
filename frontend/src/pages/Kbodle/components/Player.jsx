@@ -1,49 +1,20 @@
-const PlayerImg = (props) => {
-    const teamCode = (hangul) => {
-        switch (hangul) {
-            case "삼성":
-                return "sam";
-            case "SSG":
-                return "ssg";
-            case "롯데":
-                return "lot";
-            case "두산":
-                return "doo";
-            case "KIA":
-                return "kia";
-            case "LG":
-                return "lg";
-            case "키움":
-                return "kiw";
-            case "NC":
-                return "nc";
-            case "한화":
-                return "han";
-            default:
-                return "kt";
-        }
-    };
-    const fallbackImage = new URL(
-        `../../../assets/images/player/${teamCode(props.team ?? "SSG")}_${
-            props.pos === "선발" || props.pos === "구원" ? "p" : "b"
-        }_${props.hand?.[0] === "우" ? "r" : "l"}.jpg`,
-        import.meta.url,
-    ).href;
+import { useEffect, useState } from "react";
+import PlayerSilhouette from "../../../components/PlayerSilhouette";
+import { teamCapByName } from "../../../lib/teamAssets";
 
+// 선수 사진이 없으면 소속팀 모자를 쓴 실루엣을 보여준다.
+const PlayerImg = (props) => {
+    const [failed, setFailed] = useState(false);
+    useEffect(() => setFailed(false), [props.img]);
+
+    if (failed || !props.img) return <PlayerSilhouette className={props.className} cap={teamCapByName(props.team)} />;
     return (
         <img
             key={props.name}
-            src={
-                props.img
-                    ? `${import.meta.env.BASE_URL}assets/images/player/kbo/${props.img}.jpg`
-                    : fallbackImage
-            }
+            src={`${import.meta.env.BASE_URL}assets/images/player/kbo/${props.img}.jpg`}
             className={props.className}
             alt={props.name || "선수 이미지 준비 중"}
-            onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = fallbackImage;
-            }}
+            onError={() => setFailed(true)}
         ></img>
     );
 };

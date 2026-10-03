@@ -1,37 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import PlayerSilhouette from "../../../components/PlayerSilhouette";
+import { teamCapByCode, teamCapLogoByCode } from "../../../lib/teamAssets";
 
-// 1. 컴포넌트 외부에 선언하여 빌드 시 폴더 내 모든 jpg 이미지를 객체 형태로 가져옵니다.
-const localImages = import.meta.glob("../../../assets/images/player/*.jpg", { 
-    eager: true, 
-    import: "default" 
-});
-
+// 선수 사진은 public의 로컬 이미지에서 불러오고, 없으면 팀 모자를 쓴 실루엣을 보여준다.
+// p_img("2026_ssg_b_r" 또는 "ssg_b_r")는 모자 색을 정할 팀 코드를 찾는 데만 쓴다.
 const PlayerImg = (props) => {
     const { p_no, p_img } = props;
-    const [srcIndex, setSrcIndex] = useState(0);
+    const [failed, setFailed] = useState(false);
+    useEffect(() => setFailed(false), [p_no]);
 
-    // p_img는 팀별 로컬 이미지 fallback을 찾는 데만 사용합니다.
-    const imgName = p_img ? p_img.split("_").slice(1).join("_") : "";
-
-    // 2. 미리 로드된 이미지 객체에서 매칭되는 경로를 찾습니다.
-    const localImagePath = `../../../assets/images/player/${imgName}.jpg`;
-    const localImage = localImages[localImagePath] || "";
-
-    // 선수 사진은 프로젝트의 public 로컬 이미지에서만 불러옵니다.
-    const sources = [
-        `${import.meta.env.BASE_URL}assets/images/player/kbo/${p_no}.jpg`,
-        localImage,
-    ].filter(Boolean);
-
-    const handleError = () => {
-        setSrcIndex((prev) => (prev < sources.length - 1 ? prev + 1 : prev));
-    };
-
+    if (failed || !p_no) {
+        const parts = String(p_img || "").split("_");
+        const teamCode = parts.length >= 4 ? parts[1] : parts[0];
+        const cap = teamCapByCode(teamCode);
+        return <PlayerSilhouette className="bingo-player-silhouette w-full h-full" cap={cap} logo={cap && !cap.noLogo ? teamCapLogoByCode(teamCode) : null} />;
+    }
     return (
         <img
-            src={sources[srcIndex]}
-            alt={localImages['ssg_p_r']}
-            onError={handleError}
+            src={`${import.meta.env.BASE_URL}assets/images/player/kbo/${p_no}.jpg`}
+            alt=""
+            onError={() => setFailed(true)}
             className="w-full md:h-full md:w-auto bg-white"
         />
     );

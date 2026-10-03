@@ -30,4 +30,5 @@
 }
 
 /* KBO BINGO help carousel */
-
+/* 사진 없는 선수의 실루엣: 아래 이름 띠에 어깨가 가려지므로 인물을 조금 위로 올린다. 올라간 만큼 생기는 아래 틈은 같은 바탕색으로 메운다. */
+.bingo-player-silhouette { transform: translateY(-8%); box-shadow: 0 14px 0 #e8edf3; }

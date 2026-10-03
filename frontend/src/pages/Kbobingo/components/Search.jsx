@@ -294,7 +294,7 @@ const SearchResultDiv = (props) => {
                             {player.Name}
                         </span>
 
-                        <span className="ml-2">No.{player.BackNo}</span>
+                        {player.BackNo != null && String(player.BackNo).trim() !== "" && <span className="ml-2">No.{player.BackNo}</span>}
                     </div>
                     <div className="font-normal text-xs text-gray-500 dark:text-gray-400 -mt-1 text-start">
                         {/* 메인페이지 선수 검색 규칙 + 현역은 올해까지 (End = 올해), 모르는 값은 ? */}

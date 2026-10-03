@@ -2,6 +2,8 @@
 // 세로로 긴 칸에서는 어깨 양옆이 잘리며 아래에 붙는다.
 // cap({ crown, brim, originalLogo })을 주면 그 팀의 홈 모자 색으로 칠하고, logo를 주면 앞면에 로고를 얹는다.
 
+import './player-silhouette.css';
+
 // 정면에서 본 볼캡의 챙: 가운데가 높고 양 끝이 아래로 휘어 내려오는 ∩ 모양
 // 챙은 모자 몸통보다 조금만 넓게 두고, 몸통 아랫단을 챙 안쪽까지 내려서 둘 사이가 끊겨 보이지 않게 한다.
 const brim = 'M11.5 21.7C14.2 17.9 17.8 16.4 22 16.4s7.8 1.5 10.5 5.3c.3.5-.2 1-.7.7C29 20.6 25.7 19.7 22 19.7s-7 .9-9.8 2.7c-.5.3-1-.2-.7-.7Z';
@@ -13,9 +15,10 @@ const seams = 'M22 7.9C19.2 9.4 17 13.2 16.6 18.9M22 7.9c2.8 1.5 5 5.3 5.4 11';
 
 export default function PlayerSilhouette({ className, logo, cap }) {
     const crownStyle = cap ? { fill: cap.crown } : undefined;
-    return <svg className={`${className}${cap ? ' has-cap-color' : ''}${logo ? ' has-cap-logo' : ''}`} viewBox="0 0 44 44" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
-        <path className="is-body" d="M3 46c0-10 8.5-15 19-15s19 5 19 15Z" />
-        <circle className="is-body" cx="22" cy="20.5" r="8.3" />
+    return <svg className={`player-silhouette ${className || ''}${cap ? ' has-cap-color' : ''}${logo ? ' has-cap-logo' : ''}`} viewBox="0 0 44 44" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <path className="is-body" d="M3 47.2c0-10 8.5-15 19-15s19 5 19 15Z" />
+        {/* 얼굴: 원이 아니라 세로로 조금 긴 타원(턱 쪽으로 길어진다) */}
+        <ellipse className="is-body" cx="22" cy="20.2" rx="8.8" ry="9.6" />
         <path className="is-cap" d={crown} style={crownStyle} />
         <path d={seams} fill="none" stroke={cap ? '#fff' : '#000'} strokeWidth=".3" strokeLinecap="round" opacity=".07" />
         <ellipse className="is-cap" cx="22" cy="7.7" rx="1.2" ry=".65" style={crownStyle} />

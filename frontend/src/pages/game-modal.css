@@ -49,7 +49,7 @@
 .modal-player.kbodle-result-answer { align-items: center; gap: 14px; margin-top: 10px; padding: 14px 16px; overflow: hidden; border-radius: 16px; color: #fff; }
 .modal-player.kbodle-result-answer::before { opacity: .14; background-position: right -18px center; background-size: auto 115%; pointer-events: none; }
 .kbodle-result-photo { position: relative; z-index: 1; flex: none; }
-.kbodle-result-photo img { display: block; width: 64px; height: 80px; border-radius: 12px; background: #fff; object-fit: cover; object-position: top; box-shadow: 0 6px 16px rgba(0,0,0,.2); }
+.kbodle-result-photo img, .kbodle-result-photo svg { display: block; width: 64px; height: 80px; border-radius: 12px; background: #fff; object-fit: cover; object-position: top; box-shadow: 0 6px 16px rgba(0,0,0,.2); }
 .kbodle-result-player { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; min-width: 0; }
 .kbodle-result-team { display: inline-flex; align-items: center; gap: 5px; color: rgba(255,255,255,.82); font-size: 12px; font-weight: 700; }
 .kbodle-result-team img { width: 18px; height: 18px; padding: 2px; border-radius: 50%; background: #fff; object-fit: contain; }

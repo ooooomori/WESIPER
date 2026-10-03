@@ -2,6 +2,17 @@
 declare(strict_types=1);
 require_once __DIR__.'/player-season-schedule.php';
 
+/**
+ * 퓨처스리그 기록은 옛 시즌도 지금 구단 이름으로 저장돼 있다(2010년 경기도 'SSG', '키움').
+ * 그 해의 실제 구단 이름으로 되돌린다.
+ */
+function searchEraTeamName(string $team,int $year): string {
+    $name=trim($team);
+    if ($name==='SSG'&&$year>0&&$year<2021) return 'SK';
+    if ($name==='키움'&&$year>0&&$year<2019) return $year>=2010?'넥센':'히어로즈';
+    return $team;
+}
+
 /** Resolve latest first-team/futures clubs with one round trip per batch. */
 function searchPlayerLastTeams(PDO $db,array $ids): array {
     $teams=[];
@@ -13,9 +24,9 @@ function searchPlayerLastTeams(PDO $db,array $ids): array {
             $parts[]="(SELECT player_id,team,game_date,game_id,league_level FROM `$table` WHERE league_level=$league AND player_id=? AND NULLIF(TRIM(team),'') IS NOT NULL ORDER BY game_date DESC,game_id DESC LIMIT 1)";
             $params[]=$id;
         }
-        $q=$db->prepare('SELECT player_id,team FROM (SELECT recent.*,ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY game_date DESC,game_id DESC,league_level) rn FROM ('.implode(' UNION ALL ',$parts).') recent) ranked WHERE rn=1');
+        $q=$db->prepare('SELECT player_id,team,game_date FROM (SELECT recent.*,ROW_NUMBER() OVER (PARTITION BY player_id ORDER BY game_date DESC,game_id DESC,league_level) rn FROM ('.implode(' UNION ALL ',$parts).') recent) ranked WHERE rn=1');
         $q->execute($params);
-        foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $row) $teams[$row['player_id']]=$row['team'];
+        foreach ($q->fetchAll(PDO::FETCH_ASSOC) as $row) $teams[$row['player_id']]=searchEraTeamName((string)$row['team'],(int)substr((string)$row['game_date'],0,4));
     }
     return $teams;
 }
