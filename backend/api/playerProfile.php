@@ -49,10 +49,10 @@ try {
     $player['Titleholders'] = $titles->fetchAll(PDO::FETCH_ASSOC);
     // 선수 이동 현황(KBO 공시 + 조사로 보강한 계약). 최신이 위로 오고, 같은 날은 공시 원문 순서를 따른다.
     try {
-        $movementColumns = 'event_date AS date, event_type AS type, team, note, old_back_no AS oldBackNo, new_back_no AS newBackNo';
+        $movementColumns = 'COALESCE(CAST(event_date AS CHAR), CAST(year AS CHAR)) AS date, event_type AS type, team, note, old_back_no AS oldBackNo, new_back_no AS newBackNo';
         $contractColumns = ', contract_years AS contractYears, contract_term AS contractTerm, contract_total_amount AS contractTotal,
             contract_registered_amount AS contractRegistered, contract_currency AS contractCurrency, contract_details AS contractDetails, contract_source_url AS contractSources';
-        $movementSql = static fn(string $columns) => "SELECT $columns FROM kbo_player_movements WHERE player_id=? ORDER BY event_date DESC, source_page, source_row, id";
+        $movementSql = static fn(string $columns) => "SELECT $columns FROM kbo_player_movements WHERE player_id=? ORDER BY COALESCE(event_date, CONCAT(year, '-01-01')) DESC, source_page, source_row, id";
         try {
             $movements = $pdo->prepare($movementSql($movementColumns . $contractColumns));
             $movements->execute([$pid]);

@@ -186,7 +186,7 @@ def run(write=False,lookback=14):
             else:
                 # A researched announcement may precede the official trade post.
                 # Promote it to official provenance, keeping enriched contract fields.
-                matches=[r for r in existing.values() if row['player_id'] is not None and r['player_id']==row['player_id'] and club(r['team'])==club(row['team']) and row['event_type'] in ('FA 계약','해외 복귀 FA 계약') and r['event_type'] in ('FA 계약','해외 복귀 FA 계약','자유계약') and not r['source_key'] in {x['source_key'] for x in rows} and abs((date.fromisoformat(str(r['event_date']))-date.fromisoformat(row['event_date'])).days)<32]
+                matches=[r for r in existing.values() if r['event_date'] is not None and row['player_id'] is not None and r['player_id']==row['player_id'] and club(r['team'])==club(row['team']) and row['event_type'] in ('FA 계약','해외 복귀 FA 계약') and r['event_type'] in ('FA 계약','해외 복귀 FA 계약','자유계약') and not r['source_key'] in {x['source_key'] for x in rows} and abs((date.fromisoformat(str(r['event_date']))-date.fromisoformat(row['event_date'])).days)<32]
                 if len(matches)>1:raise ValueError('Ambiguous official contract reconciliation')
                 if matches:
                     old_contract=matches[0];statistics['announcements_promoted']+=1
@@ -217,7 +217,7 @@ def run(write=False,lookback=14):
             event=date.fromisoformat(dates[0][:4]+'-'+dates[0][4:6]+'-'+dates[0][6:8])
             if not start_date(today,lookback)<=event<=today:continue
             contract['event_date']=event.isoformat()
-            matches=[r for r in existing.values() if r['player_id']==contract['player_id'] and club(r['team'])==contract['team'] and r['event_type'] in ('FA 계약','해외 복귀 FA 계약','비FA 다년계약','자유계약') and abs((date.fromisoformat(str(r['event_date']))-event).days)<32]
+            matches=[r for r in existing.values() if r['event_date'] is not None and r['player_id']==contract['player_id'] and club(r['team'])==contract['team'] and r['event_type'] in ('FA 계약','해외 복귀 FA 계약','비FA 다년계약','자유계약') and abs((date.fromisoformat(str(r['event_date']))-event).days)<32]
             if len(matches)>1:
                 pending.append({'reason':'multiple_existing_contracts','contract':contract});continue
             if matches and matches[0].get('contract_total_amount') is not None:
