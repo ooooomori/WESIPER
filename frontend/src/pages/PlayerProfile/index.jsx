@@ -170,16 +170,27 @@ function formatContractAmount(amount, currency = 'KRW') {
     if (value >= 1e8) { const eok = value / 1e8; return `${Number.isInteger(eok) ? eok : eok.toFixed(1).replace(/\.0$/, '')}억`; }
     return `${Math.round(value / 1e4).toLocaleString('ko-KR')}만`;
 }
-function hasContract(movement) { return Boolean(movement.contractTerm || movement.contractTotal); }
+function contractSources(movement) {
+    return [...new Set((movement.contractSources || '').split(/\s*\n\s*/).filter(url => {
+        try { return ['http:', 'https:'].includes(new URL(url).protocol); } catch { return false; }
+    }))];
+}
+function contractSourceLabel(url) {
+    const source = new URL(url);
+    if (/KBO_FILE\/ebook/.test(source.pathname)) return 'KBO 연감';
+    if (source.hostname.endsWith('koreabaseball.com')) return 'KBO 공식';
+    return source.hostname.replace(/^www\./, '');
+}
+function hasContract(movement) { return Boolean(movement.contractTerm || movement.contractTotal || contractSources(movement).length); }
 function MovementLine({ movement, open = false, onToggle }) {
     const route = movementRoute(movement);
     const note = (movement.note || '').trim();
     const contract = hasContract(movement);
-    const expandable = contract && Boolean(movement.contractDetails);
+    const expandable = contract && Boolean(movement.contractDetails || contractSources(movement).length);
     let detail = null;
     if (route) {
         detail = <span className="profile-movement-route" aria-label={`${route[1]}에서 ${route[2]}로`}><MovementTeam team={route[1]} withName /><i aria-hidden="true">→</i><MovementTeam team={route[2]} withName /></span>;
-    } else if (contract) {
+    } else if (contract && (movement.contractTerm || movement.contractTotal)) {
         const amount = formatContractAmount(movement.contractTotal, movement.contractCurrency);
         detail = <span className="profile-movement-contract">{movement.contractTerm && <b>{movement.contractTerm}</b>}{movement.contractTerm && amount && <i aria-hidden="true">·</i>}{amount && <b className="is-amount">{amount}</b>}</span>;
     } else if (movement.type === '등번호 변경' && (movement.oldBackNo || movement.newBackNo)) {
@@ -196,8 +207,10 @@ function MovementLine({ movement, open = false, onToggle }) {
     </div>;
 }
 function MovementContractDetail({ movement }) {
+    const sources = contractSources(movement);
     return <div className="profile-movement-contract-detail">
         {movement.contractDetails && <p>{movement.contractDetails}</p>}
+        {sources.length > 0 && <div className="profile-movement-sources"><span>출처</span>{sources.map(url => <a key={url} href={url} target="_blank" rel="noopener noreferrer">{contractSourceLabel(url)}<svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 5h5v5M19 5l-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></a>)}</div>}
     </div>;
 }
 // 원형 마커 전용 시각 보정: 로고는 상자 기준으로 가운데지만 모양이 비대칭이라 쏠려 보인다.
