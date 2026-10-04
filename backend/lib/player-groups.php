@@ -6,6 +6,7 @@ require_once __DIR__ . '/player-search-stats.php';
 const ALUMNI_SCHOOL_ALIASES = [
     '덕수고' => ['덕수고', '덕수정보고', '덕수정보산업고', '덕수상고'],
     '군산상일고' => ['군산상일고', '군산상고'],
+    '부경고' => ['부경고', '경남상고'],
 ];
 
 /**
@@ -15,6 +16,8 @@ const ALUMNI_SCHOOL_ALIASES = [
 function alumniSchoolNames(?string $school): array {
     $names = [];
     foreach (explode('-', (string)$school) as $part) {
+        // 외국 학교는 "미국 Klein Collins(고)"처럼 괄호로 끝난다. 괄호까지 통째로 학교 이름이다.
+        if (preg_match('/^.+\((초|중|고|대)\)$/u', trim($part))) { $names[] = trim($part); continue; }
         if (preg_match_all('/\(([^)]*)\)/u', $part, $inner)) foreach ($inner[1] as $name) if (trim($name) !== '') $names[] = trim($name);
         $name = trim((string)preg_replace('/\([^)]*\)/u', '', $part));
         if ($name !== '') $names[] = $name;

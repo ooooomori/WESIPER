@@ -7,8 +7,9 @@ header_register_callback(static function(): void { if (http_response_code() >= 4
 $type = $_GET['type'] ?? '';
 $value = is_string($_GET['value'] ?? null) ? trim($_GET['value']) : '';
 $valid = match ($type) {
-    // 학교(초·중·고·대)와 리틀야구단만 받는다.
-    'school' => (bool)preg_match('/^[\p{L}\p{N} .]{2,30}(초|중|고|대|리틀)$/u', $value),
+    // 학교(초·중·고·대)와 리틀야구단만 받는다. 외국 학교는 "미국 Klein Collins(고)"처럼 괄호로 끝난다.
+    'school' => (bool)preg_match('/^[\p{L}\p{N} .]{2,30}(초|중|고|대|리틀)$/u', $value)
+        || (bool)preg_match('/^[\p{L}\p{N} .,\'&]{2,60}\((초|중|고|대)\)$/u', $value),
     'draft' => (bool)preg_match('/^(19[89]\d|20\d\d)$/D', $value),
     'birthday' => (bool)preg_match('/^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/D', $value),
     default => false,

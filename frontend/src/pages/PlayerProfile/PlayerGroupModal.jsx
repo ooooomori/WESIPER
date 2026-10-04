@@ -6,7 +6,9 @@ const schoolLevels = { 초: '초등학교', 중: '중학교', 고: '고등학교
 const isAlumniName = name => /^[\p{L}\p{N} .]{2,30}(초|중|고|대|리틀)$/u.test(name);
 // 학력의 한 토막("화곡초(강서구리틀)", "(방송통신대)", "동의대(얼리 드래프트)")을 글자 조각으로 나눈다.
 // name이 있는 조각은 동문 조회가 되는 학교(초·중·고·대)나 리틀야구단이다.
-export const alumniSchoolChunks = part => part.split(/(\([^)]*\))/).filter(Boolean).flatMap(chunk => {
+// 외국 학교는 "미국 Klein Collins(고)"처럼 괄호로 끝나고, 괄호까지 통째로 학교 이름이다.
+const foreignSchool = name => String(name).trim().match(/^([\p{L}\p{N} .,'&]{2,60})\((초|중|고|대)\)$/u);
+export const alumniSchoolChunks = part => foreignSchool(part) ? [{ text: part, name: part.trim() }] : part.split(/(\([^)]*\))/).filter(Boolean).flatMap(chunk => {
     if (chunk.startsWith('(')) {
         const inner = chunk.slice(1, -1).trim();
         return isAlumniName(inner) ? [{ text: '(' }, { text: inner, name: inner }, { text: ')' }] : [{ text: chunk }];
@@ -15,10 +17,15 @@ export const alumniSchoolChunks = part => part.split(/(\([^)]*\))/).filter(Boole
 });
 
 // 이름이 바뀐 학교는 지금 이름으로 보여준다(서버의 ALUMNI_SCHOOL_ALIASES와 같은 묶음).
-const currentSchoolName = { 군산상고: '군산상일고', 덕수정보고: '덕수고', 덕수정보산업고: '덕수고', 덕수상고: '덕수고' };
+const currentSchoolName = { 군산상고: '군산상일고', 덕수정보고: '덕수고', 덕수정보산업고: '덕수고', 덕수상고: '덕수고', 경남상고: '부경고' };
+// 학교 급: 이름의 마지막 글자, 외국 학교는 괄호 안의 글자
+const schoolLevel = name => schoolLevels[foreignSchool(name)?.[2] || name.slice(-1)];
 // 모달 제목용 정식 이름: "부산고" → "부산고등학교", "군산상고" → "군산상업고등학교", "안산공고" → "안산공업고등학교".
 // "건대부중"처럼 대학 부속 학교의 줄임말은 풀어 쓰기 어려워 그대로 둔다.
 const schoolFullName = name => {
+    // 외국 학교: "미국 Klein Collins(고)" → "미국 Klein Collins 고등학교"
+    const foreign = foreignSchool(name);
+    if (foreign) return `${foreign[1].trim()} ${schoolLevels[foreign[2]]}`;
     if (/리틀$/.test(name)) return `${name.replace(/리틀$/, '').trim()} 리틀야구단`;
     if (/부(초|중|고)$/.test(name)) return name;
     if (/상고$/.test(name)) return name.replace(/상고$/, '상업고등학교');
@@ -75,7 +82,7 @@ export default function PlayerGroupModal({ group, currentPid, getLogo, onClose }
     const [month, day] = type === 'birthday' ? value.split('-').map(Number) : [];
     const text = type === 'draft' ? { label: '입단 동기', title: `${value}년 입단`, people: '입단 동기' }
         : type === 'birthday' ? { label: '같은 생일', title: `${month}월 ${day}일`, people: '생일이 같은 선수' }
-        : { label: little ? '리틀야구단 출신' : `${schoolLevels[value.slice(-1)] || '학교'} 동문`, title: schoolFullName(data?.school || currentSchoolName[value] || value), people: little ? '출신 선수' : '동문 선수' };
+        : { label: little ? '리틀야구단 출신' : `${schoolLevel(value) || '학교'} 동문`, title: schoolFullName(data?.school || currentSchoolName[value] || value), people: little ? '출신 선수' : '동문 선수' };
     // 2월 29일도 고를 수 있게 윤년(2024년)을 기준으로 날짜를 센다.
     const monthDay = date => `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
     const shiftDay = step => setValue(monthDay(new Date(2024, month - 1, day + step)));
