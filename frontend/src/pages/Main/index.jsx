@@ -140,6 +140,56 @@ function pickPopularPlayer(list, name) {
     return candidates.sort((a, b) => score(b) - score(a))[0] || null;
 }
 
+// 다음 출전 경기에서 안타·홈런을 칠 확률 순위. 예측이 없거나 오래됐으면(시즌 종료 등) 영역을 숨긴다.
+const PREDICTION_TABS = [
+    { key: 'hit', label: '안타', stat: (row) => row.avg != null ? `타율 ${row.avg.toFixed(3).replace(/^0/, '')}` : null },
+    { key: 'homeRun', label: '홈런', stat: (row) => `시즌 ${row.homeRuns}홈런` },
+];
+function PredictionRanking() {
+    const [data, setData] = useState(null);
+    const [tab, setTab] = useState(0);
+    const [expanded, setExpanded] = useState(false);
+    useEffect(() => {
+        const controller = new AbortController();
+        fetch('/api/predictionRanking.php?limit=10', { signal: controller.signal })
+            .then((response) => response.ok ? response.json() : null)
+            .then((result) => { if (result?.available) setData(result); })
+            .catch(() => {});
+        return () => controller.abort();
+    }, []);
+    const { key, label, stat } = PREDICTION_TABS[tab];
+    const rows = data?.rankings?.[key] || [];
+    if (!data || !rows.length) return null;
+    const [, month, day] = String(data.asOf).split('-');
+    const top = rows[0].probability || 1;
+    return (
+        <section className="main-home-section main-home-predict-section" aria-labelledby="preview-predict-title">
+            <SectionTitle title={<><span id="preview-predict-title">다음 경기 예측</span><small className="main-home-section-date">{Number(month)}.{Number(day)} 기준</small></>} action={
+                <div className="main-home-league-switch main-home-ranking-switch" style={{ '--tab-index': tab }} role="group" aria-label="예측 종류 선택">
+                    {PREDICTION_TABS.map((item, index) => <button key={item.key} type="button" className={tab === index ? 'active' : ''} aria-pressed={tab === index} onClick={() => setTab(index)}>{item.label}</button>)}
+                </div>
+            } />
+            <ol className="main-home-predict-list" aria-label={`다음 경기 ${label} 확률 순위`}>
+                {(expanded ? rows : rows.slice(0, 5)).map((row) => {
+                    const team = row.Team || '';
+                    const logo = team ? getSmallTeamLogo(team) : null;
+                    const detail = [team, stat(row)].filter(Boolean).join(' · ');
+                    return <li key={row.PlayerId} style={{ '--c': getTeamStyle(team).color }}>
+                        <Link to={`/?pid=${encodeURIComponent(row.PlayerId)}`}>
+                            <span className={`main-home-predict-rank${row.rank <= 3 ? ' is-top' : ''}`}>{row.rank}</span>
+                            <span className="main-home-predict-photo"><SearchPlayerPhoto player={{ PlayerId: row.PlayerId, Team: team }} />{logo && <img className="main-home-predict-logo" src={logo} alt="" />}</span>
+                            <span className="main-home-predict-name"><strong>{row.Name}</strong>{detail && <small>{detail}</small>}</span>
+                            <span className="main-home-predict-value"><b>{(row.probability * 100).toFixed(1)}<i>%</i></b><span className="main-home-predict-bar" aria-hidden="true"><span style={{ width: `${Math.max(4, row.probability / top * 100)}%` }} /></span></span>
+                        </Link>
+                    </li>;
+                })}
+            </ol>
+            {rows.length > 5 && <button type="button" className="main-home-predict-more" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}>{expanded ? '접기' : `${rows.length}위까지 보기`}</button>}
+            <p className="main-home-predict-note">다음 출전 경기에서 {label}{key === 'hit' ? '를' : '을'} 1개 이상 기록할 확률을 통계 모델로 추정한 값입니다. 최근 {data.activeDays}일 안에 출전한 선수만 포함합니다.</p>
+        </section>
+    );
+}
+
 export default function Main() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -516,6 +566,8 @@ export default function Main() {
                         </table></div> : <p>표시할 팀 순위가 없습니다.</p>)}
                     </>
                 </section>
+
+                <PredictionRanking />
 
                 <section className="main-home-section main-home-games-section" aria-labelledby="preview-mini-title">
                     <SectionTitle title={<span id="preview-mini-title">미니게임</span>} />

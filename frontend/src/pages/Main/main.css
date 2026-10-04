@@ -483,3 +483,35 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
 .main-home-search-role { flex: none; }
 .main-home-search-years { min-width: 0; overflow: hidden; color: #9aa8ba; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: 0; text-overflow: ellipsis; }
 .main-home-search-years::before { content: '·'; margin-right: 6px; color: #c2cad5; }
+
+/* ===== 다음 경기 예측 순위 ===== */
+.main-home-predict-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.main-home-predict-list li { --c: #60758c; }
+.main-home-predict-list a { display: flex; align-items: center; gap: 12px; padding: 9px 12px; border: 1px solid #edf2f8; border-radius: 16px; background: #fff; color: #102746; text-decoration: none; transition: border-color .15s, box-shadow .15s; }
+.main-home-predict-list a:hover { border-color: #c9d6e6; box-shadow: 0 3px 10px rgba(16,39,70,.07); }
+.main-home-predict-list a:focus-visible { outline: 2px solid #087aff; outline-offset: 2px; }
+.main-home-predict-rank { display: grid; place-items: center; flex: none; width: 24px; height: 24px; border-radius: 8px; background: #eef3fa; color: #5d7089; font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.main-home-predict-rank.is-top { background: #e8f2ff; color: #0b5fc7; }
+.main-home-predict-list li:first-child .main-home-predict-rank.is-top { background: #087aff; color: #fff; }
+.main-home-predict-photo { position: relative; flex: none; width: 42px; height: 42px; border-radius: 13px; background: #eef2f6; }
+.main-home-predict-photo > img:not(.main-home-predict-logo), .main-home-predict-photo > svg { display: block; width: 100%; height: 100%; border-radius: inherit; object-fit: cover; object-position: top; }
+.main-home-predict-logo { position: absolute; right: -6px; bottom: -6px; width: 20px; height: 20px; padding: 2px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(16,39,70,.2); object-fit: contain; }
+.main-home-predict-name { display: flex; flex-direction: column; flex: 1; min-width: 0; line-height: 1.25; }
+.main-home-predict-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+.main-home-predict-name small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #6a7f99; font-size: 12px; }
+.main-home-predict-value { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex: none; width: 96px; }
+.main-home-predict-value b { color: #102746; font-size: 18px; font-weight: 900; letter-spacing: -.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+.main-home-predict-value b i { margin-left: 1px; color: #6a7f99; font-size: 12px; font-style: normal; font-weight: 700; }
+.main-home-predict-bar { display: block; width: 100%; height: 5px; overflow: hidden; border-radius: 999px; background: #eef3fa; }
+.main-home-predict-bar > span { display: block; height: 100%; border-radius: inherit; background: color-mix(in srgb, var(--c) 78%, #fff); }
+.main-home-predict-more { display: block; width: 100%; margin-top: 10px; padding: 9px; border: 1px solid #e6edf7; border-radius: 14px; background: #f7fafd; color: #3d5778; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .15s; }
+.main-home-predict-more:hover { background: #eef4fb; }
+.main-home-predict-more:focus-visible { outline: 2px solid #087aff; outline-offset: 2px; }
+.main-home-predict-note { margin: 12px 2px 0; color: #8492a6; font-size: 11.5px; line-height: 1.5; }
+@media (max-width: 600px) {
+    .main-home-predict-list a { gap: 10px; padding: 8px 10px; border-radius: 14px; }
+    .main-home-predict-photo { width: 38px; height: 38px; border-radius: 12px; }
+    .main-home-predict-name strong { font-size: 14px; }
+    .main-home-predict-value { width: 76px; }
+    .main-home-predict-value b { font-size: 16px; }
+}
