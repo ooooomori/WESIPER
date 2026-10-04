@@ -273,6 +273,46 @@ export default function Main() {
     const [playerSearchState, setPlayerSearchState] = useState("idle");
     const [popularPlayers, setPopularPlayers] = useState({ state: "idle", list: [], source: null });
     const [recentPlayers, setRecentPlayers] = useState(readRecentPlayers);
+    // PC에서 최근 본 선수 줄을 마우스 휠과 끌기로 좌우로 넘길 수 있게 한다(터치는 원래 넘겨진다).
+    const [recentList, setRecentList] = useState(null);
+    useEffect(() => {
+        if (!recentList) return undefined;
+        let drag = null, moved = false;
+        const wheel = (event) => {
+            const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+            const max = recentList.scrollWidth - recentList.clientWidth;
+            // 넘길 것이 없거나 이미 끝이면 페이지 스크롤을 막지 않는다.
+            if (max <= 0 || (delta < 0 && recentList.scrollLeft <= 0) || (delta > 0 && recentList.scrollLeft >= max - 1)) return;
+            event.preventDefault();
+            recentList.scrollLeft += delta;
+        };
+        const down = (event) => { if (event.pointerType === 'mouse' && event.button === 0) { drag = { x: event.clientX, left: recentList.scrollLeft }; moved = false; } };
+        const move = (event) => {
+            if (!drag) return;
+            const distance = event.clientX - drag.x;
+            if (Math.abs(distance) > 4) moved = true;
+            if (moved) recentList.scrollLeft = drag.left - distance;
+        };
+        const up = () => { drag = null; };
+        // 끌어서 넘긴 직후의 클릭이 선수 선택으로 이어지지 않게 막는다.
+        const click = (event) => { if (moved) { event.preventDefault(); event.stopPropagation(); moved = false; } };
+        recentList.addEventListener('wheel', wheel, { passive: false });
+        recentList.addEventListener('pointerdown', down);
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+        recentList.addEventListener('click', click, true);
+        // 링크·사진의 기본 끌기(다른 창으로 끌어다 놓기)가 시작되면 좌우 넘기기가 끊긴다.
+        const noNativeDrag = (event) => event.preventDefault();
+        recentList.addEventListener('dragstart', noNativeDrag);
+        return () => {
+            recentList.removeEventListener('dragstart', noNativeDrag);
+            recentList.removeEventListener('wheel', wheel);
+            recentList.removeEventListener('pointerdown', down);
+            window.removeEventListener('pointermove', move);
+            window.removeEventListener('pointerup', up);
+            recentList.removeEventListener('click', click, true);
+        };
+    }, [recentList]);
     const rememberPlayer = (player) => setRecentPlayers((previous) => addRecentPlayer(player, previous));
     const forgetPlayer = (playerId) => setRecentPlayers((previous) => removeRecentPlayer(playerId, previous));
     const openSearch = () => {
@@ -471,7 +511,7 @@ export default function Main() {
                                     <h2 id="search-recent-title">최근 본 선수</h2>
                                     <button type="button" onClick={() => forgetPlayer(null)}>전체 삭제</button>
                                 </div>
-                                <ul className="main-home-recent-list">
+                                <ul className="main-home-recent-list" ref={setRecentList}>
                                     {recentPlayers.map((player) => {
                                         const { color } = getPlayerTeamInfo(player);
                                         return <li key={player.PlayerId} className="main-home-recent-chip" style={{'--search-team-color':color}}>
