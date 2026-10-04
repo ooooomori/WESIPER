@@ -64,3 +64,4 @@ coverage/
 
 # 로컬 선수 식별자 복구용 DB 스냅샷
 /.identity-repairs/
+/.family-enrichment/
