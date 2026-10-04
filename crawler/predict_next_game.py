@@ -70,6 +70,9 @@ def build(games, fingerprint, source_revision, draws=100000):
             'historical_pa': profile.pa, 'historical_games': profile.games,
             'draws': draws, 'mc_max_standard_error': 0.5/np.sqrt(draws),
             'probabilities': probability,
+            # Below the sample gate the status stays insufficient_data; these two
+            # league-shrunken chances are shown with a low-sample caption only.
+            'low_sample_probabilities': None if probability else model.predict_events(player, as_of),
         })
     return predictions
 

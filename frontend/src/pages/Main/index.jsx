@@ -141,14 +141,42 @@ function pickPopularPlayer(list, name) {
 }
 
 // 다음 출전 경기에서 안타·홈런을 칠 확률 순위. 예측이 없거나 오래됐으면(시즌 종료 등) 영역을 숨긴다.
+// season: 이름 옆에 두는 시즌 기록, form: 이름 아래에 두는 최근 흐름
 const PREDICTION_TABS = [
-    { key: 'hit', label: '안타', stat: (row) => row.avg != null ? `타율 ${row.avg.toFixed(3).replace(/^0/, '')}` : null },
-    { key: 'homeRun', label: '홈런', stat: (row) => `시즌 ${row.homeRuns}홈런` },
+    { key: 'hit', label: '안타',
+        season: (row) => row.avg != null ? `타율 ${row.avg.toFixed(3).replace(/^0/, '')}` : null,
+        form: (row) => row.hitStreak >= 2 ? `${row.hitStreak}경기 연속 안타 🔥` : row.hitStreak === 1 ? '직전 경기 안타' : row.hitGamesAgo ? `마지막 안타 ${row.hitGamesAgo}경기 전` : null },
+    { key: 'homeRun', label: '홈런',
+        season: (row) => `${row.homeRuns ?? 0}홈런`,
+        form: (row) => row.homeRunStreak >= 2 ? `${row.homeRunStreak}경기 연속 홈런 🔥` : row.homeRunStreak === 1 ? '직전 경기 홈런' : row.homeRunGamesAgo ? `마지막 홈런 ${row.homeRunGamesAgo}경기 전` : null },
 ];
+// 순위에서 빠진 선수: 확률이 있으면 값과 함께 작은 설명을, 없으면 이유만 보여준다.
+const PREDICTION_EXCLUDED = {
+    inactive: (days) => ({ caption: `최근 ${days}일 출전 없음 · 순위 제외`, label: `최근 ${days}일 출전 없음` }),
+    insufficient: () => ({ caption: '표본 부족 · 리그 평균으로 보정한 값 · 순위 제외', label: '예측 표본 부족' }),
+};
+function PredictionRow({ row, rank, probability, top, season, form, excluded }) {
+    const team = row.Team || '';
+    const logo = team ? getSmallTeamLogo(team) : null;
+    const to = `/?pid=${encodeURIComponent(row.PlayerId)}`;
+    // 사진과 이름만 프로필로 이동한다. 나머지 영역은 눌러도 이동하지 않는다.
+    return <li style={{ '--c': getTeamStyle(team).color }}>
+        <div className="main-home-predict-row">
+            <span className={`main-home-predict-rank${rank != null && rank <= 3 ? ' is-top' : ''}`}>{rank ?? '–'}</span>
+            <Link className="main-home-predict-photo" to={to} aria-label={`${row.Name} 프로필`} tabIndex={-1}><SearchPlayerPhoto player={{ PlayerId: row.PlayerId, Team: team }} />{logo && <img className="main-home-predict-logo" src={logo} alt="" />}</Link>
+            <span className="main-home-predict-name"><span className="main-home-predict-title"><Link to={to}><strong>{row.Name}</strong></Link>{season && <em>{season}</em>}</span>{form && <small className="main-home-predict-stats">{form}</small>}{excluded && probability != null && <small className="main-home-predict-caveat">{excluded.caption}</small>}</span>
+            {probability != null
+                ? <span className="main-home-predict-value"><b>{(probability * 100).toFixed(1)}<i>%</i></b><span className="main-home-predict-bar" aria-hidden="true"><span style={{ width: `${Math.max(4, Math.min(100, probability / top * 100))}%` }} /></span></span>
+                : <span className="main-home-predict-excluded">{excluded?.label}</span>}
+        </div>
+    </li>;
+}
 function PredictionRanking() {
     const [data, setData] = useState(null);
     const [tab, setTab] = useState(0);
     const [expanded, setExpanded] = useState(false);
+    const [query, setQuery] = useState('');
+    const [search, setSearch] = useState({ state: 'idle', matches: [] });
     useEffect(() => {
         const controller = new AbortController();
         fetch('/api/predictionRanking.php?limit=10', { signal: controller.signal })
@@ -157,7 +185,21 @@ function PredictionRanking() {
             .catch(() => {});
         return () => controller.abort();
     }, []);
-    const { key, label, stat } = PREDICTION_TABS[tab];
+    const keyword = query.trim();
+    useEffect(() => {
+        // 두 글자부터 검색한다. 입력이 멈춘 뒤에 한 번만 요청한다.
+        if (keyword.length < 2) { setSearch({ state: 'idle', matches: [] }); return undefined; }
+        const controller = new AbortController();
+        setSearch((previous) => ({ ...previous, state: 'loading' }));
+        const timer = setTimeout(() => {
+            fetch(`/api/predictionRanking.php?q=${encodeURIComponent(keyword)}`, { signal: controller.signal })
+                .then((response) => response.ok ? response.json() : Promise.reject(new Error('search failed')))
+                .then((result) => setSearch({ state: 'ready', matches: Array.isArray(result?.matches) ? result.matches : [] }))
+                .catch((error) => { if (error.name !== 'AbortError') setSearch({ state: 'error', matches: [] }); });
+        }, 250);
+        return () => { clearTimeout(timer); controller.abort(); };
+    }, [keyword]);
+    const { key, label, season, form } = PREDICTION_TABS[tab];
     const rows = data?.rankings?.[key] || [];
     if (!data || !rows.length) return null;
     const [, month, day] = String(data.asOf).split('-');
@@ -170,22 +212,26 @@ function PredictionRanking() {
                 </div>
             } />
             <ol className="main-home-predict-list" aria-label={`다음 경기 ${label} 확률 순위`}>
-                {(expanded ? rows : rows.slice(0, 5)).map((row) => {
-                    const team = row.Team || '';
-                    const logo = team ? getSmallTeamLogo(team) : null;
-                    const detail = [team, stat(row)].filter(Boolean).join(' · ');
-                    return <li key={row.PlayerId} style={{ '--c': getTeamStyle(team).color }}>
-                        <Link to={`/?pid=${encodeURIComponent(row.PlayerId)}`}>
-                            <span className={`main-home-predict-rank${row.rank <= 3 ? ' is-top' : ''}`}>{row.rank}</span>
-                            <span className="main-home-predict-photo"><SearchPlayerPhoto player={{ PlayerId: row.PlayerId, Team: team }} />{logo && <img className="main-home-predict-logo" src={logo} alt="" />}</span>
-                            <span className="main-home-predict-name"><strong>{row.Name}</strong>{detail && <small>{detail}</small>}</span>
-                            <span className="main-home-predict-value"><b>{(row.probability * 100).toFixed(1)}<i>%</i></b><span className="main-home-predict-bar" aria-hidden="true"><span style={{ width: `${Math.max(4, row.probability / top * 100)}%` }} /></span></span>
-                        </Link>
-                    </li>;
-                })}
+                {(expanded ? rows : rows.slice(0, 5)).map((row) => <PredictionRow key={row.PlayerId} row={row} rank={row.rank} probability={row.probability} top={top} season={season(row)} form={form(row)} />)}
             </ol>
             {rows.length > 5 && <button type="button" className="main-home-predict-more" aria-expanded={expanded} onClick={() => setExpanded(value => !value)}>{expanded ? '접기' : `${rows.length}위까지 보기`}</button>}
-            <p className="main-home-predict-note">다음 출전 경기에서 {label}{key === 'hit' ? '를' : '을'} 1개 이상 기록할 확률을 통계 모델로 추정한 값입니다. 최근 {data.activeDays}일 안에 출전한 선수만 포함합니다.</p>
+            <div className="main-home-predict-search">
+                <label className="main-home-predict-search-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.8-3.8" /></svg>
+                    <span className="sr-only">예측 확률을 볼 선수 이름</span>
+                    <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="다른 선수의 확률이 궁금하다면?" maxLength={20} autoComplete="off" enterKeyHint="search" />
+                    {query && <button type="button" aria-label="검색어 지우기" onClick={() => setQuery('')}>×</button>}
+                </label>
+                {keyword.length >= 2 && <div aria-live="polite">
+                    {search.matches.length > 0 && <ol className="main-home-predict-list" aria-label={`${keyword} 검색 결과의 ${label} 확률`}>
+                        {search.matches.map((row) => <PredictionRow key={row.PlayerId} row={row} rank={row[key]?.rank} probability={row[key]?.probability} top={top}
+                            season={season(row)} form={form(row)} excluded={row.status === 'ready' ? null : (PREDICTION_EXCLUDED[row.status] || PREDICTION_EXCLUDED.insufficient)(data.activeDays)} />)}
+                    </ol>}
+                    {search.state === 'ready' && search.matches.length === 0 && <p className="main-home-predict-empty">올해 1군 타석 기록이 있는 선수 중에서 찾지 못했습니다.</p>}
+                    {search.state === 'error' && <p className="main-home-predict-empty">검색 결과를 불러오지 못했습니다.</p>}
+                </div>}
+            </div>
+            <p className="main-home-predict-note">다음 출전 경기에서 {label}{key === 'hit' ? '를' : '을'} 1개 이상 기록할 확률을 통계 모델로 추정한 값입니다.<br />순위에는 최근 {data.activeDays}일 안에 출전한 선수만 포함합니다.</p>
         </section>
     );
 }

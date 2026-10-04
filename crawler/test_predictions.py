@@ -84,6 +84,31 @@ class PredictionsTest(unittest.TestCase):
         self.assertGreater(prediction['home_run'],.1)
         self.assertLessEqual(prediction['home_run'],prediction['hit'])
 
+    def test_low_sample_event_chances_match_simulation_and_stay_near_league(self):
+        model = BattingModel()
+        current = np.zeros(6,dtype=np.int64)
+        for day in range(1,21):
+            game = Game(f'2026-04-{day:02}',f'a{day}',1,[0,3,1,6] if day % 2 else [0,0,0,3])
+            model.update(game)
+            current += game.stats
+        model.update(Game('2026-04-20','thin',2,[6]))
+        model.update(Game('2026-04-20','runner',3,[]))
+        # Same event rates and PA distribution as the simulation, without sampling noise.
+        simulated = model.predict(1,'2026-04-20',current,200000)
+        exact = model.predict_events(1,'2026-04-20')
+        self.assertAlmostEqual(exact['hit'],simulated['hit'],delta=.01)
+        self.assertAlmostEqual(exact['home_run'],simulated['home_run'],delta=.01)
+        # Below the gate predict() refuses, but the shrunken chance is still defined.
+        self.assertIsNone(model.predict(2,'2026-04-20',np.array([1,1,0,0,0,4]),2000))
+        thin, regular = model.predict_events(2,'2026-04-20'), model.predict_events(1,'2026-04-20')
+        runner = model.predict_events(3,'2026-04-20')
+        for chance in (thin, runner):
+            self.assertTrue(0 < chance['home_run'] <= chance['hit'] < 1)
+        # One home run in one PA must not look like a slugger: shrinkage keeps it near the league.
+        self.assertLess(thin['home_run'],.5)
+        self.assertEqual(model.predict_events(2,'2026-04-20'),thin)
+        self.assertGreater(regular['hit'],0)
+
     def test_walk_forward_labels_do_not_cross_season(self):
         from backtest_predictions import samples
         games = [Game(f'2025-04-{d:02}',str(d),1,[0,3,1,0]) for d in range(1,9)]

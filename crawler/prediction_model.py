@@ -159,6 +159,17 @@ class BattingModel:
         n_weights += 5 * league_pa / league_pa.sum()
         return event_p, sizes, n_weights/n_weights.sum()
 
+    def predict_events(self, player, day):
+        """Hit and home-run chances for players below the predict() sample gate.
+
+        Uses the same shrunken event rates and plate-appearance distribution, so a
+        thin sample stays close to the league average. Exact (no simulation):
+        P(at least one) = sum over n of P(n PA) * (1 - (1 - p) ** n).
+        """
+        event_p, sizes, n_p = self.distributions(player, day)
+        chance = lambda p: float(np.sum(n_p * (1 - (1 - p) ** sizes)))
+        return {'hit': chance(event_p[3:7].sum()), 'home_run': chance(event_p[6])}
+
     def predict(self, player, day, current, draws=100000):
         p = self.players[player]
         if p.pa < 20 or p.games < 5 or current[0] <= 0:
