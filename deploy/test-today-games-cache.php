@@ -5,10 +5,10 @@ function check($condition) { if (!$condition) throw new RuntimeException('Cache 
 $before = [['GAME_STATE_SC'=>'1', 'G_TM'=>'17:00']];
 check(todayGamesExpiry($before, $now) === $now + 600);
 check(todayGamesExpiry([['GAME_STATE_SC'=>'1','G_TM'=>'18:30']],$now) === $now+1800);
-check(todayGamesExpiry([['GAME_STATE_SC'=>'2']],$now) === $now+30);
+check(todayGamesExpiry([['GAME_STATE_SC'=>'2']],$now) === $now+60);
 check(todayGamesExpiry([['GAME_STATE_SC'=>'3']],$now) === $now+1800);
 check(todayGamesExpiry([],$now) === $now+1800);
-check(todayGamesExpiry($before,$now+600) === $now+630);
+check(todayGamesExpiry($before,$now+600) === $now+660);
 $midnight = strtotime('2026-09-27 23:55:00 +0900');
 check(todayGamesExpiry([],$midnight) === $midnight+300);
 $directory = sys_get_temp_dir() . '/wesiper-cache-test-' . bin2hex(random_bytes(8));
@@ -25,7 +25,7 @@ try {
     check($stale['stale'] && $stale['games'] === $before);
     cachedTodayGames('kbo',$fail,$now+601,$directory);
     check($calls === 3);
-    cachedTodayGames('kbo',$load,$now+631,$directory);
+    cachedTodayGames('kbo',$load,$now+661,$directory);
     check($calls === 4);
     cachedTodayGames('kbo',$load,$now+86400,$directory);
     check($calls === 5);

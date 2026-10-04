@@ -1,4 +1,8 @@
 <?php
+// 진행 중인 경기가 있을 때 KBO에 다시 묻는 간격(초). 조회에 실패했을 때의 재시도 간격도 같다.
+// 메인 화면이 60초마다 새로 요청하므로 이보다 짧게 잡아도 화면에는 차이가 없다.
+const TODAY_GAMES_LIVE_REFRESH = 60;
+
 function todayGamesExpiry(array $games, int $now): int {
     $zone = new DateTimeZone('Asia/Seoul');
     $date = (new DateTimeImmutable('@' . $now))->setTimezone($zone);
@@ -6,13 +10,13 @@ function todayGamesExpiry(array $games, int $now): int {
     foreach ($games as $game) {
         $state = (string)($game['GAME_STATE_SC'] ?? '');
         if (in_array($state, ['3', '4'], true)) continue;
-        if ($state !== '1') { $expires = min($expires, $now + 30); continue; }
+        if ($state !== '1') { $expires = min($expires, $now + TODAY_GAMES_LIVE_REFRESH); continue; }
         $time = $game['G_TM'] ?? '';
         if (!preg_match('/^([01][0-9]|2[0-3]):[0-5][0-9]$/', $time)) {
-            $expires = min($expires, $now + 30); continue;
+            $expires = min($expires, $now + TODAY_GAMES_LIVE_REFRESH); continue;
         }
         $start = new DateTimeImmutable($date->format('Y-m-d') . ' ' . $time, $zone);
-        $expires = min($expires, $start->getTimestamp() > $now ? $start->getTimestamp() : $now + 30);
+        $expires = min($expires, $start->getTimestamp() > $now ? $start->getTimestamp() : $now + TODAY_GAMES_LIVE_REFRESH);
     }
     return $expires;
 }
@@ -48,7 +52,7 @@ function cachedTodayGames(string $key, callable $fetch, ?int $now = null, ?strin
                 'expiresAt' => todayGamesExpiry($games, $now), 'stale' => false];
         } catch (Throwable $error) {
             $entry = $hasGames ? $cached : ['day' => $day, 'games' => null];
-            $entry['retryAt'] = $now + 30;
+            $entry['retryAt'] = $now + TODAY_GAMES_LIVE_REFRESH;
             $entry['stale'] = true;
             error_log('KBO games refresh failed: ' . $error->getMessage());
         }

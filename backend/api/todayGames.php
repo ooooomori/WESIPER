@@ -54,10 +54,15 @@ function normalizeGame($game, $weather = null)
     ));
 }
 
+// 퓨처스리그 조회 여부. 2026 시즌이 끝나 꺼 두었다. 다음 시즌이 시작되면 true로 바꾼다.
+const TODAY_GAMES_FUTURES_ENABLED = false;
+
 try {
     $requestTime = time();
     $kboCache = cachedTodayGames(KBO_TODAY_GAMES_KEY, fn($day) => fetchKboGameList('1', KBO_TODAY_GAMES_SERIES, $day), $requestTime);
-    $futuresCache = cachedTodayGames('2:0,1,9,10,15', fn($day) => fetchKboGameList('2', '0,1,9,10,15', $day), $requestTime);
+    $futuresCache = TODAY_GAMES_FUTURES_ENABLED
+        ? cachedTodayGames('2:0,1,9,10,15', fn($day) => fetchKboGameList('2', '0,1,9,10,15', $day), $requestTime)
+        : array('games' => array(), 'stale' => false, 'fetchedAt' => null);
     $kboRawGames = $kboCache['games'];
     $futuresRawGames = $futuresCache['games'];
 } catch (RuntimeException $error) {
