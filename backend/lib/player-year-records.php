@@ -146,14 +146,7 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
     $q=$db->prepare("SELECT * FROM `$table` WHERE league_level=$leagueLevel AND player_id=? AND (".implode(' OR ',$bounds).")".profileNotTiebreakerSql()."$allstar ORDER BY game_date,game_id");$q->execute([$pid]);$all=$q->fetchAll(PDO::FETCH_ASSOC);
     if(!$all)return ['rows'=>[],'career'=>null];
     $years=[];foreach($all as $row)$years[(int)substr($row['game_date'],0,4)][]=$row;ksort($years);
-    $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
-    $positionQuery=$db->prepare('SELECT mainPos,birth FROM kbo_player_data WHERE player_id=? LIMIT 1');$positionQuery->execute([$pid]);$bio=$positionQuery->fetch(PDO::FETCH_ASSOC)?:[];
-    $mainPosition=trim((string)($bio['mainPos']??''));
-    $currentPosition=match(true){
-        str_contains($mainPosition,'포수')=>'C',str_contains($mainPosition,'1루')=>'1B',str_contains($mainPosition,'2루')=>'2B',
-        str_contains($mainPosition,'3루')=>'3B',str_contains($mainPosition,'유격')=>'SS',str_contains($mainPosition,'좌익')=>'LF',
-        str_contains($mainPosition,'중견')=>'CF',str_contains($mainPosition,'우익')=>'RF',str_contains($mainPosition,'지명')=>'DH',
-        default=>profileYearPosition([['game_id'=>'current','pos'=>$mainPosition]])};
+    $bioQuery=$db->prepare('SELECT birth FROM kbo_player_data WHERE player_id=? LIMIT 1');$bioQuery->execute([$pid]);$bio=$bioQuery->fetch(PDO::FETCH_ASSOC)?:[];
     $faced=[];
     $pitchContext=[];$leaguePitch=[];
     if($pitcher){$ids=array_values(array_unique(array_column($all,'game_id')));$q=$db->prepare('SELECT game_id,pa_result,sb,cs,run_out,rbi,r FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND pitcher_id=? AND game_id IN ('.implode(',',array_fill(0,count($ids),'?')).')');$q->execute([$pid,...$ids]);while($e=$q->fetch(PDO::FETCH_ASSOC))$faced[$e['game_id']][]=profileAdvancedBatEvent($e);$pitchContext=profilePitcherGameContexts($db,$all,$leagueLevel);$leaguePitch=profileLeaguePitchingContexts($db,$schedule,$leagueLevel);}
@@ -164,8 +157,8 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
         if(!$pitcher){$league['battingYears']=[$year=>$battingYears[$year]??null];$leagueAll['battingYears'][$year]=$battingYears[$year]??null;}
         $league['pitchingYears']=$leaguePitch;$age=profileAgeOnJulyFirst($bio['birth']??null,$year);
         $teams=[];foreach($rows as $row)$teams[trim((string)$row['team'])?:'소속 미확인'][]=$row;
-        $children=[];foreach($teams as $team=>$events)$children[]=['year'=>$year,'team'=>$team,'age'=>$age,'position'=>$pitcher?null:($year===$currentYear?$currentPosition:profileYearPosition($events)),'stats'=>profileYearTotals($events,$pitcher,$faced,$league,$pitchContext)];
-        $out[]=['year'=>$year,'team'=>count($teams)>1?count($teams).'팀':array_key_first($teams),'age'=>$age,'position'=>$pitcher?null:($year===$currentYear?$currentPosition:profileYearPosition($rows)),'teams'=>count($teams)>1?$children:[],'stats'=>profileYearTotals($rows,$pitcher,$faced,$league,$pitchContext)];
+        $children=[];foreach($teams as $team=>$events)$children[]=['year'=>$year,'team'=>$team,'age'=>$age,'position'=>$pitcher?null:profileYearPosition($events),'stats'=>profileYearTotals($events,$pitcher,$faced,$league,$pitchContext)];
+        $out[]=['year'=>$year,'team'=>count($teams)>1?count($teams).'팀':array_key_first($teams),'age'=>$age,'position'=>$pitcher?null:profileYearPosition($rows),'teams'=>count($teams)>1?$children:[],'stats'=>profileYearTotals($rows,$pitcher,$faced,$league,$pitchContext)];
     }
     $leagueAll['pitchingYears']=$leaguePitch;
     $career=profileYearTotals($all,$pitcher,$faced,$leagueAll,$pitchContext);
