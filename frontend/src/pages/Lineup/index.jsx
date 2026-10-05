@@ -176,33 +176,26 @@ const recordResult = (difficulty, solved, attempts, milliseconds = null) => {
 };
 
 const StatsModal = ({ onClose }) => {
-    const [stats, setStats] = useState(loadStats);
+    const stats = loadStats();
     useEffect(() => {
         const onKeyDown = (event) => { if (event.key === "Escape") onClose(); };
         window.addEventListener("keydown", onKeyDown);
         return () => window.removeEventListener("keydown", onKeyDown);
     }, [onClose]);
-    const reset = () => {
-        if (!window.confirm("통계를 모두 지울까요?")) return;
-        try {
-            localStorage.removeItem(STATS_KEY);
-        } catch {
-            // 지울 수 없으면 화면만 비운다.
-        }
-        setStats({});
-    };
     return (
         <div className="lineup-modal" role="dialog" aria-modal="true" aria-labelledby="lineup-stats-title" onClick={onClose}>
             <div className="lineup-modal-panel lineup-stats" onClick={(event) => event.stopPropagation()}>
                 <h2 id="lineup-stats-title">내 통계</h2>
+                <button type="button" className="lineup-modal-close" aria-label="닫기" autoFocus onClick={onClose}>×</button>
                 <table>
+                    {/* 두 낱말짜리 머리글은 좁은 화면에서 두 줄로 접힌다. */}
                     <thead><tr><th scope="col">난이도</th><th scope="col">플레이</th><th scope="col">정답</th><th scope="col">정답률</th><th scope="col">평균 제출</th><th scope="col">최소 제출</th><th scope="col">평균 시간</th></tr></thead>
                     <tbody>
                         {DIFFICULTIES.map(([id, name]) => {
                             const { played = 0, solved = 0, attempts = 0, best = null, milliseconds = 0, timed = 0 } = stats[id] || {};
                             return (
                                 <tr key={id}>
-                                    <th scope="row">{name}</th><td>{played}</td><td>{solved}</td>
+                                    <th scope="row"><em className={`lineup-level is-${id}`}>{name}</em></th><td>{played}</td><td>{solved}</td>
                                     <td>{played ? `${Math.round(solved / played * 100)}%` : "-"}</td>
                                     <td>{solved ? (attempts / solved).toFixed(1) : "-"}</td>
                                     <td>{best ?? "-"}</td>
@@ -212,10 +205,6 @@ const StatsModal = ({ onClose }) => {
                         })}
                     </tbody>
                 </table>
-                <div>
-                    <button type="button" className="lineup-secondary" onClick={reset}>통계 지우기</button>
-                    <button type="button" className="lineup-primary" autoFocus onClick={onClose}>닫기</button>
-                </div>
             </div>
         </div>
     );
