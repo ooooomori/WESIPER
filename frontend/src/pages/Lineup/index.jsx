@@ -800,7 +800,6 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
     }, [confirm]);
 
     const finished = answer !== null;
-    const pool = candidates.filter((candidate) => !picks.some((pick) => pick?.id === candidate.id));
     // 지난 제출에서 알게 된 것. 칸의 선수를 바꾸면 그 칸의 채점 표시는 지워지므로, 선수별로 따로 기억해 둔다.
     // { [선수 id]: { absent: 선발이 아님, wrongSlots: 선발이지만 이 칸(들)은 아니었음 } }
     const [memory, setMemory] = useState(saved?.memory ?? {});
@@ -834,6 +833,12 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
         if (!known) return null;
         return known.absent ? ["absent", "선발 아님"] : ["present", `${wrongOrders(player)}번 아님`];
     };
+    // 후보 영역(쉬움·보통): 아직 넣지 않은 선수들. 넣어 둔 선수라도 노란색(선발이지만 그 타순은 아님)이면 다른 타순으로 옮겨야 하므로 다시 보여준다.
+    // 그런 선수를 누르거나 끌어 다른 칸에 넣으면 원래 칸에서 빠지며 옮겨진다.
+    const pool = candidates.filter((candidate) => {
+        const placed = picks.findIndex((pick) => pick?.id === candidate.id);
+        return placed < 0 || shownResult(placed) === "present";
+    });
     // 채점해 볼 새 정보가 있을 때만 제출할 수 있다.
     const canCheck = !finished && !checking && picks.some((pick, index) => pick && shownResult(index) === null);
 
@@ -1133,7 +1138,7 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
                                             {pick && !locked && !editingHere && <button type="button" className="lineup-clear" aria-label={`${slot.order}번 타자 지우기`} onClick={() => move(pick, index, "pool")}>×</button>}
                                             {/* 고치는 중에는 지금 들어 있는 선수도 후보에 넣어, 그대로 Enter를 치면 유지되게 한다. */}
                                             {(!pick || editingHere) && <PlayerSearch key={editingHere ? "edit" : "new"} slot={index} year={year} label={`${slot.order}번 타자`} placeholder={placeholder}
-                                                options={typed ? null : editingHere ? [pick, ...pool] : pool} initialText={editingHere ? pick.name : ""}
+                                                options={typed ? null : editingHere ? [pick, ...pool.filter((player) => player.id !== pick.id)] : pool} initialText={editingHere ? pick.name : ""}
                                                 onCancel={editingHere ? () => setEditing((current) => (current === index ? null : current)) : undefined}
                                                 hint={searchHint} onPick={(player) => pickBySearch(player, index)} />}
                                         </div>
