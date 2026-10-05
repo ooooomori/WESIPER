@@ -52,8 +52,8 @@ function normalizeGame($game, $weather = null)
     );
 }
 
-// 퓨처스리그 조회 여부. 2026 시즌이 끝나 꺼 두었다. 다음 시즌이 시작되면 true로 바꾼다.
-const TODAY_GAMES_FUTURES_ENABLED = false;
+// 퓨처스리그 조회 여부. 1군과 같은 캐시 규칙을 쓰므로 경기가 없는 날에는 하루 한 번만 묻는다.
+const TODAY_GAMES_FUTURES_ENABLED = true;
 
 try {
     $requestTime = time();

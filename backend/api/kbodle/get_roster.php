@@ -6,59 +6,6 @@
         die("Connection failed: " . $con->connect_error);
     }
     
-    /*
-    include_once '../Snoopy.class.php';
-        
-    $snoopy = new Snoopy;  // Corrected capitalization
-
-    $snoopy->fetch("https://www.koreabaseball.com/Player/RegisterAll.aspx");
-    $html = $snoopy->results;
-
-    $dom = new DOMDocument();
-    @$dom->loadHTML($html);
-    $xpath = new DOMXPath($dom);        
-
-    $result = [];
-    $result["status"] = 200;
-    $dateElement = $xpath->query('//*[@id="cphContents_cphContents_cphContents_lblGameDate"]');
-    $date = $dateElement->item(0)->textContent;
-    if($dateElement->length > 0) {
-        $result["date"] = $date;
-
-        for ($trIndex = 1; $trIndex <= 10; $trIndex++) {
-            // td[1]의 텍스트를 키로 사용
-            $keyQuery = "//*[@id='cphContents_cphContents_cphContents_udpRecord']/div/table/tbody/tr[$trIndex]/th";
-            $keyElements = $xpath->query($keyQuery);
-            if ($keyElements->length > 0) {
-                $key = trim($keyElements->item(0)->textContent);
-                
-                $trResult = [];
-                for ($tdIndex = 3; $tdIndex <= 6; $tdIndex++) {
-                    $query = "//*[@id='cphContents_cphContents_cphContents_udpRecord']/div/table/tbody/tr[$trIndex]/td[$tdIndex]/ul";
-                    $elements = $xpath->query($query);
-                    
-                    $tdResult = [];
-                    if ($elements->length > 0) {
-                        $ul = $elements->item(0);
-                        $lis = $ul->getElementsByTagName('li');
-                        foreach ($lis as $li) {
-                            $tdResult[] = trim($li->textContent);
-                        }
-                    }
-                    $trResult[] = $tdResult;
-                }
-                $result[$key] = $trResult;
-            } else {
-                $result["status"] = 404;
-            }
-        }
-
-    } else {
-        $result["status"] = 404;
-    }
-
-    */
-
 // 1. 기본 결과 구조 및 팀 목록 정의
 $teams = ["KIA", "SSG", "NC", "키움", "두산", "삼성", "한화", "롯데", "LG", "KT"];
 $result = ['status' => 200]; 
