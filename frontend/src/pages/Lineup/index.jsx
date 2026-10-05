@@ -1301,8 +1301,14 @@ const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
     // 화면 키보드가 가린 높이. 좁은 화면에서 실시간 타수를 키보드 바로 위에 붙이는 데 쓴다.
     const [keyboard, setKeyboard] = useState(0);
     useEffect(() => {
-        window.scrollTo({ top: 0 });
-        inputs.current[0]?.focus({ preventScroll: true });
+        // 넓은 화면은 맨 위(경기 정보)부터 보여주고, 좁은 화면은 키보드가 화면을 가리므로 처음부터 1번 타자 줄에 맞춰 내려 둔다.
+        if (window.matchMedia("(max-width: 640px)").matches) {
+            inputs.current[0]?.focus({ preventScroll: true });
+            inputs.current[0]?.closest(".lineup-row").scrollIntoView({ block: "start" });
+        } else {
+            window.scrollTo({ top: 0 });
+            inputs.current[0]?.focus({ preventScroll: true });
+        }
         const timer = setInterval(() => {
             const { typed, errors, startedAt } = tally.current;
             if (startedAt === null || typed === 0) return;
@@ -1434,7 +1440,6 @@ const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
 
             {result && (
                 <div className="lineup-outcome is-solved" role="status">
-                    <p>20명을 모두 쳤습니다!</p>
                     <dl className="lineup-result-figures">
                         <div><dt>평균 타수</dt><dd>{result.speed}타/분</dd></div>
                         <div><dt>정확도</dt><dd>{result.accuracy}%</dd></div>

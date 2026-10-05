@@ -279,8 +279,7 @@ a.lineup-chip:hover { text-decoration: underline; }
 @media (max-width: 480px) {
     .lineup-typing-rows .lineup-row { grid-template-columns: 28px minmax(0, 1fr) 14px 42px 30px; }
 }
-.lineup-typing .lineup-outcome p { margin-bottom: 4px; }
-.lineup-typing .lineup-result-figures { margin: 6px 0 0; }
+.lineup-typing .lineup-result-figures { margin: 0; }
 .lineup-typing .lineup-result-figures div { background: #fff; color: var(--ink); }
 .lineup-typing .lineup-actions > button { flex: 1; }
 @media (prefers-reduced-motion: reduce) {
