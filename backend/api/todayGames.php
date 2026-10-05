@@ -28,30 +28,28 @@ if (!function_exists('curl_init')) {
 
 function normalizeGame($game, $weather = null)
 {
-    $inning = $game['GAME_INN_NO'] ?? null;
-    $status = !empty($inning)
-        ? $inning . '회' . ($game['GAME_TB_SC_NM'] ?? '')
-        : ($game['G_TM'] ?? '');
+    // 실시간 정보(이닝, 현재 투수·타자, 진행 중 점수)는 내보내지 않는다.
+    $public = todayGamesPublicState($game);
+    $final = $public['state'] === 'final';
 
-    if (($game['GAME_STATE_SC'] ?? null) === '4') {
-        $status = $game['CANCEL_SC_NM'] ?? '경기 취소';
-    }
-
-    return array_merge(array_intersect_key($game, array_flip(array(
-        'GAME_STATE_SC', 'GAME_TB_SC', 'T_P_NM', 'B_P_NM',
-        'T_PIT_P_NM', 'B_PIT_P_NM', 'W_PIT_P_NM', 'L_PIT_P_NM'
-    ))), array(
+    return array(
+        'GAME_STATE_SC' => $public['code'],
+        'state' => $public['state'],
+        'T_PIT_P_NM' => $game['T_PIT_P_NM'] ?? '',
+        'B_PIT_P_NM' => $game['B_PIT_P_NM'] ?? '',
+        'W_PIT_P_NM' => $final ? ($game['W_PIT_P_NM'] ?? '') : '',
+        'L_PIT_P_NM' => $final ? ($game['L_PIT_P_NM'] ?? '') : '',
         'away' => $game['AWAY_NM'] ?? '',
         'home' => $game['HOME_NM'] ?? '',
-        'away_score' => $game['T_SCORE_CN'] ?? '',
-        'home_score' => $game['B_SCORE_CN'] ?? '',
+        'away_score' => $public['away_score'],
+        'home_score' => $public['home_score'],
         'stadium' => $game['S_NM'] ?? '',
         'gameDate' => $game['G_DT'] ?? '',
         'gameStartTime' => $game['G_TM'] ?? '',
         'weather' => $weather,
-        'status' => $status,
-        'isGameFinished' => ($game['GAME_STATE_SC'] ?? null) === '3',
-    ));
+        'status' => $public['status'],
+        'isGameFinished' => $final,
+    );
 }
 
 // 퓨처스리그 조회 여부. 2026 시즌이 끝나 꺼 두었다. 다음 시즌이 시작되면 true로 바꾼다.

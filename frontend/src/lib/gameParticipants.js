@@ -10,9 +10,6 @@ export function gameParticipants(game) {
         const loser = person('패', game.L_PIT_P_NM);
         return awayScore > homeScore ? { awayPlayer: winner, homePlayer: loser } : { awayPlayer: loser, homePlayer: winner };
     }
-    if (state === '2') {
-        const top = game.GAME_TB_SC === 'T';
-        return { awayPlayer: person(top ? '타자' : '투수', game.T_P_NM), homePlayer: person(top ? '투수' : '타자', game.B_P_NM) };
-    }
+    // 진행 중인 경기도 예정 경기처럼 선발 투수만 보여준다(실시간 투수·타자는 받지 않는다).
     return { awayPlayer: person('선발', game.T_PIT_P_NM), homePlayer: person('선발', game.B_PIT_P_NM) };
 }

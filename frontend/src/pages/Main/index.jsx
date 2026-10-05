@@ -9,7 +9,8 @@ import { gameParticipants } from '../../lib/gameParticipants';
 import GameWeather from './GameWeather';
 import ulsanLogo from '../../assets/images/logos/ulsan-logo.png';
 
-const REFRESH_INTERVAL = 60_000;
+// 오늘의 경기는 일정·결과만 보여주고 서버도 KBO에 하루 몇 번만 묻는다. 화면은 5분마다 확인하면 충분하다.
+const REFRESH_INTERVAL = 300_000;
 const teamStyles = {
     SSG: ["ssg", "#ce0e2d"], 두산: ["doo", "#131d40"],
     삼성: ["sam", "#074ca1"], 롯데: ["lot", "#041e42"],
@@ -51,18 +52,19 @@ function GameParticipant({ text, home = false }) {
 }
 
 function normalizeKboGame(game) {
-    const inning = game.GAME_INN_NO;
-    let status = inning ? `${inning}회${game.GAME_TB_SC_NM || ""}` : (game.G_TM || "");
-    if (game.GAME_STATE_SC === "4") status = game.CANCEL_SC_NM || "경기 취소";
+    // 예정·종료·취소만 구분한다. 진행 중인 경기는 예정 경기처럼 시작 시각만 보여준다.
+    const finished = game.GAME_STATE_SC === "3";
+    const cancelled = game.GAME_STATE_SC === "4";
     return {
         ...game,
+        GAME_STATE_SC: finished || cancelled ? game.GAME_STATE_SC : "1",
         away: game.AWAY_NM || "",
         home: game.HOME_NM || "",
-        away_score: game.T_SCORE_CN || "",
-        home_score: game.B_SCORE_CN || "",
+        away_score: finished ? game.T_SCORE_CN || "" : "",
+        home_score: finished ? game.B_SCORE_CN || "" : "",
         stadium: game.S_NM || "",
-        status,
-        isGameFinished: game.GAME_STATE_SC === "3",
+        status: cancelled ? game.CANCEL_SC_NM || "경기 취소" : finished ? "종료" : (game.G_TM || ""),
+        isGameFinished: finished,
     };
 }
 
@@ -600,17 +602,16 @@ export default function Main() {
                             const away = getTeamStyle(game.away);
                             const home = getTeamStyle(game.home);
                             const participants = gameParticipants(game);
-                            const scheduled = /^\d{1,2}:\d{2}$/.test(game.status);
-                            const cancelled = /취소/.test(game.status);
-                            const hasScore = !scheduled && !cancelled && (game.away_score !== "" || game.home_score !== "");
-                            const live = hasScore && !game.isGameFinished && /회/.test(game.status || "");
+                            // 경기는 예정(시작 시각)·종료(최종 점수)·취소 세 가지로만 보여준다.
+                            const cancelled = game.GAME_STATE_SC === "4" || /취소/.test(game.status || "");
+                            const hasScore = game.isGameFinished && !cancelled && (game.away_score !== "" || game.home_score !== "");
                             return (
                                 <article className="main-home-game-card" key={`${game.away}-${game.home}-${index}`} style={{ "--away-color": away.color, "--home-color": home.color }}>
                                     <TeamLogo name={game.away} logo={away.logo} />
                                     <div className="main-home-team-info"><strong className="main-home-team-name">{game.away}</strong><GameParticipant text={participants.awayPlayer} /></div>
                                     <div className="main-home-game-center">
                                         {hasScore ? <strong className="main-home-score"><b className={Number(game.away_score) > Number(game.home_score) ? "is-leading" : ""}>{game.away_score || 0}</b><span>:</span><b className={Number(game.home_score) > Number(game.away_score) ? "is-leading" : ""}>{game.home_score || 0}</b></strong> : <strong className="main-home-game-time">{game.status || "경기 예정"}</strong>}
-                                        <span className="main-home-game-status">{live && <b className="main-home-game-live"><i aria-hidden="true" />{game.status}</b>}{hasScore && game.isGameFinished && <b className="main-home-game-final">종료</b>}{hasScore && !live && !game.isGameFinished && `${game.status} · `}{game.stadium}{scheduled && !hasScore && !cancelled && <GameWeather weather={game.weather} />}</span>
+                                        <span className="main-home-game-status">{hasScore && <b className="main-home-game-final">종료</b>}{game.stadium}{!hasScore && !cancelled && <GameWeather weather={game.weather} />}</span>
                                     </div>
                                     <div className="main-home-team-info main-home-team-home"><strong className="main-home-team-name">{game.home}</strong><GameParticipant text={participants.homePlayer} home /></div>
                                     <TeamLogo name={game.home} logo={home.logo} />

@@ -302,10 +302,7 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
 
 /* 오늘의 경기: 상태 표시 */
 .main-home-game-status { flex-wrap: wrap; gap: 5px; }
-.main-home-game-live, .main-home-game-final { display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border-radius: 999px; font-size: 10.5px; font-weight: 800; line-height: 1.5; }
-.main-home-game-live { background: #ff3b47; color: #fff; box-shadow: 0 0 0 1px rgba(255,255,255,.35); }
-.main-home-game-live i { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: main-home-live-pulse 1.2s ease-in-out infinite; }
-@keyframes main-home-live-pulse { 50% { opacity: .25; } }
+.main-home-game-final { display: inline-flex; align-items: center; gap: 4px; padding: 1px 7px; border-radius: 999px; font-size: 10.5px; font-weight: 800; line-height: 1.5; }
 .main-home-game-final { background: rgba(0,0,0,.28); color: #fff; }
 
 /* 오늘의 경기: 로딩·오류·빈 상태 */
@@ -338,7 +335,7 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
     .main-home-game-skeleton { height: 60px; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .main-home-game-live i, .main-home-game-skeleton { animation: none; }
+    .main-home-game-skeleton { animation: none; }
     .main-home-hero-chip, .main-home-mini-go { transition: none; }
 }
 
