@@ -1335,16 +1335,25 @@ const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
         input.closest(".lineup-row").scrollIntoView({ block: window.matchMedia("(max-width: 640px)").matches ? "start" : "center", behavior: "smooth" });
     };
 
-    const current = sides[side];
+    // 화면에 보여주는 팀. 치는 팀을 따라가지만, 헤더의 팀을 눌러 다른 팀 라인업도 볼 수 있다(치는 중에도, 끝난 뒤에도).
+    const [viewSide, setViewSide] = useState(0);
+    // 치는 팀을 보고 있을 때만 입력을 받는다.
+    const typingHere = !result && viewSide === side;
+    useEffect(() => {
+        // 다른 팀을 보다가 치는 팀으로 돌아오면 치던 칸에 다시 포커스를 준다.
+        if (typingHere) inputs.current[cursor.current.index]?.focus({ preventScroll: true });
+    }, [typingHere]);
+
+    const current = sides[viewSide];
     const year = game.date.slice(0, 4);
     const [primary, secondary] = TEAM_COLORS[teamCodeByName(current.team, year)] || DEFAULT_COLORS;
-    const target = current.players[index]?.name ?? "";
+    const target = sides[side].players[index]?.name ?? "";
     const typo = !result && !typingKeys(target).startsWith(typingKeys(values[index] ?? ""));
 
     const onChange = (position, value) => {
         const at = cursor.current;
         // 치는 중인 칸이 아니면 무시한다(넘어간 뒤에 앞 칸의 한글 조합이 뒤늦게 확정되며 한 번 더 온다).
-        if (result || position !== at.index) return;
+        if (result || viewSide !== at.side || position !== at.index) return;
         const name = sides[at.side].players[at.index].name;
         const before = typingKeys(latestValues.current[position]);
         const after = typingKeys(value);
@@ -1366,6 +1375,7 @@ const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
             // 원정팀 투수까지 쳤으면 홈팀 라인업으로 바꾼다.
             cursor.current = { side: 1, index: 0 };
             setSide(1);
+            setViewSide(1);
             setIndex(0);
             latestValues.current = emptyTyping();
             setValues(latestValues.current);
@@ -1387,12 +1397,13 @@ const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
                 <p className="lineup-daily-label">타자 연습</p>
                 <p className="lineup-meta">{formatDate(game.date)} · {game.stadium}{game.doubleheader ? ` · DH ${game.doubleheader}차전` : ""}<span>{result ? "완료" : `${side * 10 + index} / 20`}</span></p>
                 <div className="lineup-matchup">
+                    {/* 팀을 누르면 그 팀의 라인업을 본다. 보고 있는 팀을 구단 색으로 강조한다. */}
                     {sides.map((team, order) => (
-                        <div key={team.side} className={`lineup-side${order === side ? " is-own" : ""}`}>
+                        <button key={team.side} type="button" className={`lineup-side${order === viewSide ? " is-own" : ""}`} aria-pressed={order === viewSide} onClick={() => setViewSide(order)}>
                             <i><TeamLogo team={team.team} year={year} /></i>
-                            <div><b>{teamFullName(team.team)}</b><small>{team.side === "away" ? "원정" : "홈"}</small></div>
+                            <div><b>{teamFullName(team.team)}</b><small>{team.side === "away" ? "원정" : "홈"}{!result && order === side ? " · 입력 중" : ""}</small></div>
                             <strong>{team.score}</strong>
-                        </div>
+                        </button>
                     ))}
                 </div>
             </header>
@@ -1405,20 +1416,21 @@ const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
             )}
             <ol className="lineup-rows lineup-typing-rows">
                 {current.players.map((player, position) => {
-                    const done = Boolean(result) || position < index;
-                    const active = !result && position === index;
+                    // 이미 다 친 팀(또는 끝난 뒤)은 전부 채워서, 아직 차례가 오지 않은 팀은 이름만 흐리게 보여준다.
+                    const done = Boolean(result) || viewSide < side || (viewSide === side && position < index);
+                    const active = typingHere && position === index;
                     return (
                         <li key={position} className={`lineup-row${active ? " is-active" : ""}${done ? " is-done" : ""}${active && typo ? " is-typo" : ""}`}>
                             <b className="lineup-order">{player.label}</b>
                             <div className={`lineup-slot${done ? "" : " is-open"}`}>
                                 {/* 입력창은 10칸 모두 처음부터 끝까지 그대로 둔다. 치는 중인 칸만 입력을 받는다. */}
-                                <input type="text" className="lineup-typing-input" value={done ? player.name : values[position]} placeholder={player.name}
+                                <input type="text" className="lineup-typing-input" value={done ? player.name : typingHere ? values[position] : ""} placeholder={player.name}
                                     aria-label={`${player.label === "P" ? "선발투수" : `${player.label}번 타자`} ${player.name}`} aria-invalid={active && typo}
                                     autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false} enterKeyHint="next"
-                                    readOnly={done} tabIndex={active ? 0 : -1} ref={(element) => { inputs.current[position] = element; }}
+                                    readOnly={done || !typingHere} tabIndex={active ? 0 : -1} ref={(element) => { inputs.current[position] = element; }}
                                     onChange={(event) => onChange(position, event.target.value)}
                                     // 다른 칸을 누르면 치던 칸으로 돌려보낸다.
-                                    onFocus={() => { if (!result && position !== cursor.current.index) inputs.current[cursor.current.index]?.focus(); }} />
+                                    onFocus={() => { if (typingHere && position !== cursor.current.index) inputs.current[cursor.current.index]?.focus(); }} />
                                 {/* 오타 표시: 속이 빈 붉은 동그라미 안의 붉은 느낌표 */}
                                 {active && typo && (
                                     <svg className="lineup-typo-mark" viewBox="0 0 20 20" width="20" height="20" role="img" aria-label="오타">

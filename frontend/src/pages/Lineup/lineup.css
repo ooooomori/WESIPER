@@ -251,6 +251,11 @@ a.lineup-chip:hover { text-decoration: underline; }
 .lineup-page .lineup-hide-names input[role="switch"]:checked::after { transform: translateX(12px); }
 /* 타자 연습: 이름이 흐리게 깔린 입력창에 그대로 따라 친다. */
 .lineup-card.lineup-typing { width: min(100%, 520px); }
+/* 타자 연습의 대진은 누르면 그 팀의 라인업으로 바뀌는 버튼이다. */
+.lineup-typing button.lineup-side { width: 100%; color: var(--ink); font: inherit; text-align: left; cursor: pointer; transition: border-color .15s; }
+.lineup-typing button.lineup-side.is-own { color: #fff; }
+.lineup-typing button.lineup-side:not(.is-own):hover { border-color: #94a3b8; }
+.lineup-typing button.lineup-side:focus-visible { outline: 2px solid var(--team); outline-offset: 2px; }
 .lineup-typing .lineup-side b { font-size: 14.5px; }
 .lineup-typing .lineup-side.is-own b { font-size: 16.5px; font-weight: 800; }
 /* 다 친 칸은 색을 칠하지 않고 이름만 또렷하게 남긴다. */
