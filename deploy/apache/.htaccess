@@ -1,8 +1,8 @@
 Options -MultiViews
 RewriteEngine On
 
-# KBO CANDLE page was retired: send old links to the home page.
-RewriteRule ^kbocandle/?$ / [R=301,L]
+# KBO CANDLE and Gameday pages were retired: send old links to the home page.
+RewriteRule ^(kbocandle|gameday)/?$ / [R=301,L]
 
 <IfModule mod_headers.c>
     # Baseline browser security headers for the HTTPS site.

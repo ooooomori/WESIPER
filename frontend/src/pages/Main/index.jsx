@@ -51,23 +51,6 @@ function GameParticipant({ text, home = false }) {
     </span>;
 }
 
-function normalizeKboGame(game) {
-    // 예정·종료·취소만 구분한다. 진행 중인 경기는 예정 경기처럼 시작 시각만 보여준다.
-    const finished = game.GAME_STATE_SC === "3";
-    const cancelled = game.GAME_STATE_SC === "4";
-    return {
-        ...game,
-        GAME_STATE_SC: finished || cancelled ? game.GAME_STATE_SC : "1",
-        away: game.AWAY_NM || "",
-        home: game.HOME_NM || "",
-        away_score: finished ? game.T_SCORE_CN || "" : "",
-        home_score: finished ? game.B_SCORE_CN || "" : "",
-        stadium: game.S_NM || "",
-        status: cancelled ? game.CANCEL_SC_NM || "경기 취소" : finished ? "종료" : (game.G_TM || ""),
-        isGameFinished: finished,
-    };
-}
-
 function SectionTitle({ title, action }) {
     return (
         <div className="main-home-section-heading">
@@ -437,25 +420,8 @@ export default function Main() {
                 const result = await response.json();
                 if (!response.ok || !result.success) throw new Error(result.error || "경기 정보를 불러오지 못했습니다.");
 
-                let kboGames = result.kboGames;
-                let futuresGames = result.futuresGames;
-                // 배포 전 운영 API에서도 미리보기가 가능하도록 기존 일정 API를 폴백으로 사용한다.
-                if (!Array.isArray(kboGames) || !Array.isArray(futuresGames)) {
-                    const scheduleResponse = await fetch("/api/gameday/get_game_list.php", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            date: new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date()),
-                        }),
-                        signal: controller.signal,
-                        cache: "no-store",
-                    });
-                    const schedule = await scheduleResponse.json();
-                    if (!scheduleResponse.ok || !schedule.success) throw new Error("경기 일정 정보를 불러오지 못했습니다.");
-                    kboGames = (schedule.kbo?.game || []).map(normalizeKboGame);
-                    futuresGames = (schedule.futures?.game || []).map(normalizeKboGame);
-                }
-
+                const kboGames = Array.isArray(result.kboGames) ? result.kboGames : [];
+                const futuresGames = Array.isArray(result.futuresGames) ? result.futuresGames : [];
                 setGameLists({ kbo: kboGames, futures: futuresGames });
                 setGameState("ready");
                 const finished = kboGames.filter((game) => game.isGameFinished).length;
