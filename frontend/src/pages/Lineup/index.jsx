@@ -43,6 +43,7 @@ const DIFFICULTIES = [
 const SETTINGS_KEY = "lineup-settings";
 const STATS_KEY = "lineup-stats";
 const OPTIONS_KEY = "lineup-options";
+const TYPING_STATS_KEY = "lineup-typing-stats";
 const PROGRESS_KEY = "lineup-progress";
 // 오늘의 라인업은 자유 플레이를 하고 와도 이어지도록 진행 상황을 따로 보관한다.
 const DAILY_PROGRESS_KEY = "lineup-daily-progress";
@@ -177,8 +178,26 @@ const recordResult = (difficulty, solved, attempts, milliseconds = null) => {
     }
 };
 
+// 타자 연습 통계: { played, speed(분당 타수의 합), best(가장 빠른 타수), accuracy(정확도의 합) }. 20명을 끝까지 친 판만 센다.
+const loadTypingStats = () => {
+    try {
+        return { played: 0, speed: 0, best: 0, accuracy: 0, ...JSON.parse(localStorage.getItem(TYPING_STATS_KEY)) };
+    } catch {
+        return { played: 0, speed: 0, best: 0, accuracy: 0 };
+    }
+};
+const recordTyping = ({ speed, accuracy }) => {
+    const stats = loadTypingStats();
+    try {
+        localStorage.setItem(TYPING_STATS_KEY, JSON.stringify({ played: stats.played + 1, speed: stats.speed + speed, best: Math.max(stats.best, speed), accuracy: stats.accuracy + accuracy }));
+    } catch {
+        // 저장소를 쓸 수 없으면 통계만 남지 않는다.
+    }
+};
+
 const StatsModal = ({ onClose }) => {
     const stats = loadStats();
+    const typing = loadTypingStats();
     useEffect(() => {
         const onKeyDown = (event) => { if (event.key === "Escape") onClose(); };
         window.addEventListener("keydown", onKeyDown);
@@ -205,6 +224,18 @@ const StatsModal = ({ onClose }) => {
                                 </tr>
                             );
                         })}
+                    </tbody>
+                </table>
+                <h3>타자 연습</h3>
+                <table>
+                    <thead><tr><th scope="col">플레이</th><th scope="col">평균 타수</th><th scope="col">최고 타수</th><th scope="col">평균 정확도</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>{typing.played}</td>
+                            <td>{typing.played ? `${Math.round(typing.speed / typing.played)}타/분` : "-"}</td>
+                            <td>{typing.played ? `${typing.best}타/분` : "-"}</td>
+                            <td>{typing.played ? `${(typing.accuracy / typing.played).toFixed(1)}%` : "-"}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -332,9 +363,10 @@ const DailyCountdown = () => {
     return <b>{[Math.floor(seconds / 3600), Math.floor(seconds / 60) % 60, seconds % 60].map((part) => String(part).padStart(2, "0")).join(":")}</b>;
 };
 
-const Setup = ({ settings, setSettings, onStart, onDaily, onStats, onOptions, loading, error }) => {
+const Setup = ({ settings, setSettings, onStart, onTyping, onDaily, onStats, onOptions, loading, error }) => {
     // 오늘의 문제를 이미 끝냈는지(이 브라우저 기준)
-    const dailyDone = Boolean(loadProgress(`daily|${todayInKorea()}`, DAILY_PROGRESS_KEY)?.answer);
+    const today = todayInKorea();
+    const dailyDone = Boolean(loadProgress(`daily|${today}`, DAILY_PROGRESS_KEY)?.answer);
     const teams = TEAMS.filter((team) => teamNameIn(team, settings.year));
     const change = (patch) => {
         const next = { ...settings, ...patch };
@@ -353,38 +385,54 @@ const Setup = ({ settings, setSettings, onStart, onDaily, onStats, onOptions, lo
                 </span>
             </div>
             <p className="lineup-lead">정규시즌 한 경기의 선발 라인업을 맞추어 보세요!</p>
-            <button type="button" className="lineup-daily" onClick={onDaily}>
+
+            {/* 오늘의 라인업: 왼쪽에 오늘 날짜, 끝냈으면 체크 */}
+            <button type="button" className={`lineup-daily${dailyDone ? " is-done" : ""}`} onClick={onDaily}>
+                <i aria-hidden="true"><small>{Number(today.slice(5, 7))}월</small><b>{Number(today.slice(8))}</b></i>
                 <span><strong>오늘의 라인업 맞추기</strong><small>{dailyDone ? "오늘 문제를 풀었어요 · 결과 보기" : "하루에 한 문제 · 난이도 보통"}</small></span>
-                <b aria-hidden="true">→</b>
+                <b aria-hidden="true">{dailyDone ? "✓" : "→"}</b>
             </button>
-            <h2 className="lineup-section-title">자유 플레이</h2>
-            <div className="lineup-fields">
-                <label>
-                    <span>연도</span>
-                    <select value={settings.year} onChange={(e) => change({ year: e.target.value === "random" ? "random" : Number(e.target.value) })}>
-                        <option value="random">랜덤</option>
-                        {YEARS.map((year) => <option key={year} value={year}>{year}</option>)}
-                    </select>
-                </label>
-                <div>
-                    <span id="lineup-team-label">팀</span>
-                    <TeamSelect value={settings.team} year={settings.year} teams={teams} onChange={(team) => change({ team })} />
+
+            <div className="lineup-section">
+                <h2 className="lineup-section-title">자유 플레이</h2>
+                <div className="lineup-fields">
+                    <label>
+                        <span>연도</span>
+                        <select value={settings.year} onChange={(e) => change({ year: e.target.value === "random" ? "random" : Number(e.target.value) })}>
+                            <option value="random">랜덤</option>
+                            {YEARS.map((year) => <option key={year} value={year}>{year}</option>)}
+                        </select>
+                    </label>
+                    <div>
+                        <span id="lineup-team-label">팀</span>
+                        <TeamSelect value={settings.team} year={settings.year} teams={teams} onChange={(team) => change({ team })} />
+                    </div>
                 </div>
+                <p className="lineup-field-label" id="lineup-difficulty-label">난이도</p>
+                <div className="lineup-difficulties" role="radiogroup" aria-labelledby="lineup-difficulty-label">
+                    {DIFFICULTIES.map(([id, name], level) => (
+                        <button key={id} type="button" role="radio" aria-checked={settings.difficulty === id}
+                            className={`is-${id}${settings.difficulty === id ? " is-active" : ""}`} onClick={() => change({ difficulty: id })}>
+                            <strong>{name}</strong>
+                            {/* 난이도 단계를 막대 수로 보여준다. */}
+                            <span aria-hidden="true">{DIFFICULTIES.map(([step], index) => <i key={step} className={index <= level ? "is-on" : ""} />)}</span>
+                        </button>
+                    ))}
+                </div>
+                {/* 고른 난이도의 설명 */}
+                <p className={`lineup-difficulty-note is-${settings.difficulty}`} aria-live="polite">{DIFFICULTIES.find(([id]) => id === settings.difficulty)[2]}</p>
+                {error && <p className="lineup-error" role="alert">{error}</p>}
+                <button type="button" className="lineup-primary" onClick={onStart} disabled={loading}>{loading ? "경기 고르는 중…" : "게임 시작"}</button>
             </div>
-            <div className="lineup-difficulties" role="radiogroup" aria-label="난이도">
-                {DIFFICULTIES.map(([id, name], level) => (
-                    <button key={id} type="button" role="radio" aria-checked={settings.difficulty === id}
-                        className={`is-${id}${settings.difficulty === id ? " is-active" : ""}`} onClick={() => change({ difficulty: id })}>
-                        <strong>{name}</strong>
-                        {/* 난이도 단계를 막대 수로 보여준다. */}
-                        <span aria-hidden="true">{DIFFICULTIES.map(([step], index) => <i key={step} className={index <= level ? "is-on" : ""} />)}</span>
-                    </button>
-                ))}
+
+            {/* 타자 연습: 위에서 고른 연도·팀의 경기로, 양 팀 라인업을 보고 그대로 따라 친다(난이도와는 무관). */}
+            <div className="lineup-section lineup-typing-entry">
+                <div>
+                    <h2 className="lineup-section-title">타자 연습</h2>
+                    <p>위에서 고른 연도·팀의 경기로 양 팀 라인업 20명을 빠르게 따라 쳐 보세요.</p>
+                </div>
+                <button type="button" className="lineup-secondary" onClick={onTyping} disabled={loading}>연습 시작</button>
             </div>
-            {/* 고른 난이도의 설명 */}
-            <p className={`lineup-difficulty-note is-${settings.difficulty}`} aria-live="polite">{DIFFICULTIES.find(([id]) => id === settings.difficulty)[2]}</p>
-            {error && <p className="lineup-error" role="alert">{error}</p>}
-            <button type="button" className="lineup-primary" onClick={onStart} disabled={loading}>{loading ? "경기 고르는 중…" : "게임 시작"}</button>
         </section>
     );
 };
@@ -1211,6 +1259,197 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
     );
 };
 
+/*
+ * 타자 연습: 원정팀 1번 타자부터 9번 타자, 선발투수, 이어서 홈팀까지 20명의 이름을 보이는 대로 따라 친다.
+ * 한글은 한 글자가 여러 번의 자판 입력으로 만들어지므로(김 = ㄱ·ㅣ·ㅁ), 글자를 자판 입력 단위로 풀어서 오타와 타수를 센다.
+ */
+const TYPING_CHO = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+const TYPING_JUNG = ["ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅗㅏ", "ㅗㅐ", "ㅗㅣ", "ㅛ", "ㅜ", "ㅜㅓ", "ㅜㅔ", "ㅜㅣ", "ㅠ", "ㅡ", "ㅡㅣ", "ㅣ"];
+const TYPING_JONG = ["", "ㄱ", "ㄲ", "ㄱㅅ", "ㄴ", "ㄴㅈ", "ㄴㅎ", "ㄷ", "ㄹ", "ㄹㄱ", "ㄹㅁ", "ㄹㅂ", "ㄹㅅ", "ㄹㅌ", "ㄹㅍ", "ㄹㅎ", "ㅁ", "ㅂ", "ㅂㅅ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"];
+// 조합 중에 홀로 떠 있는 겹자모(ㅘ, ㄳ …)도 두 번의 입력으로 본다.
+const TYPING_COMPOUND = { ㅘ: "ㅗㅏ", ㅙ: "ㅗㅐ", ㅚ: "ㅗㅣ", ㅝ: "ㅜㅓ", ㅞ: "ㅜㅔ", ㅟ: "ㅜㅣ", ㅢ: "ㅡㅣ", ㄳ: "ㄱㅅ", ㄵ: "ㄴㅈ", ㄶ: "ㄴㅎ", ㄺ: "ㄹㄱ", ㄻ: "ㄹㅁ", ㄼ: "ㄹㅂ", ㄽ: "ㄹㅅ", ㄾ: "ㄹㅌ", ㄿ: "ㄹㅍ", ㅀ: "ㄹㅎ", ㅄ: "ㅂㅅ" };
+const typingKeys = (text) => {
+    let keys = "";
+    for (const letter of text) {
+        const code = letter.charCodeAt(0) - 0xac00;
+        // 완성형 한글 한 글자 = 초성 19 × 중성 21 × 종성 28
+        if (code >= 0 && code < 11172) keys += TYPING_CHO[Math.floor(code / 588)] + TYPING_JUNG[Math.floor(code % 588 / 28)] + TYPING_JONG[code % 28];
+        else keys += TYPING_COMPOUND[letter] ?? letter;
+    }
+    return keys;
+};
+const emptyTyping = () => Array(10).fill("");
+// 실시간 타수를 다시 계산하는 간격
+const TYPING_METER_MS = 300;
+
+const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
+    const { game, sides } = practice;
+    // 어느 팀의 몇 번째 선수를 치는 중인지. 입력 이벤트가 화면 갱신보다 먼저 겹쳐 올 수 있어, 판정은 cursor로 하고 화면은 state로 그린다.
+    const cursor = useRef({ side: 0, index: 0 });
+    const [side, setSide] = useState(0);
+    const [index, setIndex] = useState(0);
+    const [values, setValues] = useState(emptyTyping);
+    // 입력이 빠르면 화면이 다시 그려지기 전에 다음 입력이 오므로, 직전 값은 여기서 읽는다.
+    const latestValues = useRef(values);
+    // 끝난 뒤의 결과 { speed: 분당 타수, accuracy: 정확도(%), milliseconds }
+    const [result, setResult] = useState(null);
+    // 자판 입력 수: 전체, 그중 오타. 첫 입력부터 시간을 잰다.
+    const tally = useRef({ typed: 0, errors: 0, startedAt: null });
+    const inputs = useRef([]);
+    // 실시간 타수·정확도. 치는 동안 주기적으로 다시 계산한다.
+    const [meter, setMeter] = useState({ speed: 0, accuracy: 100 });
+    // 화면 키보드가 가린 높이. 좁은 화면에서 실시간 타수를 키보드 바로 위에 붙이는 데 쓴다.
+    const [keyboard, setKeyboard] = useState(0);
+    useEffect(() => {
+        window.scrollTo({ top: 0 });
+        inputs.current[0]?.focus({ preventScroll: true });
+        const timer = setInterval(() => {
+            const { typed, errors, startedAt } = tally.current;
+            if (startedAt === null || typed === 0) return;
+            const minutes = Math.max(Date.now() - startedAt, 1000) / 60000;
+            setMeter({ speed: Math.round((typed - errors) / minutes), accuracy: Math.round((typed - errors) / typed * 100) });
+        }, TYPING_METER_MS);
+        const viewport = window.visualViewport;
+        const onViewport = () => setKeyboard(Math.max(0, window.innerHeight - viewport.height - viewport.offsetTop));
+        viewport?.addEventListener("resize", onViewport);
+        viewport?.addEventListener("scroll", onViewport);
+        return () => {
+            clearInterval(timer);
+            viewport?.removeEventListener("resize", onViewport);
+            viewport?.removeEventListener("scroll", onViewport);
+        };
+    }, []);
+
+    // 다음 칸으로: 입력창은 그대로 두고 포커스만 옮기고, 화면도 그 행을 따라간다.
+    // 좁은 화면에서는 키보드에 가리지 않게 행을 화면 위쪽으로 끌어올리고, 넓은 화면에서는 화면 가운데에 오게 한다.
+    const focusTyping = (position) => {
+        const input = inputs.current[position];
+        if (!input) return;
+        input.focus({ preventScroll: true });
+        input.closest(".lineup-row").scrollIntoView({ block: window.matchMedia("(max-width: 640px)").matches ? "start" : "center", behavior: "smooth" });
+    };
+
+    const current = sides[side];
+    const year = game.date.slice(0, 4);
+    const [primary, secondary] = TEAM_COLORS[teamCodeByName(current.team, year)] || DEFAULT_COLORS;
+    const target = current.players[index]?.name ?? "";
+    const typo = !result && !typingKeys(target).startsWith(typingKeys(values[index] ?? ""));
+
+    const onChange = (position, value) => {
+        const at = cursor.current;
+        // 치는 중인 칸이 아니면 무시한다(넘어간 뒤에 앞 칸의 한글 조합이 뒤늦게 확정되며 한 번 더 온다).
+        if (result || position !== at.index) return;
+        const name = sides[at.side].players[at.index].name;
+        const before = typingKeys(latestValues.current[position]);
+        const after = typingKeys(value);
+        if (after.length > before.length) {
+            tally.current.startedAt ??= Date.now();
+            tally.current.typed += after.length - before.length;
+            if (!typingKeys(name).startsWith(after)) tally.current.errors += after.length - before.length;
+        }
+        latestValues.current = latestValues.current.map((old, slot) => (slot === position ? value : old));
+        setValues(latestValues.current);
+        if (value !== name) return;
+
+        // 다 쳤으면 바로 다음 칸으로. 입력창들은 계속 그대로 두고 포커스만 옮겨야 휴대폰 키보드가 닫히지 않는다.
+        if (at.index < 9) {
+            cursor.current = { side: at.side, index: at.index + 1 };
+            setIndex(at.index + 1);
+            focusTyping(at.index + 1);
+        } else if (at.side === 0) {
+            // 원정팀 투수까지 쳤으면 홈팀 라인업으로 바꾼다.
+            cursor.current = { side: 1, index: 0 };
+            setSide(1);
+            setIndex(0);
+            latestValues.current = emptyTyping();
+            setValues(latestValues.current);
+            focusTyping(0);
+        } else {
+            const { typed, errors, startedAt } = tally.current;
+            const milliseconds = Date.now() - startedAt;
+            // 타수는 맞게 친 입력만 센다(분당).
+            const finished = { speed: Math.round((typed - errors) / (milliseconds / 60000)), accuracy: Math.round((typed - errors) / typed * 1000) / 10, milliseconds };
+            recordTyping(finished);
+            setResult(finished);
+            inputs.current[at.index]?.blur();
+        }
+    };
+
+    return (
+        <section className="lineup-card lineup-board lineup-typing" style={{ "--team": primary, "--team-2": secondary }}>
+            <header className="lineup-head">
+                <p className="lineup-daily-label">타자 연습</p>
+                <p className="lineup-meta">{formatDate(game.date)} · {game.stadium}{game.doubleheader ? ` · DH ${game.doubleheader}차전` : ""}<span>{result ? "완료" : `${side * 10 + index} / 20`}</span></p>
+                <div className="lineup-matchup">
+                    {sides.map((team, order) => (
+                        <div key={team.side} className={`lineup-side${order === side ? " is-own" : ""}`}>
+                            <i><TeamLogo team={team.team} year={year} /></i>
+                            <div><b>{teamFullName(team.team)}</b><small>{team.side === "away" ? "원정" : "홈"}</small></div>
+                            <strong>{team.score}</strong>
+                        </div>
+                    ))}
+                </div>
+            </header>
+
+            {/* 실시간 타수: 넓은 화면은 라인업 위에(스크롤해도 따라온다), 좁은 화면은 키보드 바로 위에 작게 */}
+            {!result && (
+                <p className="lineup-typing-meter" style={{ "--keyboard": `${keyboard}px` }} aria-hidden="true">
+                    <span><b>{meter.speed}</b>타/분</span><span>정확도 <b>{meter.accuracy}</b>%</span><span><b>{side * 10 + index}</b> / 20</span>
+                </p>
+            )}
+            <ol className="lineup-rows lineup-typing-rows">
+                {current.players.map((player, position) => {
+                    const done = Boolean(result) || position < index;
+                    const active = !result && position === index;
+                    return (
+                        <li key={position} className={`lineup-row${active ? " is-active" : ""}${done ? " is-done" : ""}${active && typo ? " is-typo" : ""}`}>
+                            <b className="lineup-order">{player.label}</b>
+                            <div className={`lineup-slot${done ? "" : " is-open"}`}>
+                                {/* 입력창은 10칸 모두 처음부터 끝까지 그대로 둔다. 치는 중인 칸만 입력을 받는다. */}
+                                <input type="text" className="lineup-typing-input" value={done ? player.name : values[position]} placeholder={player.name}
+                                    aria-label={`${player.label === "P" ? "선발투수" : `${player.label}번 타자`} ${player.name}`} aria-invalid={active && typo}
+                                    autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck={false} enterKeyHint="next"
+                                    readOnly={done} tabIndex={active ? 0 : -1} ref={(element) => { inputs.current[position] = element; }}
+                                    onChange={(event) => onChange(position, event.target.value)}
+                                    // 다른 칸을 누르면 치던 칸으로 돌려보낸다.
+                                    onFocus={() => { if (!result && position !== cursor.current.index) inputs.current[cursor.current.index]?.focus(); }} />
+                                {/* 오타 표시: 속이 빈 붉은 동그라미 안의 붉은 느낌표 */}
+                                {active && typo && (
+                                    <svg className="lineup-typo-mark" viewBox="0 0 20 20" width="20" height="20" role="img" aria-label="오타">
+                                        <circle cx="10" cy="10" r="8.9" fill="none" stroke="#dc2626" strokeWidth="2" /><path d="M10 5.2v5.8M10 14.3v.4" stroke="#dc2626" strokeWidth="2.2" strokeLinecap="round" />
+                                    </svg>
+                                )}
+                            </div>
+                            {/* 타자는 치는 쪽(L/R/S), 투수는 던지는 손(L/R) */}
+                            {player.label === "P"
+                                ? <span className="lineup-hand" title={{ R: "우투", L: "좌투" }[player.throw]}>{player.throw || ""}</span>
+                                : <span className="lineup-hand" title={BAT_NAMES[player.bat]}>{player.bat || ""}</span>}
+                            {/* 타자는 고른 기록(타율·OPS), 투수는 평균자책점. 넓은 화면에서는 앞에 이름을 작게 적는다. */}
+                            <span className="lineup-avg"><small>{player.label === "P" ? "ERA" : STAT_NAMES.find(([id]) => id === options.stat)[1]}</small>{(player.label === "P" ? player.era : player[options.stat]) ?? "-"}</span>
+                            <span className="lineup-pos" title={POSITION_NAMES[player.pos]}>{player.pos}</span>
+                        </li>
+                    );
+                })}
+            </ol>
+
+            {result && (
+                <div className="lineup-outcome is-solved" role="status">
+                    <p>20명을 모두 쳤습니다!</p>
+                    <dl className="lineup-result-figures">
+                        <div><dt>평균 타수</dt><dd>{result.speed}타/분</dd></div>
+                        <div><dt>정확도</dt><dd>{result.accuracy}%</dd></div>
+                        <div><dt>걸린 시간</dt><dd>{formatDuration(result.milliseconds)}</dd></div>
+                    </dl>
+                </div>
+            )}
+            <div className="lineup-actions">
+                <button type="button" className="lineup-secondary" onClick={onSetup}>뒤로가기</button>
+                <button type="button" className={result ? "lineup-primary" : "lineup-secondary"} onClick={onNext} disabled={loading}>{loading ? "경기 고르는 중…" : "다른 경기로 연습"}</button>
+            </div>
+        </section>
+    );
+};
+
 const Lineup = () => {
     const [settings, setSettings] = useState(loadSettings);
     const [puzzle, setPuzzle] = useState(null);
@@ -1221,6 +1460,8 @@ const Lineup = () => {
     const [showStats, setShowStats] = useState(false);
     const [options, setOptions] = useState(loadOptions);
     const [showOptions, setShowOptions] = useState(false);
+    // 타자 연습 중인 경기. 주소에 담지 않으므로 새로고침하면 시작 화면으로 돌아간다.
+    const [practice, setPractice] = useState(null);
     const changeOptions = (patch) => {
         const next = { ...options, ...patch };
         setOptions(next);
@@ -1267,6 +1508,21 @@ const Lineup = () => {
         return () => { cancelled = true; };
     }, [address.daily, address.game, address.side, address.level]);
 
+    const startTyping = async () => {
+        setLoading(true);
+        setError("");
+        try {
+            const { data } = await axios.get("/api/lineup/typing.php", { params: { year: settings.year, team: settings.team } });
+            setPractice(data);
+            setRound(round + 1);
+        } catch (failure) {
+            setError(failure.response?.data?.error || "경기를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.");
+            setPractice(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const start = async () => {
         setLoading(true);
         setError("");
@@ -1295,7 +1551,9 @@ const Lineup = () => {
                 ? <section className="lineup-card lineup-loading" role="status">경기를 불러오는 중…</section>
                 : puzzle
                     ? <Board key={round} puzzle={puzzle} options={options} loading={loading} onNext={start} onSetup={() => setParams({})} onStats={() => setShowStats(true)} onOptions={() => setShowOptions(true)} />
-                    : <Setup settings={settings} setSettings={setSettings} onStart={start} onDaily={() => setParams({ daily: "1" })} onStats={() => setShowStats(true)} onOptions={() => setShowOptions(true)} loading={loading} error={error} />}
+                    : practice
+                        ? <TypingBoard key={round} practice={practice} options={options} loading={loading} onNext={startTyping} onSetup={() => setPractice(null)} />
+                        : <Setup settings={settings} setSettings={setSettings} onStart={start} onTyping={startTyping} onDaily={() => setParams({ daily: "1" })} onStats={() => setShowStats(true)} onOptions={() => setShowOptions(true)} loading={loading} error={error} />}
             {showOptions && <SettingsModal options={options} onChange={changeOptions} onClose={() => setShowOptions(false)} />}
             {showStats && <StatsModal onClose={() => setShowStats(false)} />}
         </main>

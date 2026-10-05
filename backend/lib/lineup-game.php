@@ -189,13 +189,46 @@ function lineupForTeam(PDO $db, array $game, string $team): ?array
     // 선발로 나온 선수가 교체 명단에 다시 잡히지 않게 한다.
     foreach ($starters as $starter) unset($subs[$starter['id']]);
 
-    $query = $db->prepare('SELECT p.team,d.name FROM kbo_season_pitch_records p LEFT JOIN kbo_player_data d ON d.player_id=p.player_id'
+    $query = $db->prepare('SELECT p.team,p.player_id,d.name,d.`throw` FROM kbo_season_pitch_records p LEFT JOIN kbo_player_data d ON d.player_id=p.player_id'
         . ' WHERE p.league_level=1 AND p.game_id IN (?,?) AND p.`order`=1');
     $query->execute($ids);
-    $pitchers = ['starter' => null, 'opponentStarter' => null];
-    foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $row) $pitchers[lineupSameTeam($row['team'], $team) ? 'starter' : 'opponentStarter'] = $row['name'];
+    $pitchers = ['starter' => null, 'starterId' => null, 'starterThrow' => null, 'opponentStarter' => null];
+    foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $own = lineupSameTeam($row['team'], $team);
+        $pitchers[$own ? 'starter' : 'opponentStarter'] = $row['name'];
+        if (!$own) continue;
+        $pitchers['starterId'] = (int)$row['player_id'];
+        // 던지는 손: 우투·우언(언더)·우사(사이드)는 R, 좌투는 L
+        $pitchers['starterThrow'] = ['우' => 'R', '좌' => 'L'][mb_substr((string)$row['throw'], 0, 1, 'UTF-8')] ?? null;
+    }
 
     return ['starters' => array_values($starters), 'subs' => array_values($subs)] + $pitchers;
+}
+
+/**
+ * 투수의 그 경기 직전까지의 정규시즌 평균자책점('2.39'). 타자 기록과 같은 기준이라 그 경기는 넣지 않고, 더블헤더 2차전이면 1차전까지 넣는다.
+ * 앞서 던진 이닝이 없거나 자책점이 비어 있는 기록이 섞여 있으면 null.
+ */
+function lineupPitcherEra(PDO $db, array $schedule, array $game, int $pitcherId): ?string
+{
+    $start = $schedule[substr($game['game_date'], 0, 4)]['regular'][0] ?? '';
+    if (!$start) return null;
+    $query = $db->prepare('SELECT game_id,game_date,inning,er FROM kbo_season_pitch_records WHERE league_level=1 AND player_id=? AND game_date BETWEEN ? AND ?' . profileNotTiebreakerSql());
+    $query->execute([$pitcherId, $start, $game['game_date']]);
+    $number = lineupGameNumber($game['game_code']);
+    $outs = 0;
+    $earnedRuns = 0;
+    foreach ($query->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        if ($row['game_date'] === $game['game_date'] && lineupGameNumber((string)$row['game_id']) >= $number) continue;
+        if ($row['er'] === null) return null;
+        try {
+            $outs += profileInningOuts((string)$row['inning']);
+        } catch (RuntimeException $error) {
+            return null;
+        }
+        $earnedRuns += (int)$row['er'];
+    }
+    return $outs > 0 ? number_format($earnedRuns * 27 / $outs, 2) : null;
 }
 
 /** 선수들의 별명 (player_id => 별명 목록). 메인 페이지의 선수 검색이 쓰는 kbo_player_nicknames를 함께 쓴다. */

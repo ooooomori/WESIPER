@@ -12,17 +12,32 @@
 .lineup-icon-button { display: grid; place-items: center; width: 34px; padding: 0; color: #475569; }
 .lineup-options-open { position: absolute; top: -6px; right: 0; }
 .lineup-text-button:hover { background: #f8fafc; border-color: #cbd5e1; }
-.lineup-lead { margin: 8px 0 24px; color: var(--muted); font-size: 14.5px; line-height: 1.6; word-break: keep-all; }
+.lineup-lead { margin: 8px 0 20px; color: var(--muted); font-size: 14.5px; line-height: 1.6; word-break: keep-all; }
 
 /* 시작 화면 */
-.lineup-daily { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-bottom: 24px; padding: 16px 18px; border: 0; border-radius: 16px; background: linear-gradient(120deg, #0f172a, #334155); color: #fff; font: inherit; text-align: left; cursor: pointer; box-shadow: 0 10px 24px #0f172a2e; transition: transform .15s, box-shadow .15s; }
-.lineup-daily:hover { transform: translateY(-1px); box-shadow: 0 14px 28px #0f172a3d; }
-.lineup-daily:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.lineup-setup { padding: 30px 24px 24px; }
+/* 오늘의 라인업: 사이트의 파란색 계열로 눈에 띄게. 왼쪽에는 달력 모양으로 오늘 날짜를 둔다. */
+.lineup-daily { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; width: 100%; margin-bottom: 14px; padding: 14px 18px 14px 14px; border: 0; border-radius: 18px; background: linear-gradient(120deg, #0a5fd6, #087aff 55%, #00b5e5); color: #fff; font: inherit; text-align: left; cursor: pointer; box-shadow: 0 10px 24px #087aff3d; transition: transform .15s, box-shadow .15s; }
+.lineup-daily:hover { transform: translateY(-1px); box-shadow: 0 14px 28px #087aff52; }
+.lineup-daily:focus-visible { outline: 2px solid #087aff; outline-offset: 3px; }
+.lineup-daily i { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 14px; background: #fff; color: #0a5fd6; font-style: normal; line-height: 1; }
+.lineup-daily i small { color: #0a5fd6; font-size: 11px; font-weight: 800; }
+.lineup-daily i b { margin-top: 2px; font-size: 22px; font-weight: 900; }
 .lineup-daily span { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .lineup-daily strong { font-size: 17px; font-weight: 900; letter-spacing: -.01em; }
-.lineup-daily small { color: #ffffffbf; font-size: 12.5px; font-weight: 600; }
-.lineup-daily > b { font-size: 20px; }
-.lineup-section-title { margin: 0 0 12px; color: var(--muted); font-size: 13px; font-weight: 800; }
+.lineup-daily span small { color: #ffffffd9; font-size: 12.5px; font-weight: 600; }
+.lineup-daily > b { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #ffffff2e; font-size: 17px; }
+.lineup-daily.is-done > b { background: #fff; color: #0a5fd6; }
+/* 자유 플레이, 타자 연습: 옅은 테두리 상자로 구역을 나눈다. */
+.lineup-section { margin-top: 14px; padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: #fff; }
+.lineup-section-title { margin: 0 0 14px; color: var(--ink); font-size: 16px; font-weight: 900; letter-spacing: -.01em; }
+.lineup-field-label { margin: 16px 0 7px; color: var(--muted); font-size: 12.5px; font-weight: 700; }
+.lineup-section .lineup-difficulties { margin-top: 0; }
+.lineup-typing-entry { display: flex; align-items: center; justify-content: space-between; gap: 14px; background: #f8fafc; }
+.lineup-typing-entry .lineup-section-title { margin-bottom: 4px; }
+.lineup-typing-entry p { margin: 0; color: var(--muted); font-size: 12.5px; line-height: 1.5; word-break: keep-all; }
+.lineup-typing-entry .lineup-secondary { flex: none; height: 42px; padding: 0 16px; background: #fff; border: 1px solid #cbd5e1; font-size: 14px; }
+.lineup-typing-entry .lineup-secondary:hover:not(:disabled) { background: #f1f5f9; }
 .lineup-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .lineup-fields label, .lineup-fields > div { display: flex; flex-direction: column; gap: 7px; color: var(--muted); font-size: 12.5px; font-weight: 700; }
 .lineup-fields select { width: 100%; height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 12px; background-color: #fff; color: var(--ink); font: inherit; font-size: 15.5px; font-weight: 700; }
@@ -95,7 +110,7 @@
 /* 구단 색 바탕에서도 로고가 묻히지 않게, 로고 모양을 따라 흰 테두리를 두른다. */
 .lineup-side.is-own i { padding: 2px; }
 .lineup-side.is-own img { filter: drop-shadow(1.5px 0 0 #fff) drop-shadow(-1.5px 0 0 #fff) drop-shadow(0 1.5px 0 #fff) drop-shadow(0 -1.5px 0 #fff); }
-.lineup-side.is-own h1 { font-size: 16.5px; font-weight: 900; }
+.lineup-side.is-own h1 { font-size: 16.5px; font-weight: 800; }
 .lineup-side.is-own small { color: #ffffffd9; }
 .lineup-side.is-own > strong { font-size: 24px; }
 
@@ -234,6 +249,44 @@ a.lineup-chip:hover { text-decoration: underline; }
 .lineup-page .lineup-hide-names input[role="switch"] { width: 30px; height: 18px; }
 .lineup-page .lineup-hide-names input[role="switch"]::after { top: 2px; left: 2px; width: 14px; height: 14px; }
 .lineup-page .lineup-hide-names input[role="switch"]:checked::after { transform: translateX(12px); }
+/* 타자 연습: 이름이 흐리게 깔린 입력창에 그대로 따라 친다. */
+.lineup-card.lineup-typing { width: min(100%, 520px); }
+.lineup-typing .lineup-side b { font-size: 14.5px; }
+.lineup-typing .lineup-side.is-own b { font-size: 16.5px; font-weight: 800; }
+/* 다 친 칸은 색을 칠하지 않고 이름만 또렷하게 남긴다. */
+.lineup-typing-rows .lineup-row.is-done .lineup-typing-input { color: var(--ink); }
+.lineup-typing-rows .lineup-row { grid-template-columns: 32px minmax(0, 1fr) 18px 84px 40px; cursor: default; }
+.lineup-typing-rows .lineup-avg { text-align: right; }
+.lineup-typing-rows .lineup-slot { max-width: none; }
+.lineup-typing-input { width: 100%; height: 30px; padding: 0 8px; border: 0; background: transparent; color: inherit; font: inherit; font-size: 16.5px; font-weight: 800; letter-spacing: .04em; }
+.lineup-typing-input::placeholder { color: #94a3b8; font-weight: 700; opacity: 1; }
+.lineup-row.is-active .lineup-typing-input::placeholder { color: #ffffff99; }
+.lineup-typing-input:focus { outline: 0; box-shadow: none; }
+.lineup-typing-input[readonly] { cursor: default; }
+/* 오타: 구단 색이 붉은 팀에서도 눈에 띄도록 칸을 흰 바탕의 붉은 글씨로 바꾸고 한 번 흔든다. 칸 오른쪽 끝에 붉은 느낌표를 띄운다. */
+.lineup-typo-mark { flex: none; margin-right: 3px; }
+/* 실시간 타수: 라인업 위에 붙여 두고, 아래 타순을 치느라 스크롤해도 따라오게 한다. */
+.lineup-typing-meter { position: sticky; top: 8px; z-index: 6; display: flex; align-items: center; justify-content: center; gap: 18px; margin: 0 0 10px; padding: 9px 14px; border-radius: 12px; background: #0f172a; color: #ffffffb3; font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; box-shadow: 0 6px 16px #0f172a26; }
+.lineup-typing-meter b { margin-right: 2px; color: #fff; font-size: 17px; font-weight: 900; }
+.lineup-typing-meter span:first-child b { font-size: 21px; }
+@media (max-width: 640px) {
+    /* 좁은 화면: 화면 키보드 바로 위에 작게 띄운다(--keyboard = 키보드가 가린 높이). */
+    .lineup-typing-meter { position: fixed; top: auto; left: 50%; bottom: calc(var(--keyboard, 0px) + 8px); transform: translateX(-50%); gap: 12px; margin: 0; padding: 6px 14px; border-radius: 999px; font-size: 11.5px; white-space: nowrap; }
+    .lineup-typing-meter b, .lineup-typing-meter span:first-child b { font-size: 14px; }
+}
+.lineup-typing-rows .lineup-row.is-typo .lineup-slot { border: 1px solid #dc2626; background: #fff; color: #dc2626; animation: lineup-typo .22s; }
+@keyframes lineup-typo { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+@media (max-width: 480px) {
+    .lineup-typing-rows .lineup-row { grid-template-columns: 28px minmax(0, 1fr) 14px 42px 30px; }
+}
+.lineup-typing .lineup-outcome p { margin-bottom: 4px; }
+.lineup-typing .lineup-result-figures { margin: 6px 0 0; }
+.lineup-typing .lineup-result-figures div { background: #fff; color: var(--ink); }
+.lineup-typing .lineup-actions > button { flex: 1; }
+@media (prefers-reduced-motion: reduce) {
+    .lineup-typing-rows .lineup-row.is-typo .lineup-slot { animation: none; }
+}
+
 /* 화면 아래 가운데에 잠깐 뜨는 안내 */
 .lineup-toast { position: fixed; left: 50%; bottom: 28px; z-index: 80; transform: translateX(-50%); margin: 0; padding: 12px 18px; border-radius: 999px; background: #0f172ae6; color: #fff; font-size: 14px; font-weight: 700; white-space: nowrap; box-shadow: 0 10px 24px #0f172a40; animation: lineup-toast-in .18s ease-out; }
 @keyframes lineup-toast-in { from { opacity: 0; transform: translate(-50%, 8px); } }
@@ -322,6 +375,8 @@ a.lineup-chip:hover { text-decoration: underline; }
 .lineup-stats table { margin-bottom: 4px; }
 .lineup-stats tbody tr:last-child th, .lineup-stats tbody tr:last-child td { border-bottom: 0; }
 .lineup-stats .lineup-level { margin: 0; }
+.lineup-stats h3 { margin: 22px 0 0; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; font-weight: 900; text-align: left; }
+.lineup-stats h3 + table { margin-top: 10px; }
 /* 좁은 화면: 7칸이 한 화면에 들어가도록 글자와 여백을 줄이고, 머리글은 두 줄로 접히게 한다. */
 @media (max-width: 520px) {
     .lineup-modal-panel.lineup-stats { padding-inline: 12px; }
@@ -354,6 +409,12 @@ a.lineup-chip:hover { text-decoration: underline; }
     .lineup-row-records .lineup-record-list span { font-size: 12.5px; }
 }
 @media (max-width: 480px) {
+    .lineup-setup { padding: 24px 14px 16px; }
+    .lineup-section { padding: 16px 14px; }
+    .lineup-daily { gap: 11px; padding: 12px 14px 12px 12px; }
+    .lineup-daily i { width: 46px; height: 46px; border-radius: 12px; }
+    .lineup-daily i b { font-size: 20px; }
+    .lineup-daily strong { font-size: 16px; }
     .lineup-page { padding: 14px 10px 40px; }
     .lineup-card { padding: 24px 14px 18px; border-radius: 20px; }
     .lineup-card::before { left: 20px; right: 20px; }
