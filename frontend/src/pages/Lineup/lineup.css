@@ -279,7 +279,15 @@ a.lineup-chip:hover { text-decoration: underline; }
     .lineup-typing-meter { position: fixed; top: auto; left: 50%; bottom: calc(var(--keyboard, 0px) + 8px); transform: translateX(-50%); gap: 12px; margin: 0; padding: 6px 14px; border-radius: 999px; font-size: 11.5px; white-space: nowrap; }
     .lineup-typing-meter b, .lineup-typing-meter span:first-child b { font-size: 14px; }
 }
-.lineup-typing-rows .lineup-row.is-typo .lineup-slot { border: 1px solid #dc2626; background: #fff; color: #dc2626; animation: lineup-typo .22s; }
+/* 구단 색(특히 붉은색·주황색 팀) 위에서는 붉은 표시가 묻히므로, 오타가 난 행은 구단 색을 걷어 내고 흰 바탕에 붉은 테두리로 바꾼다. */
+.lineup-typing-rows .lineup-row.is-active.is-typo { border-color: #dc2626; background: #fff; color: var(--ink); box-shadow: 0 0 0 3px #dc262633; }
+.lineup-typing-rows .lineup-row.is-active.is-typo .lineup-order { background: #dc2626; color: #fff; }
+.lineup-typing-rows .lineup-row.is-active.is-typo .lineup-hand { color: #64748b; }
+.lineup-typing-rows .lineup-row.is-active.is-typo .lineup-avg { color: #475569; }
+.lineup-typing-rows .lineup-row.is-active.is-typo .lineup-pos { background: #fee2e2; color: #dc2626; }
+/* 치는 중에는 칸에 포커스가 있어서, 포커스 상태의 규칙보다 앞서도록 :focus-within까지 함께 적는다. */
+.lineup-typing-rows .lineup-row.is-active.is-typo .lineup-slot.is-open,
+.lineup-typing-rows .lineup-row.is-active.is-typo .lineup-slot.is-open:focus-within { border: 1px solid #dc2626; background: #fef2f2; color: #dc2626; animation: lineup-typo .22s; }
 @keyframes lineup-typo { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 @media (max-width: 480px) {
     .lineup-typing-rows .lineup-row { grid-template-columns: 28px minmax(0, 1fr) 14px 42px 30px; }
@@ -288,7 +296,8 @@ a.lineup-chip:hover { text-decoration: underline; }
 .lineup-typing .lineup-result-figures div { background: #fff; color: var(--ink); }
 .lineup-typing .lineup-actions > button { flex: 1; }
 @media (prefers-reduced-motion: reduce) {
-    .lineup-typing-rows .lineup-row.is-typo .lineup-slot { animation: none; }
+    .lineup-typing-rows .lineup-row.is-active.is-typo .lineup-slot.is-open,
+    .lineup-typing-rows .lineup-row.is-active.is-typo .lineup-slot.is-open:focus-within { animation: none; }
 }
 
 /* 화면 아래 가운데에 잠깐 뜨는 안내 */
