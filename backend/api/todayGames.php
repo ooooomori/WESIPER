@@ -52,13 +52,13 @@ function normalizeGame($game, $weather = null)
     );
 }
 
-// 퓨처스리그 조회 여부. 1군과 같은 캐시 규칙을 쓰므로 경기가 없는 날에는 하루 한 번만 묻는다.
-const TODAY_GAMES_FUTURES_ENABLED = true;
+// 퓨처스리그는 2026 시즌이 끝나 이 날짜(KST) 전까지 조회하지 않는다. 그 뒤로는 1군과 같은 캐시 규칙으로 다시 묻는다.
+const TODAY_GAMES_FUTURES_RESUME = '2027-03-01';
 
 try {
     $requestTime = time();
     $kboCache = cachedTodayGames(KBO_TODAY_GAMES_KEY, fn($day) => fetchKboGameList('1', KBO_TODAY_GAMES_SERIES, $day), $requestTime);
-    $futuresCache = TODAY_GAMES_FUTURES_ENABLED
+    $futuresCache = date('Y-m-d', $requestTime) >= TODAY_GAMES_FUTURES_RESUME
         ? cachedTodayGames('2:0,1,9,10,15', fn($day) => fetchKboGameList('2', '0,1,9,10,15', $day), $requestTime)
         : array('games' => array(), 'stale' => false, 'fetchedAt' => null);
     $kboRawGames = $kboCache['games'];
