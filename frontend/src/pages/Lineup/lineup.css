@@ -128,7 +128,7 @@
 .lineup-order { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 10px; background: var(--team); color: #fff; font: inherit; font-size: 16px; font-weight: 900; font-variant-numeric: tabular-nums; cursor: pointer; }
 .lineup-row.is-active .lineup-order { background: #fff; color: var(--team); }
 .lineup-order:focus-visible { outline: 2px solid var(--team-2); outline-offset: 2px; }
-/* 쉬움: 이름 칸 바로 오른쪽에 타석(L/R/S) 칸이 하나 더 있다. */
+/* 익스트림을 뺀 난이도: 이름 칸 바로 오른쪽에 타석(L/R/S) 칸이 하나 더 있다. */
 .lineup-rows.has-hands .lineup-row { grid-template-columns: 32px minmax(0, 168px) 18px minmax(max-content, 1fr) 40px; }
 .lineup-hand { color: #64748b; font-size: 13px; font-weight: 800; text-align: center; }
 .lineup-row.is-active .lineup-hand { color: #ffffffd9; }

@@ -1102,7 +1102,7 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
             </header>
 
             <div className="lineup-body">
-                <ol className={`lineup-rows${difficulty === "easy" ? " has-hands" : ""}`} ref={rows}>
+                <ol className={`lineup-rows${difficulty === "extreme" ? "" : " has-hands"}`} ref={rows}>
                     {slots.map((slot, index) => {
                         const pick = picks[index];
                         const locked = results[index] === "correct";
@@ -1138,7 +1138,8 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
                                                 hint={searchHint} onPick={(player) => pickBySearch(player, index)} />}
                                         </div>
                                     )}
-                                    {difficulty === "easy" && <span className="lineup-hand" title={BAT_NAMES[slot.bat]}>{slot.bat || ""}</span>}
+                                    {/* 타석(L/R/S)은 익스트림을 뺀 모든 난이도에서 보여준다. */}
+                                    {difficulty !== "extreme" && <span className="lineup-hand" title={BAT_NAMES[slot.bat]}>{slot.bat || ""}</span>}
                                     {/* 넓은 화면에서는 어떤 기록인지(타율·OPS) 숫자 앞에 적는다. 경기 전 기록이라 시즌 첫 경기면 값이 없어 「-」로 적는다. 익스트림은 끝날 때까지 가린다. */}
                                     <span className="lineup-avg">{(finished || difficulty !== "extreme") && <><small>{STAT_NAMES.find(([id]) => id === options.stat)[1]}</small>{shown[options.stat] ?? "-"}</>}</span>
                                     <span className="lineup-pos" title={POSITION_NAMES[shown.pos]}>{shown.pos || "?"}</span>
@@ -1222,7 +1223,7 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
             {error && <p className="lineup-error" role="alert">{error}</p>}
 
             <div className="lineup-actions">
-                <button type="button" className="lineup-secondary" onClick={onSetup}>뒤로가기</button>
+                <button type="button" className="lineup-secondary" onClick={onSetup}><span aria-hidden="true">← </span>뒤로 가기</button>
                 {finished
                     ? (
                         <>
@@ -1460,7 +1461,7 @@ const TypingBoard = ({ practice, options, loading, onNext, onSetup }) => {
                 </div>
             )}
             <div className="lineup-actions">
-                <button type="button" className="lineup-secondary" onClick={onSetup}>뒤로가기</button>
+                <button type="button" className="lineup-secondary" onClick={onSetup}><span aria-hidden="true">← </span>뒤로 가기</button>
                 <button type="button" className={result ? "lineup-primary" : "lineup-secondary"} onClick={onNext} disabled={loading}>{loading ? "경기 고르는 중…" : "다른 경기로 연습"}</button>
             </div>
         </section>

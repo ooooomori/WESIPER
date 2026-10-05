@@ -90,8 +90,8 @@ try {
         ],
         // 그날의 타석 결과는 누구인지 짐작하는 단서로 준다.
         'slots' => array_map(static fn($starter) => ['order' => $starter['order'], 'pos' => $extreme ? null : $starter['pos'], 'avg' => $stats[$starter['id']]['avg'] ?? null, 'ops' => $stats[$starter['id']]['ops'] ?? null,
-            // 쉬움에서는 타자의 타석(L/R/S)도 단서로 준다.
-            'bat' => $difficulty === 'easy' ? $starter['bat'] : null, 'records' => $starter['records']], $lineup['starters']),
+            // 타자의 타석(L/R/S)도 단서로 준다. 익스트림에서는 포지션·기록과 함께 가린다.
+            'bat' => $extreme ? null : $starter['bat'], 'records' => $starter['records']], $lineup['starters']),
         'candidates' => $candidates,
     ], JSON_UNESCAPED_UNICODE);
 } catch (Throwable $error) {
