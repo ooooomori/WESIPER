@@ -429,7 +429,7 @@ const Setup = ({ settings, setSettings, onStart, onTyping, onDaily, onStats, onO
             <div className="lineup-section lineup-typing-entry">
                 <div>
                     <h2 className="lineup-section-title">타자 연습</h2>
-                    <p>위에서 고른 연도·팀의 경기로 양 팀 라인업 20명을 빠르게 따라 쳐 보세요.</p>
+                    <p>양팀 라인업을 따라 쳐보세요!</p>
                 </div>
                 <button type="button" className="lineup-secondary" onClick={onTyping} disabled={loading}>연습 시작</button>
             </div>
