@@ -546,3 +546,19 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
 
 /* 최근 본 선수: PC에서 끌어 넘길 때 링크·사진이 따로 끌려가지 않게 한다 */
 .main-home-recent-list a, .main-home-recent-list img { -webkit-user-drag: none; user-select: none; }
+
+/* 미니게임: 라인업 맞추기 카드는 한 줄을 다 쓴다 */
+.main-home-lineup-card { grid-column: 1 / -1; background: linear-gradient(145deg, #fffaf1, #fcefd9); border-color: #f1e3c8; color: #5a3d10; }
+.main-home-lineup-card:hover { color: #5a3d10; }
+.main-home-lineup-card small { color: #8a7352; }
+.main-home-lineup-rows { display: flex; flex-direction: column; gap: 4px; width: 100%; max-width: 150px; }
+.main-home-lineup-rows > span { display: grid; grid-template-columns: 12px minmax(0, 1fr); align-items: center; gap: 6px; }
+.main-home-lineup-rows b { font-size: 10px; font-weight: 900; text-align: center; }
+.main-home-lineup-rows i { height: 15px; border-radius: 5px; background: #e2a23a; }
+.main-home-lineup-rows .is-open i { border: 1px dashed #d9b06a; background: #ffffffb3; }
+@media (min-width: 601px) {
+    .main-home-lineup-card { display: grid; grid-template-columns: minmax(0, 1fr) 150px; grid-template-areas: "title art" "desc art"; align-items: center; column-gap: 20px; padding-right: 56px; }
+    .main-home-lineup-card .main-home-mini-art { grid-area: art; height: auto; }
+    .main-home-lineup-card strong { grid-area: title; align-self: end; margin-top: 0; }
+    .main-home-lineup-card small { grid-area: desc; align-self: start; }
+}

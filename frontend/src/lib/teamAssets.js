@@ -27,7 +27,9 @@ export const teamCapByCode = code => teamCaps[code] ? { crown: teamCaps[code][0]
 const currentTeamCodes = { KIA: 'kia', LG: 'lg', SSG: 'ssg', 두산: 'doo', 삼성: 'sam', 롯데: 'lot', 한화: 'han', KT: 'kt', NC: 'nc', 키움: 'kiw', 울산: 'ulsan', '울산 웨일즈': 'ulsan' };
 // 시대에 따라 로고·모자가 달랐던 팀: 2000~2005년 SK는 파란 「W」 로고(코드 sk00)를 썼다.
 export const eraTeamCode = (name, year) => name === 'SK' && Number(year) >= 2000 && Number(year) <= 2005 ? 'sk00' : null;
-export const teamCapByName = (name, year) => { const team = String(name || '').trim(); return teamCapByCode(eraTeamCode(team, year) || currentTeamCodes[team.toUpperCase()] || currentTeamCodes[team] || legacyTeams[team]?.[0]); };
+// 팀 이름(과 연도)으로 로고·모자 파일 코드 찾기
+export const teamCodeByName = (name, year) => { const team = String(name || '').trim(); return eraTeamCode(team, year) || currentTeamCodes[team.toUpperCase()] || currentTeamCodes[team] || legacyTeams[team]?.[0] || null; };
+export const teamCapByName = (name, year) => teamCapByCode(teamCodeByName(name, year));
 
 // 지금은 없는 팀·옛 팀명: [파일 코드, 대표 색(모자·강조에 쓴다)]
 export const legacyTeams = {

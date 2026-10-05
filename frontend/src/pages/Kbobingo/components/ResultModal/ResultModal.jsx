@@ -326,6 +326,9 @@ const ResultModal = (props) => {
                 <Button variant="success" onClick={() => navigate("/kbodle")}>
                     크보들 풀기
                 </Button>
+                <Button variant="outline-success" onClick={() => navigate("/lineup")}>
+                    라인업 맞추기
+                </Button>
             </Modal.Footer>
         </Modal>
     );

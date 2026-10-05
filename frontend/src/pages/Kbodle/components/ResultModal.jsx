@@ -64,7 +64,7 @@ const ResultSquare = (props) => {
                         url={props.handleShare(null, "text")}
                         aria-label="X에 공유"
                     >
-                        <XIcon size={36} round={true}></XIcon>
+                        <XIcon size={32} round={true}></XIcon>
                     </TwitterShareButton>
                     <button
                         id="kakaotalk-sharing-btn"
@@ -402,6 +402,15 @@ const ResultModal = (props) => {
                         }}
                     >
                         크보빙고 풀기
+                    </Button>
+                    <Button
+                        variant="outline-success"
+                        onClick={() => {
+                            handleClose();
+                            navigate("/lineup");
+                        }}
+                    >
+                        라인업 맞추기
                     </Button>
                 </Modal.Footer>
             </Modal>

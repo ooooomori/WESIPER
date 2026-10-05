@@ -68,15 +68,15 @@
 .kbodle-result-tiles { min-width: 128px; padding: 10px 12px; border-radius: 12px; background: #f6f9fc; font-size: 10px; line-height: 1.6; text-align: center; white-space: nowrap; }
 .kbodle-result-actions { display: flex; flex-direction: column; gap: 10px; align-items: stretch; }
 .kbodle-result-icons { display: flex; justify-content: center; gap: 10px; }
-.kbodle-result-icons > button { display: grid; place-items: center; width: 36px; height: 36px; padding: 0; overflow: hidden; border: 0; border-radius: 50%; background: transparent; }
+.kbodle-result-icons > button { display: grid; place-items: center; width: 32px; height: 32px; padding: 0; overflow: hidden; border: 0; border-radius: 50%; background: transparent; }
 .kbodle-result-icon img { width: 100%; height: 100%; object-fit: cover; }
-.kbodle-result-icon.is-system { background: #f1f4f8; color: #33475f; font-size: 15px; transition: background-color .15s; }
+.kbodle-result-icon.is-system { background: #f1f4f8; color: #33475f; font-size: 14px; transition: background-color .15s; }
 .kbodle-result-icon.is-system:hover { background: #e6ebf2; }
 .kbodle-result-previous { display: flex; gap: 6px; padding-bottom: 4px; overflow-x: auto; scrollbar-width: thin; }
 .kbodle-result-previous button { flex: none; padding: 6px 12px; border: 1px solid #e3e9f2; border-radius: 999px; background: #fff; color: #33475f; font-size: 12.5px; font-weight: 700; white-space: nowrap; transition: border-color .15s, color .15s; }
 .kbodle-result-previous button:hover { border-color: color-mix(in srgb, var(--game-accent) 40%, #e3e9f2); color: var(--game-accent); }
 .modal.game-modal .kbodle-result-custom { width: 100%; margin-top: 10px; }
-.modal.game-modal .kbodle-result-footer { display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 12px; padding-top: 12px; border-top: 1px solid #eef2f7; }
+.modal.game-modal .kbodle-result-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; padding-top: 12px; border-top: 1px solid #eef2f7; }
 .kbodle-result-countdown { display: flex; flex-direction: column; color: #8a9bb1; font-size: 11.5px; line-height: 1.35; }
 .kbodle-result-countdown > span:last-child { color: #22364f; font-size: 16px; font-weight: 800; font-variant-numeric: tabular-nums; }
 @media (max-width: 600px) {

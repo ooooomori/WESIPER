@@ -27,6 +27,7 @@ const Nav = () => {
     const pages = [
         {id: "kbodle", name: "KBODLE: 크보들", href: "/kbodle"},
         {id: "bingo", name: "KBO BINGO", href: "/bingo"},
+        {id: "lineup", name: "라인업 맞추기", href: "/lineup"},
         {id: "contact", name: "문의하기", href:"mailto:godmascotvic@gmail.com"},
     ];
     // 탭에는 없지만 주소로는 들어올 수 있는 페이지의 제목

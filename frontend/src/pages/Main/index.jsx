@@ -637,6 +637,12 @@ export default function Main() {
                             </div>
                             <strong className="font-family-kbo">KBO BINGO</strong><small>야구 지식으로 아홉 칸을 채워보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
                         </Link>
+                        <Link className="main-home-mini-card main-home-lineup-card" to="/lineup">
+                            <div className="main-home-mini-art" aria-hidden="true">
+                                <div className="main-home-lineup-rows">{[1, 2, 3].map(order => <span key={order} className={order === 2 ? 'is-open' : ''}><b>{order}</b><i /></span>)}</div>
+                            </div>
+                            <strong className="font-family-kbo">라인업 맞추기</strong><small>그날의 선발 타순을 1번부터 9번까지 맞혀보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
+                        </Link>
                     </div>
                 </section>
             </div>
