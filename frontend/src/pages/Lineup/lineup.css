@@ -54,19 +54,20 @@
 .lineup-select li { display: flex; align-items: center; gap: 9px; padding: 9px 8px; border-radius: 9px; color: var(--ink); font-size: 15px; font-weight: 700; cursor: pointer; }
 .lineup-select li:hover { background: #f1f5f9; }
 .lineup-select li.is-active { background: #eef2f7; font-weight: 800; }
-.lineup-difficulties { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 18px 0 12px; }
+/* 난이도 버튼 4개를 한 줄에 놓는다. 칸이 좁아서 이름 아래에 단계 막대를 둔다. */
+.lineup-difficulties { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 18px 0 10px; }
 /* 고른 난이도의 설명: 그 난이도의 색으로 옅게 칠한다. */
-.lineup-difficulty-note { --tone: #16a34a; margin: 0 0 22px; padding: 11px 14px; border-radius: 12px; background: color-mix(in srgb, var(--tone) 8%, #fff); color: color-mix(in srgb, var(--tone) 75%, #0f172a); font-size: 13.5px; font-weight: 600; line-height: 1.5; text-align: center; word-break: keep-all; }
+.lineup-difficulty-note { --tone: #16a34a; margin: 0 0 20px; padding: 9px 12px; border-radius: 12px; background: color-mix(in srgb, var(--tone) 8%, #fff); color: color-mix(in srgb, var(--tone) 75%, #0f172a); font-size: 12px; font-weight: 600; line-height: 1.5; text-align: center; word-break: keep-all; }
 .lineup-difficulty-note.is-normal { --tone: #2563eb; }
 .lineup-difficulty-note.is-hard { --tone: #ea580c; }
 .lineup-difficulty-note.is-extreme { --tone: #be123c; }
 /* 난이도마다 고유색(--tone)을 주고, 고른 난이도는 그 색으로 채운다. */
-.lineup-difficulties button { --tone: #16a34a; --tone-2: #22c55e; display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 60px; padding: 0 16px; border: 1.5px solid color-mix(in srgb, var(--tone) 28%, #fff); border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--tone) 13%, #fff), color-mix(in srgb, var(--tone-2) 5%, #fff)); color: var(--tone); font: inherit; text-align: left; cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; }
+.lineup-difficulties button { --tone: #16a34a; --tone-2: #22c55e; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; height: 66px; padding: 0 4px; border: 1.5px solid color-mix(in srgb, var(--tone) 28%, #fff); border-radius: 14px; background: linear-gradient(135deg, color-mix(in srgb, var(--tone) 13%, #fff), color-mix(in srgb, var(--tone-2) 5%, #fff)); color: var(--tone); font: inherit; text-align: left; cursor: pointer; transition: transform .15s, box-shadow .15s, border-color .15s; }
 .lineup-difficulties .is-normal { --tone: #2563eb; --tone-2: #38bdf8; }
 .lineup-difficulties .is-hard { --tone: #ea580c; --tone-2: #f59e0b; }
 .lineup-difficulties .is-extreme { --tone: #be123c; --tone-2: #a21caf; }
 .lineup-difficulties button:hover { border-color: var(--tone); transform: translateY(-1px); }
-.lineup-difficulties button strong { font-size: 16px; font-weight: 800; }
+.lineup-difficulties button strong { font-size: 15px; font-weight: 800; white-space: nowrap; }
 .lineup-difficulties button span { display: flex; align-items: flex-end; gap: 3px; height: 18px; }
 .lineup-difficulties button i { width: 5px; border-radius: 2px; background: currentColor; opacity: .22; }
 .lineup-difficulties button i:nth-child(1) { height: 7px; }
@@ -169,11 +170,10 @@
 /* 지난 제출에서 알게 된 것: 노란 점 = 선발로 확인된 선수, 회색 취소선 = 선발이 아닌 선수 */
 .lineup-known { flex: none; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #f59e0b; }
 .lineup-chip.is-out:not(.is-selected) { background: #f1f5f9; color: #94a3b8; text-decoration: line-through; box-shadow: none; }
-/* 노란 점 선수의 안내(「1·3번 타순 아님」): 마우스를 올리거나, 후보 영역에서는 눌러서 펼친다. */
-.lineup-chip[data-tip] { position: relative; }
-.lineup-chip[data-tip]:hover::after, .lineup-chip[data-tip].is-tip-open::after { content: attr(data-tip); position: absolute; left: 50%; bottom: calc(100% + 7px); z-index: 30; transform: translateX(-50%); padding: 6px 10px; border-radius: 8px; background: #0f172a; color: #fff; font-size: 12px; font-weight: 700; line-height: 1.3; white-space: nowrap; text-decoration: none; pointer-events: none; box-shadow: 0 6px 16px #0f172a33; }
 .lineup-pool.is-known .lineup-chip { cursor: default; }
-.lineup-pool.is-known button.lineup-chip { cursor: pointer; }
+/* 라인업 칸은 좁아서, 이름 옆의 작은 글씨(「1·3번 아님」)가 길면 칸을 넘기지 않고 말줄임한다. */
+.lineup-rows .lineup-slot > .lineup-chip { min-width: 0; overflow: hidden; }
+.lineup-rows .lineup-slot > .lineup-chip small { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .lineup-chip.is-movable { cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
 .lineup-chip.is-movable:active { cursor: grabbing; }
 .lineup-chip.is-selected { border-color: var(--ink); background: var(--ink); color: #fff; }
@@ -405,6 +405,8 @@ a.lineup-chip:hover { text-decoration: underline; }
     /* 오른쪽 패널 대신, 누른 타순의 기록을 그 행 바로 아래에 펼친다. */
     .lineup-body { grid-template-columns: minmax(0, 1fr); }
     .lineup-records { display: none; }
+    /* 좁은 화면: 라인업 칸에서는 이름 옆의 「1·3번 아님」을 숨긴다(노란 점은 그대로). 후보 영역에서는 계속 보여준다. */
+    .lineup-rows .lineup-wrong-orders { display: none; }
     .lineup-aside { position: static; }
     .lineup-aside .lineup-pool { margin-top: 12px; }
     .lineup-row { grid-template-columns: 32px minmax(0, 168px) minmax(max-content, 1fr) 40px 28px; }
@@ -422,6 +424,9 @@ a.lineup-chip:hover { text-decoration: underline; }
     .lineup-row-records .lineup-record-list span { font-size: 12.5px; }
 }
 @media (max-width: 480px) {
+    .lineup-difficulties { gap: 6px; }
+    .lineup-difficulties button { height: 62px; border-radius: 12px; }
+    .lineup-difficulties button strong { font-size: 13.5px; letter-spacing: -.02em; }
     .lineup-setup { padding: 24px 14px 16px; }
     .lineup-section { padding: 16px 14px; }
     .lineup-daily { gap: 11px; padding: 12px 14px 12px 12px; }

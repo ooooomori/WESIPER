@@ -835,10 +835,12 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
     };
     // 후보 영역(쉬움·보통): 아직 넣지 않은 선수들. 넣어 둔 선수라도 노란색(선발이지만 그 타순은 아님)이면 다른 타순으로 옮겨야 하므로 다시 보여준다.
     // 그런 선수를 누르거나 끌어 다른 칸에 넣으면 원래 칸에서 빠지며 옮겨진다.
+    // 순서: 노란색(선발로 확인된 선수) → 아직 모르는 선수 → 회색(선발이 아닌 선수). 같은 무리 안에서는 이름순 그대로다.
+    const poolRank = (player) => (!memory[player.id] ? 1 : memory[player.id].absent ? 2 : 0);
     const pool = candidates.filter((candidate) => {
         const placed = picks.findIndex((pick) => pick?.id === candidate.id);
         return placed < 0 || shownResult(placed) === "present";
-    });
+    }).sort((a, b) => poolRank(a) - poolRank(b));
     // 채점해 볼 새 정보가 있을 때만 제출할 수 있다.
     const canCheck = !finished && !checking && picks.some((pick, index) => pick && shownResult(index) === null);
 
@@ -1067,11 +1069,8 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
         .filter(([id, known]) => known.name && !solvedIds.has(Number(id)))
         .map(([id, known]) => ({ id: Number(id), ...known }))
         .sort((a, b) => a.absent - b.absent || a.name.localeCompare(b.name, "ko"));
-    // 눌러서 안내를 펼쳐 둔 선수(터치 화면에는 호버가 없다)
-    const [openTip, setOpenTip] = useState(null);
-    const wrongTip = (player) => (memory[player.id]?.wrongSlots.length ? `${wrongOrders(player)}번 타순 아님` : undefined);
-    // 선발로 확인된 선수는 노란 점을 붙이고, 후보 영역에서는 틀렸던 타순도 함께 적는다.
-    const chipLabel = (player, inPool) => {
+    // 선발로 확인된 선수는 노란 점을 붙이고, 아닌 것으로 확인된 타순을 이름 옆에 작게 적는다(「1·3번 아님」). 모든 난이도, 후보 영역과 라인업 칸에서 같다.
+    const chipLabel = (player) => {
         // 제자리를 찾아 맞힌 선수에게는 더 알려줄 것이 없다.
         const solvedPlayer = picks.some((pick, index) => pick?.id === player.id && results[index] === "correct");
         const known = finished || solvedPlayer ? null : memory[player.id];
@@ -1080,7 +1079,8 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
                 {known && !known.absent && <i className="lineup-known" />}
                 {player.name}
                 {player.birthYear && <small>{String(player.birthYear).slice(2)}년생</small>}
-                {inPool && known?.wrongSlots.length > 0 && <small>{wrongOrders(player)}번 ✕</small>}
+                {/* 좁은 화면의 라인업 칸에서는 자리가 없어 숨긴다(lineup.css). 후보 영역에서는 항상 보인다. */}
+                {known?.wrongSlots.length > 0 && <small className="lineup-wrong-orders">{wrongOrders(player)}번 아님</small>}
             </>
         );
     };
@@ -1134,7 +1134,7 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
                                             onClick={() => { if (selected && !pick) move(selected.player, selected.from, index); }}>
                                             {pick && !editingHere && (locked
                                                 ? <span className="lineup-chip">{chipLabel(pick)}</span>
-                                                : <button type="button" className={`lineup-chip is-movable${selected?.player.id === pick.id ? " is-selected" : ""}`} data-tip={solvedIds.has(pick.id) ? undefined : wrongTip(pick)} {...chipHandlers(pick, index)}>{chipLabel(pick)}</button>)}
+                                                : <button type="button" className={`lineup-chip is-movable${selected?.player.id === pick.id ? " is-selected" : ""}`} {...chipHandlers(pick, index)}>{chipLabel(pick)}</button>)}
                                             {pick && !locked && !editingHere && <button type="button" className="lineup-clear" aria-label={`${slot.order}번 타자 지우기`} onClick={() => move(pick, index, "pool")}>×</button>}
                                             {/* 고치는 중에는 지금 들어 있는 선수도 후보에 넣어, 그대로 Enter를 치면 유지되게 한다. */}
                                             {(!pick || editingHere) && <PlayerSearch key={editingHere ? "edit" : "new"} slot={index} year={year} label={`${slot.order}번 타자`} placeholder={placeholder}
@@ -1164,10 +1164,7 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
                             <strong className="lineup-pool-title">선수 후보</strong>
                             {knownPlayers.map((player) => (player.absent
                                 ? <span key={player.id} className="lineup-chip is-out">{player.name}</span>
-                                : (
-                                    <button key={player.id} type="button" className={`lineup-chip${openTip === player.id ? " is-tip-open" : ""}`} data-tip={wrongTip(player)}
-                                        onClick={() => setOpenTip(openTip === player.id ? null : player.id)}><i className="lineup-known" />{player.name}</button>
-                                )))}
+                                : <span key={player.id} className="lineup-chip">{chipLabel(player)}</span>))}
                         </div>
                     )}
                     {!finished && !typed && (
@@ -1177,7 +1174,7 @@ const Board = ({ puzzle, options, loading, onNext, onSetup, onStats, onOptions }
                             <strong className="lineup-pool-title">선수 후보</strong>
                             {pool.length === 0 && <span className="lineup-placeholder">모든 선수를 배치했습니다.</span>}
                             {pool.map((player) => (
-                                <button key={player.id} type="button" className={`lineup-chip is-movable${selected?.player.id === player.id ? " is-selected" : ""}${memory[player.id]?.absent ? " is-out" : ""}`} {...chipHandlers(player, "pool")}>{chipLabel(player, true)}</button>
+                                <button key={player.id} type="button" className={`lineup-chip is-movable${selected?.player.id === player.id ? " is-selected" : ""}${memory[player.id]?.absent ? " is-out" : ""}`} {...chipHandlers(player, "pool")}>{chipLabel(player)}</button>
                             ))}
                             {pool.length > 0 && <p className="lineup-pool-hint">선수를 터치하거나 드래그해보세요!</p>}
                         </div>
