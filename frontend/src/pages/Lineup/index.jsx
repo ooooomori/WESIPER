@@ -2,6 +2,8 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { TwitterShareButton, XIcon } from "react-share";
+import { Table } from "flowbite-react";
+import Button from "react-bootstrap/Button";
 import RealisticModule from "react-canvas-confetti/dist/presets/realistic";
 import { teamFullName } from "../../lib/teamFullName";
 import { teamCodeByName, teamLogoByCode, teamSmallLogoByCode } from "../../lib/teamAssets";
@@ -612,13 +614,17 @@ const DailyResultModal = ({ daily, difficulty, solved, attempts, solvedIn, corre
         if (percentage > 0.01) return percentage.toFixed(2);
         return "0.01";
     })();
+    // 크보빙고 결과 창의 리더보드(LeaderboardTable.jsx)와 같은 모양: 1~3위는 메달, 내 줄은 회색 바탕에 굵게, 닉네임 옆에 MY 표시
     const rankRow = (row, mine) => (
-        <tr key={row.rank} className={mine ? "is-me" : ""}>
-            <th scope="row">{row.rank}</th><td className="lineup-ranking-name">{row.nickname}{mine && <em>나</em>}</td><td>{row.attempts}회</td><td>{row.milliseconds === null ? "-" : formatDuration(row.milliseconds)}</td>
-        </tr>
+        <Table.Row key={row.rank} className={mine ? "bg-gray-100 font-bold" : "bg-white"}>
+            <Table.Cell className="px-0 py-2">{["🥇", "🥈", "🥉"][row.rank - 1] ?? row.rank}</Table.Cell>
+            <Table.Cell className="px-0 py-2">{row.nickname}{mine && <div className="inline-block rounded-full bg-green-400 text-white py-0.5 px-2 ml-1.5">MY</div>}</Table.Cell>
+            <Table.Cell className="px-0 py-2">{row.attempts}회</Table.Cell>
+            <Table.Cell className="px-0 py-2">{row.milliseconds === null ? "-" : formatDuration(row.milliseconds)}</Table.Cell>
+        </Table.Row>
     );
     return (
-        <div className="lineup-modal" role="dialog" aria-modal="true" aria-labelledby="lineup-result-title" onClick={onClose}>
+        <div className="lineup-modal is-wide" role="dialog" aria-modal="true" aria-labelledby="lineup-result-title" onClick={onClose}>
             <div className="lineup-modal-panel lineup-result" onClick={(event) => event.stopPropagation()}>
                 <button type="button" className="lineup-modal-close" aria-label="닫기" onClick={onClose}>×</button>
                 <p className="lineup-result-label">오늘의 라인업 #{daily.number}</p>
@@ -647,21 +653,22 @@ const DailyResultModal = ({ daily, difficulty, solved, attempts, solvedIn, corre
                     {ranking === null && <p>랭킹을 불러오지 못했습니다.</p>}
                     {ranking && ranking.top.length === 0 && <p>아직 맞힌 사람이 없습니다.</p>}
                     {ranking && ranking.top.length > 0 && (
-                        <table>
-                            <thead><tr><th scope="col">순위</th><th scope="col">닉네임</th><th scope="col">제출</th><th scope="col">시간</th></tr></thead>
-                            <tbody>
-                                {ranking.top.map((row) => rankRow(row, row.me))}
-                                {/* 10위 밖이면 내 순위를 따로 덧붙인다. */}
-                                {ranking.me && ranking.me.rank > ranking.top.length && rankRow(ranking.me, true)}
-                            </tbody>
-                        </table>
+                        <div className="overflow-x-auto w-full mt-3.5">
+                            <Table hoverable className="text-center">
+                                <Table.Head>{["순위", "닉네임", "제출", "시간"].map((label) => <Table.HeadCell key={label} className="px-0">{label}</Table.HeadCell>)}</Table.Head>
+                                <Table.Body className="divide-y">
+                                    {ranking.top.map((row) => rankRow(row, row.me))}
+                                    {/* 10위 밖이면 내 순위를 따로 덧붙인다. */}
+                                    {ranking.me && ranking.me.rank > ranking.top.length && rankRow(ranking.me, true)}
+                                </Table.Body>
+                            </Table>
+                        </div>
                     )}
                     <small>제출 횟수가 적은 순, 같으면 빨리 푼 순입니다.</small>
                     {ranking && (
-                        <p className="lineup-nickname">
-                            내 닉네임 <b>{ranking.nickname}</b>
-                            <button type="button" className="lineup-text-button" onClick={changeNickname}>닉네임 변경</button>
-                        </p>
+                        <div className="text-center mt-4">
+                            <Button variant="outline-secondary" size="sm" onClick={changeNickname} className="!rounded-full !px-3">✏️ 닉네임 변경</Button>
+                        </div>
                     )}
                 </section>
 
