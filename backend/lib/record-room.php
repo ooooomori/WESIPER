@@ -111,11 +111,13 @@ const RECORD_ROOM_FIELDING_CODES = ['투수'=>'P','포수'=>'C','1루수'=>'1B',
 const RECORD_ROOM_POSITION_GROUPS = ['OF'=>['LF','CF','RF'],'IF'=>['1B','2B','3B','SS']];
 
 /** 팀 필터·팀별 보기용 구단 계보: 이름이 바뀐 팀은 한 구단으로 묶는다. */
-function recordRoomFranchise(?string $team): string {
+function recordRoomFranchise(?string $team,?int $year=null): string {
     $team=trim((string)$team);
+    // 퓨처스리그의 '고양'은 2018년까지 NC의 퓨처스 팀(고양 다이노스), 2019년부터 고양 히어로즈다. '화성'은 2014~2018년의 히어로즈 퓨처스 팀이다.
+    if($team==='고양'&&$year!==null&&$year<=2018)return 'NC';
     return match(strtoupper($team)){
         'KIA','HT','해태'=>'KIA','두산','OB'=>'두산','LG','MBC'=>'LG','삼성','SS'=>'삼성','롯데','LT'=>'롯데','한화','HH','빙그레'=>'한화',
-        'SSG','SK'=>'SSG','키움','WO','넥센','히어로즈','우리','우리히어로즈','서울히어로즈','고양'=>'키움','NC'=>'NC','KT'=>'KT',
+        'SSG','SK'=>'SSG','키움','WO','넥센','히어로즈','우리','우리히어로즈','서울히어로즈','고양','화성'=>'키움','NC'=>'NC','KT'=>'KT',
         '현대','태평양','청보','삼미'=>'현대','쌍방울'=>'쌍방울',default=>$team,
     };
 }
@@ -130,7 +132,7 @@ function recordRoomGameSubset(PDO $db,string $start,string $end,string $stadium,
     $ids=[];$teamGames=[];
     while($row=$q->fetch(PDO::FETCH_ASSOC)){
         if($stadium!==''&&trim((string)$row['stadium'])!==$stadium)continue;
-        if($opponent!==''&&recordRoomFranchise($row['away_team'])!==$opponent&&recordRoomFranchise($row['home_team'])!==$opponent)continue;
+        if($opponent!==''&&recordRoomFranchise($row['away_team'],(int)$row['y'])!==$opponent&&recordRoomFranchise($row['home_team'],(int)$row['y'])!==$opponent)continue;
         $ids[]=(string)$row['game_code'];$ids[]=$row['game_code'].$row['y'];
         if(isset($row['away_score'],$row['home_score']))foreach([$row['away_team'],$row['home_team']] as $team){$team=(string)profileTeam($team);$teamGames[$team]=($teamGames[$team]??0)+1;}
     }
@@ -458,7 +460,7 @@ function recordRoomFieldingMergedStats(array $parts): array {
 function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): array {
     $segments=$filter['segments'];
     $current=recordRoomCurrentYear();$touchesCurrent=(bool)array_filter($segments,static fn($segment)=>$segment[0]>=$current);
-    $name='q7-'.$type[0].'-'.substr(hash('sha256',json_encode($filter)),0,32);
+    $name='q8-'.$type[0].'-'.substr(hash('sha256',json_encode($filter)),0,32);
     return recordRoomCached($name,recordRoomStamp($touchesCurrent),static function()use($db,$filter,$segments,$type,$schedule){
         @set_time_limit(300);
         $pitcher=$type==='pitcher';$fielding=$type==='fielding';
@@ -493,7 +495,7 @@ function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): 
                 }
                 foreach($player['parts'] as $part){
                     if($candidates!==null&&!recordRoomCandidatePart($candidates,$type,(int)$id,$part,$goldenGlove,$award))continue;
-                    $franchise=recordRoomFranchise($part['team']);
+                    $franchise=recordRoomFranchise($part['team'],$year);
                     if($team!==''&&$franchise!==$team)continue;
                     $key=$id.($splitSeasons?'|'.$year:'').($splitTeams?'|'.$franchise:'').($fielding&&!$mergePositions?'|'.$part['fpos']:'');
                     $groups[$key]??=['id'=>$id,'name'=>$player['n'],'parts'=>[],'teams'=>[],'years'=>[],'pos'=>[],'fpos'=>$part['fpos']??null];

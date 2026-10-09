@@ -36,10 +36,12 @@ const eraTeams = [
     ['해태', 1982, 1995, 'hai82'],
     ['두산', 1999, 2009, 'doo99'],
     ['한화', 1994, 2005, 'han94'],
+    // 퓨처스리그의 '고양'은 2018년까지 NC의 퓨처스 팀(고양 다이노스)이었고, 2019년부터 고양 히어로즈다.
+    ['고양', 2015, 2018, 'nc'],
 ];
 export const eraTeamCode = (name, year) => eraTeams.find(([team, from, to]) => team === name && Number(year) >= from && Number(year) <= to)?.[3] || null;
-// 1군 구단이 아닌 퓨처스리그 팀: 상무, 고양(키움의 퓨처스 팀)
-export const futuresTeamCodes = { 상무: 'sm', 고양: 'goy' };
+// 1군 구단이 아닌 퓨처스리그 팀: 상무, 고양 히어로즈(2019년~), 화성 히어로즈(2014~2018년)
+export const futuresTeamCodes = { 상무: 'sm', 고양: 'goy', 화성: 'hws' };
 // 팀 이름(과 연도)으로 로고·모자 파일 코드 찾기
 export const teamCodeByName = (name, year) => { const team = String(name || '').trim(); return eraTeamCode(team, year) || currentTeamCodes[team.toUpperCase()] || currentTeamCodes[team] || legacyTeams[team]?.[0] || futuresTeamCodes[team] || null; };
 export const teamCapByName = (name, year) => teamCapByCode(teamCodeByName(name, year));

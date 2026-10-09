@@ -51,7 +51,7 @@ expectRecordRoom($ids(recordRoomQuery($rows,'batter','hr',true,1.0,0,50,null,['p
 expectRecordRoom($ids(recordRoomQuery($rows,'batter','hr',true,1.0,0,50,null,['minAll'=>true])),[1,4],'Minimum on every sort when asked');
 expectRecordRoom($ids(recordRoomQuery($rows,'batter','hr',true,1.0,0,50,null,['hand'=>'L','birthMin'=>1996])),[3],'Handedness and birth year');
 expectRecordRoom([recordRoomHand('우투',true),recordRoomHand('우언',true),recordRoomHand('좌사',true),recordRoomHand('좌투',true),recordRoomHand('양타',false),recordRoomHand('',true)],['R','U','D','L','S',null],'Throwing and batting hand codes');
-expectRecordRoom([recordRoomFranchise('해태'),recordRoomFranchise('SK'),recordRoomFranchise('넥센'),recordRoomFranchise('태평양')],['KIA','SSG','키움','현대'],'Franchise lineage');
+expectRecordRoom([recordRoomFranchise('해태'),recordRoomFranchise('SK'),recordRoomFranchise('넥센'),recordRoomFranchise('태평양'),recordRoomFranchise('고양',2017),recordRoomFranchise('고양',2019),recordRoomFranchise('화성',2016)],['KIA','SSG','키움','현대','NC','키움','키움'],'Franchise lineage');
 $f=recordRoomFieldingStats(['games'=>10,'starts'=>8,'outs'=>200,'errors'=>1,'pickoffs'=>0,'putouts'=>60,'assists'=>9,'doublePlays'=>2,'passedBalls'=>3,'stolenBases'=>6,'caughtStealing'=>2],'포수');
 expectRecordRoom([$f['innings'],$f['fieldingPct'],$f['caughtStealingPct'],$f['passedBalls']],['66.2','0.986','25.0',3],'Catcher fielding');
 $f=recordRoomFieldingStats(['games'=>10,'starts'=>8,'outs'=>200,'errors'=>1,'pickoffs'=>0,'putouts'=>60,'assists'=>9,'doublePlays'=>2,'passedBalls'=>0,'stolenBases'=>0,'caughtStealing'=>0],'유격수');
