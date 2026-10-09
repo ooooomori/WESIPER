@@ -224,6 +224,7 @@ function PredictionRanking() {
 export default function Main() {
     const location = useLocation();
     const navigate = useNavigate();
+    const [teamRecordsNotice, setTeamRecordsNotice] = useState(false);
     const [league, setLeague] = useState("kbo");
     const [rankingTab, setRankingTab] = useState(0);
     const [ranking, setRanking] = useState({ state: "loading", rows: [], title: "" });
@@ -454,6 +455,13 @@ export default function Main() {
 
     return (
         <main className="main-home font-family-NaSqNe">
+            {teamRecordsNotice && <div className="main-home-notice-backdrop" onClick={() => setTeamRecordsNotice(false)}>
+                <div className="main-home-notice" role="alertdialog" aria-modal="true" aria-labelledby="team-records-notice-title" onClick={event => event.stopPropagation()}>
+                    <strong id="team-records-notice-title">팀 기록실</strong>
+                    <p>준비 중입니다.</p>
+                    <button type="button" autoFocus onClick={() => setTeamRecordsNotice(false)}>확인</button>
+                </div>
+            </div>}
             <dialog ref={searchDialog} className="main-home-search-screen" aria-label="선수 검색" onClose={() => setSearchOpen(false)}>
                 <div className="main-home-search-screen-inner">
                     <header className="main-home-search-header">
@@ -545,6 +553,18 @@ export default function Main() {
                             : heroPopular.list.map((name) => <button key={name} type="button" className="main-home-hero-chip" onClick={() => openSearchWith(name)}>{name}</button>)}
                         </div>
                     </div>}
+                    <div className="main-home-records-row">
+                        <Link className="main-home-records-link" to="/records">
+                            <span className="main-home-records-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 20V10M12 20V4M19 20v-7" /></svg></span>
+                            <span className="main-home-records-text"><strong>선수 기록실</strong></span>
+                            <svg className="main-home-records-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        </Link>
+                        <button type="button" className="main-home-records-link" onClick={() => setTeamRecordsNotice(true)} aria-haspopup="dialog">
+                            <span className="main-home-records-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V6l-8-3Z" /></svg></span>
+                            <span className="main-home-records-text"><strong>팀 기록실</strong></span>
+                            <svg className="main-home-records-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        </button>
+                    </div>
                 </section>
                 <section className="main-home-section main-home-match-section" aria-labelledby="preview-games-title">
                     <SectionTitle title={<><span id="preview-games-title">오늘의 KBO</span><small className="main-home-section-date">{todayLabel}</small></>} action={

@@ -25,6 +25,7 @@ const Nav = () => {
     const location = useLocation();
 
     const pages = [
+        {id: "records", name: "선수 기록실", href: "/records"},
         {id: "kbodle", name: "KBODLE: 크보들", href: "/kbodle"},
         {id: "bingo", name: "KBO BINGO", href: "/bingo"},
         {id: "lineup", name: "라인업 맞추기", href: "/lineup"},

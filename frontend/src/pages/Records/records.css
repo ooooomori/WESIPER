@@ -1,0 +1,164 @@
+/* 선수 기록실: 표는 선수 프로필의 연도별 기록 스타일(player-profile.css)을 그대로 쓴다. */
+.record-room { --team-primary: #0b5fc7; --heading-primary: #00b5e5; --heading-secondary: #00d1c6; --profile-nav-height: 0px; --profile-compact-height: 0px; min-height: calc(100vh - 56px); padding: 20px 16px 48px; background: radial-gradient(ellipse at 85% 0%, #deebfe 0, transparent 38%), #f0f5fa; color: #102746; }
+.record-room-card { width: min(100%, 1180px); margin: 0 auto; padding: 28px; border: 1px solid #e7eef7; border-radius: 30px; background: #fff; box-shadow: 0 1px 2px rgba(16,39,70,.04), 0 10px 30px rgba(16,39,70,.05); }
+.record-room-booting { display: grid; place-items: center; min-height: 320px; }
+
+.record-room-heading { gap: 12px; }
+.record-room-types { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); flex: none; isolation: isolate; }
+.record-room-types::before { content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; width: calc(100% / 3); border-radius: 999px; background: var(--team-primary); box-shadow: 0 4px 12px rgba(11,95,199,.28); transform: translateX(calc(var(--type-index, 0) * 100%)); transition: transform .3s cubic-bezier(.22,.68,0,1); }
+.record-room-types button { min-width: 68px; padding: 8px 16px; border: 0; border-radius: 999px; background: transparent; color: #7a8798; font: inherit; font-size: 15px; font-weight: 800; line-height: 20px; cursor: pointer; transition: color .25s ease; }
+.record-room-types button:hover { color: #22364f; }
+.record-room-types button[aria-pressed="true"] { color: #fff; }
+.record-room-filter-toggle { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 12px; padding: 10px 14px; border: 1px solid #dde5ef; border-radius: 13px; background: #fff; color: #607a9a; font: inherit; font-size: 13px; font-weight: 700; text-align: left; cursor: pointer; }
+.record-room-types button:focus-visible, .record-room-filter-toggle:focus-visible { outline: 2px solid #087aff; outline-offset: 2px; }
+.record-room-filter-toggle:hover { border-color: #b7cbe4; }
+.record-room-filter-toggle strong { min-width: 0; overflow: hidden; color: #102746; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+.record-room-filter-chevron { flex: none; margin-left: auto; transform: rotate(-90deg); }
+.record-room-fields .record-room-number input { width: 96px; }
+.record-room-fields .record-room-age { flex-direction: row; align-items: flex-end; gap: 6px; }
+.record-room-fields .record-room-age select { min-width: 0; }
+.record-room-fields .record-room-age input { width: 70px; }
+.record-room-age > div { display: flex; align-items: center; gap: 6px; }
+.record-room-fields .record-room-age input { width: 62px; min-width: 0; padding-inline: 8px; text-align: center; }
+.record-room-age i { color: #8793a3; font-style: normal; }
+.record-room-modal-backdrop { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 20px; background: rgba(13,30,56,.45); animation: record-room-fade .18s ease-out; }
+.record-room-modal { display: flex; flex-direction: column; width: min(100%, 720px); max-height: calc(100svh - 40px); margin: 0; overflow: hidden; border-radius: 20px; background: #fff; box-shadow: 0 20px 50px rgba(13,30,56,.25); animation: record-room-pop .24s cubic-bezier(.22,1,.36,1); }
+.record-room-modal-head { display: flex; align-items: center; justify-content: space-between; flex: none; padding: 16px 16px 12px 22px; border-bottom: 1px solid #edf2f8; }
+.record-room-modal-head strong { font-size: 17px; font-weight: 800; }
+.record-room-modal-head button { display: grid; place-items: center; width: 34px; height: 34px; border: 0; border-radius: 10px; background: transparent; color: #607a9a; cursor: pointer; }
+.record-room-modal-head button:hover { background: #f1f5fa; color: #102746; }
+.record-room-modal-body { min-height: 0; padding: 0 22px 6px; overflow-y: auto; overscroll-behavior: contain; }
+.record-room-group { margin: 0; padding: 14px 0 16px; }
+.record-room-group + .record-room-group { border-top: 1px solid #edf2f8; }
+/* 최소 조건 드롭다운과 적용 범위 스위치는 좁은 화면에서도 한 줄에 둔다(드롭다운이 줄어든다). */
+.record-room-min { display: flex; align-items: flex-end; gap: 8px; min-width: 0; max-width: 100%; }
+.record-room-min .record-room-field { flex: 0 1 auto; min-width: 0; }
+.record-room-min .record-room-field select { width: 100%; min-width: 0; text-overflow: ellipsis; }
+.record-room-min .record-room-scope { flex: none; }
+/* 줄바꿈: 이 뒤의 칸은 다음 줄에서 시작한다. */
+.record-room-break { flex: 0 0 100%; height: 0; margin-top: -10px; }
+.record-room-scope { position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; align-self: flex-end; padding: 3px; border-radius: 9px; background: #eef2f7; isolation: isolate; }
+.record-room-scope::before { content: ''; position: absolute; z-index: -1; top: 3px; bottom: 3px; left: 3px; width: calc(50% - 3px); border-radius: 7px; background: #fff; box-shadow: 0 1px 2px rgba(16,39,70,.12); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+.record-room-scope.is-all::before { transform: translateX(100%); }
+.record-room-scope button { height: 28px; padding: 0 10px; border: 0; border-radius: 7px; background: transparent; color: #7a8798; font: inherit; font-size: 12.5px; font-weight: 700; white-space: nowrap; cursor: pointer; transition: color .2s; }
+.record-room-scope button[aria-pressed="true"] { color: #0b5fc7; }
+.record-room-scope button:disabled { opacity: .45; cursor: default; }
+.record-room-scope button:focus-visible { outline: 2px solid #087aff; outline-offset: 1px; }
+.record-room-field > span { color: #7d8ea5; font-size: 11.5px; font-weight: 600; }
+.record-room-field select, .record-room-field input { height: 34px; min-width: 76px; padding: 0 26px 0 10px; border: 1px solid #d6dee8; border-radius: 9px; background-color: #fff; background-position: right 9px center; background-size: 9px; color: #22364f; font: inherit; font-size: 13px; font-weight: 600; }
+.record-room-fields + .record-room-fields { margin-top: 10px; }
+.record-room-checks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; min-height: 34px; }
+.record-room-chip { position: relative; display: inline-flex; margin: 0; cursor: pointer; }
+.record-room-chip input { position: absolute; opacity: 0; pointer-events: none; }
+.record-room-chip span { display: inline-flex; align-items: center; gap: 7px; color: #22364f; font-size: 13.5px; font-weight: 600; white-space: nowrap; }
+.record-room-chip span::before { content: ''; width: 17px; height: 17px; border: 1.5px solid #c3cedb; border-radius: 5px; background: #fff center / 12px no-repeat; }
+.record-room-chip input:checked + span::before { border-color: #087aff; background-color: #087aff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5 9-10'/%3E%3C/svg%3E"); }
+.record-room-chip input:focus-visible + span::before { outline: 2px solid #087aff; outline-offset: 2px; }
+/* 통산: 시즌 범위를 합산으로 바꾸는 스위치라 다른 체크박스보다 눈에 띄는 버튼 모양으로 둔다. */
+.record-room-toggle { align-self: flex-end; flex: none; }
+.record-room-toggle span { height: 34px; padding: 0 14px 0 11px; border: 1px solid #d6dee8; border-radius: 9px; background: #fff; color: #4c5d74; font-size: 13px; font-weight: 800; transition: background .15s, border-color .15s, color .15s; }
+.record-room-toggle span::before { width: 15px; height: 15px; border-radius: 50%; transition: background-color .15s, border-color .15s; }
+.record-room-toggle:hover span { border-color: #b7cbe4; }
+.record-room-toggle input:checked + span { border-color: #087aff; background: #087aff; color: #fff; }
+.record-room-toggle input:checked + span::before { border-color: #fff; background-color: transparent; }
+.record-room-toggle input:focus-visible + span { outline: 2px solid #087aff; outline-offset: 2px; }
+.record-room-toggle input:focus-visible + span::before { outline: none; }
+.record-room-source { display: inline-flex; align-items: center; gap: 3px; color: #607a9a; font-size: 12px; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; white-space: nowrap; }
+.record-room-source:hover { color: #0b5fc7; }
+.record-room-modal-foot { display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex: none; padding: 12px 22px 16px; border-top: 1px solid #edf2f8; background: #fff; }
+.record-room-reset { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border: 1px solid #d6dee8; border-radius: 10px; background: #fff; color: #4c5868; font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer; }
+.record-room-reset:hover { background: #f6f9fd; }
+.record-room-search { min-width: 110px; height: 40px; padding: 0 24px; border: 0; border-radius: 10px; background: #087aff; color: #fff; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
+.record-room-search:hover { background: #0866e0; }
+.record-room-search:focus-visible, .record-room-reset:focus-visible, .record-room-more:focus-visible { outline: 2px solid #087aff; outline-offset: 2px; }
+@keyframes record-room-fade { from { opacity: 0; } }
+@keyframes record-room-pop { from { opacity: 0; transform: translateY(14px) scale(.97); } }
+.record-room-fields { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; }
+.record-room-fields + .record-room-checks { margin-top: 12px; }
+.record-room-field { display: flex; flex-direction: column; gap: 5px; min-width: 0; margin: 0; }
+.record-room-field input { padding-right: 10px; }
+.record-room-field select:hover:not(:disabled), .record-room-field input:hover { border-color: #b7cbe4; }
+.record-room-field select:focus, .record-room-field input:focus { outline: none; border-color: #087aff; box-shadow: 0 0 0 3px rgba(8,122,255,.16); }
+.record-room-field select:disabled { opacity: .5; }
+/* 시작 시즌 ~ 끝 시즌은 좁은 화면에서도 한 줄에 둔다. */
+.record-room-range { display: flex; align-items: flex-end; gap: 10px; min-width: 0; }
+.record-room-tilde { align-self: flex-end; height: 34px; color: #8793a3; line-height: 34px; }
+.record-room-check-group { display: inline-flex; align-items: center; gap: 6px; }
+.record-room-hint { margin: 2px 4px 0; color: #8793a3; font-size: 12.5px; }
+.record-room-hint.is-error { color: #d2504c; font-weight: 700; }
+.record-room-opponent { position: relative; }
+.record-room-opponent-box { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.record-room-fields .record-room-opponent input { width: 120px; padding-right: 10px; }
+.record-room-opponent-chip { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 6px 0 12px; border: 1px solid #b7cbe4; border-radius: 11px; background: #eef5ff; color: #0b3f86; font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+.record-room-opponent-chip button { width: 22px; height: 22px; border: 0; border-radius: 50%; background: transparent; color: #4b6a94; font-size: 16px; line-height: 1; cursor: pointer; }
+.record-room-opponent-chip button:hover { background: #d9e8fb; }
+.record-room-opponent-list { position: absolute; top: calc(100% + 4px); left: 0; z-index: 20; min-width: 200px; margin: 0; padding: 4px; list-style: none; border: 1px solid #e6eaf0; border-radius: 12px; background: #fff; box-shadow: 0 10px 28px #15253d26; }
+.record-room-opponent-list button { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; width: 100%; padding: 8px 10px; border: 0; border-radius: 8px; background: transparent; color: #22364f; font: inherit; font-size: 13px; font-weight: 700; text-align: left; white-space: nowrap; cursor: pointer; }
+.record-room-opponent-list button:hover, .record-room-opponent-list button:focus-visible { background: #f3f6fb; outline: none; }
+.record-room-opponent-list small { color: #8793a3; font-size: 11.5px; font-weight: 500; }
+
+
+/* 고정 칸: 순위 + 선수(팀 로고와 이름) */
+.profile-year-records.record-room-table { --year-width: 40px; --team-width: 88px; }
+.record-room-table tbody .record-room-rank { color: #607a9a; font-weight: 700; }
+.record-room-table .record-room-player { padding-inline: 4px 2px; text-align: left; white-space: nowrap; }
+.record-room-player a { display: flex; align-items: center; gap: 4px; min-width: 0; color: #102746; font-weight: 700; text-decoration: none; }
+.record-room-player a:hover span { color: var(--team-primary); text-decoration: underline; }
+.record-room-player img, .record-room-player i { flex: none; width: 18px; height: 18px; object-fit: contain; }
+.record-room-player span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.record-room-name b { font-weight: inherit; }
+.record-room-name b + b { display: none; }
+@keyframes record-room-marquee { to { transform: translateX(-100%); } }
+.record-room-player small { flex: none; padding: 1px 4px; border-radius: 6px; background: #eef3f9; color: #5b6d84; font-size: 10.5px; font-weight: 700; }
+.profile-year-records.record-room-table.has-season { --team-width: 112px; }
+.profile-year-records.record-room-table.has-position { --team-width: 108px; }
+.profile-year-records.record-room-table.has-position.has-season { --team-width: 132px; }
+.record-room-player em { flex: none; color: #8793a3; font-size: 10.5px; font-style: normal; font-weight: 700; }
+.record-room-table th.is-sorted { color: var(--team-primary); background: #e9f1fb; }
+.record-room-table tbody td.is-sorted { background: #f3f8fe; color: #0b3f86; font-weight: 800; }
+.record-room-table tbody tr:hover td.is-sorted { background-color: #e9f2fd; }
+.record-room-table.is-loading tbody { opacity: .45; }
+/* 표가 길어도 불러오는 중 표시가 화면 안에 보이도록, 표 가운데가 아니라 화면 가운데를 따라다니게 한다. */
+.record-room .profile-year-table-loading { display: block; inset: 0; padding-top: 70px; text-align: center; }
+.record-room .profile-year-table-loading > * { position: sticky; top: calc(50svh - 20px); display: inline-block; }
+.record-room-more { display: block; width: 100%; margin-top: 12px; padding: 12px; border: 1px solid #dde5ef; border-radius: 13px; background: #fff; color: #22364f; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+.record-room-more:hover:not(:disabled) { border-color: #b7cbe4; background: #f6f9fd; }
+.record-room-more:disabled { color: #8793a3; cursor: default; }
+
+@media (max-width: 600px) {
+    .record-room { padding: 12px 8px 32px; }
+    .record-room-card { padding: 18px 12px; border-radius: 22px; }
+    .record-room-types button { min-width: 0; padding: 7px 12px; font-size: 13.5px; }
+    .profile-year-records.record-room-table { --year-width: 32px; --team-width: 74px; }
+    .profile-year-records.record-room-table.has-season { --team-width: 96px; }
+    .profile-year-records.record-room-table.has-position { --team-width: 92px; }
+    .profile-year-records.record-room-table.has-position.has-season { --team-width: 114px; }
+    .record-room-player em { font-size: 10px; }
+    .record-room-table .record-room-player { padding-inline: 5px 4px; }
+    .record-room-player a { gap: 4px; }
+    .record-room-player img, .record-room-player i { width: 17px; height: 17px; }
+    .record-room-heading h2 { font-size: 19px; }
+    .record-room-modal-backdrop { place-items: end center; padding: 0; }
+    .record-room-modal { width: 100%; max-height: 92svh; border-radius: 20px 20px 0 0; animation-name: record-room-sheet; }
+    .record-room-modal-head { padding: 14px 10px 10px 16px; }
+    .record-room-modal-body { padding: 0 16px 6px; }
+    /* 드롭다운과 입력칸은 화면을 채우지 않고 내용 길이만큼만 차지한다(PC와 같은 배치). */
+    .record-room-fields { gap: 8px; }
+    .record-room-range { flex: 1 1 100%; gap: 6px; max-width: 100%; }
+    /* 통산 체크박스는 줄의 오른쪽 끝에 둔다. */
+    .record-room-range .record-room-toggle { margin-left: auto; }
+    .record-room-toggle span { height: 36px; }
+    .record-room-field { max-width: 100%; }
+    .record-room-field select, .record-room-field input { max-width: 100%; height: 36px; font-size: 13.5px; }
+    .record-room-range input[type="date"] { width: 132px; min-width: 0; padding-inline: 8px 4px; }
+    .record-room-tilde { height: 36px; line-height: 36px; }
+    .record-room-scope { height: 36px; }
+    .record-room-scope button { height: 30px; }
+    .record-room-modal-foot { padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); }
+    .record-room-search { flex: 1; min-width: 0; }
+    /* 긴 이름은 잘라내지 않고 흘려 보여준다(연도 배지가 있으면 4글자부터, 없으면 5글자부터). */
+    .record-room-name.is-marquee { text-overflow: clip; white-space: nowrap; }
+    .record-room-name.is-marquee b { display: inline-block; padding-right: 14px; animation: record-room-marquee 6s linear infinite; }
+}
+@keyframes record-room-sheet { from { transform: translateY(100%); } }
+@media (prefers-reduced-motion: reduce) { .record-room-scope::before { transition: none; } .record-room-modal, .record-room-modal-backdrop, .record-room-name.is-marquee b { animation: none; } .record-room-name.is-marquee b + b { display: none; } .record-room-name.is-marquee { text-overflow: ellipsis; } .record-room-types::before, .record-room-types button, .record-room-filter-chevron { transition: none; } }
