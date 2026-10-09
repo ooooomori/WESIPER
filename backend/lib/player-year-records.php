@@ -99,7 +99,7 @@ function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule
     $dir=sys_get_temp_dir().'/wesiper-profile-year-records-'.(function_exists('posix_geteuid')?posix_geteuid():'web');
     if(!is_dir($dir)&&!@mkdir($dir,0700,true))throw new RuntimeException('Year record cache unavailable');
     $key=hash('sha256',$pid.'|'.($pitcher?'pitcher':'batter').'|'.$seasonType.'|'.json_encode($schedule));
-    $path="$dir/v11-$key.json";$lock=fopen("$path.lock",'c');
+    $path="$dir/v13-$key.json";$lock=fopen("$path.lock",'c');
     if(!$lock||!flock($lock,LOCK_EX))throw new RuntimeException('Year record cache lock unavailable');
     try {
         // Shared with ranking caches: only a successful crawler update changes this revision.
@@ -127,7 +127,12 @@ function profileComputeYearRecords(PDO $db, string $pid, bool $pitcher, array $s
     $historical=profileHistoricalYearRecords($db,$pid,$pitcher,$seasonType);
     if(!$historical['rows'])return $modern;
     $rows=array_merge($historical['rows'],$modern['rows']);usort($rows,static fn($a,$b)=>$a['year']<=>$b['year']);
-    $career=profileMergeSeasonStats(array_values(array_filter([$historical['career'],$modern['career']],static fn($s)=>$s!==null)),$pitcher);$career['position']=$modern['career']['position']??null;
+    $career=profileMergeSeasonStats(array_values(array_filter([$historical['career'],$modern['career']],static fn($s)=>$s!==null)),$pitcher);$career['position']=$modern['career']['position']??$historical['careerPosition']??null;
+    // 두 시기에 걸친 선수의 통산 주 포지션은 시즌별 주 포지션에 그 시즌 출장 경기 수를 더해 고른다.
+    if(!$pitcher&&$modern['rows']&&($historical['careerPosition']??null)!==null){
+        $games=[];foreach($rows as $row)if(($row['position']??null)!==null)$games[$row['position']]=($games[$row['position']]??0)+(int)($row['stats']['games']??0);
+        if($games){arsort($games,SORT_NUMERIC);$career['position']=(string)array_key_first($games);}
+    }
     // 팀별 통산: 시즌 합계(1982~2000)와 경기 기록(2001~) 중 같은 팀 이름끼리 합친다.
     $byTeam=[];
     foreach([$historical['careerTeams']??[],$modern['careerTeams']??[]] as $list)foreach($list as $item){

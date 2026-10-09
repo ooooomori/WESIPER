@@ -74,15 +74,22 @@ function profileHistoricalYearRecords(PDO $db,string $pid,bool $pitcher,string $
     $raw=profileHistoricalRows($db,$pid,$pitcher,$season);$years=[];foreach($raw as $r)$years[(int)$r['year']][]=$r;if(!$years)return ['rows'=>[],'career'=>null];
     $q=$db->prepare('SELECT birth FROM kbo_player_data WHERE player_id=?');$q->execute([$pid]);$birth=$q->fetchColumn();$out=[];
     $league=$pitcher?profileHistoricalPitchingContexts($db,$season):profileBattingLeagueContexts($db,[],$season);
+    // 경기 기록이 없는 시기의 타자 주 포지션(kbo_player_season_positions, deploy/import-season-positions.php). 표가 없으면 비워 둔다.
+    $positions=[];$positionGames=[];
+    if(!$pitcher&&$season==='regular')try{$p=$db->prepare('SELECT year,position FROM kbo_player_season_positions WHERE player_id=?');$p->execute([$pid]);foreach($p->fetchAll(PDO::FETCH_ASSOC) as $row)$positions[(int)$row['year']]=(string)$row['position'];}
+        catch(Throwable $error){error_log('Season positions unavailable: '.$error->getMessage());}
     foreach($years as $year=>$rows){$teams=array_unique(array_column($rows,'team_name'));$age=null;
         if(is_string($birth)&&preg_match('/^\d{4}-\d{2}-\d{2}$/D',$birth))$age=$year-(int)substr($birth,0,4)-(substr($birth,5)>'07-01'?1:0);
-        $entry=['year'=>$year,'team'=>count($teams)>1?count($teams).'팀':reset($teams),'age'=>$age!==null&&$age>=0?$age:null,'position'=>null,'teams'=>[],'stats'=>profileSeasonStats($rows,$pitcher,$league),'source'=>'official_season_totals','granularity'=>'season','series'=>[]];
+        $entry=['year'=>$year,'team'=>count($teams)>1?count($teams).'팀':reset($teams),'age'=>$age!==null&&$age>=0?$age:null,'position'=>$positions[$year]??null,'teams'=>[],'stats'=>profileSeasonStats($rows,$pitcher,$league),'source'=>'official_season_totals','granularity'=>'season','series'=>[]];
         foreach($rows as $r)$entry['series'][]=['series_id'=>(int)$r['series_id'],'team'=>$r['team_name'],'player_name'=>$r['player_name'],'stats'=>profileSeasonStats([$r],$pitcher,$league)];$out[]=$entry;
     }
     // 팀별 통산(시즌 합계 자료): 같은 팀 이름의 시즌 행을 모아 계산한다.
     $teamRows=[];foreach($raw as $r)$teamRows[(string)$r['team_name']][]=$r;$careerTeams=[];
     foreach($teamRows as $team=>$rows){$years=array_map('intval',array_column($rows,'year'));$careerTeams[]=['team'=>$team,'firstYear'=>min($years),'lastYear'=>max($years),'stats'=>profileSeasonStats($rows,$pitcher,$league)];}
-    return ['rows'=>$out,'career'=>profileMergeSeasonStats(array_column($out,'stats'),$pitcher),'careerTeams'=>$careerTeams];
+    // 이 시기 통산 주 포지션: 출장 경기 수가 가장 많은 포지션
+    foreach($out as $entry)if($entry['position']!==null)$positionGames[$entry['position']]=($positionGames[$entry['position']]??0)+(int)($entry['stats']['games']??0);
+    arsort($positionGames,SORT_NUMERIC);
+    return ['rows'=>$out,'career'=>profileMergeSeasonStats(array_column($out,'stats'),$pitcher),'careerTeams'=>$careerTeams,'careerPosition'=>$positionGames?(string)array_key_first($positionGames):null];
 }
 function profileSeasonDisplayStats(array $s,bool $pitcher): array {
     $labels=$pitcher?['ERA'=>'era','승리'=>'wins','홀드'=>'holds','세이브'=>'saves','이닝'=>'innings','삼진'=>'so','WHIP'=>'whip','ERA+'=>'eraPlus']:['타율'=>'avg','안타'=>'h','홈런'=>'hr','타점'=>'rbi','OPS'=>'ops','도루'=>'sb','득점'=>'r','OPS+'=>'opsPlus'];$out=[];foreach($labels as $label=>$k)$out[]=[$label,$s[$k]??null];return $out;

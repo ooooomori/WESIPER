@@ -10,8 +10,8 @@ import { getCachedYearRecords, loadYearRecords } from './yearRecordsCache';
 
 export const yearRecordColumns = {
     batter: {
-        basic: [['경기','games'],['선발','starts'],['타율','avg'],['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['삼진','so'],['병살','gdp'],['희플','sf'],['희생번트','sh'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['실질OPS','effectiveOps'],['OPS+','opsPlus']],
-        advanced: [['경기','games'],['타석','pa'],['wOBA','woba'],['순출루율','isoObp'],['순장타율','isoSlg'],['BABIP','babip'],['땅볼/뜬공','groundFly'],['BB%','bbPct'],['K%','kPct'],['BB/K','bbK']],
+        basic: [['경기','games'],['선발','starts'],['타율','avg'],['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['삼진','so'],['병살','gdp'],['희플','sf'],['희생번트','sh'],['도루','sb'],['도루자','cs'],['출루율','obp'],['장타율','slg'],['OPS','ops'],['OPS+','opsPlus']],
+        advanced: [['경기','games'],['타석','pa'],['wOBA','woba'],['실질OPS','effectiveOps'],['순출루율','isoObp'],['순장타율','isoSlg'],['BABIP','babip'],['땅볼/뜬공','groundFly'],['BB%','bbPct'],['K%','kPct'],['BB/K','bbK']],
         special: [['경기','games'],['Spd','spd'],['도루시도','sbAttempts'],['도루','sb'],['도루자','cs'],['도루성공률','sbPct'],['주루사','runOut']],
         fielding: [['포지션','position'],['경기','games'],['선발','starts'],['이닝','innings'],['실책','errors'],['자살','putouts'],['보살','assists'],['병살','doublePlays'],['수비율','fieldingPct'],['견제사','pickoffs'],['포일','passedBalls'],['도루허용','stolenBases'],['도루저지','caughtStealing'],['도루저지율','caughtStealingPct']],
     },
@@ -21,7 +21,7 @@ export const yearRecordColumns = {
         special: [['경기','games'],['선발','starts'],['구원','reliefs'],['마무리','finishes'],['선발이닝','starterInnings'],['구원이닝','reliefInnings'],['투구수','pitches'],['투구수/이닝','pitchesPerInning'],['투구수/경기','pitchesPerGame'],['QS','qs'],['QS+','qsPlus'],['DS','ds'],['완투','complete'],['완봉','shutouts']],
     },
 };
-const fieldingPositionLabels = { 투수: 'P', 포수: 'C', '1루수': '1B', '2루수': '2B', '3루수': '3B', 유격수: 'SS', 좌익수: 'LF', 중견수: 'CF', 우익수: 'RF', 외야수: 'OF', 내야수: 'IF', 지명타자: 'DH', 지명: 'DH' };
+export const fieldingPositionLabels = { 투수: 'P', 포수: 'C', '1루수': '1B', '2루수': '2B', '3루수': '3B', 유격수: 'SS', 좌익수: 'LF', 중견수: 'CF', 우익수: 'RF', 외야수: 'OF', 내야수: 'IF', 지명타자: 'DH', 지명: 'DH' };
 const fieldingPositionOrder = ['P', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH'];
 const compareFieldingPositions = (a, b) => {
     const rank = stats => {
@@ -30,7 +30,7 @@ const compareFieldingPositions = (a, b) => {
     };
     return rank(a) - rank(b);
 };
-const metricHints = {
+export const metricHints = {
     age: '해당 연도 7월 1일 기준 만 나이', bb9: '9이닝당 볼넷',
     eraPlus: '구장 보정 없이 시즌별 리그 평균 ERA와 비교 (리그 평균 100)',
     groundFly: '땅볼아웃 ÷ 뜬공아웃 (병살타 포함, 직선타 제외)',

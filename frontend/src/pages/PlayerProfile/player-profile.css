@@ -398,7 +398,8 @@
 @media (max-width: 600px) {
     .profile-year-records { width: var(--record-table-mobile-width); font-size: 11px; }
     .profile-year-records col { width: var(--record-column-mobile-width); }
-    .profile-year-records th, .profile-year-records td { padding-inline: 3px; }
+    /* 모바일: 행 높이를 낮춘다(연도별 기록·기록실 공통). */
+    .profile-year-records th, .profile-year-records td { padding-block: 6px; padding-inline: 3px; }
 }
 
 .profile-year-sort-heading { display: inline-flex; align-items: center; justify-content: center; gap: 2px; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; }
@@ -408,7 +409,7 @@
 @media (max-width: 600px) {
     .profile-rolling-table { width: var(--record-table-mobile-width); min-width: 0; table-layout: fixed; font-size: 11px; }
     .profile-rolling-table col { width: var(--record-column-mobile-width); }
-    .profile-rolling-table th, .profile-rolling-table td { padding-inline: 3px; }
+    .profile-rolling-table th, .profile-rolling-table td { padding-block: 6px; padding-inline: 3px; }
 }
 
 .profile-loading-state { display: flex; min-height: 340px; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; color: #7c8ba0; font-size: 12px; }
