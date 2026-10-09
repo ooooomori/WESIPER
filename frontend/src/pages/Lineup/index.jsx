@@ -69,6 +69,8 @@ const TEAM_COLORS = {
     nc: ["#315288", "#af917b"], kt: ["#1a1a1a", "#eb1c24"], sk: ["#ea002c", "#f58220"], sk00: ["#0b4a8f", "#ea002c"],
     nex: ["#820024", "#b07f4a"], heroes: ["#820024", "#1a1a1a"], hyd: ["#0b6b3a", "#f6c416"],
 };
+// 시대별 로고 코드(롯데·두산·한화의 옛 로고)는 그 팀의 기본 색을 쓴다.
+for (const [era, base] of [["lot82", "lot"], ["lot93", "lot"], ["lot96", "lot"], ["lot03", "lot"], ["lot18", "lot"], ["doo99", "doo"], ["han94", "han"]]) TEAM_COLORS[era] = TEAM_COLORS[base];
 const DEFAULT_COLORS = ["#1f2937", "#6b7280"];
 const WEEKDAYS = ["일", "월", "화", "수", "목", "금", "토"];
 const BAT_NAMES = { R: "우타", L: "좌타", S: "양타(스위치)" };
