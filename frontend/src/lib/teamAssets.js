@@ -38,8 +38,10 @@ const eraTeams = [
     ['한화', 1994, 2005, 'han94'],
 ];
 export const eraTeamCode = (name, year) => eraTeams.find(([team, from, to]) => team === name && Number(year) >= from && Number(year) <= to)?.[3] || null;
+// 1군 구단이 아닌 퓨처스리그 팀: 상무, 고양(키움의 퓨처스 팀)
+export const futuresTeamCodes = { 상무: 'sm', 고양: 'goy' };
 // 팀 이름(과 연도)으로 로고·모자 파일 코드 찾기
-export const teamCodeByName = (name, year) => { const team = String(name || '').trim(); return eraTeamCode(team, year) || currentTeamCodes[team.toUpperCase()] || currentTeamCodes[team] || legacyTeams[team]?.[0] || null; };
+export const teamCodeByName = (name, year) => { const team = String(name || '').trim(); return eraTeamCode(team, year) || currentTeamCodes[team.toUpperCase()] || currentTeamCodes[team] || legacyTeams[team]?.[0] || futuresTeamCodes[team] || null; };
 export const teamCapByName = (name, year) => teamCapByCode(teamCodeByName(name, year));
 
 // 지금은 없는 팀·옛 팀명: [파일 코드, 대표 색(모자·강조에 쓴다)]

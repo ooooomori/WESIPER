@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './player-profile.css';
 import PlayerSilhouette from '../../components/PlayerSilhouette';
-import { legacyTeams, legacyTeamColor, teamCapByCode, eraTeamCode, teamCapLogoByCode, teamLogoByCode, teamSmallLogoByCode } from '../../lib/teamAssets';
+import { futuresTeamCodes, legacyTeams, legacyTeamColor, teamCapByCode, eraTeamCode, teamCapLogoByCode, teamLogoByCode, teamSmallLogoByCode } from '../../lib/teamAssets';
 import YearRecords, { allStarSide } from './YearRecords';
 import GameLogFilter from './GameLogFilter';
 import ProfileCandleChart from './ProfileCandleChart';
@@ -157,7 +157,7 @@ const movementRoute = movement => movement.type === '등번호 변경' ? null : 
 const legacyMovementTeams = Object.fromEntries(Object.entries(legacyTeams).map(([name, [code]]) => [name, code]));
 const compareTeamColor = team => teams[team]?.[1] || legacyTeamColor(team);
 // 시대에 따라 로고가 다른 팀(2000~2005년 SK 등)은 연도를 주면 그때 로고를 쓴다.
-const movementTeamCode = (team, year) => eraTeamCode(team, year) || teams[team]?.[0] || legacyMovementTeams[team];
+const movementTeamCode = (team, year) => eraTeamCode(team, year) || teams[team]?.[0] || legacyMovementTeams[team] || futuresTeamCodes[team];
 function movementLogo(team, year) {
     if (team === 'MLB' || team?.startsWith('美')) return logos['../../assets/images/logos/mlb-logo.svg'] || null;
     if (team?.startsWith('日')) return npbLogo;
