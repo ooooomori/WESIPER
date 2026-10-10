@@ -23,7 +23,7 @@ const RECORD_ROOM_PITCH_FIELDS = ['games','starts','wins','losses','saves','hold
 const RECORD_ROOM_BAT_KEYS = ['games','starts','avg','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','so','gdp','sf','sh','sb','cs','obp','slg','ops','effectiveOps','opsPlus','woba','isoObp','isoSlg','babip','groundFly','bbPct','kPct','bbK','spd','sbAttempts','sbPct','runOut'];
 const RECORD_ROOM_PITCH_KEYS = ['games','starts','era','wins','losses','saves','holds','innings','r','er','so','h','hr','bb','hbp','winPct','whip','fip','eraPlus','k9','bb9','kPct','bbPct','kBb','opponentAvg','opponentObp','opponentSlg','opponentOps','h9','hr9','groundFly','babip','reliefs','finishes','starterInnings','reliefInnings','pitches','pitchesPerInning','pitchesPerGame','qs','qsPlus','ds','complete','shutouts'];
 // 비율 기록: 이 열로 정렬할 때만 최소 조건(규정 타석·이닝 비율)을 적용한다.
-const RECORD_ROOM_BAT_RATES = ['avg','obp','slg','ops','effectiveOps','opsPlus','woba','isoObp','isoSlg','babip','groundFly','bbPct','kPct','bbK','spd','sbPct'];
+const RECORD_ROOM_BAT_RATES = ['avg','obp','slg','ops','effectiveOps','opsPlus','woba','isoObp','isoSlg','babip','groundFly','bbPct','kPct','bbK','sbPct'];
 const RECORD_ROOM_PITCH_RATES = ['era','winPct','whip','fip','eraPlus','k9','bb9','kPct','bbPct','kBb','opponentAvg','opponentObp','opponentSlg','opponentOps','h9','hr9','groundFly','babip','pitchesPerInning','pitchesPerGame'];
 const RECORD_ROOM_FIELD_KEYS = ['games','starts','innings','errors','putouts','assists','doublePlays','fieldingPct','pickoffs','passedBalls','stolenBases','caughtStealing','caughtStealingPct'];
 // 특정 타자를 상대한 투수 기록: 타석 결과로 알 수 있는 항목만 있다(이닝·실점 없음).

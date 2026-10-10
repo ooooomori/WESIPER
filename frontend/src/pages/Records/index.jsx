@@ -172,12 +172,13 @@ export default function Records() {
     const select = (field, label, options, { numeric = false, all = null, disabled = false, hideLabel = false } = {}) => <label className="record-room-field">{!hideLabel && <span>{label}</span>}<select aria-label={hideLabel ? label : undefined} value={draft[field]} disabled={disabled} onChange={event => {
         const value = numeric && event.target.value !== 'custom' && event.target.value !== 'utility' ? Number(event.target.value) : event.target.value;
         // 시작 시즌을 바꾸면 끝 시즌이 따라온다(한 시즌만 보던 중이면 그대로 한 시즌, 범위면 시작보다 앞서지 않게).
-        update(field === 'season' && typeof value === 'number' ? { season: value, to: draft.season === draft.to ? value : Math.max(draft.to, value) } : { [field]: value });
+        // 통산을 켜 두었다면 끝 시즌은 그대로 두고, 시작보다 앞서게 될 때만 맞춘다.
+        update(field === 'season' && typeof value === 'number' ? { season: value, to: draft.career ? Math.max(draft.to, value) : draft.season === draft.to ? value : Math.max(draft.to, value) } : { [field]: value });
     }}>{all !== null && <option value="">{all}</option>}{options.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></label>;
     // 직접 입력: 이닝이면 6.1·6.2처럼 소수점 아래 0·1·2만, 타석·경기 수면 숫자만 들어간다. 단위를 바꾸면 맞지 않는 값은 비운다.
     const minInnings = customMinInnings(type, draft);
     const minValueInput = label => <input type="text" inputMode={minInnings ? 'decimal' : 'numeric'} aria-label={label} value={draft.minValue} onChange={event => { if (customMinText(event.target.value, minInnings)) update({ minValue: event.target.value }); }} />;
-    const candidatesOnly = (draft.goldenGlove && regularSeason) || (draft.award && type === 'fielding');
+    const candidatesOnly = (draft.goldenGlove && regularSeason) || (draft.award && type === 'fielding') || draft.players.length > 0;
     const check = (field, label) => <label className="record-room-chip"><input type="checkbox" checked={draft[field]} onChange={event => update({ [field]: event.target.checked })} /><span>{label}</span></label>;
     const yearOptions = [...(years.includes(draft.season) ? [] : [[draft.season, draft.season]]), ...years.map(year => [year, year])];
     const showSeason = Boolean(params?.splitSeasons);

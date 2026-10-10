@@ -141,11 +141,13 @@ try {
         if (!is_string($_GET['players']) || !preg_match('/^\d{1,10}(,\d{1,10}){0,29}$/D', $_GET['players'])) $fail('잘못된 선수입니다.');
         $only['players'] = array_map('intval', explode(',', $_GET['players']));
     }
-    if ($goldenGlove || $award) { $min = 0; $minValue = null; }
+    // 후보 조건이나 선수를 직접 지정한 검색에는 최소 조건을 걸지 않는다(상대 선수 지정은 직접 입력한 값만 쓴다).
+    $noMin = $goldenGlove || $award || isset($only['players']);
+    if ($noMin) { $min = 0; $minValue = null; }
     if ($type === 'fielding') {
         if (!in_array($_GET['minUnit'] ?? 'innings', ['innings', 'games'], true)) $fail('잘못된 최소 조건입니다.');
         $only['minUnit'] = $_GET['minUnit'] ?? 'innings';
-        $only['minUtility'] = $minUtility && !$goldenGlove && !$award;
+        $only['minUtility'] = $minUtility && !$noMin;
     }
     if (!in_array($_GET['minScope'] ?? 'rate', ['rate', 'all'], true)) $fail('잘못된 최소 조건입니다.');
     $only['minAll'] = ($_GET['minScope'] ?? 'rate') === 'all';

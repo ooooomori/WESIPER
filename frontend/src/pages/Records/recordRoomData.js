@@ -103,7 +103,7 @@ export function resolveFilter(filter, meta, type) {
         }
     }
     // 후보 조건을 켜면 최소 조건은 쓰지 않는다.
-    const candidatesOnly = (filter.goldenGlove && (type === 'fielding' || filter.seasonType === 'regular')) || (filter.award && type === 'fielding');
+    const candidatesOnly = (filter.goldenGlove && (type === 'fielding' || filter.seasonType === 'regular')) || (filter.award && type === 'fielding') || Boolean(filter.players?.length);
     if (candidatesOnly) params.min = 0;
     else if (filter.min === 'utility') params.min = type === 'fielding' ? 'utility' : 100;
     else if (filter.min === 'custom') {
