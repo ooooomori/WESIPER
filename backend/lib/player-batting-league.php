@@ -62,5 +62,5 @@ function profileSeasonOpsPlus(array $s): ?float {
     if(!$l||$sf===null||!isset($s['ab'],$s['h'],$s['bb'],$s['hbp'],$s['tb'])||$s['ab']<=0)return null;
     $den=$s['ab']+$s['bb']+$s['hbp']+$sf;$ld=$l['cum_ab']+$l['cum_ob']+$l['cum_sf'];
     if($den<=0||$ld<=0||$l['cum_ab']<=0||$l['cum_h']+$l['cum_ob']<=0||$l['cum_tb']<=0)return null;
-    return round(100*(($s['h']+$s['bb']+$s['hbp'])/$den/(($l['cum_h']+$l['cum_ob'])/$ld)+($s['tb']/$s['ab'])/($l['cum_tb']/$l['cum_ab'])-1));
+    return round(100*(($s['h']+$s['bb']+$s['hbp'])/$den/(($l['cum_h']+$l['cum_ob'])/$ld)+($s['tb']/$s['ab'])/($l['cum_tb']/$l['cum_ab'])-1),(int)($GLOBALS['profileExtraPrecision']??0));
 }

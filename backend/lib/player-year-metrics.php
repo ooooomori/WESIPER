@@ -8,8 +8,13 @@ function profileAgeOnJulyFirst(?string $birth, int $year): ?int {
     return $age>=0?$age:null;
 }
 
+// 기록실이 동점자를 가리려고 비율 기록을 한 자리 더 계산할 때만 켠다(표시용 계산에는 0).
+function profileRatioPrecision(int $precision): int {
+    return $precision+(int)($GLOBALS['profileExtraPrecision']??0);
+}
+
 function profileMetricRatio(?float $numerator, ?float $denominator, int $precision=3): ?string {
-    return $numerator!==null&&$denominator!==null&&$denominator>0?number_format($numerator/$denominator,$precision,'.',''):null;
+    return $numerator!==null&&$denominator!==null&&$denominator>0?number_format($numerator/$denominator,profileRatioPrecision($precision),'.',''):null;
 }
 
 function profileAdvancedBatEvent(array $row): array {
@@ -41,7 +46,7 @@ function profileBatterAdvancedStats(array $parsed, array $s): array {
     foreach(['so','ibb','sh','roe','go','fo','runOut'] as $key)$s[$key]=profileSum($parsed,$key);
     $s['isoObp']=$s['isoSlg']=null;
     // Rates use unrounded counts; iso rates must not subtract rounded displays.
-    if($s['ab']>0){$den=$s['ab']+$s['bb']+$s['hbp']+$s['sf'];$s['isoObp']=$den>0?number_format(($s['h']+$s['bb']+$s['hbp'])/$den-$s['h']/$s['ab'],3,'.',''):null;$s['isoSlg']=number_format(($s['tb']-$s['h'])/$s['ab'],3,'.','');}
+    if($s['ab']>0){$den=$s['ab']+$s['bb']+$s['hbp']+$s['sf'];$s['isoObp']=$den>0?number_format(($s['h']+$s['bb']+$s['hbp'])/$den-$s['h']/$s['ab'],profileRatioPrecision(3),'.',''):null;$s['isoSlg']=number_format(($s['tb']-$s['h'])/$s['ab'],profileRatioPrecision(3),'.','');}
     $s['babip']=profileMetricRatio($s['h']-$s['hr'],$s['ab']-$s['so']-$s['hr']+$s['sf']);
     $s['groundFly']=profileMetricRatio($s['go'],$s['fo'],2);
     $s['bbPct']=profileMetricRatio($s['bb']*100,$s['pa'],1);

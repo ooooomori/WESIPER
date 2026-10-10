@@ -9,7 +9,7 @@ function profileHistoricalRows(PDO $db,string $pid,bool $pitcher,string $season=
     if($pid!==''){$sql.=' AND player_id=?';$params[]=$pid;}if($year!==null){$sql.=' AND year=?';$params[]=$year;}
     $q=$db->prepare($sql.' ORDER BY year,series_id,player_id');$q->execute($params);return $q->fetchAll(PDO::FETCH_ASSOC);
 }
-function profileSeasonRatio($n,$d,int $p=3): ?string {return $n!==null&&$d!==null&&$d>0?number_format($n/$d,$p,'.',''):null;}
+function profileSeasonRatio($n,$d,int $p=3): ?string {return $n!==null&&$d!==null&&$d>0?number_format($n/$d,profileRatioPrecision($p),'.',''):null;}
 function profileHistoricalPitchingContexts(PDO $db,string $season): array {
     $ids=match($season){'regular'=>[0],'postseason'=>[3,5,7],default=>[]};if(!$ids)return [];
     $q=$db->query("SELECT year,series_id,COUNT(*) AS n,COUNT(innings_outs) AS known_outs,COUNT(er) AS known_er,COUNT(hr) AS known_hr,COUNT(bb) AS known_bb,COUNT(hbp) AS known_hbp,COUNT(so) AS known_so,SUM(innings_outs) AS outs,SUM(er) AS er,SUM(hr) AS hr,SUM(bb) AS bb,SUM(hbp) AS hbp,SUM(so) AS so FROM kbo_player_season_pitching_totals WHERE league_level=1 AND row_scope='total' AND year BETWEEN 1982 AND 2000 AND series_id IN (".implode(',',$ids).') GROUP BY year,series_id');
@@ -34,8 +34,8 @@ function profileSeasonRates(array $s,bool $pitcher): array {
         $obpSf=$s['obpSf']??$s['sf'];
         $den=isset($s['ab'],$s['bb'],$s['hbp'])&&$obpSf!==null?$s['ab']+$s['bb']+$s['hbp']+$obpSf:null;
         $s['obp']=profileSeasonRatio(isset($s['h'],$s['bb'],$s['hbp'])?$s['h']+$s['bb']+$s['hbp']:null,$den);
-        $s['ops']=$s['obp']!==null&&$s['slg']!==null?number_format(($s['h']+$s['bb']+$s['hbp'])/$den+$s['tb']/$s['ab'],3,'.',''):null;
-        $s['isoObp']=$s['obp']!==null&&$s['ab']>0?number_format(($s['h']+$s['bb']+$s['hbp'])/$den-$s['h']/$s['ab'],3,'.',''):null;
+        $s['ops']=$s['obp']!==null&&$s['slg']!==null?number_format(($s['h']+$s['bb']+$s['hbp'])/$den+$s['tb']/$s['ab'],profileRatioPrecision(3),'.',''):null;
+        $s['isoObp']=$s['obp']!==null&&$s['ab']>0?number_format(($s['h']+$s['bb']+$s['hbp'])/$den-$s['h']/$s['ab'],profileRatioPrecision(3),'.',''):null;
         $s['babip']=profileSeasonRatio(isset($s['h'],$s['hr'])?$s['h']-$s['hr']:null,isset($s['ab'],$s['so'],$s['hr'],$s['sf'])?$s['ab']-$s['so']-$s['hr']+$s['sf']:null);
         $s['isoSlg']=profileSeasonRatio(isset($s['tb'],$s['h'])?$s['tb']-$s['h']:null,$s['ab']);$s['bbPct']=profileSeasonRatio(isset($s['bb'])?$s['bb']*100:null,$s['pa'],1);$s['kPct']=profileSeasonRatio(isset($s['so'])?$s['so']*100:null,$s['pa'],1);$s['bbK']=profileSeasonRatio($s['bb'],$s['so'],2);
         $s['sbAttempts']=isset($s['sb'],$s['cs'])?$s['sb']+$s['cs']:null;$s['sbPct']=profileSeasonRatio(isset($s['sb'])?$s['sb']*100:null,$s['sbAttempts'],1);

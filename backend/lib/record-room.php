@@ -17,7 +17,7 @@ require_once __DIR__.'/record-room-awards.php';
  * - 시즌 전체 구간은 연도별 파일에 보관한다. 지난 시즌은 PROFILE_HISTORY_VERSION이 같으면 계속 쓴다.
  * 계산식은 선수 프로필의 연도별 기록(player-year-records.php)과 같다.
  */
-const RECORD_ROOM_VERSION = '9';
+const RECORD_ROOM_VERSION = '10';
 const RECORD_ROOM_BAT_FIELDS = ['games','starts','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb','tb','roe','go','fo','runOut','eab','eh','etb','eob'];
 const RECORD_ROOM_PITCH_FIELDS = ['games','starts','wins','losses','saves','holds','outs','r','er','so','h','hr','bb','hbp','pa','ab','sf','tb','go','fo','startOuts','reliefOuts','finishes','qs','qsPlus','ds','complete','shutouts','pitches','eraW','fipW'];
 const RECORD_ROOM_BAT_KEYS = ['games','starts','avg','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','so','gdp','sf','sh','sb','cs','obp','slg','ops','effectiveOps','opsPlus','woba','isoObp','isoSlg','babip','groundFly','bbPct','kPct','bbK','spd','sbAttempts','sbPct','runOut'];
@@ -384,15 +384,15 @@ function recordRoomBatterStats(array $s,array $leagueYears,bool $historical,bool
     }else{
         $den=$s['ab']+$s['bb']+$s['hbp']+$s['sf'];
         $obp=$den?($s['h']+$s['bb']+$s['hbp'])/$den:null;$slg=$s['ab']?$s['tb']/$s['ab']:null;
-        $s['avg']=$s['ab']?number_format($s['h']/$s['ab'],3,'.',''):null;
-        $s['obp']=$obp===null?null:number_format($obp,3,'.','');$s['slg']=$slg===null?null:number_format($slg,3,'.','');
-        $s['ops']=$obp===null||$slg===null?null:number_format($obp+$slg,3,'.','');
+        $s['avg']=$s['ab']?number_format($s['h']/$s['ab'],profileRatioPrecision(3),'.',''):null;
+        $s['obp']=$obp===null?null:number_format($obp,profileRatioPrecision(3),'.','');$s['slg']=$slg===null?null:number_format($slg,profileRatioPrecision(3),'.','');
+        $s['ops']=$obp===null||$slg===null?null:number_format($obp+$slg,profileRatioPrecision(3),'.','');
         $s['opsPlus']=profileSeasonOpsPlus($s);
         $ed=recordRoomKnown($s,'eab','eob')?$s['eab']+$s['eob']+$s['sf']:0;
-        $s['effectiveOps']=$ed&&$s['eab']?number_format(($s['eh']+$s['eob'])/$ed+$s['etb']/$s['eab'],3,'.',''):null;
+        $s['effectiveOps']=$ed&&$s['eab']?number_format(($s['eh']+$s['eob'])/$ed+$s['etb']/$s['eab'],profileRatioPrecision(3),'.',''):null;
         $out=profileBatterAdvancedStats([$s],$s);
     }
-    if(isset($out['opsPlus']))$out['opsPlus']=(int)$out['opsPlus'];
+    if(isset($out['opsPlus']))$out['opsPlus']=((int)($GLOBALS['profileExtraPrecision']??0))?(float)$out['opsPlus']:(int)$out['opsPlus'];
     return array_intersect_key($out,array_flip(RECORD_ROOM_BAT_KEYS));
 }
 
@@ -402,7 +402,7 @@ function recordRoomPitcherStats(array $s): array {
     $ratio=static fn($n,$d,int $p=2)=>profileMetricRatio($n===null?null:(float)$n,$d===null?null:(float)$d,$p);
     $o=[];foreach(['games','starts','wins','losses','saves','holds','r','er','so','h','hr','bb','hbp','finishes','pitches','qs','qsPlus','ds','complete','shutouts'] as $key)$o[$key]=$s[$key]??null;
     $o['innings']=profileInningText($outs);
-    $o['winPct']=$has('wins','losses')&&$s['wins']+$s['losses']>0?number_format($s['wins']/($s['wins']+$s['losses']),3,'.',''):null;
+    $o['winPct']=$has('wins','losses')&&$s['wins']+$s['losses']>0?number_format($s['wins']/($s['wins']+$s['losses']),profileRatioPrecision(3),'.',''):null;
     $o['era']=$ratio($has('er')?$s['er']*27:null,$outs);
     $o['whip']=$ratio($has('h','bb')?($s['h']+$s['bb'])*3:null,$outs);
     $o['reliefs']=$has('starts')?$s['games']-$s['starts']:null;
@@ -414,11 +414,11 @@ function recordRoomPitcherStats(array $s): array {
     $o['opponentAvg']=$ratio($s['h']??null,$s['ab']??null,3);$o['opponentSlg']=$ratio($s['tb']??null,$s['ab']??null,3);
     $obpKnown=$has('h','bb','hbp','ab','sf');$obpDen=$obpKnown?$s['ab']+$s['bb']+$s['hbp']+$s['sf']:0;
     $o['opponentObp']=$obpKnown?$ratio($s['h']+$s['bb']+$s['hbp'],$obpDen,3):null;
-    $o['opponentOps']=$obpKnown&&$has('tb')&&$obpDen>0&&$s['ab']>0?number_format(($s['h']+$s['bb']+$s['hbp'])/$obpDen+$s['tb']/$s['ab'],3,'.',''):null;
+    $o['opponentOps']=$obpKnown&&$has('tb')&&$obpDen>0&&$s['ab']>0?number_format(($s['h']+$s['bb']+$s['hbp'])/$obpDen+$s['tb']/$s['ab'],profileRatioPrecision(3),'.',''):null;
     $o['groundFly']=$ratio($s['go']??null,$s['fo']??null);
     $o['babip']=$has('h','hr','ab','so','sf')?$ratio($s['h']-$s['hr'],$s['ab']-$s['so']-$s['hr']+$s['sf'],3):null;
-    $o['fip']=$outs>0&&$has('hr','bb','hbp','so','fipW')?number_format((13*$s['hr']+3*($s['bb']+$s['hbp'])-2*$s['so'])*3/$outs+$s['fipW']/$outs,2,'.',''):null;
-    $o['eraPlus']=$outs>0&&$has('er','eraW')&&$s['er']>0?(int)round(100*$s['eraW']/($s['er']*27)):null;
+    $o['fip']=$outs>0&&$has('hr','bb','hbp','so','fipW')?number_format((13*$s['hr']+3*($s['bb']+$s['hbp'])-2*$s['so'])*3/$outs+$s['fipW']/$outs,profileRatioPrecision(2),'.',''):null;
+    $o['eraPlus']=$outs>0&&$has('er','eraW')&&$s['er']>0?(((int)($GLOBALS['profileExtraPrecision']??0))>0?round(100*$s['eraW']/($s['er']*27),(int)($GLOBALS['profileExtraPrecision']??0)):(int)round(100*$s['eraW']/($s['er']*27))):null;
     return array_intersect_key($o,array_flip(RECORD_ROOM_PITCH_KEYS));
 }
 
@@ -557,6 +557,15 @@ function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): 
                 if($group['pos']){arsort($group['pos'],SORT_NUMERIC);$position=(string)array_key_first($group['pos']);}
             }
             if($value<=0&&(int)($s['games']??0)<=0)continue;
+            // 비율 기록은 표시보다 한 자리 더 계산해 정렬에 쓴다(같은 값으로 보이는 동점자를 가리기 위해).
+            $GLOBALS['profileExtraPrecision']=1;
+            try{
+                if($mergePositions)$more=recordRoomFieldingMergedStats($group['fparts']);
+                elseif($fielding)$more=recordRoomFieldingStats($s,$group['fpos']);
+                elseif($pitcher)$more=$versus!==null?array_intersect_key(recordRoomPitcherStats($s)+['pa'=>$s['pa'],'ab'=>$s['ab']],array_flip(RECORD_ROOM_VERSUS_KEYS)):recordRoomPitcherStats($s);
+                else $more=recordRoomBatterStats($s,$contexts,min($years)<=2000,count($segments)===1&&$segments[0][0]<=1985);
+            }finally{$GLOBALS['profileExtraPrecision']=0;}
+            $sortStats=array_intersect_key($more,array_flip(RECORD_ROOM_RATES[$versus!==null&&$pitcher?'versus':$type]));
             if($mergedNeed!==null)$need=$mergedNeed;
             elseif($fielding)$need=(float)array_sum(array_column($group['fielding']??[],'need'));
             elseif($versus!==null)$need=0.0;
@@ -571,7 +580,7 @@ function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): 
             $teams=array_values(array_unique($group['teams']));
             $rows[]=['id'=>(int)$id,'name'=>(string)($info[$id]['name']??$group['name']??''),'team'=>end($teams)?:null,'teams'=>count(array_unique(array_map('recordRoomFranchise',$teams))),'year'=>max($years),
                 'season'=>$splitSeasons?$years[0]:null,'utility'=>!empty($group['utility']),'active'=>isset($info[$id])&&(string)$info[$id]['is_kbodle']!=='0','foreign'=>(int)($info[$id]['is_foreign']??0)===1,'prospect'=>isset($prospects[(int)$id]),'pos'=>$position,
-                'hand'=>recordRoomHand((string)($info[$id][$pitcher?'throw':'bat']??''),$pitcher),'birth'=>(int)substr((string)($info[$id]['birth']??''),0,4)?:null,'v'=>$value,'need'=>$need,'stats'=>$stats];
+                'hand'=>recordRoomHand((string)($info[$id][$pitcher?'throw':'bat']??''),$pitcher),'birth'=>(int)substr((string)($info[$id]['birth']??''),0,4)?:null,'v'=>$value,'need'=>$need,'stats'=>$stats,'sort'=>$sortStats];
         }
         return ['rows'=>$rows];
     },true)['rows'];
@@ -585,7 +594,7 @@ function recordRoomHand(string $value,bool $pitcher): ?string {
 }
 
 function recordRoomSortValue(array $row,string $key): ?float {
-    $value=$row['stats'][$key]??null;
+    $value=$row['sort'][$key]??$row['stats'][$key]??null;
     if($value===null||$value==='')return null;
     return in_array($key,RECORD_ROOM_INNING_KEYS,true)?(float)profileInningOuts((string)$value):(float)$value;
 }
@@ -617,7 +626,7 @@ function recordRoomQuery(array $rows,string $type,string $sort,bool $descending,
     }
     usort($list,static fn($a,$b)=>($descending?$b['sortValue']<=>$a['sortValue']:$a['sortValue']<=>$b['sortValue'])?:($b['v']<=>$a['v'])?:strcmp($a['name'],$b['name'])?:($a['id']<=>$b['id'])?:($b['year']<=>$a['year']));
     $rank=0;$last=null;
-    foreach($list as $index=>&$row){if($last===null||abs($row['sortValue']-$last)>1e-9)$rank=$index+1;$last=$row['sortValue'];$row['rank']=$rank;$row['qualified']=$row['need']>0&&$row['v']>=floor($row['need']);unset($row['sortValue'],$row['v'],$row['need'],$row['active'],$row['foreign'],$row['prospect'],$row['utility'],$row['hand'],$row['birth']);}
+    foreach($list as $index=>&$row){if($last===null||abs($row['sortValue']-$last)>1e-9)$rank=$index+1;$last=$row['sortValue'];$row['rank']=$rank;$row['qualified']=$row['need']>0&&$row['v']>=floor($row['need']);unset($row['sortValue'],$row['sort'],$row['v'],$row['need'],$row['active'],$row['foreign'],$row['prospect'],$row['utility'],$row['hand'],$row['birth']);}
     unset($row);
     return ['total'=>count($list),'rate'=>$rate,'rows'=>array_slice($list,$offset,$limit)];
 }

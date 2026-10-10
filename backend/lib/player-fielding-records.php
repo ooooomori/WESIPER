@@ -21,9 +21,9 @@ function profileFieldingApplies(string $key, ?string $position): bool {
 
 function profileFieldingRates(array $stats): array {
     $chances=$stats['putouts']===null||$stats['assists']===null||$stats['errors']===null?0:$stats['putouts']+$stats['assists']+$stats['errors'];
-    $stats['fieldingPct']=$chances>0?number_format(($stats['putouts']+$stats['assists'])/$chances,3,'.',''):null;
+    $stats['fieldingPct']=$chances>0?number_format(($stats['putouts']+$stats['assists'])/$chances,profileRatioPrecision(3),'.',''):null;
     $attempts=($stats['stolenBases']??0)+($stats['caughtStealing']??0);
-    $stats['caughtStealingPct']=$stats['position']==='포수'&&$attempts>0?number_format($stats['caughtStealing']*100/$attempts,1,'.',''):null;
+    $stats['caughtStealingPct']=$stats['position']==='포수'&&$attempts>0?number_format($stats['caughtStealing']*100/$attempts,profileRatioPrecision(1),'.',''):null;
     return $stats;
 }
 

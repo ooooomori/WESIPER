@@ -21,6 +21,10 @@ $bat=array_fill_keys(RECORD_ROOM_BAT_FIELDS,0);
 $bat=['games'=>10,'starts'=>10,'pa'=>40,'ab'=>30,'h'=>12,'doubles'=>2,'triples'=>1,'hr'=>2,'rbi'=>8,'r'=>7,'bb'=>8,'hbp'=>1,'sf'=>1,'tb'=>22,'so'=>5,'sb'=>2,'cs'=>1,'eab'=>30,'eh'=>11,'etb'=>23,'eob'=>9]+$bat;
 $s=recordRoomBatterStats($bat,[2024=>['cum_ab'=>1000,'cum_h'=>270,'cum_ob'=>110,'cum_sf'=>10,'cum_tb'=>400]],false,false);
 foreach(['avg'=>'0.400','obp'=>'0.525','slg'=>'0.733','ops'=>'1.258','opsPlus'=>238,'effectiveOps'=>'1.267','bbPct'=>'20.0','sbPct'=>'66.7'] as $key=>$value)expectRecordRoom($s[$key],$value,'Batter '.$key);
+// 정렬용 계산은 비율 기록을 한 자리 더 낸다(표시용 계산은 그대로).
+$GLOBALS['profileExtraPrecision']=1;$more=recordRoomBatterStats($bat,[2024=>['cum_ab'=>1000,'cum_h'=>270,'cum_ob'=>110,'cum_sf'=>10,'cum_tb'=>400]],false,false);$GLOBALS['profileExtraPrecision']=0;
+foreach(['avg'=>'0.4000','bbPct'=>'20.00','sbPct'=>'66.67'] as $key=>$value)expectRecordRoom($more[$key],$value,'Extra precision '.$key);
+expectRecordRoom($s['avg'],'0.400','Display precision unchanged');
 $old=recordRoomBatterStats(['starts'=>null,'roe'=>null,'go'=>null,'fo'=>null,'runOut'=>null,'eab'=>null,'eh'=>null,'etb'=>null,'eob'=>null]+$bat,[1999=>null],true,false);
 expectRecordRoom($old['avg'],'0.400','Historical average');
 foreach(['woba','spd','effectiveOps','groundFly','opsPlus'] as $key)expectRecordRoom($old[$key]??null,null,'Historical '.$key);
