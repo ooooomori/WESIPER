@@ -99,8 +99,12 @@ function profileComputeModernYearLeaders(PDO $db,int $year,array $schedule): arr
         $id=(int)$row['pitcher_id'];$e=profileAdvancedBatEvent(['pa_result'=>$row['pa_result']]);if(!$e['pa'])continue;
         foreach(['so','h','bb','hbp','hr'] as $key)$faces[$id][$key]=($faces[$id][$key]??0)+$e[$key]*(int)$row['n'];
     }
-    $q=$db->prepare('SELECT pitcher_id,COUNT(DISTINCT game_id) g FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().' AND pitcher_id IS NOT NULL AND pa_result IS NOT NULL AND pa_result<>\'\' GROUP BY pitcher_id');$q->execute($range);
-    $facedGames=[];while($r=$q->fetch(PDO::FETCH_ASSOC))$facedGames[(int)$r['pitcher_id']]=(int)$r['g'];
+    $q=$db->prepare('SELECT DISTINCT pitcher_id,game_id FROM kbo_season_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql().' AND pitcher_id IS NOT NULL AND pa_result IS NOT NULL AND pa_result<>\'\'');$q->execute($range);
+    $facedGames=[];while($r=$q->fetch(PDO::FETCH_ASSOC))$facedGames[(int)$r['pitcher_id']][(string)$r['game_id']]=true;
+    // 상대 타석 기록이 없는 등판이 있으면 탈삼진·WHIP 등을 모른다. 타석을 끝내지 않은 등판(⅓이닝 이하 무실점)은 예외다.
+    $facedUnknown=[];
+    $q=$db->prepare('SELECT player_id,game_id,inning,r FROM kbo_season_pitch_records WHERE league_level=1 AND game_date BETWEEN ? AND ?'.profileNotTiebreakerSql());$q->execute($range);
+    while($r=$q->fetch(PDO::FETCH_ASSOC)){$id=(int)$r['player_id'];if(!isset($facedGames[$id][(string)$r['game_id']])&&!profileNoBatterAppearance(profileInningOuts((string)$r['inning']),$r['r']))$facedUnknown[$id]=true;}
     $q=$db->prepare("SELECT player_id,COUNT(DISTINCT game_id) g,SUM(`order`=1) gs,SUM(`order` IS NULL) gs_unknown,SUM(er) er,COUNT(er) er_n,COUNT(*) n,
         SUM(record IN ('승','W','승리')) wins,SUM(record IN ('패','L','패전')) losses,SUM(record IN ('세','S','세이브')) saves,SUM(record IN ('홀','H','홀드')) holds
         FROM kbo_season_pitch_records WHERE league_level=1 AND game_date BETWEEN ? AND ?".profileNotTiebreakerSql()." GROUP BY player_id");$q->execute($range);
@@ -112,7 +116,7 @@ function profileComputeModernYearLeaders(PDO $db,int $year,array $schedule): arr
     $pitchStats=[];$pitchQualified=[];
     foreach($pitch as $id=>$p){
         $f=$faces[$id]??['so'=>0,'h'=>0,'bb'=>0,'hbp'=>0,'hr'=>0];$outs=$p['outs'];
-        $erKnown=(int)$p['er_n']===(int)$p['n'];$known=($facedGames[$id]??0)>=(int)$p['g'];
+        $erKnown=(int)$p['er_n']===(int)$p['n'];$known=!isset($facedUnknown[$id]);
         $s=['games'=>(int)$p['g'],'starts'=>(int)$p['gs_unknown']>0?null:(int)$p['gs'],'wins'=>(int)$p['wins'],'saves'=>(int)$p['saves'],'holds'=>(int)$p['holds'],'innings'=>profileInningText($outs)];
         $w=(int)$p['wins'];$l=(int)$p['losses'];$s['winPct']=$w+$l>0?number_format($w/($w+$l),3,'.',''):null;
         $er=(int)$p['er'];

@@ -16,9 +16,9 @@ function profileYearTotals(array $rows, bool $pitcher, array $faced, array $leag
     if($pitcher){
         $events=[];$known=true;$outs=0;
         foreach($rows as $row){$rowOuts=profileInningOuts($row['inning']);$outs+=$rowOuts;
-            // 등판했지만 타자를 상대하지 않은 경기(0이닝·0구·0실점)는 상대 타석이 없는 것이 정상이다.
+            // 타석을 끝내지 않은 등판(⅓이닝 이하 무실점)은 상대 타석이 없는 것이 정상이다.
             if(isset($faced[$row['game_id']]))foreach($faced[$row['game_id']] as $event)$events[]=$event;
-            elseif($rowOuts>0||!isset($row['pitched'])||(int)$row['pitched']!==0||(int)($row['r']??0)!==0)$known=false;
+            elseif(!profileNoBatterAppearance($rowOuts,$row['r']??null))$known=false;
         }
         foreach(['r','er'] as $key)$s[$key]=profileSum($rows,$key);
         foreach(['so','h','hr','bb','hbp'] as $key)$s[$key]=$known?profileSum($events,$key):null;

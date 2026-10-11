@@ -17,7 +17,7 @@ require_once __DIR__.'/record-room-awards.php';
  * - 시즌 전체 구간은 연도별 파일에 보관한다. 지난 시즌은 PROFILE_HISTORY_VERSION이 같으면 계속 쓴다.
  * 계산식은 선수 프로필의 연도별 기록(player-year-records.php)과 같다.
  */
-const RECORD_ROOM_VERSION = '11';
+const RECORD_ROOM_VERSION = '13';
 const RECORD_ROOM_BAT_FIELDS = ['games','starts','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb','tb','roe','go','fo','runOut','eab','eh','etb','eob'];
 const RECORD_ROOM_PITCH_FIELDS = ['games','starts','wins','losses','saves','holds','outs','r','er','so','h','hr','bb','hbp','pa','ab','sf','tb','go','fo','startOuts','reliefOuts','finishes','qs','qsPlus','ds','complete','shutouts','pitches','eraW','fipW'];
 const RECORD_ROOM_BAT_KEYS = ['games','starts','avg','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','so','gdp','sf','sh','sb','cs','obp','slg','ops','effectiveOps','opsPlus','woba','isoObp','isoSlg','babip','groundFly','bbPct','kPct','bbK','spd','sbAttempts','sbPct','runOut'];
@@ -257,8 +257,8 @@ function recordRoomModernPitchers(PDO $db,int $year,string $start,string $end,ar
                 if($row['pitched']===null)$unknown['pitches']=true;else $s['pitches']+=(int)$row['pitched'];
                 foreach($labels as $key=>$names)if(in_array($row['record'],$names,true))$s[$key]++;
                 if(in_array($row['record'],$labels['wins'],true)){if($order===null)$unknown['reliefWins']=true;elseif(!$start)$s['reliefWins']++;}
-                // 등판했지만 타자를 상대하지 않은 경기(0이닝·0구·0실점)는 상대 타석이 없는 것이 정상이다.
-                if(!isset($facedGames[$id][(string)$row['game_id']])&&($outs>0||$row['pitched']===null||(int)$row['pitched']!==0||(int)($row['r']??0)!==0))$known=false;
+                // 타석을 끝내지 않은 등판(⅓이닝 이하 무실점)은 상대 타석이 없는 것이 정상이다(프로필의 연도별 기록과 같다).
+                if(!isset($facedGames[$id][(string)$row['game_id']])&&!profileNoBatterAppearance($outs,$row['r']))$known=false;
                 if(count($teams)>1)foreach($facedByGame[$id][(string)$row['game_id']]??[] as $key=>$value)$events[$key]+=$value;
                 if($order===null){foreach(['starts','startOuts','reliefOuts','finishes','qs','qsPlus','ds','complete','shutouts'] as $key)$unknown[$key]=true;continue;}
                 $meta=$context[$row['game_id'].'|'.profileTeam($row['team'])];

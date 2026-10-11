@@ -13,7 +13,7 @@ function profileBatEvent(array $row): array {
     $last = mb_substr($text, -1, 1, 'UTF-8');
     $bases = match ($last) { '안'=>1, '2'=>2, '3'=>3, '홈'=>4, default=>0 };
     $ab = (int)($text !== '' && !$walk && !$hbp && !$sac && !$interference);
-    return ['pa'=>(int)($text!==''),'ab'=>$ab,'h'=>(int)($bases>0),'doubles'=>(int)($bases===2),'triples'=>(int)($bases===3),'tb'=>$bases,'bb'=>(int)$walk,'hbp'=>(int)$hbp,'sf'=>(int)$sf,'sh'=>(int)$sh,'hr'=>(int)($bases===4),'so'=>(int)str_contains($text,'삼진'),'gdp'=>(int)str_contains($text,'병'),'sb'=>(int)($row['sb']??0),'cs'=>(int)($row['cs']??0),'rbi'=>isset($row['rbi'])?(int)$row['rbi']:null,'r'=>isset($row['r'])?(int)$row['r']:null];
+    return ['pa'=>(int)($text!==''),'ab'=>$ab,'h'=>(int)($bases>0),'doubles'=>(int)($bases===2),'triples'=>(int)($bases===3),'tb'=>$bases,'bb'=>(int)$walk,'hbp'=>(int)$hbp,'sf'=>(int)$sf,'sh'=>(int)$sh,'hr'=>(int)($bases===4),'so'=>(int)(str_contains($text,'삼진')||str_contains($text,'스낫')),'gdp'=>(int)str_contains($text,'병'),'sb'=>(int)($row['sb']??0),'cs'=>(int)($row['cs']??0),'rbi'=>isset($row['rbi'])?(int)$row['rbi']:null,'r'=>isset($row['r'])?(int)$row['r']:null];
 }
 /*
  * 정규시즌이 아닌 순위 결정전(타이브레이커) 경기. 날짜는 정규시즌 기간 안이지만
@@ -26,7 +26,7 @@ const PROFILE_TIEBREAKER_GAMES = ['66661031KTSS02021', '66661001SKKT02024'];
  * 크롤러 revision과 무관하게 이 값이 같으면 계속 재사용한다.
  * 지난 시즌 기록을 백필·보정하거나 계산 방식이 바뀌면 이 값을 바꿔 다시 계산하게 한다.
  */
-const PROFILE_HISTORY_VERSION = '2026-10-11.1';
+const PROFILE_HISTORY_VERSION = '2026-10-11.3';
 function profileIsTiebreakerGame(?string $id): bool { return $id !== null && in_array($id, PROFILE_TIEBREAKER_GAMES, true); }
 function profileNotTiebreakerSql(string $column = 'game_id'): string {
     return ' AND '.$column.' NOT IN (\''.implode('\',\'', PROFILE_TIEBREAKER_GAMES).'\')';
@@ -45,6 +45,11 @@ function profileBatStats(array $events, ?array $league = null): array {
     $opsPlus=$obp!==null && $slg!==null && ($league['obp']??0)>0 && ($league['slg']??0)>0 ? round(100*($obp/$league['obp']+$slg/$league['slg']-1)) : null;
     return [['타율',$avg===null?null:number_format($avg,3)],['안타',$s['h']],['홈런',$s['hr']],['타점',$s['rbi']],['OPS',$obp===null||$slg===null?null:number_format($obp+$slg,3)],['도루',$s['sb']],['득점',$s['r']],['OPS+',$opsPlus]];
 }
+/**
+ * 등판했지만 타석을 하나도 끝내지 않은 경기일 수 있는지: ⅓이닝 이하 무실점(타석 도중 교체, 주자 아웃으로 이닝 종료).
+ * 이런 등판은 상대 타석 기록이 없어도 기록 누락으로 보지 않는다.
+ */
+function profileNoBatterAppearance(int $outs,$runs): bool { return $outs<=1&&(int)($runs??0)===0; }
 function profileInningOuts(string $inning): int {
     $inning=str_replace(['⅓','⅔'],['1/3','2/3'],$inning);
     // Naver innings use mixed fractions, e.g. "5 2/3", not decimal innings.
@@ -161,7 +166,7 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
         foreach($rows as $row) {
             $outs+=profileInningOuts($row['inning']); $erKnown=$erKnown && isset($row['er']);$er+=(int)$row['er'];
             $wins+=(int)in_array($row['record'],['승','W','승리'],true); $holds+=(int)in_array($row['record'],['홀','H','홀드'],true);$saves+=(int)in_array($row['record'],['세','S','세이브'],true);
-            $f=$faced[$row['game_id']]??[]; $facedKnown=$facedKnown && count($f)>0;
+            $f=$faced[$row['game_id']]??[]; $facedKnown=$facedKnown && (count($f)>0 || profileNoBatterAppearance(profileInningOuts($row['inning']),$row['r']??null));
             $h+=profileSum($f,'h')??0;$bb+=profileSum($f,'bb')??0;$so+=profileSum($f,'so')??0;
         }
         require_once __DIR__.'/player-year-league.php';

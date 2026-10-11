@@ -19,7 +19,6 @@ function profileMetricRatio(?float $numerator, ?float $denominator, int $precisi
 
 function profileAdvancedBatEvent(array $row): array {
     $event=profileBatEvent($row);$text=trim((string)($row['pa_result']??''));
-    $event['so']=(int)(str_contains($text,'삼진')||str_contains($text,'스낫'));
     $event['ibb']=(int)(in_array($text,['고4','고의4구','고의사구','고의볼넷'],true)||str_contains($text,'고의4구')||str_contains($text,'고의볼넷'));
     if($event['ibb']){$event['bb']=1;$event['hbp']=0;$event['ab']=0;}
     $event['sh']=(int)(!$event['sf']&&(str_contains($text,'희번')||str_contains($text,'희타')||str_contains($text,'희실')));
