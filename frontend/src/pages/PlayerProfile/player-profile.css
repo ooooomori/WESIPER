@@ -1117,3 +1117,10 @@ a.profile-alumni-row:focus-visible { outline: 2px solid var(--team-primary); out
 @media (max-width: 600px) { .profile-alumni-tabs { padding: 9px 16px; } .profile-alumni-tabs button { height: 28px; padding: 0 10px; font-size: 12px; } }
 @media (max-width: 600px) { .profile-alumni-body h3 { margin: 0 -16px; padding: 12px 16px 8px; } }
 .profile-alumni-modal .profile-career-title p .profile-birthday-step:disabled { opacity: .4; cursor: default; }
+
+/* 경기 일지 표: 연도별 기록 표와 같은 행 높이·글자 크기 */
+.profile-game-log th, .profile-game-log td { padding-block: 8px; padding-inline: 4px; }
+@media (max-width: 600px) {
+    .profile-game-log { font-size: 11px; }
+    .profile-game-log th, .profile-game-log td { padding-block: 6px; padding-inline: 3px; }
+}

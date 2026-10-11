@@ -4,6 +4,7 @@ import { loadYearRecords } from './yearRecordsCache';
 import './player-compare.css';
 import PlayerSilhouette from '../../components/PlayerSilhouette';
 import { teamCapByName } from '../../lib/teamAssets';
+import { saveCompareImage } from './compareImage';
 
 const MAX_PLAYERS = 5;
 // 탭을 옮겨도 비교 설정이 유지되도록 선수(pid)별로 기억한다. 새로고침하면 초기화된다.
@@ -117,7 +118,19 @@ export default function PlayerCompare({ pid, player, getTeamLogo, getTeamColor }
     const remove = id => setEntries(list => list.filter(entry => entry.id !== id));
     const setYear = (id, year) => setEntries(list => list.map(entry => entry.id === id ? { ...entry, year } : entry));
     const [searchOpen, setSearchOpen] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [saveError, setSaveError] = useState('');
+    const tableRef = useRef(null);
     const full = entries.length >= MAX_PLAYERS;
+    const saveImage = async () => {
+        if (saving) return;
+        setSaving(true);
+        setSaveError('');
+        try {
+            const names = [...tableRef.current.querySelectorAll('.compare-head strong')].map(node => node.textContent.trim()).filter(Boolean);
+            await saveCompareImage(tableRef.current, `wesiper_compare_${names.join('_').replace(/[<>:"/\|?*\s]+/g, '-')}.png`);
+        } catch { setSaveError('이미지를 저장하지 못했습니다.'); } finally { setSaving(false); }
+    };
     const switches = <div className="profile-compare-switches">
         <div className={`profile-game-switch ${mode === 'career' ? 'is-detailed' : ''}`} role="group" aria-label="비교 기준">
             {[['season', '시즌'], ['career', '통산']].map(([id, label]) => <button key={id} type="button" className={mode === id ? 'active' : ''} aria-pressed={mode === id} onClick={() => setMode(id)}>{label}</button>)}
@@ -132,16 +145,20 @@ export default function PlayerCompare({ pid, player, getTeamLogo, getTeamColor }
             {switches}
         </div>
         <div className="profile-compare-actions">
+            {saveError && <span className="compare-save-error" role="alert">{saveError}</span>}
+            <button type="button" className="compare-save" disabled={saving} onClick={saveImage}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14" /></svg>{saving ? '저장 중…' : '이미지 저장'}
+            </button>
             <button type="button" className="compare-add" disabled={full} aria-expanded={searchOpen} onClick={() => setSearchOpen(value => !value)} title={full ? `최대 ${MAX_PLAYERS}명까지 비교할 수 있어요` : undefined}>
                 <span aria-hidden="true">+</span>{full ? `최대 ${MAX_PLAYERS}명` : '선수 추가'}
             </button>
         </div>
         <PlayerSearch onSelect={add} open={searchOpen && !full} setOpen={setSearchOpen} />
-        <CompareTable entries={entries} mode={mode} kind={kind} onYear={setYear} onRemove={remove} getTeamLogo={getTeamLogo} getTeamColor={getTeamColor} />
+        <CompareTable scrollRef={tableRef} entries={entries} mode={mode} kind={kind} onYear={setYear} onRemove={remove} getTeamLogo={getTeamLogo} getTeamColor={getTeamColor} />
     </section>;
 }
 
-function CompareTable({ entries, mode, kind, switches, onYear, onRemove, getTeamLogo, getTeamColor }) {
+function CompareTable({ scrollRef, entries, mode, kind, switches, onYear, onRemove, getTeamLogo, getTeamColor }) {
     // 선수 수가 바뀌어도 훅 순서를 지키도록 최대 인원만큼 고정 호출한다.
     const slots = Array.from({ length: MAX_PLAYERS }, (_, index) => entries[index]?.pid ?? null);
     const datas = slots.map(slotPid => useCompareDataOptional(slotPid)); // eslint-disable-line react-hooks/rules-of-hooks
@@ -170,7 +187,7 @@ function CompareTable({ entries, mode, kind, switches, onYear, onRemove, getTeam
     };
     const awardRows = AWARD_TYPES.filter(type => columns.some(column => column.awards[type] > 0));
     const loading = columns.some(column => column.data.status === 'loading');
-    return <div className="profile-compare-scroll" aria-busy={loading}>
+    return <div className="profile-compare-scroll" ref={scrollRef} aria-busy={loading}>
         <table className="profile-compare-table" style={{ '--compare-cols': columns.length }}>
             <colgroup><col className="compare-col-label" />{columns.map(({ entry }) => <col key={entry.id} />)}</colgroup>
             <thead><tr>

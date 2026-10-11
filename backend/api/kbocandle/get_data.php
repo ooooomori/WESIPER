@@ -18,6 +18,14 @@ if ($season === 'preseason' && in_array((string)$year, ['2008', '2009', '2010', 
     exit;
 }
 
+// 선수 페이지 차트 탭이 반복해서 부르는 전체 기간 조회는 파일 캐시로 응답한다(올해 기록은 크롤러 revision마다 갱신).
+if ($date_preset === 'whole' && preg_match('/^\d{1,10}$/D', (string)$player_id) && preg_match('/^\d{4}$/D', (string)$year)) {
+    require_once __DIR__ . '/../../lib/player-chart-cache.php';
+    $cacheParams = $_GET;
+    ksort($cacheParams);
+    profileChartCacheServe('candle', $cacheParams, (int)$year >= (int)(new DateTimeImmutable('now', new DateTimeZone('Asia/Seoul')))->format('Y'));
+}
+
 // 타석 결과 텍스트를 요청한 규격으로 강제 변환하는 전용 함수 신설
 function formatPaResult($pa_txt, $sb, $cs) {
     $clean = trim($pa_txt);

@@ -6,18 +6,17 @@ import MetricHelp from '../Kbocandle/MetricHelp';
 import { loadYearRecords } from './yearRecordsCache';
 import ProfileLoading from './ProfileLoading';
 import { getCachedProfileData, loadProfileData } from './profileDataCache';
+import SplitCharts from './SplitCharts';
 import './profile-candle.css';
 
 const seasons = ['regular', 'preseason', 'postseason', 'futures'];
 
-export default function ProfileCandleChart({ pid, player, active = true }) {
-    if ((player.Pos || '').includes('투수')) {
-        return <section className="profile-candle-section" hidden={!active}>
-            <div className="profile-heading"><h2>시즌 차트</h2></div>
-            <p className="profile-games-empty profile-pitcher-chart-message">투수 차트는 준비중이에요!</p>
-        </section>;
-    }
-    return <BatterCandleChart pid={pid} player={player} active={active} />;
+export default function ProfileCandleChart({ pid, player, active = true, getTeamColor }) {
+    if ((player.Pos || '').includes('투수')) return <SplitCharts pid={pid} pitcher active={active} getTeamColor={getTeamColor} />;
+    return <>
+        <SplitCharts pid={pid} pitcher={false} active={active} getTeamColor={getTeamColor} />
+        <BatterCandleChart pid={pid} player={player} active={active} />
+    </>;
 }
 
 function BatterCandleChart({ pid, player, active }) {

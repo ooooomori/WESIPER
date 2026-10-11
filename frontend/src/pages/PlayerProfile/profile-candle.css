@@ -121,12 +121,12 @@
 .player-profile .profile-candle-terminal .candle-values .candle-daily-change { flex-basis: auto; order: 3; margin: 0; font-size: 10.5px; font-weight: 600; }
 .player-profile .profile-candle-terminal .candle-values > div > span { order: 1; }
 .player-profile .profile-candle-terminal .candle-values strong { order: 2; }
-.player-profile .profile-candle-terminal .candle-moving-summary { gap: 6px; margin-top: 10px; font-size: 11.5px; }
-.player-profile .profile-candle-terminal .candle-moving-summary span { padding: 3px 9px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px #e6edf6; color: #5b6d84; }
-.player-profile .profile-candle-terminal .candle-moving-summary em { font-weight: 800; }
-.player-profile .profile-candle-terminal .candle-moving-summary em.gold { color: #c98a12; }
-.player-profile .profile-candle-terminal .candle-moving-summary em.mint { color: #0f9f80; }
-.player-profile .profile-candle-terminal .candle-moving-summary em.purple { color: #7d5bd6; }
+
+
+
+
+
+
 .player-profile .profile-candle-terminal .candle-atbats { margin-top: 12px; padding-top: 12px; border-top: 1px dashed #e3e9f2; }
 .player-profile .profile-candle-terminal .candle-atbats > span { color: #7c8ba0; font-size: 11.5px; font-weight: 700; }
 .player-profile .profile-candle-terminal .candle-atbats > div > span { padding: 3px 10px; border: 0; border-radius: 999px; background: #eef2f7; color: #4c5d73; font-size: 12px; font-weight: 700; }
@@ -181,3 +181,145 @@
 .modal.candle-settings-modal.is-profile .candle-chart-style-options button.selected, .modal.candle-settings-modal.is-profile .candle-palette-option.selected { border-color: color-mix(in srgb, var(--settings-accent) 40%, #e3e9f2); background: color-mix(in srgb, var(--settings-accent) 7%, #fff); color: var(--settings-accent); }
 .modal.candle-settings-modal.is-profile .candle-chart-style-options button:focus-visible, .modal.candle-settings-modal.is-profile .candle-palette-option:focus-within { outline: 2px solid var(--settings-accent); outline-offset: 2px; }
 .modal.candle-settings-modal.is-profile .candle-palette-preview { transform: scale(.85); }
+
+/* 시즌 스플릿 차트 */
+.profile-split-section { margin-bottom: 36px; }
+.profile-split-card { padding: 0; border: 0; border-radius: 0; background: transparent; }
+.profile-split-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; margin-bottom: 10px; }
+.profile-split-tabs { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: #f2f5f9; }
+.profile-split-tabs button { min-width: 56px; padding: 6px 12px; border: 0; border-radius: 8px; background: transparent; color: #7a8798; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s, color .2s; }
+.profile-split-tabs button[aria-pressed="true"] { background: #fff; color: var(--team-primary, #0b5fc7); font-weight: 800; box-shadow: 0 2px 6px #1027460f; }
+.profile-split-tabs button:focus-visible { outline: 2px solid var(--team-primary, #087aff); outline-offset: -2px; }
+.profile-split-legend { display: flex; gap: 12px; color: #5b6d84; font-size: 12.5px; font-weight: 700; }
+.profile-split-legend button { display: inline-flex; align-items: center; gap: 5px; padding: 4px 6px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; cursor: pointer; transition: opacity .2s; }
+.profile-split-legend button:hover { background: #f2f5f9; }
+.profile-split-legend button[aria-pressed="false"] { opacity: .45; }
+.profile-split-legend button[aria-pressed="false"] { text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.profile-split-legend button:focus-visible { outline: 2px solid var(--team-primary, #087aff); outline-offset: -1px; }
+.profile-split-legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--team-primary, #087aff); }
+.profile-split-legend button.is-1 i { background: var(--team-secondary, #17283d); }
+.profile-split-legend b { color: #8793a3; font-size: 12px; font-weight: 600; }
+.profile-split-svg { display: block; width: 100%; max-width: 440px; margin-inline: auto; height: auto; overflow: visible; font-variant-numeric: tabular-nums; }
+.profile-split-bar { fill: var(--team-primary, #087aff); transform-box: fill-box; transform-origin: 0 50%; animation: profile-split-grow .75s cubic-bezier(.2, .8, .25, 1) both; }
+.profile-split-bar.is-1 { fill: var(--team-secondary, #17283d); }
+.profile-split-value { fill: #22364f; font-size: 10.5px; font-weight: 800; animation: profile-split-fade .5s ease-out both; }
+.profile-split-divider { stroke: #eef2f7; stroke-width: 1; }
+.profile-split-base { stroke: #dbe3ee; stroke-width: 1; }
+.profile-split-label { fill: #4c5f78; font-size: 11.5px; font-weight: 700; }
+.profile-split-games { fill: #9aa6b6; font-size: 9.5px; font-weight: 600; }
+@keyframes profile-split-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes profile-split-fade { from { opacity: 0; } 60% { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .profile-split-bar, .profile-split-value { animation: none; } }
+@media (max-width: 600px) {
+    .profile-split-card { padding: 0; border: 0; border-radius: 0; background: transparent; }
+    .profile-split-tabs button { min-width: 0; padding: 6px 10px; font-size: 12.5px; }
+}
+
+/* 상세(candle-detail): 박스·배지 대신 구분선과 글자 위계로 정리 */
+.player-profile .profile-candle-terminal .candle-detail { margin: 0; padding: 18px 2px 4px; border: 0; border-top: 1px solid #edf2f8; border-radius: 0; background: transparent; box-shadow: none; }
+.player-profile .profile-candle-terminal .candle-detail-heading { margin: 0 0 14px; }
+.player-profile .profile-candle-terminal .candle-detail-heading strong { padding: 0; border: 0; border-radius: 0; background: none; color: #102746; font-size: 15px; font-weight: 800; }
+.player-profile .profile-candle-terminal .candle-values { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none; gap: 0; margin: 0; overflow: visible; }
+.player-profile .profile-candle-terminal .candle-values > div { display: flex; flex-direction: column; align-items: flex-start; flex-wrap: nowrap; gap: 3px; min-width: 0; padding: 2px 16px; border: 0; border-left: 1px solid #e8eef6; border-radius: 0; background: transparent; box-shadow: none; white-space: nowrap; }
+.player-profile .profile-candle-terminal .candle-values > div:first-child { padding-left: 0; border-left: 0; }
+.player-profile .profile-candle-terminal .candle-values span { color: #8793a3; font-size: 12px; font-weight: 600; }
+.player-profile .profile-candle-terminal .candle-values strong { color: #102746; font-size: 21px; font-weight: 800; letter-spacing: -.01em; }
+.player-profile .profile-candle-terminal .candle-values strong.up { color: #d9253a; }
+.player-profile .profile-candle-terminal .candle-values strong.down { color: #1769c2; }
+.player-profile .profile-candle-terminal .candle-values small.candle-daily-change { display: block; margin: 0; color: #8793a3; font-size: 11.5px; font-weight: 600; }
+.player-profile .profile-candle-terminal .candle-values small.candle-daily-change.up { color: #d9253a; }
+.player-profile .profile-candle-terminal .candle-values small.candle-daily-change.down { color: #1769c2; }
+.player-profile .profile-candle-terminal .candle-atbats { display: flex; align-items: baseline; gap: 14px; margin-top: 16px; padding: 14px 0 0; border: 0; border-top: 1px solid #edf2f8; }
+.player-profile .profile-candle-terminal .candle-atbats > span { flex: none; color: #8793a3; font-size: 12px; font-weight: 600; }
+.player-profile .profile-candle-terminal .candle-atbats { align-items: center; }
+.player-profile .profile-candle-terminal .candle-atbats > div { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+.player-profile .profile-candle-terminal .candle-atbats > div > span { padding: 5px 11px; border: 1px solid #e3e9f2; border-radius: 999px; background: #f4f7fb; color: #4c5f78; font-size: 13px; font-weight: 700; line-height: 1.2; }
+.player-profile .profile-candle-terminal .candle-atbats > div > span.on-base { border-color: #bfe6da; background: #e3f5ee; color: #0a7a5f; }
+@media (max-width: 600px) {
+    .player-profile .profile-candle-terminal .candle-detail { padding: 14px 0 2px; }
+    .player-profile .profile-candle-terminal .candle-values { grid-template-columns: none; overflow: visible; gap: 0; }
+    .player-profile .profile-candle-terminal .candle-values > div { padding: 2px 9px; }
+    .player-profile .profile-candle-terminal .candle-values > div:first-child { padding-left: 0; }
+    .player-profile .profile-candle-terminal .candle-values strong { font-size: 16px; }
+    .player-profile .profile-candle-terminal .candle-values span { font-size: 11px; }
+    .player-profile .profile-candle-terminal .candle-values small.candle-daily-change { font-size: 10.5px; }
+    .player-profile .profile-candle-terminal .candle-atbats { gap: 10px; }
+    .player-profile .profile-candle-terminal .candle-atbats > div > span { padding: 4px 10px; font-size: 12.5px; }
+}
+
+/* 스플릿 차트: 행 클릭, 최고·최저 강조, 상세 모달 */
+.profile-split-hit { fill: transparent; cursor: pointer; outline: none; }
+.profile-split-hit:hover, .profile-split-hit:focus-visible { fill: color-mix(in srgb, var(--team-primary, #087aff) 6%, transparent); }
+.profile-split-modal-body { flex: 1; min-height: 0; padding: 14px 20px 20px; overflow-y: auto; overscroll-behavior: contain; }
+.profile-split-modal-rates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
+.profile-split-modal-rates > div { padding: 10px 6px; border-radius: 12px; background: #f4f7fb; text-align: center; }
+.profile-split-modal-rates span, .profile-split-modal-counts span { display: block; color: #8793a3; font-size: 11.5px; font-weight: 600; }
+.profile-split-modal-rates strong { display: block; margin-top: 2px; color: #102746; font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.profile-split-modal-counts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 8px; margin: 0 0 16px; padding: 0 2px; }
+.profile-split-modal-counts strong { display: block; margin-top: 1px; color: #22364f; font-size: 15px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.profile-split-modal-body h3 { margin: 0 0 4px; color: #102746; font-size: 14px; font-weight: 800; }
+.profile-split-modal-games { margin: 0; padding: 0; list-style: none; }
+.profile-split-modal-games li { display: grid; grid-template-columns: 44px 62px minmax(0, 1fr); align-items: baseline; gap: 8px; padding: 9px 0; border-bottom: 1px solid #eef2f7; font-size: 13px; }
+.profile-split-modal-games li:last-child { border-bottom: 0; }
+.profile-split-modal-games time { color: #8793a3; font-weight: 600; font-variant-numeric: tabular-nums; }
+.profile-split-modal-games b { color: #22364f; font-weight: 700; }
+.profile-split-modal-games .profile-split-modal-line { color: #4c5f78; }
+.profile-split-modal-games .profile-split-modal-line.is-good { font-weight: 800; }
+@media (max-width: 600px) {
+    .profile-split-modal-body { padding: 12px 16px calc(16px + env(safe-area-inset-bottom)); }
+    .profile-split-modal-rates strong { font-size: 16px; }
+}
+
+/* 스플릿 차트: 최고·최저는 숫자 색만 */
+.profile-split-value.is-high { fill: #d9253a; font-weight: 900; }
+.profile-split-value.is-low { fill: #1769c2; font-weight: 900; }
+
+/* 스플릿 모달: 머리에 핵심 지표, 경기별 기록만 스크롤 */
+.profile-split-modal-head { flex-wrap: wrap; align-items: flex-start; }
+.profile-split-modal-head .profile-career-title { flex: 1; min-width: 0; }
+.profile-split-modal .profile-career-title h2 { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0; }
+.profile-split-modal .profile-career-title h2 span { color: rgba(255,255,255,.78); font-size: 14px; font-weight: 700; letter-spacing: 0; }
+.profile-split-modal-head .profile-split-modal-rates { position: relative; z-index: 1; flex: 0 0 100%; margin: 14px 0 0; }
+.profile-split-modal-head .profile-split-modal-rates > div { background: rgba(255,255,255,.15); }
+.profile-split-modal-head .profile-split-modal-rates span { color: rgba(255,255,255,.78); }
+.profile-split-modal-head .profile-split-modal-rates strong { color: #fff; }
+.profile-split-modal-body { display: flex; flex-direction: column; overflow: hidden; }
+.profile-split-modal-games { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.profile-split-modal-games .profile-game-badge { margin-left: 6px; vertical-align: 1px; }
+.profile-split-modal-counts { flex: none; }
+.profile-split-modal-body h3 { flex: none; }
+
+/* 모바일: 캔들 상세를 한 단계 작게 */
+@media (max-width: 600px) {
+    .player-profile .profile-candle-terminal .candle-detail { padding: 10px 0 0; }
+    .player-profile .profile-candle-terminal .candle-detail-heading { margin-bottom: 9px; }
+    .player-profile .profile-candle-terminal .candle-detail-heading strong { font-size: 13px; }
+    .player-profile .profile-candle-terminal .candle-values > div { padding: 1px 7px; gap: 1px; }
+    .player-profile .profile-candle-terminal .candle-values strong { font-size: 14px; }
+    .player-profile .profile-candle-terminal .candle-values span { font-size: 10px; }
+    .player-profile .profile-candle-terminal .candle-values small.candle-daily-change { font-size: 9.5px; }
+    .player-profile .profile-candle-terminal .candle-atbats { gap: 8px; margin-top: 11px; padding-top: 10px; }
+    .player-profile .profile-candle-terminal .candle-atbats > span { font-size: 10.5px; }
+    .player-profile .profile-candle-terminal .candle-atbats > div { gap: 4px; }
+    .player-profile .profile-candle-terminal .candle-atbats > div > span { padding: 3px 8px; font-size: 11px; }
+    .player-profile .profile-candle-terminal .candle-footnote { padding: 8px 0 0; font-size: 8.5px; }
+}
+.profile-split-modal-body { flex: 0 1 auto; min-height: 0; }
+.profile-split-modal-games { flex: 0 1 auto; }
+
+/* 스플릿 모달: 내용 전체가 스크롤 */
+.profile-split-modal-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.profile-split-modal-games { flex: none; overflow: visible; }
+.profile-split-modal-body > * { flex: none; }
+
+/* 스플릿 모달: 투수 승패 기록 줄 */
+.profile-split-modal-head .profile-split-modal-record { position: relative; z-index: 1; flex: 0 0 100%; margin: 12px 0 0; color: rgba(255,255,255,.92); font-size: 13.5px; font-weight: 800; letter-spacing: -.01em; }
+.profile-split-modal-head .profile-split-modal-record + .profile-split-modal-rates { margin-top: 8px; }
+.profile-split-modal-rates.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.profile-split-modal-head .profile-split-modal-rates + .profile-split-modal-rates { margin-top: 8px; }
+
+.profile-split-modal-counts.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+
+.profile-split-axis { stroke: #cfd8e4; stroke-width: 1; }

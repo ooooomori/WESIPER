@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/player-batting-league.php';
+// profileRatioPrecision()을 쓴다. 2000년 이전 선수처럼 이 파일만 먼저 읽히는 경로에서도 정의되도록 직접 읽는다.
+require_once __DIR__.'/player-year-metrics.php';
 
 function profileHistoricalRows(PDO $db,string $pid,bool $pitcher,string $season='regular',?int $year=null): array {
     $ids=match($season){'regular'=>[0],'preseason'=>[1],'postseason'=>[3,5,7],default=>[]};if(!$ids)return [];

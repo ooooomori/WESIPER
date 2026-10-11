@@ -158,15 +158,83 @@ try {
         if($gamePitcher!==$basePitcher)$player['Pos']=$gamePitcher?'투수':'타자';
         $availableSeasons=profilePlayerGameSeasons($pdo,$player,$schedule);
         $years=array_keys($availableSeasons);
-        $year=isset($_GET['year'])?filter_var($_GET['year'],FILTER_VALIDATE_INT):($years[0]??null);
-        $season=$_GET['season']??($availableSeasons[$year][0]??'regular');
-        if(!in_array($season,['regular','preseason','postseason','futures'],true)||($year!==null&&(!in_array($year,$years,true)||!in_array($season,$availableSeasons[$year],true)))) {
+        // year=all: 선택한 시즌 종류의 통산 경기를 연도 순서와 무관하게 모두 합쳐 돌려준다(스플릿 차트의 통산).
+        $allYears=($_GET['year']??null)==='all';
+        $year=$allYears?null:(isset($_GET['year'])?filter_var($_GET['year'],FILTER_VALIDATE_INT):($years[0]??null));
+        $season=$_GET['season']??($allYears?'regular':($year!==null?$availableSeasons[$year][0]??'regular':'regular'));
+        $seasonYears=array_values(array_filter($years,static fn($y)=>in_array($season,$availableSeasons[$y],true)));
+        if(!in_array($season,['regular','preseason','postseason','futures'],true)||($allYears?!$seasonYears:($year!==null&&(!in_array($year,$years,true)||!in_array($season,$availableSeasons[$year],true))))) {
             http_response_code(400);echo json_encode(['error'=>'잘못된 경기 조회 조건입니다.'],JSON_UNESCAPED_UNICODE);exit;
         }
-        $streakRows=null;
-        $record=$year!==null?profileRecords($pdo,$player,$schedule,$year,$season,true,$streakRows):null;
+        require_once __DIR__.'/../lib/player-chart-cache.php';
         require_once __DIR__.'/../lib/player-streaks.php';
-        echo json_encode(['years'=>$years,'year'=>$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$record['games']??[],'pitcher'=>$gamePitcher,'currentSeasonStreaks'=>$basePitcher?null:profileCurrentStreaks($pdo,(string)$pid,$schedule,$streakRows)],JSON_UNESCAPED_UNICODE);exit;
+        // 올해가 들어간 조회(올해·통산)만 크롤러 revision을 따라 갱신한다. 연도 목록은 캐시하지 않고 매번 새로 읽는다.
+        $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
+        $volatile=$allYears||$year===null||(int)$year>=$currentYear;
+        $cacheKey=[(string)$pid,$type,$allYears?'all':$year,$season,$player['Pos'],(string)$player['IsKbodle'],md5(json_encode($schedule))];
+        $computed=json_decode(profileChartCachedJson('games',$cacheKey,$volatile,static function() use ($pdo,$player,$schedule,$allYears,$year,$season,$seasonYears,$gamePitcher,$basePitcher,$pid) {
+            $streakRows=null;
+            if($allYears) {
+                $record=['games'=>[]];
+                foreach($seasonYears as $seasonYear) {
+                    $yearRecord=profileRecords($pdo,$player,$schedule,$seasonYear,$season,true,$streakRows);
+                    foreach($yearRecord['games']??[] as $yearGame)$record['games'][]=$yearGame;
+                }
+            } else $record=$year!==null?profileRecords($pdo,$player,$schedule,$year,$season,true,$streakRows):null;
+            // 투수 FIP 계산용 리그 상수(스플릿 기록의 FIP). 연도별로 달라 연도→상수 표로도 돌려준다. 계산할 수 없으면 null.
+            $fipConstant=null;$fipConstants=[];
+            if($gamePitcher&&($year!==null||$allYears)) {
+                try {
+                    $contexts=profileLeaguePitchingContexts($pdo,$schedule,$season==='futures'?2:1);
+                    foreach($allYears?$seasonYears:[$year] as $constantYear)$fipConstants[$constantYear]=$contexts[$constantYear]['fipConstant']??null;
+                    if($year!==null)$fipConstant=$fipConstants[$year]??null;
+                } catch (Throwable $contextError) { error_log('FIP constant unavailable: '.$contextError->getMessage()); }
+            }
+            return ['fipConstant'=>$fipConstant,'fipConstants'=>(object)$fipConstants,'games'=>$record['games']??[],'currentSeasonStreaks'=>($basePitcher||$allYears)?null:profileCurrentStreaks($pdo,(string)$pid,$schedule,$streakRows)];
+        }),true);
+        echo json_encode(['fipConstant'=>$computed['fipConstant']??null,'fipConstants'=>(object)($computed['fipConstants']??[]),'years'=>$years,'year'=>$allYears?'all':$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$computed['games']??[],'pitcher'=>$gamePitcher,'currentSeasonStreaks'=>$computed['currentSeasonStreaks']??null],JSON_UNESCAPED_UNICODE);exit;
+    }
+    if($part==='innings') {
+        // 타자 이닝별 성적: 타석 기록(kbo_season_records.inning)을 이닝별로 묶어 돌려준다. 10회 이후는 연장으로 합친다.
+        $schedule=profileSchedule();
+        $allYears=($_GET['year']??null)==='all';
+        $year=$allYears?'all':filter_var($_GET['year']??null,FILTER_VALIDATE_INT);
+        $season=$_GET['season']??'regular';
+        if(!in_array($season,['regular','preseason','postseason','futures'],true)||$year===false||$year===null||(!$allYears&&($year<1982||$year>2100))) {
+            http_response_code(400);echo json_encode(['error'=>'잘못된 조회 조건입니다.'],JSON_UNESCAPED_UNICODE);exit;
+        }
+        // 통산이면 시즌 종류의 연도별 기간을 OR로 묶는다(퓨처스는 날짜 제한 없이 전체).
+        $ranges=[];
+        if($allYears) {
+            if($season!=='futures')foreach($schedule as $scheduleYear=>$seasons){[$rangeStart,$rangeEnd]=$seasons[$season]??['',''];if($rangeStart&&$rangeEnd)$ranges[]=[$rangeStart,$rangeEnd];}
+            $rangeSql=$season==='futures'?'':' AND ('.implode(' OR ',array_fill(0,max(count($ranges),1),'game_date BETWEEN ? AND ?')).')';
+            if($season!=='futures'&&!$ranges){echo json_encode(['year'=>$year,'season'=>$season,'rows'=>[]],JSON_UNESCAPED_UNICODE);exit;}
+        } else {
+            [$start,$end]=$season==='futures'?[$year.'-01-01',$year.'-12-31']:($schedule[$year][$season]??['','']);
+            if(!$start||!$end){echo json_encode(['year'=>$year,'season'=>$season,'rows'=>[]],JSON_UNESCAPED_UNICODE);exit;}
+            $ranges[]=[$start,$end];
+            $rangeSql=' AND game_date BETWEEN ? AND ?';
+        }
+        $leagueLevel=$season==='futures'?2:1;
+        require_once __DIR__.'/../lib/player-chart-cache.php';
+        $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
+        $volatile=$allYears||(int)$year>=$currentYear;
+        echo profileChartCachedJson('innings',[(string)$pid,$allYears?'all':(int)$year,$season,md5(json_encode($schedule))],$volatile,static function() use ($pdo,$pid,$year,$season,$leagueLevel,$rangeSql,$ranges,$allYears) {
+            $q=$pdo->prepare('SELECT inning,pa_result FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND player_id=?'.$rangeSql.' AND inning>0'.profileNotTiebreakerSql());
+            $q->execute([$pid,...($allYears&&$season==='futures'?[]:array_merge(...$ranges))]);
+            $rows=[];
+            while($row=$q->fetch(PDO::FETCH_ASSOC)) {
+                $event=profileBatEvent($row);
+                if(!$event['pa'])continue;
+                $key=min((int)$row['inning'],10);
+                $rows[$key]??=['inning'=>$key,'pa'=>0,'ab'=>0,'h'=>0,'tb'=>0,'bb'=>0,'hbp'=>0,'sf'=>0,'doubles'=>0,'triples'=>0,'hr'=>0,'so'=>0,'rbi'=>0];
+                $rows[$key]['pa']++;
+                foreach(['ab','h','tb','bb','hbp','sf','doubles','triples','hr','so','rbi'] as $stat)$rows[$key][$stat]+=(int)$event[$stat];
+            }
+            ksort($rows);
+            return ['year'=>$year,'season'=>$season,'rows'=>array_values($rows)];
+        });
+        exit;
     }
     if($part==='ranks') {
         require_once __DIR__.'/../lib/player-rankings.php';

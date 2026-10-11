@@ -120,3 +120,40 @@
 svg.compare-photo-empty { background: linear-gradient(160deg, #f6f8fb, #e8edf3); }
 .compare-photo-empty .is-body { fill: #b9c3d0; }
 .compare-photo-empty .is-cap { fill: #8f9bab; }
+
+/* 표 축소 */
+.profile-compare-table th, .profile-compare-table td { padding: 6px 6px; }
+.profile-compare-table thead th { padding: 0 4px 9px; }
+.profile-compare-table tr > :first-child { font-size: 12px; }
+.profile-compare-table tbody td { font-size: 13px; }
+.profile-compare-table .compare-group th { padding: 13px 2px 6px; font-size: 13px; }
+.compare-head { gap: 3px; padding: 11px 6px 8px; border-radius: 14px; }
+.compare-head-photo { width: 42px; height: 42px; }
+.compare-head-photo > img:first-child, .compare-head-photo > .compare-photo-empty { border-radius: 12px; }
+.compare-head-logo { width: 20px; height: 20px; right: -7px; bottom: -5px; }
+.compare-head strong { font-size: 13.5px; }
+.compare-head small { min-height: 13px; font-size: 11px; }
+.compare-head select { max-width: 96px; padding: 4px 20px 4px 8px; font-size: 12px; }
+.compare-head-tag { padding: 3px 10px; font-size: 11.5px; }
+.profile-compare-table { min-width: calc(64px + var(--compare-cols, 1) * 108px); width: min(100%, calc(64px + var(--compare-cols, 1) * 140px)); }
+.profile-compare-table col.compare-col-label { width: 64px; }
+@media (max-width: 600px) {
+    .profile-compare-table th, .profile-compare-table td { padding: 5px 3px; }
+    .profile-compare-table tr > :first-child { font-size: 11px; }
+    .profile-compare-table tbody td { font-size: 12px; }
+    .compare-head { padding: 10px 4px 7px; }
+    .compare-head-photo { width: 38px; height: 38px; }
+    .compare-head strong { font-size: 12.5px; }
+    .compare-head select { font-size: 11.5px; }
+    .profile-compare-table { min-width: calc(56px + var(--compare-cols, 1) * 92px); width: min(100%, calc(56px + var(--compare-cols, 1) * 120px)); }
+    .profile-compare-table col.compare-col-label { width: 56px; }
+}
+
+/* 이미지 저장 */
+.profile-compare-actions { align-items: center; gap: 8px; }
+.profile-compare .compare-save { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border: 1px solid #e3e9f2; border-radius: 999px; background: #fff; color: #4c6b93; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer; transition: background .15s, border-color .15s; }
+.profile-compare .compare-save svg { width: 16px; height: 16px; }
+.profile-compare .compare-save:hover:not(:disabled) { border-color: #c6d3e4; background: #f5f8fc; }
+.profile-compare .compare-save:disabled { color: #8a97a8; cursor: default; }
+.compare-save-error { margin-right: auto; color: #c0392b; font-size: 12.5px; font-weight: 600; }
+@media (max-width: 600px) { .profile-compare .compare-save { padding: 6px 11px; font-size: 12.5px; } }

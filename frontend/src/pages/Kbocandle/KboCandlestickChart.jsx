@@ -295,7 +295,6 @@ export default function KboCandlestickChart({ kboData, dark, setDark, profile = 
         {latest && <div className="candle-detail">
             <div className="candle-detail-heading"><strong>{active?.time || "경기 기록"}{timeframe === "weekly" ? " 주" : timeframe === "monthly" ? " 월" : ""}</strong></div>
             <div className="candle-values">{(plus ? [["OPS+", active?.ops_plus], ["실질OPS+", active?.eff_ops_plus]] : [["시작", active?.open], ["최고", active?.high], ["최저", active?.low], ["마지막", active?.close]]).map(([label, value]) => <div key={label}><span>{label}</span><strong className={label === "최고" ? "up" : label === "최저" ? "down" : ""}>{format(value)}</strong>{!plus && valueChange(value) && <small className={`candle-daily-change ${value > previousClose ? "up" : value < previousClose ? "down" : ""}`}>({valueChange(value)})</small>}</div>)}</div>
-            {!plus && <div className="candle-moving-summary" aria-label="이동평균값"><span>7경기 평균 <em className="gold">{format(active?.ma7)}</em></span><span>15경기 평균 <em className="mint">{format(active?.ma15)}</em></span><span>30경기 평균 <em className="purple">{format(active?.ma30)}</em></span></div>}
             {timeframe === "daily" && <div className="candle-atbats"><span>타석 결과</span><div>{active?.pa_results?.length ? active.pa_results.map((result, index) => <span className={/^(볼넷|고4|사구|1루타|2루타|3루타|홈런)/.test(result) ? "on-base" : ""} key={index}>{displayPaResult(result)}</span>) : <span>기록 없음</span>}</div></div>}
         </div>}
         {!profile && latest && <div className="candle-period-summary">
