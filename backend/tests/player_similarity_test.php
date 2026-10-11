@@ -50,7 +50,7 @@ expectSimilarity($mixed,25.0,'Hand penalty only');
 expectSimilarity(similarityScore($reliever,similarityVector($pitcher($reliefStats+['winPct'=>'0.400'],1800),true,'우언'),true),1000.0,'Reliever winning percentage is skipped');
 expectSimilarity(similarityScore($starter,similarityVector($pitcher($reliefStats+['winPct'=>'0.400'],1800),true,'우투'),true)===similarityScore($starter,similarityVector($pitcher($reliefStats,1800),true,'우투'),true),true,'Starter and reliever skip winning percentage');
 expectSimilarity(similarityScore($starter,similarityVector($pitcher([]),true,'좌투'),true)-similarityScore($starter,similarityVector($pitcher($reliefStats,1800),true,'좌투'),true)<0,false,'Starter is closer to a starter');
-// 선발 등판 수를 모르면(2000년 이전) 등판당 이닝만으로 구원을 가르고, 선발 등판은 비교하지 않는다.
+// 선발 등판 수를 모르면 등판당 이닝만으로 구원을 가르고, 선발 등판은 비교하지 않는다.
 $unknown=similarityVector($pitcher(['starts'=>null,'games'=>500],1800),true,'우투');
 expectSimilarity($unknown['reliever'],true,'Unknown starts use innings per game');
 expectSimilarity(similarityScore($reliever,$unknown,true),1000.0,'Unknown starts are skipped');
