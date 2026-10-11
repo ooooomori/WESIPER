@@ -145,6 +145,10 @@
     /* 드롭다운과 입력칸은 화면을 채우지 않고 내용 길이만큼만 차지한다(PC와 같은 배치). */
     .record-room-fields { gap: 8px; }
     .record-room-range { flex: 1 1 100%; gap: 6px; max-width: 100%; }
+    /* 상대 선수 입력은 한 줄을 차지해야 목록이 화면 밖으로 나가지 않는다. */
+    .record-room-opponent { flex: 1 1 100%; }
+    .record-room-opponent-list { right: 0; min-width: 0; max-width: 100%; }
+    .record-room-opponent-list button { white-space: normal; }
     /* 통산 체크박스는 줄의 오른쪽 끝에 둔다. */
     .record-room-range .record-room-toggle { margin-left: auto; }
     .record-room-toggle span { height: 36px; }

@@ -171,9 +171,8 @@ export default function Records() {
     const dateSpan = isDateSpan(draft.span);
     const select = (field, label, options, { numeric = false, all = null, disabled = false, hideLabel = false } = {}) => <label className="record-room-field">{!hideLabel && <span>{label}</span>}<select aria-label={hideLabel ? label : undefined} value={draft[field]} disabled={disabled} onChange={event => {
         const value = numeric && event.target.value !== 'custom' && event.target.value !== 'utility' ? Number(event.target.value) : event.target.value;
-        // 시작 시즌을 바꾸면 끝 시즌이 따라온다(한 시즌만 보던 중이면 그대로 한 시즌, 범위면 시작보다 앞서지 않게).
-        // 통산을 켜 두었다면 끝 시즌은 그대로 두고, 시작보다 앞서게 될 때만 맞춘다.
-        update(field === 'season' && typeof value === 'number' ? { season: value, to: draft.career ? Math.max(draft.to, value) : draft.season === draft.to ? value : Math.max(draft.to, value) } : { [field]: value });
+        // 두 시즌은 서로 앞서지 않는다: 시작이 끝보다 늦어지면 끝이, 끝이 시작보다 이르러지면 시작이 같은 값으로 따라온다.
+        update(typeof value === 'number' && ((field === 'season' && value > draft.to) || (field === 'to' && value < draft.season)) ? { season: value, to: value } : { [field]: value });
     }}>{all !== null && <option value="">{all}</option>}{options.map(([value, text]) => <option key={value} value={value}>{text}</option>)}</select></label>;
     // 직접 입력: 이닝이면 6.1·6.2처럼 소수점 아래 0·1·2만, 타석·경기 수면 숫자만 들어간다. 단위를 바꾸면 맞지 않는 값은 비운다.
     const minInnings = customMinInnings(type, draft);
@@ -225,7 +224,7 @@ export default function Records() {
                         {select('season', '시즌', yearOptions, { numeric: true, disabled: dateSpan })}
                         <span className="record-room-tilde" aria-hidden="true">~</span>
                         {select('to', '끝 시즌', years.map(year => [year, year]), { numeric: true, disabled: dateSpan, hideLabel: true })}
-                        <label className="record-room-chip record-room-toggle"><input type="checkbox" checked={draft.career} onChange={event => update({ career: event.target.checked })} /><span>통산</span></label>
+                        <label className="record-room-chip record-room-toggle"><input type="checkbox" checked={draft.career} onChange={event => update(event.target.checked && years.length ? { career: true, season: Math.min(...years), to: Math.max(...years) } : { career: event.target.checked })} /><span>통산</span></label>
                     </div>
                     {gameLog && <span className="record-room-break" aria-hidden="true" />}
                     {gameLog && select('span', '기간', regularSeason ? spanOptions : spanOptions.filter(([value]) => !seasonParts.includes(value)))}
