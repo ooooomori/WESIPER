@@ -11,7 +11,7 @@ function SimilarPhoto({ player }) {
     return <img src={`/assets/images/player/kbo/${encodeURIComponent(player.PlayerId)}.${step === 0 ? 'jpg' : 'png'}`} alt="" loading="lazy" onError={() => setStep(value => value + 1)} />;
 }
 
-// 유사 선수: 통산 기록의 유사도 점수가 높은 순.
+// 비슷한 선수: 통산 기록의 유사도 점수가 높은 순. 사진과 이름만 그 선수 페이지로 이어진다.
 export default function SimilarPlayers({ pid }) {
     const url = `/api/playerProfile.php?pid=${encodeURIComponent(pid)}&part=similar`;
     const [players, setPlayers] = useState(() => getCachedProfileData(url)?.similar?.players || []);
@@ -23,13 +23,15 @@ export default function SimilarPlayers({ pid }) {
         return () => { active = false; };
     }, [url]);
     if (!players.length) return null;
-    return <section><div className="profile-heading"><h2>유사 선수</h2></div>
-        <ol className="profile-similar">{players.map((player, index) => <li key={player.PlayerId}><Link className="profile-alumni-row profile-similar-row" to={`/?pid=${encodeURIComponent(player.PlayerId)}`} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
+    const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    return <section><div className="profile-heading"><h2>비슷한 선수</h2></div>
+        <ol className="profile-similar">{players.map((player, index) => { const to = `/?pid=${encodeURIComponent(player.PlayerId)}`; return <li key={player.PlayerId} className="profile-similar-row">
             <span className="profile-similar-rank">{index + 1}</span>
-            <span className="profile-similar-photo"><SimilarPhoto player={player} /></span>
-            <span className="profile-alumni-name"><strong>{player.Name}</strong></span>
-            <span className="profile-alumni-meta">{player.Team ? (player.IsActive ? player.Team : `前 ${player.Team}`) : ''}</span>
+            <Link className="profile-similar-photo" to={to} onClick={toTop} tabIndex={-1} aria-hidden="true"><SimilarPhoto player={player} /></Link>
+            <Link className="profile-similar-name" to={to} onClick={toTop}>{player.Name}</Link>
+            <span className="profile-similar-team">{player.Team ? (player.IsActive ? player.Team : `前 ${player.Team}`) : ''}</span>
             <span className="profile-similar-score">{Number(player.Score).toFixed(1)}</span>
-        </Link></li>)}</ol>
+        </li>; })}</ol>
+        <p className="profile-similar-caption">클래식 기록을 기반으로 성적이 유사한 선수 상위 10명을 나타냅니다.<br />1000점 만점으로, <a href="https://www.baseball-reference.com/about/similarity.shtml" target="_blank" rel="noopener noreferrer">베이스볼 레퍼런스</a>의 공식을 변형해 적용했습니다.</p>
     </section>;
 }
