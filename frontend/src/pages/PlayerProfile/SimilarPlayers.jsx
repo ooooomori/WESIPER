@@ -32,6 +32,6 @@ export default function SimilarPlayers({ pid }) {
             <span className="profile-similar-team">{player.Team ? (player.IsActive ? player.Team : `前 ${player.Team}`) : ''}</span>
             <span className="profile-similar-score">{Number(player.Score).toFixed(1)}</span>
         </li>; })}</ol>
-        <p className="profile-similar-caption">클래식 기록을 기반으로 성적이 유사한 선수 상위 10명을 나타냅니다.<br />1000점 만점으로, <a href="https://www.baseball-reference.com/about/similarity.shtml" target="_blank" rel="noopener noreferrer">베이스볼 레퍼런스</a>의 공식을 변형해 적용했습니다.</p>
+        <p className="profile-similar-caption">클래식 기록을 기반으로 성적의 유사도를 1000점 만점으로 나타낸 점수입니다. <a href="https://www.baseball-reference.com/about/similarity.shtml" target="_blank" rel="noopener noreferrer">BASEBALL REFERENCE의 공식</a>을 변형해 적용했습니다.</p>
     </section>;
 }
