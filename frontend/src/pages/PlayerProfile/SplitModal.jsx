@@ -2,10 +2,14 @@ import useSheetDrag from './useSheetDrag';
 
 const seasonLabels = { regular: '정규시즌', preseason: '시범경기', postseason: '포스트시즌', futures: '퓨처스리그' };
 const rate = value => value == null ? '—' : value.toFixed(3).replace(/^0\./, '.');
-const splitNames = { month: '월별', opponent: '상대별', inning: '이닝별', venue: '홈/원정' };
 
-function batterCards(row) {
+// faced: 투수가 상대한 타석(상대 타순별)이라 피안타 기준으로 적는다.
+function batterCards(row, faced) {
     const t = row.totals || {};
+    if (faced) return {
+        rates: [['피안타율', rate(row.avg)], ['피출루율', rate(row.obp)], ['피장타율', rate(row.slg)], ['피OPS', rate(row.ops)]],
+        counts: [['타수', t.ab], ['피안타', t.h], ['2루타', t.doubles], ['3루타', t.triples], ['피홈런', t.hr], ['볼넷', t.bb], ['사구', t.hbp], ['삼진', t.so]],
+    };
     return {
         rates: [['타율', rate(row.avg)], ['출루율', rate(row.obp)], ['장타율', rate(row.slg)], ['OPS', rate(row.ops)]],
         counts: [['타수', t.ab], ['안타', t.h], ['2루타', t.doubles], ['3루타', t.triples], ['홈런', t.hr], ['타점', t.rbi], ['득점', t.r], ['볼넷', (t.bb ?? 0) + (t.hbp ?? 0)], ['삼진', t.so], ['도루', t.sb], ['도루자', t.cs]],
@@ -47,12 +51,14 @@ const badgeTone = value => value === '패전' ? 'loss' : value === '홀드' ? 'h
 
 export default function SplitModal({ row, split, pitcher, year, season, fipConstants, onClose }) {
     const { dialog, expanded, close, justDragged, handlers } = useSheetDrag();
-    const { rates, counts } = pitcher ? pitcherCards(row, fipConstants) : batterCards(row);
+    // 이닝·타순별은 투수여도 타석 기록이라 타격 지표로 보여준다.
+    const pitching = pitcher && !['inning', 'order', 'oppOrder'].includes(split);
+    const { rates, counts } = pitching ? pitcherCards(row, fipConstants) : batterCards(row, split === 'oppOrder');
     const games = row.list || [];
     const totals = row.totals || {};
-    const summary = pitcher ? `${totals.games ?? row.games}경기 · ${totals.innings ?? '0'}이닝`
+    const summary = pitching ? `${totals.games ?? row.games}경기 · ${totals.innings ?? '0'}이닝`
         : totals.games != null ? `${totals.games}경기 · ${totals.pa ?? 0}타석` : `${totals.pa ?? row.games}타석`;
-    const titleLabel = split === 'opponent' ? `vs ${row.label}` : split === 'inning' ? `${row.label} 타석` : row.label;
+    const titleLabel = split === 'opponent' ? `vs ${row.label}` : split === 'inning' ? `${row.label} 타석` : split === 'order' ? `${row.label} 타순` : split === 'oppOrder' ? `상대 ${row.label} 타순` : row.label;
     return <dialog ref={dialog} className={`profile-career-modal profile-split-modal${expanded ? ' is-expanded' : ''}`} aria-labelledby="profile-split-title" onClose={onClose}
         onClick={event => { if (event.target !== event.currentTarget || justDragged.current) return; const box = event.currentTarget.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) close(); }}>
         <header className="profile-career-modal-head profile-split-modal-head" {...handlers}>
@@ -64,7 +70,7 @@ export default function SplitModal({ row, split, pitcher, year, season, fipConst
             <div className="profile-split-modal-rates">{rates.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value ?? '—'}</strong></div>)}</div>
         </header>
         <div className="profile-split-modal-body">
-            <dl className={`profile-split-modal-counts${pitcher ? ' is-three' : ''}`}>{counts.filter(([, value]) => value != null).map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</dl>
+            <dl className={`profile-split-modal-counts${pitching ? ' is-three' : ''}`}>{counts.filter(([, value]) => value != null).map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</dl>
             {games.length > 0 && <>
                 <h3>경기별 기록</h3>
                 <ul className="profile-split-modal-games">{[...games].sort((a, b) => String(a.date).localeCompare(String(b.date))).map(game => <li key={game.gameId || game.date}>

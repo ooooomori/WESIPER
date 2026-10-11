@@ -120,6 +120,10 @@ try {
     $stmt->execute(['pid'=>$pid]);
     $career=$stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    if($part==='similar') {
+        require_once __DIR__.'/../lib/player-similarity.php';
+        echo json_encode(['similar'=>similarPlayers($pdo,(int)$pid,str_contains((string)$player['Pos'],'투수'),profileSchedule())],JSON_UNESCAPED_UNICODE);exit;
+    }
     if($part==='year-records') {
         $type=$_GET['type']??(str_contains((string)$player['Pos'],'투수')?'pitcher':'batter');
         if(!in_array($type,['pitcher','batter','all'],true)){http_response_code(400);echo json_encode(['error'=>'잘못된 기록 종류입니다.'],JSON_UNESCAPED_UNICODE);exit;}
@@ -192,11 +196,20 @@ try {
             }
             return ['fipConstant'=>$fipConstant,'fipConstants'=>(object)$fipConstants,'games'=>$record['games']??[],'currentSeasonStreaks'=>($basePitcher||$allYears)?null:profileCurrentStreaks($pdo,(string)$pid,$schedule,$streakRows)];
         }),true);
-        echo json_encode(['fipConstant'=>$computed['fipConstant']??null,'fipConstants'=>(object)($computed['fipConstants']??[]),'years'=>$years,'year'=>$allYears?'all':$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$computed['games']??[],'pitcher'=>$gamePitcher,'currentSeasonStreaks'=>$computed['currentSeasonStreaks']??null],JSON_UNESCAPED_UNICODE);exit;
+        // 전반기·후반기 스플릿용 후반기 시작일(정규시즌만).
+        $halfStarts=[];
+        if($season==='regular') {
+            try { $halfStarts=profileHalfStarts($pdo,$schedule,$allYears?$seasonYears:($year!==null?[$year]:[])); }
+            catch (Throwable $halfError) { error_log('Half-season boundaries unavailable: '.$halfError->getMessage()); }
+        }
+        echo json_encode(['fipConstant'=>$computed['fipConstant']??null,'fipConstants'=>(object)($computed['fipConstants']??[]),'halfStarts'=>(object)$halfStarts,'years'=>$years,'year'=>$allYears?'all':$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$computed['games']??[],'pitcher'=>$gamePitcher,'currentSeasonStreaks'=>$computed['currentSeasonStreaks']??null],JSON_UNESCAPED_UNICODE);exit;
     }
     if($part==='innings') {
-        // 타자 이닝별 성적: 타석 기록(kbo_season_records.inning)을 이닝별로 묶어 돌려준다. 10회 이후는 연장으로 합친다.
+        // 타석 단위 스플릿: 타석 기록(kbo_season_records)을 이닝별(by=inning, 10회 이후는 연장으로 합침) 또는 타순별(by=order)로 묶어 돌려준다.
+        // side=pitcher면 이 선수가 투수로 상대한 타석을 묶는다(상대 타순별).
         $schedule=profileSchedule();
+        $by=$_GET['by']??'inning';$side=$_GET['side']??'batter';
+        if(!in_array($by,['inning','order'],true)||!in_array($side,['batter','pitcher'],true)){http_response_code(400);echo json_encode(['error'=>'잘못된 조회 조건입니다.'],JSON_UNESCAPED_UNICODE);exit;}
         $allYears=($_GET['year']??null)==='all';
         $year=$allYears?'all':filter_var($_GET['year']??null,FILTER_VALIDATE_INT);
         $season=$_GET['season']??'regular';
@@ -219,17 +232,29 @@ try {
         require_once __DIR__.'/../lib/player-chart-cache.php';
         $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
         $volatile=$allYears||(int)$year>=$currentYear;
-        echo profileChartCachedJson('innings',[(string)$pid,$allYears?'all':(int)$year,$season,md5(json_encode($schedule))],$volatile,static function() use ($pdo,$pid,$year,$season,$leagueLevel,$rangeSql,$ranges,$allYears) {
-            $q=$pdo->prepare('SELECT inning,pa_result FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND player_id=?'.$rangeSql.' AND inning>0'.profileNotTiebreakerSql());
-            $q->execute([$pid,...($allYears&&$season==='futures'?[]:array_merge(...$ranges))]);
+        echo profileChartCachedJson('innings',[(string)$pid,$allYears?'all':(int)$year,$season,md5(json_encode($schedule)),$by,$side,'v2'],$volatile,static function() use ($pdo,$pid,$year,$season,$leagueLevel,$rangeSql,$ranges,$allYears,$by,$side) {
+            $params=[$pid,...($allYears&&$season==='futures'?[]:array_merge(...$ranges))];
+            $where='league_level='.$leagueLevel.' AND player_id=?'.$rangeSql;
+            if($side==='pitcher') {
+                // pitcher_id와 날짜만으로는 느려서, 투수 기록에서 등판 경기를 먼저 찾아 그 경기의 타석만 읽는다.
+                $games=$pdo->prepare('SELECT DISTINCT game_id FROM kbo_season_pitch_records WHERE '.$where);
+                $games->execute($params);
+                $gameIds=$games->fetchAll(PDO::FETCH_COLUMN);
+                if(!$gameIds)return ['year'=>$year,'season'=>$season,'rows'=>[]];
+                $where='league_level='.$leagueLevel.' AND pitcher_id=? AND game_id IN ('.implode(',',array_fill(0,count($gameIds),'?')).')';
+                $params=[$pid,...$gameIds];
+            }
+            // 타점(rbi)은 타석이 아니라 경기 단위로 적혀 있어 타석 스플릿에는 쓰지 않는다.
+            $q=$pdo->prepare('SELECT '.($by==='order'?'`order`':'inning').' AS split_key,pa_result FROM kbo_season_records WHERE '.$where.($by==='order'?' AND `order` BETWEEN 1 AND 9':' AND inning>0').profileNotTiebreakerSql());
+            $q->execute($params);
             $rows=[];
             while($row=$q->fetch(PDO::FETCH_ASSOC)) {
                 $event=profileBatEvent($row);
                 if(!$event['pa'])continue;
-                $key=min((int)$row['inning'],10);
-                $rows[$key]??=['inning'=>$key,'pa'=>0,'ab'=>0,'h'=>0,'tb'=>0,'bb'=>0,'hbp'=>0,'sf'=>0,'doubles'=>0,'triples'=>0,'hr'=>0,'so'=>0,'rbi'=>0];
+                $key=$by==='order'?(int)$row['split_key']:min((int)$row['split_key'],10);
+                $rows[$key]??=['key'=>$key,'pa'=>0,'ab'=>0,'h'=>0,'tb'=>0,'bb'=>0,'hbp'=>0,'sf'=>0,'doubles'=>0,'triples'=>0,'hr'=>0,'so'=>0];
                 $rows[$key]['pa']++;
-                foreach(['ab','h','tb','bb','hbp','sf','doubles','triples','hr','so','rbi'] as $stat)$rows[$key][$stat]+=(int)$event[$stat];
+                foreach(['ab','h','tb','bb','hbp','sf','doubles','triples','hr','so'] as $stat)$rows[$key][$stat]+=(int)$event[$stat];
             }
             ksort($rows);
             return ['year'=>$year,'season'=>$season,'rows'=>array_values($rows)];

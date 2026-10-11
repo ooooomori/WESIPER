@@ -13,7 +13,7 @@ export function summarizeBatter(games) {
     const plate = sum.ab + sum.bb + sum.hbp + sum.sf;
     const obp = plate ? (sum.h + sum.bb + sum.hbp) / plate : null;
     const slg = sum.ab ? sum.tb / sum.ab : null;
-    return { avg: sum.ab ? sum.h / sum.ab : null, obp, slg, ops: obp !== null && slg !== null ? obp + slg : null, played: plate > 0, totals: { games: games.length, ...sum } };
+    return { avg: sum.ab ? sum.h / sum.ab : null, obp, slg, ops: obp !== null && slg !== null ? obp + slg : null, played: plate > 0, sample: plate, totals: { games: games.length, ...sum } };
 }
 
 export function summarizePitcher(games) {
@@ -26,7 +26,7 @@ export function summarizePitcher(games) {
     // QS: 선발로 6이닝 이상 던지고 3자책 이하.
     const qs = games.filter(game => game.isStarter === true && game.er != null && outsOf(game.innings) >= 18 && num(game.er) <= 3).length;
     const innings = `${Math.floor(sum.outs / 3)}${sum.outs % 3 ? `.${sum.outs % 3}` : ''}`;
-    return { era: sum.outs ? sum.er * 27 / sum.outs : null, whip: sum.outs ? (sum.h + sum.bb) * 3 / sum.outs : null, played: sum.outs > 0, totals: { games: games.length, ...sum, innings, wins: count('승리'), losses: count('패전'), holds: count('홀드'), saves: count('세이브'), qs } };
+    return { era: sum.outs ? sum.er * 27 / sum.outs : null, whip: sum.outs ? (sum.h + sum.bb) * 3 / sum.outs : null, played: sum.outs > 0, sample: sum.outs, totals: { games: games.length, ...sum, innings, wins: count('승리'), losses: count('패전'), holds: count('홀드'), saves: count('세이브'), qs } };
 }
 
 // 3월은 개막 직후 경기가 적어 4월과 합쳐 보여준다.
@@ -37,35 +37,42 @@ const groups = [
     ['venue', '홈/원정', game => game.isAway === true ? 'away' : game.isAway === false ? 'home' : '', key => key === 'home' ? '홈' : '원정', (a, b) => (a.key === 'home' ? 0 : 1) - (b.key === 'home' ? 0 : 1)],
 ];
 
-// 경기 일지를 월별·상대별·홈/원정별로 묶어 지표를 계산한다.
-export function buildSplits(games, pitcher) {
+// 경기 일지를 월별·상대별·홈/원정별로 묶어 지표를 계산한다. 월별 끝에는 전반기·후반기를 덧붙인다(halfStarts: 연도 → 후반기 시작일).
+export function buildSplits(games, pitcher, halfStarts = {}) {
     const summarize = pitcher ? summarizePitcher : summarizeBatter;
     const played = (games || []).filter(game => game.date);
+    const bucket = (keyOf, labelOf) => {
+        const buckets = new Map();
+        for (const game of played) {
+            const key = keyOf(game);
+            if (!key) continue;
+            if (!buckets.has(key)) buckets.set(key, []);
+            buckets.get(key).push(game);
+        }
+        return [...buckets].map(([key, list]) => ({ key, label: labelOf(key), games: list.length, list, ...summarize(list) })).filter(row => row.played);
+    };
+    const halfOf = game => { const start = halfStarts[String(game.date).slice(0, 4)]; return !start ? '' : game.date < start ? 'first' : 'second'; };
+    const halves = bucket(halfOf, key => key === 'first' ? '전반기' : '후반기').sort((a, b) => (a.key === 'first' ? 0 : 1) - (b.key === 'first' ? 0 : 1)).map(row => ({ ...row, section: 'half' }));
+    const total = summarize(played);
     return {
-        total: summarize(played),
-        groups: groups.map(([id, title, keyOf, labelOf, order]) => {
-            const buckets = new Map();
-            for (const game of played) {
-                const key = keyOf(game);
-                if (!key) continue;
-                if (!buckets.has(key)) buckets.set(key, []);
-                buckets.get(key).push(game);
-            }
-            const rows = [...buckets].map(([key, list]) => ({ key, label: labelOf(key), games: list.length, list, ...summarize(list) }))
-                .filter(row => row.played).sort(order);
-            return { id, title, rows };
-        }),
+        total,
+        groups: groups.map(([id, title, keyOf, labelOf, order]) => ({ id, title, total, rows: [...bucket(keyOf, labelOf).sort(order), ...(id === 'month' ? halves : [])] })),
     };
 }
 
-// 서버가 이닝별로 합쳐 보낸 타석 기록(ab·h·tb·bb·hbp·sf)에서 타율과 OPS를 계산한다. 10은 연장.
-export function buildInningRows(rows) {
-    return (rows || []).map(row => {
-        const ab = num(row.ab), h = num(row.h), bb = num(row.bb), hbp = num(row.hbp), sf = num(row.sf);
-        const plate = ab + bb + hbp + sf;
-        const obp = plate ? (h + bb + hbp) / plate : null;
-        const slg = ab ? num(row.tb) / ab : null;
-        const totals = { pa: num(row.pa), ab, h, doubles: num(row.doubles), triples: num(row.triples), hr: num(row.hr), rbi: num(row.rbi), bb, hbp, so: num(row.so) };
-        return { key: String(row.inning), label: Number(row.inning) >= 10 ? '연장' : `${row.inning}회`, games: num(row.pa), unit: '타석', avg: ab ? h / ab : null, obp, slg, ops: obp !== null && slg !== null ? obp + slg : null, played: plate > 0, totals };
+const paKeys = ['pa', 'ab', 'h', 'tb', 'doubles', 'triples', 'hr', 'bb', 'hbp', 'sf', 'so'];
+const paRates = t => {
+    const plate = t.ab + t.bb + t.hbp + t.sf;
+    const obp = plate ? (t.h + t.bb + t.hbp) / plate : null;
+    const slg = t.ab ? t.tb / t.ab : null;
+    return { avg: t.ab ? t.h / t.ab : null, obp, slg, ops: obp !== null && slg !== null ? obp + slg : null, played: plate > 0, sample: plate };
+};
+
+// 서버가 이닝·타순별로 합쳐 보낸 타석 기록에서 타율과 OPS를 계산한다. 기준선은 그 타석들의 합계다.
+export function buildPaRows(rows, labelOf) {
+    const list = (rows || []).map(row => {
+        const totals = Object.fromEntries(paKeys.map(key => [key, num(row[key])]));
+        return { key: String(row.key), label: labelOf(Number(row.key)), games: totals.pa, unit: '타석', ...paRates(totals), totals };
     }).filter(row => row.played);
+    return { rows: list, total: paRates(Object.fromEntries(paKeys.map(key => [key, list.reduce((sum, row) => sum + row.totals[key], 0)]))) };
 }

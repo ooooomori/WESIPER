@@ -11,10 +11,10 @@ import './profile-candle.css';
 
 const seasons = ['regular', 'preseason', 'postseason', 'futures'];
 
-export default function ProfileCandleChart({ pid, player, active = true, getTeamColor }) {
-    if ((player.Pos || '').includes('투수')) return <SplitCharts pid={pid} pitcher active={active} getTeamColor={getTeamColor} />;
+export default function ProfileCandleChart({ pid, player, active = true, getTeamLogo }) {
+    if ((player.Pos || '').includes('투수')) return <SplitCharts pid={pid} pitcher active={active} getTeamLogo={getTeamLogo} />;
     return <>
-        <SplitCharts pid={pid} pitcher={false} active={active} getTeamColor={getTeamColor} />
+        <SplitCharts pid={pid} pitcher={false} active={active} getTeamLogo={getTeamLogo} />
         <BatterCandleChart pid={pid} player={player} active={active} />
     </>;
 }

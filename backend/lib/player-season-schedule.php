@@ -33,3 +33,30 @@ function profileSchedule() {
             '2001' => ['preseason' => ['', ''], 'regular' => ['2001-04-05', '2001-10-04'], 'postseason' => ['', '']]
         ];
     }
+
+/**
+ * 연도별 정규시즌 후반기 시작일(스플릿 차트의 전반기·후반기).
+ * 기록실(recordRoomSeasons)과 같은 기준: 7월~8월 15일 사이 1군 경기가 4일 이상 비는 가장 긴 구간을 올스타 휴식기로 본다. 없으면 그 해는 뺀다.
+ */
+function profileHalfStarts(PDO $db, array $schedule, array $years): array {
+    $bounds=[];$params=[];
+    foreach($years as $year){
+        [$start,$end]=$schedule[$year]['regular']??['',''];
+        if(!$start||!$end)continue;
+        $bounds[(int)$year]=[$start,$end];array_push($params,"$year-07-01","$year-08-15");
+    }
+    if(!$bounds)return [];
+    $q=$db->prepare('SELECT DISTINCT game_date d FROM kbo_schedule WHERE league_level=1 AND ('.implode(' OR ',array_fill(0,count($bounds),'game_date BETWEEN ? AND ?')).') ORDER BY game_date');
+    $q->execute($params);
+    $dates=[];foreach($q->fetchAll(PDO::FETCH_COLUMN) as $date)$dates[(int)substr((string)$date,0,4)][]=(string)$date;
+    $halves=[];
+    foreach($bounds as $year=>[$start,$end]){
+        $gap=3;$previous=null;
+        foreach($dates[$year]??[] as $date){
+            if($date<$start||$date>$end)continue;
+            if($previous!==null){$days=(int)(new DateTimeImmutable($previous))->diff(new DateTimeImmutable($date))->days;if($days>$gap){$gap=$days;$halves[$year]=$date;}}
+            $previous=$date;
+        }
+    }
+    return $halves;
+}

@@ -58,7 +58,7 @@ WBC 조사 대상은 원래 플래그가 1이었던 159명으로 한정했습니
 - 크보들·캔들·빙고 선수 검색에 `fullname`을 추가했습니다.
 - `playerProfile.php`는 기존 필드에 `FullName`, `IsForeign`, `career` 배열을 추가했습니다. `career`에는 각 선정 이력이 별도 항목으로 반환됩니다. 운영 미리보기 프로필도 동일하게 수정했습니다.
 - 투수 기록 보완 크롤러의 이름 검색도 `fullname`을 확인합니다.
-- 기존 `kbo_playerlist_20250613` 호환 뷰는 경력 테이블에서 플래그를 계산합니다. 기존 `player_data` 호환 뷰의 이름 조회는 `oldname`과 `fullname`을 함께 확인합니다.
+- 기존 `kbo_playerlist_20250613`, `player_data` 호환 뷰는 2026-10-11에 삭제했습니다. 상세는 `player-data-migration.md`를 참고합니다.
 - `search_test.php`를 호출하는 프런트엔드 코드가 없음을 확인했습니다. 삭제 주소는 현재 Apache의 SPA 기본 경로 규칙에 따라 HTML 페이지로 응답하며 선수 검색 API로 실행되지 않습니다.
 
 ## 검증과 백업

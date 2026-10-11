@@ -7,6 +7,7 @@ import YearRecords, { allStarSide } from './YearRecords';
 import GameLogFilter from './GameLogFilter';
 import ProfileCandleChart from './ProfileCandleChart';
 import PlayerCompare from './PlayerCompare';
+import SimilarPlayers from './SimilarPlayers';
 import PlayerGroupModal, { alumniSchoolChunks, parseDraft } from './PlayerGroupModal';
 import ProfileLoading from './ProfileLoading';
 import { getCachedProfileData, loadProfileData } from './profileDataCache';
@@ -646,6 +647,7 @@ export default function PlayerProfile({ pid }) {
             {records && records.year === Number(dateValue('year')) && tab === 1 && records.rolling && <section><div className="profile-heading"><h2>최근 성적</h2>{futuresCaption && <small className="profile-season-caption">{futuresCaption}</small>}</div><RollingSummary rows={records.rolling} pitcher={records.pitcher} stats={records.stats} /><div className="profile-game-scroll" ref={rollingScrollRef}><table className="profile-season-games profile-rolling-table" style={{ '--record-table-mobile-width': `${rollingMobileWidths.reduce((sum, width) => sum + width, 0)}px` }}><colgroup>{rollingMobileWidths.map((width, index) => <col key={index} style={{ '--record-column-mobile-width': `${width}px` }} />)}</colgroup><caption className="sr-only">최근 7·15·30일 성적</caption><thead><tr>{rollingColumns.map(([label,key])=><th key={key} scope="col">{label}</th>)}</tr></thead><tbody>{records.rolling.map(row=><tr key={row.label}>{rollingColumns.map(([,key])=><td key={key}>{row[key] ?? (['sf','sh'].includes(key) ? 0 : '—')}</td>)}</tr>)}</tbody></table></div></section>}
             {tab === 1 && <YearRecords key={`year-records-${pid}`} pid={pid} position={player.Pos} teams={teams} titles={player.Titleholders} awards={player.Awards} awardImages={awardImages} getTeamLogo={movementLogo} />}
             {tab === 1 && <TitleholderRecords rows={player.Titleholders} />}
+            {tab === 1 && <SimilarPlayers key={`similar-${pid}`} pid={pid} />}
             {records && tab === 0 && <section style={retiredTheme ? { '--team-primary': '#002561', '--team-secondary': '#286fcc' } : undefined}><div className="profile-heading"><h2>{records.career ? '통산 주요 기록' : `${records.year} 시즌 주요 기록`}</h2>{futuresCaption && <small className="profile-season-caption">{records.career ? '퓨처스리그' : futuresCaption}</small>}</div><div className={`profile-stats ${`profile-stats-ranked${tab === 0 ? ' profile-stats-overview' : ''}`}`}>{records.stats.map(([label, value]) => {
                 const rank = value != null && Number(value) !== 0 ? ranks[label] : null;
                 return <div key={label} className={rank >= 1 && rank <= 5 ? 'profile-stat-top-five' : undefined}>{tab === 0 ? <><div className="profile-stat-header"><span>{label}</span>{rank != null && <small className={`profile-stat-rank ${rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : rank <= 5 ? 'is-top' : ''}${rank >= 100 ? ' is-long' : ''}`}>{rank}위</small>}</div><strong style={{ '--value-chars': String(value ?? '—').length }}>{value ?? '—'}</strong></> : <><span>{label}</span><strong>{value ?? '—'}</strong>{<small>{rank != null ? `${rank}위` : ''}</small>}</>}</div>;
@@ -677,7 +679,7 @@ export default function PlayerProfile({ pid }) {
                 const fill = [narrow.length % 2 ? 'fill-m' : '', narrow.length % 3 === 1 ? 'fill-d3' : narrow.length % 3 === 2 ? 'fill-d2' : ''].filter(Boolean).join(' ');
                 return [...narrow.map(([label, value], index) => <div key={label} className={index === narrow.length - 1 && fill ? fill : undefined}><dt>{label}</dt><dd>{value}</dd></div>), ...wide.map(([label, value]) => <div key={label} className="is-wide"><dt>{label}</dt><dd>{value}</dd></div>)];
             })()}</dl></section>}
-            {(chartVisited || tab === 3) && <ProfileCandleChart key={`candle-chart-${pid}`} pid={pid} player={player} active={tab === 3} getTeamColor={compareTeamColor} />}
+            {(chartVisited || tab === 3) && <ProfileCandleChart key={`candle-chart-${pid}`} pid={pid} player={player} active={tab === 3} getTeamLogo={movementLogo} />}
             {tab === 4 && <PlayerCompare key={`compare-${pid}`} pid={pid} player={player} getTeamLogo={movementLogo} getTeamColor={compareTeamColor} />}
         </div>
         {playerGroup && <PlayerGroupModal key={`${playerGroup.type}-${playerGroup.value}`} group={playerGroup} currentPid={pid} getLogo={movementLogo} onClose={() => setPlayerGroup(null)} />}

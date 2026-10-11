@@ -182,37 +182,49 @@
 .modal.candle-settings-modal.is-profile .candle-chart-style-options button:focus-visible, .modal.candle-settings-modal.is-profile .candle-palette-option:focus-within { outline: 2px solid var(--settings-accent); outline-offset: 2px; }
 .modal.candle-settings-modal.is-profile .candle-palette-preview { transform: scale(.85); }
 
-/* 시즌 스플릿 차트 */
+/* 시즌 스플릿 차트: 막대는 값 그대로이고 세로 점선이 시즌 기록이다. 그보다 좋으면 빨강, 나쁘면 파랑이고 멀수록 진하다 */
 .profile-split-section { margin-bottom: 36px; }
-.profile-split-card { padding: 0; border: 0; border-radius: 0; background: transparent; }
-.profile-split-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; margin-bottom: 10px; }
+.profile-split-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 14px; margin-bottom: 12px; }
 .profile-split-tabs { display: inline-flex; gap: 2px; padding: 3px; border-radius: 10px; background: #f2f5f9; }
-.profile-split-tabs button { min-width: 56px; padding: 6px 12px; border: 0; border-radius: 8px; background: transparent; color: #7a8798; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s, color .2s; }
+.profile-split-tabs button { min-width: 56px; padding: 6px 12px; border: 0; border-radius: 8px; background: transparent; color: #7a8798; font: inherit; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer; transition: background .2s, color .2s; }
 .profile-split-tabs button[aria-pressed="true"] { background: #fff; color: var(--team-primary, #0b5fc7); font-weight: 800; box-shadow: 0 2px 6px #1027460f; }
 .profile-split-tabs button:focus-visible { outline: 2px solid var(--team-primary, #087aff); outline-offset: -2px; }
-.profile-split-legend { display: flex; gap: 12px; color: #5b6d84; font-size: 12.5px; font-weight: 700; }
-.profile-split-legend button { display: inline-flex; align-items: center; gap: 5px; padding: 4px 6px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; cursor: pointer; transition: opacity .2s; }
-.profile-split-legend button:hover { background: #f2f5f9; }
-.profile-split-legend button[aria-pressed="false"] { opacity: .45; }
-.profile-split-legend button[aria-pressed="false"] { text-decoration: line-through; text-decoration-thickness: 1.5px; }
-.profile-split-legend button:focus-visible { outline: 2px solid var(--team-primary, #087aff); outline-offset: -1px; }
-.profile-split-legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--team-primary, #087aff); }
-.profile-split-legend button.is-1 i { background: var(--team-secondary, #17283d); }
-.profile-split-legend b { color: #8793a3; font-size: 12px; font-weight: 600; }
-.profile-split-svg { display: block; width: 100%; max-width: 440px; margin-inline: auto; height: auto; overflow: visible; font-variant-numeric: tabular-nums; }
-.profile-split-bar { fill: var(--team-primary, #087aff); transform-box: fill-box; transform-origin: 0 50%; animation: profile-split-grow .75s cubic-bezier(.2, .8, .25, 1) both; }
-.profile-split-bar.is-1 { fill: var(--team-secondary, #17283d); }
-.profile-split-value { fill: #22364f; font-size: 10.5px; font-weight: 800; animation: profile-split-fade .5s ease-out both; }
-.profile-split-divider { stroke: #eef2f7; stroke-width: 1; }
-.profile-split-base { stroke: #dbe3ee; stroke-width: 1; }
-.profile-split-label { fill: #4c5f78; font-size: 11.5px; font-weight: 700; }
-.profile-split-games { fill: #9aa6b6; font-size: 9.5px; font-weight: 600; }
+.profile-split-chart { font-variant-numeric: tabular-nums; }
+.profile-split-head, .profile-split-row { display: grid; grid-template-columns: 78px repeat(var(--split-metrics, 2), minmax(0, 1fr)) 14px; column-gap: 20px; align-items: stretch; }
+.profile-split-cell { display: grid; min-width: 0; padding-right: 48px; }
+.profile-split-base { position: relative; display: block; height: 22px; }
+.profile-split-base small { position: absolute; bottom: 4px; transform: translateX(-50%); color: #6b7a8e; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.profile-split-row { width: 100%; min-height: 44px; padding: 0; border: 0; border-top: 1px solid #eef2f7; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.profile-split-row.is-section-start { border-top-color: #c5cfdc; }
+.profile-split-row:hover { background: color-mix(in srgb, var(--team-primary, #087aff) 5%, transparent); }
+.profile-split-row:focus-visible { outline: 2px solid var(--team-primary, #087aff); outline-offset: -2px; }
+.profile-split-name { display: flex; flex-direction: column; justify-content: center; gap: 1px; min-width: 0; }
+.profile-split-name b { display: flex; align-items: center; gap: 5px; color: #22364f; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.profile-split-name img { flex: none; width: 18px; height: 18px; object-fit: contain; }
+.profile-split-name small { color: #9aa6b6; font-size: 11px; font-weight: 600; }
+.profile-split-track { position: relative; align-self: stretch; }
+.profile-split-track::after { content: ''; position: absolute; top: 0; bottom: 0; left: var(--split-base, -10px); border-left: 1px dashed #7d8b9e; }
+.profile-split-track i { position: absolute; top: 50%; left: 0; height: 16px; margin-top: -8px; border-radius: 0 4px 4px 0; background: #d3d9e1; transform-origin: 0 50%; animation: profile-split-grow .6s cubic-bezier(.2, .8, .25, 1) both; }
+.profile-split-track i.is-up { background: color-mix(in srgb, #d9253a var(--split-tone, 100%), #d3d9e1); }
+.profile-split-track i.is-down { background: color-mix(in srgb, #1f5fb4 var(--split-tone, 100%), #d3d9e1); }
+.profile-split-value { position: absolute; top: 50%; z-index: 1; margin-left: 3px; padding: 1px 3px; transform: translateY(-50%); background: #fff; color: #22364f; font-size: 13px; font-weight: 700; }
+.profile-split-row.is-thin .profile-split-track i { opacity: .35; }
+.profile-split-row.is-thin .profile-split-value { color: #a9b4c2; font-weight: 600; }
+.profile-split-chevron { align-self: center; width: 14px; height: 14px; color: #b4bfcc; }
 @keyframes profile-split-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes profile-split-fade { from { opacity: 0; } 60% { opacity: 0; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .profile-split-bar, .profile-split-value { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .profile-split-track i { animation: none; } }
 @media (max-width: 600px) {
-    .profile-split-card { padding: 0; border: 0; border-radius: 0; background: transparent; }
-    .profile-split-tabs button { min-width: 0; padding: 6px 10px; font-size: 12.5px; }
+    .profile-split-toolbar > .profile-split-tabs:first-child { display: flex; flex: 1 1 100%; }
+    .profile-split-tabs button { flex: 1 1 auto; min-width: 0; padding: 6px 4px; font-size: 12.5px; }
+    .profile-split-tabs.is-metric button { padding: 6px 12px; }
+    .profile-split-head, .profile-split-row { grid-template-columns: 60px repeat(var(--split-metrics, 2), minmax(0, 1fr)) 12px; column-gap: 9px; }
+    .profile-split-cell { padding-right: 42px; }
+    .profile-split-base small { font-size: 10.5px; }
+    .profile-split-name b { font-size: 12.5px; }
+    .profile-split-name img { width: 16px; height: 16px; }
+    .profile-split-track i { height: 14px; margin-top: -7px; }
+    .profile-split-value { font-size: 12.5px; }
+    .profile-split-chevron { width: 12px; height: 12px; }
 }
 
 /* 상세(candle-detail): 박스·배지 대신 구분선과 글자 위계로 정리 */
@@ -247,10 +259,9 @@
     .player-profile .profile-candle-terminal .candle-atbats > div > span { padding: 4px 10px; font-size: 12.5px; }
 }
 
-/* 스플릿 차트: 행 클릭, 최고·최저 강조, 상세 모달 */
-.profile-split-hit { fill: transparent; cursor: pointer; outline: none; }
-.profile-split-hit:hover, .profile-split-hit:focus-visible { fill: color-mix(in srgb, var(--team-primary, #087aff) 6%, transparent); }
-.profile-split-modal-body { flex: 1; min-height: 0; padding: 14px 20px 20px; overflow-y: auto; overscroll-behavior: contain; }
+/* 스플릿 상세 모달 */
+.profile-split-modal-body { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; padding: 14px 20px 20px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+.profile-split-modal-body > * { flex: none; }
 .profile-split-modal-rates { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 14px; }
 .profile-split-modal-rates > div { padding: 10px 6px; border-radius: 12px; background: #f4f7fb; text-align: center; }
 .profile-split-modal-rates span, .profile-split-modal-counts span { display: block; color: #8793a3; font-size: 11.5px; font-weight: 600; }
@@ -270,11 +281,7 @@
     .profile-split-modal-rates strong { font-size: 16px; }
 }
 
-/* 스플릿 차트: 최고·최저는 숫자 색만 */
-.profile-split-value.is-high { fill: #d9253a; font-weight: 900; }
-.profile-split-value.is-low { fill: #1769c2; font-weight: 900; }
-
-/* 스플릿 모달: 머리에 핵심 지표, 경기별 기록만 스크롤 */
+/* 스플릿 모달: 머리에 핵심 지표 */
 .profile-split-modal-head { flex-wrap: wrap; align-items: flex-start; }
 .profile-split-modal-head .profile-career-title { flex: 1; min-width: 0; }
 .profile-split-modal .profile-career-title h2 { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0; }
@@ -283,11 +290,7 @@
 .profile-split-modal-head .profile-split-modal-rates > div { background: rgba(255,255,255,.15); }
 .profile-split-modal-head .profile-split-modal-rates span { color: rgba(255,255,255,.78); }
 .profile-split-modal-head .profile-split-modal-rates strong { color: #fff; }
-.profile-split-modal-body { display: flex; flex-direction: column; overflow: hidden; }
-.profile-split-modal-games { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 .profile-split-modal-games .profile-game-badge { margin-left: 6px; vertical-align: 1px; }
-.profile-split-modal-counts { flex: none; }
-.profile-split-modal-body h3 { flex: none; }
 
 /* 모바일: 캔들 상세를 한 단계 작게 */
 @media (max-width: 600px) {
@@ -304,13 +307,6 @@
     .player-profile .profile-candle-terminal .candle-atbats > div > span { padding: 3px 8px; font-size: 11px; }
     .player-profile .profile-candle-terminal .candle-footnote { padding: 8px 0 0; font-size: 8.5px; }
 }
-.profile-split-modal-body { flex: 0 1 auto; min-height: 0; }
-.profile-split-modal-games { flex: 0 1 auto; }
-
-/* 스플릿 모달: 내용 전체가 스크롤 */
-.profile-split-modal-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
-.profile-split-modal-games { flex: none; overflow: visible; }
-.profile-split-modal-body > * { flex: none; }
 
 /* 스플릿 모달: 투수 승패 기록 줄 */
 .profile-split-modal-head .profile-split-modal-record { position: relative; z-index: 1; flex: 0 0 100%; margin: 12px 0 0; color: rgba(255,255,255,.92); font-size: 13.5px; font-weight: 800; letter-spacing: -.01em; }
@@ -322,4 +318,3 @@
 .profile-split-modal-counts.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 
-.profile-split-axis { stroke: #cfd8e4; stroke-width: 1; }
