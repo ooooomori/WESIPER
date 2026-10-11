@@ -10,7 +10,7 @@ if(PHP_SAPI!=='cli'){http_response_code(404);exit;}
 [$lib,$config]=[$argv[1]??'',$argv[2]??''];
 if(!is_dir($lib)||!is_file($config)){fwrite(STDERR,"Usage: php warm-profile-caches.php LIB_DIR DB_CONFIG\n");exit(2);}
 date_default_timezone_set('Asia/Seoul');
-foreach(['player-season-schedule','player-records','player-year-records','player-overview-cache','player-rankings','player-year-qualified'] as $file)require_once "$lib/$file.php";
+foreach(['player-season-schedule','player-records','player-year-records','player-overview-cache','player-rankings','player-year-qualified','player-similarity'] as $file)require_once "$lib/$file.php";
 $c=require $config;
 $db=new PDO(sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',$c['host'],$c['port']??3306,$c['database']),$c['username'],$c['password'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC,PDO::ATTR_EMULATE_PREPARES=>false]);
 
@@ -49,6 +49,9 @@ $step('team games by year',static fn()=>profileTeamGamesByYear($db,$schedule));
 foreach($players as $role=>$player)$step("overview $role",static fn()=>profileComputeOverviewRecords($db,$player,$schedule));
 // 리그 순위(ranks 탭): 올해 시즌·통산, 1군·퓨처스.
 foreach([[false,1],[true,1],[false,2]] as [$career,$level])$step(sprintf('rankings %d %s league%d',$year,$career?'career':'season',$level),static fn()=>profileRankings($db,$year,$schedule,$career,$level));
+
+// 유사 선수: 기록실 통산 자료(타자·투수)와 선수별 유사 목록.
+foreach(['batter'=>false,'pitcher'=>true] as $role=>$pitcher)$step("similarity $role",static fn()=>similarityIndex($db,$schedule,$pitcher));
 
 if(!$failed)@file_put_contents($marker,$stamp);
 $log($failed?"done with $failed failure(s)":'done');
