@@ -17,9 +17,9 @@ $bat=array_map('metricBatRow',['좌안','좌2','좌3','좌홈','4구','고4','�
 $bat[0]['sb']=2;$bat[0]['cs']=1;$bat[0]['run_out']=1;
 foreach([0,2,3] as $i)$bat[$i]['r']=1;
 $s=profileYearTotals($bat,false,[],[]);
-foreach(['pa'=>15,'ab'=>10,'so'=>2,'woba'=>'0.619','spd'=>'5.6','isoObp'=>'0.100','isoSlg'=>'0.600','babip'=>'0.375','groundFly'=>'1.00','bbPct'=>'13.3','kPct'=>'13.3','bbK'=>'1.00','sbAttempts'=>3,'sbPct'=>'66.7','runOut'=>1,'sbSecond'=>null,'sbThird'=>null,'sbHome'=>null] as $key=>$value)expectYearMetric($s[$key],$value,'Batter '.$key);
+foreach(['pa'=>15,'ab'=>10,'so'=>2,'woba'=>'0.575','spd'=>'5.6','isoObp'=>'0.100','isoSlg'=>'0.600','babip'=>'0.375','groundFly'=>'1.00','bbPct'=>'13.3','kPct'=>'13.3','bbK'=>'1.00','sbAttempts'=>3,'sbPct'=>'66.7','runOut'=>1,'sbSecond'=>null,'sbThird'=>null,'sbHome'=>null] as $key=>$value)expectYearMetric($s[$key],$value,'Batter '.$key);
 $missing=$bat;$missing[0]['sb']=null;$missing[0]['run_out']=null;$s=profileYearTotals($missing,false,[],[]);
-foreach(['woba','spd','sbAttempts','sbPct','runOut','effectiveOps'] as $key)expectYearMetric($s[$key],null,'Missing running data '.$key);
+foreach(['spd','sbAttempts','sbPct','runOut','effectiveOps'] as $key)expectYearMetric($s[$key],null,'Missing running data '.$key);
 expectYearMetric(profileMetricRatio(1,0),null,'Zero denominator');
 $pitch=[
     ['game_id'=>'g1','game_date'=>'2024-06-01','team'=>'KIA','inning'=>'9','order'=>1,'er'=>0,'r'=>0,'record'=>'승','pitched'=>100],

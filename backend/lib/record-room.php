@@ -17,7 +17,7 @@ require_once __DIR__.'/record-room-awards.php';
  * - 시즌 전체 구간은 연도별 파일에 보관한다. 지난 시즌은 PROFILE_HISTORY_VERSION이 같으면 계속 쓴다.
  * 계산식은 선수 프로필의 연도별 기록(player-year-records.php)과 같다.
  */
-const RECORD_ROOM_VERSION = '10';
+const RECORD_ROOM_VERSION = '11';
 const RECORD_ROOM_BAT_FIELDS = ['games','starts','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb','tb','roe','go','fo','runOut','eab','eh','etb','eob'];
 const RECORD_ROOM_PITCH_FIELDS = ['games','starts','wins','losses','saves','holds','outs','r','er','so','h','hr','bb','hbp','pa','ab','sf','tb','go','fo','startOuts','reliefOuts','finishes','qs','qsPlus','ds','complete','shutouts','pitches','eraW','fipW'];
 const RECORD_ROOM_BAT_KEYS = ['games','starts','avg','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','so','gdp','sf','sh','sb','cs','obp','slg','ops','effectiveOps','opsPlus','woba','isoObp','isoSlg','babip','groundFly','bbPct','kPct','bbK','spd','sbAttempts','sbPct','runOut'];
@@ -319,7 +319,7 @@ function recordRoomHistorical(PDO $db,int $year,bool $pitcher): array {
     $players=[];
     foreach($byPlayer as $id=>$rows){
         $s=array_fill_keys($pitcher?RECORD_ROOM_PITCH_FIELDS:RECORD_ROOM_BAT_FIELDS,null);
-        $map=$pitcher?['games'=>'games','wins'=>'wins','losses'=>'losses','saves'=>'saves','holds'=>'holds','outs'=>'innings_outs','r'=>'r','er'=>'er','so'=>'so','h'=>'h','hr'=>'hr','bb'=>'bb','hbp'=>'hbp','pa'=>'tbf','complete'=>'cg','shutouts'=>'sho']
+        $map=$pitcher?['games'=>'games','wins'=>'wins','losses'=>'losses','saves'=>'saves','holds'=>'holds','outs'=>'innings_outs','r'=>'r','er'=>'er','so'=>'so','h'=>'h','hr'=>'hr','bb'=>'bb','hbp'=>'hbp','pa'=>'tbf','complete'=>'cg','shutouts'=>'sho','starts'=>'gs','finishes'=>'gf','ab'=>'ab','sf'=>'sf']
             :array_combine($keys=['games','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb'],$keys);
         foreach($map as $key=>$column)$s[$key]=profileSum($rows,$column);
         if($pitcher){

@@ -13,7 +13,7 @@
 
 ## 타자
 
-- 사용자 지정 wOBA: `(0.7*(BB-IBB+HBP)+0.9*(1B+ROE)+1.25*2B+1.6*3B+2*HR+0.25*SB-0.5*CS)/(PA-IBB-SH)`. `고4` 등은 IBB, 희생번트 결과는 SH, `실`로 끝나는 결과는 실책 출루(ROE)로 센다. 공식 KBO 연도별 가중치 wOBA와는 구분한다.
+- wOBA: 이장택(2018) 「한국프로야구에서 가중출루율의 추정」의 KBO 계수. `(0.70*(BB-IBB)+0.77*HBP+0.92*1B+1.38*2B+1.76*3B+1.94*HR)/(AB+BB-IBB+SF+HBP)`. 도루·실책 출루는 반영하지 않으며, 1982~2000년 시즌 합계에서도 같은 식으로 계산한다. 공식 KBO 연도별 가중치 wOBA와는 구분한다.
 - Spd는 [사용자가 지정한 Speed Score 공식](https://en.wikipedia.org/wiki/Speed_Score)의 F6을 제외한다. F1~F5 각각을 0~10으로 제한한 뒤 평균을 낸다.
 - 순출루율은 OBP-AVG, 순장타율은 SLG-AVG이며 반올림 전 수치로 계산한다.
 - BABIP는 `(H-HR)/(AB-K-HR+SF)`, BB%/K%는 타석 기준이다.

@@ -42,6 +42,18 @@ function profileSpeedScore(array $s): ?string {
     return number_format(array_sum(array_map(static fn($v)=>max(0,min(10,$v)),$factors))/5,1,'.','');
 }
 
+/*
+ * KBO 가중출루율(이장택, 2018): (0.70·uBB + 0.77·HBP + 0.92·1B + 1.38·2B + 1.76·3B + 1.94·HR) / (AB + BB − IBB + SF + HBP).
+ * uBB는 고의4구를 뺀 볼넷이다. 하나라도 비어 있으면 계산하지 않는다.
+ */
+function profileWoba(array $s): ?string {
+    foreach(['ab','h','doubles','triples','hr','bb','ibb','hbp','sf'] as $key)if(!isset($s[$key]))return null;
+    $den=$s['ab']+$s['bb']-$s['ibb']+$s['sf']+$s['hbp'];
+    $singles=$s['h']-$s['doubles']-$s['triples']-$s['hr'];
+    $numerator=.70*($s['bb']-$s['ibb'])+.77*$s['hbp']+.92*$singles+1.38*$s['doubles']+1.76*$s['triples']+1.94*$s['hr'];
+    return profileMetricRatio($numerator,(float)$den);
+}
+
 function profileBatterAdvancedStats(array $parsed, array $s): array {
     foreach(['so','ibb','sh','roe','go','fo','runOut'] as $key)$s[$key]=profileSum($parsed,$key);
     $s['isoObp']=$s['isoSlg']=null;
@@ -55,10 +67,7 @@ function profileBatterAdvancedStats(array $parsed, array $s): array {
     $s['sbAttempts']=$s['sb']!==null&&$s['cs']!==null?$s['sb']+$s['cs']:null;
     $s['sbPct']=profileMetricRatio($s['sb']===null?null:$s['sb']*100,$s['sbAttempts'],1);
     $s['sbSecond']=$s['sbThird']=$s['sbHome']=null; // Destination bases were not stored.
-    // User-specified weights, including running value and reached-on-error.
-    $singles=$s['h']-$s['doubles']-$s['triples']-$s['hr'];
-    $numerator=$s['sb']!==null&&$s['cs']!==null?.7*($s['bb']-$s['ibb']+$s['hbp'])+.9*($singles+($s['roe']??0))+1.25*$s['doubles']+1.6*$s['triples']+2*$s['hr']+.25*$s['sb']-.5*$s['cs']:null;
-    $s['woba']=profileMetricRatio($numerator,$s['pa']-$s['ibb']-$s['sh']);
+    $s['woba']=profileWoba($s);
     $s['spd']=profileSpeedScore($s);
     if($s['sb']===null||$s['cs']===null)$s['effectiveOps']=null;
     return $s;
@@ -93,6 +102,7 @@ function profilePitcherAdvancedStats(array $rows, array $s, array $events, bool 
     $s['k9']=profileMetricRatio($known?$s['so']*27:null,$outs,2);$s['bb9']=profileMetricRatio($known?$s['bb']*27:null,$outs,2);
     $s['h9']=profileMetricRatio($known?$s['h']*27:null,$outs,2);$s['hr9']=profileMetricRatio($known?$s['hr']*27:null,$outs,2);
     $totals=[];foreach(['pa','ab','h','hr','bb','hbp','sf','so','tb','go','fo'] as $key)$totals[$key]=$known?profileSum($events,$key):null;
+    $s['ab']=$known?$totals['ab']:null;$s['sf']=$known?$totals['sf']:null;
     $s['kPct']=profileMetricRatio($known?$totals['so']*100:null,$totals['pa'],1);$s['bbPct']=profileMetricRatio($known?$totals['bb']*100:null,$totals['pa'],1);
     $s['kBb']=profileMetricRatio($totals['so'],$totals['bb'],2);$s['opponentAvg']=profileMetricRatio($totals['h'],$totals['ab']);
     $s['opponentObp']=$known?profileMetricRatio($totals['h']+$totals['bb']+$totals['hbp'],$totals['ab']+$totals['bb']+$totals['hbp']+$totals['sf']):null;

@@ -30,7 +30,14 @@ function profileSeasonRates(array $s,bool $pitcher): array {
         $s['kBb']=profileSeasonRatio($s['so']??null,$s['bb']??null,2);$s['kPct']=profileSeasonRatio(isset($s['so'])?$s['so']*100:null,$s['tbf']??null,1);$s['bbPct']=profileSeasonRatio(isset($s['bb'])?$s['bb']*100:null,$s['tbf']??null,1);
         $s['fip']=$outs>0&&isset($s['hr'],$s['bb'],$s['hbp'],$s['so'],$s['fipConstantWeighted'])?number_format((13*$s['hr']+3*($s['bb']+$s['hbp'])-2*$s['so'])*3/$outs+$s['fipConstantWeighted']/$outs,2,'.',''):null;
         $s['eraPlus']=$outs>0&&isset($s['eraWeighted'],$s['er'])&&$s['er']>0?(int)round(100*$s['eraWeighted']/($s['er']*27)):null;
-        $missing=['reliefs','finishes','starterInnings','reliefInnings','pitches','pitchesPerInning','pitchesPerGame','qs','qsPlus','ds','opponentAvg','opponentObp','opponentSlg','opponentOps','groundFly','babip'];
+        // 기록대백과로 보충한 상대 타수·희생플라이·선발·종료가 있으면 상대 타율·출루율·BABIP를 계산한다(루타 수는 없어서 장타율·OPS는 비운다).
+        $s['reliefs']=isset($s['games'],$s['starts'])?$s['games']-$s['starts']:null;
+        $s['finishes']=$s['finishes']??null;
+        $s['opponentAvg']=profileSeasonRatio($s['h']??null,$s['ab']??null);
+        $obpDen=isset($s['ab'],$s['bb'],$s['hbp'],$s['sf'])?$s['ab']+$s['bb']+$s['hbp']+$s['sf']:null;
+        $s['opponentObp']=isset($s['h'],$s['bb'],$s['hbp'])?profileSeasonRatio($s['h']+$s['bb']+$s['hbp'],$obpDen):null;
+        $s['babip']=isset($s['h'],$s['hr'],$s['ab'],$s['so'],$s['sf'])?profileSeasonRatio($s['h']-$s['hr'],$s['ab']-$s['so']-$s['hr']+$s['sf']):null;
+        $missing=['starterInnings','reliefInnings','pitches','pitchesPerInning','pitchesPerGame','qs','qsPlus','ds','opponentSlg','opponentOps','groundFly'];
     }else{
         $s['avg']=profileSeasonRatio($s['h'],$s['ab']);$s['slg']=profileSeasonRatio($s['tb'],$s['ab']);
         $obpSf=$s['obpSf']??$s['sf'];
@@ -42,12 +49,13 @@ function profileSeasonRates(array $s,bool $pitcher): array {
         $s['isoSlg']=profileSeasonRatio(isset($s['tb'],$s['h'])?$s['tb']-$s['h']:null,$s['ab']);$s['bbPct']=profileSeasonRatio(isset($s['bb'])?$s['bb']*100:null,$s['pa'],1);$s['kPct']=profileSeasonRatio(isset($s['so'])?$s['so']*100:null,$s['pa'],1);$s['bbK']=profileSeasonRatio($s['bb'],$s['so'],2);
         $s['sbAttempts']=isset($s['sb'],$s['cs'])?$s['sb']+$s['cs']:null;$s['sbPct']=profileSeasonRatio(isset($s['sb'])?$s['sb']*100:null,$s['sbAttempts'],1);
         $s['opsPlus']=profileSeasonOpsPlus($s);
-        $missing=['effectiveOps','woba','groundFly','spd','runOut','roe','go','fo','sbSecond','sbThird','sbHome'];
+        $s['woba']=profileWoba($s);
+        $missing=['effectiveOps','groundFly','spd','runOut','roe','go','fo','sbSecond','sbThird','sbHome'];
     }foreach($missing as $k)$s[$k]=null;return $s;
 }
 function profileSeasonStats(array $rows,bool $pitcher,array $league=[]): array {
-    $fields=$pitcher?['games','wins','losses','saves','holds','r','er','so','h','hr','bb','hbp','tbf','innings_outs','cg','sho']:['games','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb','e'];
-    $s=[];foreach($fields as $k)$s[$k]=profileSum($rows,$k);$s['starts']=null;
+    $fields=$pitcher?['games','wins','losses','saves','holds','r','er','so','h','hr','bb','hbp','tbf','innings_outs','cg','sho','gs','gf','ab','sf']:['games','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb','e'];
+    $s=[];foreach($fields as $k)$s[$k]=profileSum($rows,$k);$s['starts']=$pitcher?($s['gs']??null):null;if($pitcher){$s['finishes']=$s['gf']??null;unset($s['gs'],$s['gf']);}
     if($pitcher){$s['complete']=$s['cg'];$s['shutouts']=$s['sho'];$era=$constant=0;$eraKnown=$constantKnown=true;
         foreach($rows as $r){$ip=(int)$r['innings_outs'];if(!$ip)continue;$context=$league[$r['year'].'|'.$r['series_id']]??[];
             if(!isset($context['era']))$eraKnown=false;else $era+=$ip*$context['era'];
@@ -66,7 +74,7 @@ function profileSeasonStats(array $rows,bool $pitcher,array $league=[]): array {
 }
 function profileMergeSeasonStats(array $stats,bool $pitcher): ?array {
     if(!$stats)return null;
-    $fields=$pitcher?['games','starts','wins','losses','saves','holds','r','er','so','h','hr','bb','hbp','tbf','complete','shutouts']:['games','starts','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb','e','tb'];
+    $fields=$pitcher?['games','starts','wins','losses','saves','holds','r','er','so','h','hr','bb','hbp','tbf','complete','shutouts','finishes','ab','sf']:['games','starts','pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','gdp','sb','cs','so','sf','sh','ibb','e','tb'];
     $s=[];foreach($fields as $k)$s[$k]=profileSum($stats,$k);
     if($pitcher)foreach(['eraWeighted','fipConstantWeighted'] as $key){$s[$key]=array_filter($stats,static fn($r)=>!isset($r[$key]))?null:array_sum(array_column($stats,$key));}
     if(!$pitcher){$s['opsLeagueYears']=[];foreach($stats as $item)foreach($item['opsLeagueYears']??[] as $year=>$context)$s['opsLeagueYears'][$year]=$context;}

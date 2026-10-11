@@ -50,6 +50,8 @@ function profileFormatFieldingRecords(array $rows): array {
 function profileFieldingCareerPositions(array $fielding): array {
     $totals=[];
     foreach($fielding['rows'] as $row)foreach($row['positions'] as $stats){
+        // 위치별 출장수만 있는 시즌(1993~2000)은 통산 수비 합계에 넣지 않는다.
+        if(!empty($stats['gamesOnly']))continue;
         $position=$stats['position']??'';
         if(!isset($totals[$position])){$totals[$position]=profileFieldingEmptyStats($position);$totals[$position]['outs']=0;foreach(['games','starts',...array_keys(PROFILE_FIELDING_COUNTS)] as $key)$totals[$position][$key]=0;}
         // 한 시즌이라도 값이 없으면(지명타자의 선발 수 등) 통산도 비운다.
@@ -112,12 +114,40 @@ function profileFieldingRecords(PDO $db, string $pid, array $schedule): array {
     return $fielding;
 }
 
+/*
+ * 1993~2000년 위치별 출장수(KBO 기록대백과, kbo_player_season_position_games). 이 시기에는 경기 단위 수비 기록이 없어서
+ * 출장수 외의 항목은 빈칸이다. 같은 해 공식 수비 기록이 이미 있으면 덮어쓰지 않는다. 표가 없으면 그대로 돌려준다.
+ */
+function profileAddPositionGamesRecords(PDO $db, string $pid, array $fielding): array {
+    $names=['C'=>'포수','1B'=>'1루수','2B'=>'2루수','3B'=>'3루수','SS'=>'유격수','OF'=>'외야수'];
+    try {
+        $query=$db->prepare("SELECT g.year,g.position,g.games,(SELECT t.team_name FROM kbo_player_season_batting_totals t WHERE t.player_id=g.player_id AND t.year=g.year AND t.league_level=1 AND t.series_id=0 AND t.row_scope='total' LIMIT 1) AS team
+            FROM kbo_player_season_position_games g WHERE g.player_id=? ORDER BY g.year,g.games DESC,g.position");
+        $query->execute([$pid]);
+        $rows=$query->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Throwable $error) {
+        error_log('Position games unavailable: '.$error->getMessage());
+        return $fielding;
+    }
+    if(!$rows)return $fielding;
+    $official=[];foreach($fielding['rows'] as $row)$official[(int)$row['year']]=true;
+    $byYear=[];
+    foreach($rows as $row){
+        $year=(int)$row['year'];if(isset($official[$year]))continue;
+        $stats=profileFieldingEmptyStats($names[$row['position']]??$row['position']);$stats['games']=(int)$row['games'];$stats['gamesOnly']=true;
+        $byYear[$year]['team']=(string)($row['team']??'');$byYear[$year]['positions'][]=$stats;
+    }
+    foreach($byYear as $year=>$group)$fielding['rows'][]=['year'=>$year,'team'=>$group['team'],'positions'=>$group['positions']];
+    usort($fielding['rows'],static fn($a,$b)=>($a['year']<=>$b['year'])?:strcmp($a['team'],$b['team']));
+    return $fielding;
+}
+
 function profileComputeFieldingRecords(PDO $db, string $pid, array $schedule): array {
     // 같은 해·팀 안에서는 많이 뛴 포지션이 먼저 온다.
     $query=$db->prepare('SELECT year,team,position,games,starts,innings_outs,errors,pickoffs,putouts,assists,double_plays,fielding_pct,passed_balls,stolen_bases,caught_stealing,caught_stealing_pct
         FROM kbo_fielding_records WHERE player_id=? ORDER BY year,team,innings_outs DESC,games DESC,id');
     $query->execute([$pid]);
-    $fielding=profileFormatFieldingRecords($query->fetchAll(PDO::FETCH_ASSOC));
+    $fielding=profileAddPositionGamesRecords($db,$pid,profileFormatFieldingRecords($query->fetchAll(PDO::FETCH_ASSOC)));
     $bounds=[];foreach($schedule as $year=>$season){if((int)$year<PROFILE_FIELDING_FIRST_YEAR)continue;[$start,$end]=$season['regular'];if($start&&$end)$bounds[]='(game_date BETWEEN '.$db->quote($start).' AND '.$db->quote($end).')';}
     if(!$bounds)return $fielding;
     $query=$db->prepare("SELECT game_id,game_date,team,pos,is_gs FROM kbo_season_records WHERE league_level=1 AND player_id=? AND (".implode(' OR ',$bounds).")".profileNotTiebreakerSql()." AND (pos LIKE '%지%' OR pos LIKE '%D%') ORDER BY game_date,game_id,PK");

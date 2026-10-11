@@ -27,7 +27,8 @@ foreach(['avg'=>'0.4000','bbPct'=>'20.00','sbPct'=>'66.67'] as $key=>$value)expe
 expectRecordRoom($s['avg'],'0.400','Display precision unchanged');
 $old=recordRoomBatterStats(['starts'=>null,'roe'=>null,'go'=>null,'fo'=>null,'runOut'=>null,'eab'=>null,'eh'=>null,'etb'=>null,'eob'=>null]+$bat,[1999=>null],true,false);
 expectRecordRoom($old['avg'],'0.400','Historical average');
-foreach(['woba','spd','effectiveOps','groundFly','opsPlus'] as $key)expectRecordRoom($old[$key]??null,null,'Historical '.$key);
+foreach(['spd','effectiveOps','groundFly','opsPlus'] as $key)expectRecordRoom($old[$key]??null,null,'Historical '.$key);
+expectRecordRoom($old['woba'],'0.530','Historical wOBA from season totals');
 
 // 정렬: 비율 기록만 최소 조건을 적용하고, 값이 없으면 제외하며, 동률은 같은 순위다.
 $rows=[
