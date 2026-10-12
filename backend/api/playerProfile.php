@@ -122,7 +122,10 @@ try {
     }
     if($part==='similar') {
         require_once __DIR__.'/../lib/player-similarity.php';
-        echo json_encode(['similar'=>similarPlayers($pdo,(int)$pid,str_contains((string)$player['Pos'],'투수'),profileSchedule())],JSON_UNESCAPED_UNICODE);exit;
+        // age: 현역 선수의 올해 시즌 나이. byAge=1이면 그 나이까지의 누적 기록으로 비교한 목록을 준다.
+        $age=similarityCurrentAge($player);$byAge=($_GET['byAge']??'')==='1';
+        $similar=$byAge&&$age===null?null:similarPlayers($pdo,(int)$pid,str_contains((string)$player['Pos'],'투수'),profileSchedule(),$byAge?$age:null);
+        echo json_encode(['similar'=>$similar,'age'=>$age],JSON_UNESCAPED_UNICODE);exit;
     }
     if($part==='year-records') {
         $type=$_GET['type']??(str_contains((string)$player['Pos'],'투수')?'pitcher':'batter');

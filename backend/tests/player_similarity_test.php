@@ -13,6 +13,10 @@ expectSimilarity(similarityQualified(['v'=>1000,'stats'=>[]],false),true,'Batter
 expectSimilarity(similarityQualified(['v'=>899,'stats'=>['games'=>149]],true),false,'Pitcher below both minimums');
 expectSimilarity(similarityQualified(['v'=>900,'stats'=>['games'=>30]],true),true,'Pitcher by innings');
 expectSimilarity(similarityQualified(['v'=>450,'stats'=>['games'=>150]],true),true,'Pitcher by games');
+// 같은 나이까지 비교할 때의 기준: 타자 300타석, 투수 100이닝 또는 50경기
+expectSimilarity([similarityQualified(['v'=>299,'stats'=>[]],false,true),similarityQualified(['v'=>300,'stats'=>[]],false,true)],[false,true],'Batter minimum by age');
+expectSimilarity([similarityQualified(['v'=>299,'stats'=>['games'=>49]],true,true),similarityQualified(['v'=>300,'stats'=>['games'=>10]],true,true),similarityQualified(['v'=>90,'stats'=>['games'=>50]],true,true)],[false,true,true],'Pitcher minimum by age');
+expectSimilarity([similarityCurrentAge(['IsKbodle'=>'0','Birth'=>'1990-01-01']),similarityCurrentAge(['IsKbodle'=>'1','Birth'=>null])],[null,null],'No current age for retired or unknown birth');
 
 // 타자: 같은 기록이면 1000점, 항목별 차이만큼 뺀다.
 expectSimilarity(similarityScore($base,$base,false),1000.0,'Identical batters');

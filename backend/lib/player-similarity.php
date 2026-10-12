@@ -8,12 +8,17 @@ require_once __DIR__.'/record-room.php';
  * - 기준(타자 1,000타석, 투수 300이닝 또는 150경기)을 채운 선수끼리만 비교한다.
  * - 통산 기록은 기록실의 통산 자료(recordRoomDataset)를 쓰고, 선수별 상위 목록을 파일에 보관한다.
  * - 한쪽이라도 모르는 항목(타석 기록이 빠진 경기가 있는 투수의 탈삼진 등)은 그 항목만 비교에서 뺀다.
+ * - 현역 선수는 '지금 나이까지'의 누적 기록끼리도 비교한다(시즌 나이는 그해 7월 1일 기준). 이때는 기준을 낮춘다(300타석, 100이닝 또는 50경기).
  * - 투수는 원래 공식을 KBO에 맞게 바꿨다: 평균자책점 대신 ERA+(시대 보정), 홀드 추가, 승률은 구원이 아닌 투수끼리만 비교.
  */
-const SIMILARITY_VERSION = '2';
+const SIMILARITY_VERSION = '3';
 const SIMILARITY_MIN_PA = 1000;
 const SIMILARITY_MIN_OUTS = 900;
 const SIMILARITY_MIN_PITCH_GAMES = 150;
+// 같은 나이까지의 기록으로 비교할 때의 기준
+const SIMILARITY_AGE_MIN_PA = 300;
+const SIMILARITY_AGE_MIN_OUTS = 300;
+const SIMILARITY_AGE_MIN_PITCH_GAMES = 50;
 const SIMILARITY_LIMIT = 10;
 // 1점이 깎이는 차이
 const SIMILARITY_BAT_UNITS = ['games'=>20,'ab'=>75,'r'=>10,'h'=>15,'doubles'=>5,'triples'=>4,'hr'=>2,'rbi'=>10,'bb'=>25,'so'=>150,'sb'=>20,'avg'=>.001,'slg'=>.002];
@@ -25,8 +30,9 @@ const SIMILARITY_POSITION_VALUES = ['C'=>240,'SS'=>168,'2B'=>132,'3B'=>84,'LF'=>
 // 던지는 손이 다르면 빼는 점수: 둘 다 선발, 둘 다 구원, 선발과 구원
 const SIMILARITY_HAND_PENALTY = [10,25,17.5];
 
-function similarityQualified(array $row,bool $pitcher): bool {
-    return $pitcher?(int)$row['v']>=SIMILARITY_MIN_OUTS||(int)($row['stats']['games']??0)>=SIMILARITY_MIN_PITCH_GAMES:(int)$row['v']>=SIMILARITY_MIN_PA;
+function similarityQualified(array $row,bool $pitcher,bool $byAge=false): bool {
+    [$pa,$outs,$games]=$byAge?[SIMILARITY_AGE_MIN_PA,SIMILARITY_AGE_MIN_OUTS,SIMILARITY_AGE_MIN_PITCH_GAMES]:[SIMILARITY_MIN_PA,SIMILARITY_MIN_OUTS,SIMILARITY_MIN_PITCH_GAMES];
+    return $pitcher?(int)$row['v']>=$outs||(int)($row['stats']['games']??0)>=$games:(int)$row['v']>=$pa;
 }
 
 /** 기록실 통산 자료의 한 줄 → 비교용 값. $throws는 투수의 던지는 손 표기(우투·좌언 등). */
@@ -70,31 +76,40 @@ function similarityTop(array $vectors,bool $pitcher,int $limit=SIMILARITY_LIMIT)
     return $top;
 }
 
-/** 기록실의 통산 조회(playerRecords.php의 mode=career)와 같은 조건이라 보관된 통산 자료를 함께 쓴다. */
-function similarityCareerRows(PDO $db,array $schedule,bool $pitcher): array {
-    $filter=['career'=>true,'segments'=>recordRoomYearSegments(recordRoomYears($schedule),$schedule),'team'=>'','splitSeasons'=>false,'splitTeams'=>false,'ageMin'=>null,'ageMax'=>null,'versus'=>null,'stadium'=>'','opponent'=>'','goldenGlove'=>false,'award'=>false,'mergePositions'=>false,'season'=>'regular'];
+/** 기록실의 통산 조회(playerRecords.php의 mode=career)와 같은 조건이라 보관된 통산 자료를 함께 쓴다. $ageMax를 주면 그 시즌 나이까지만 합산한다. */
+function similarityCareerRows(PDO $db,array $schedule,bool $pitcher,?int $ageMax=null): array {
+    $filter=['career'=>true,'segments'=>recordRoomYearSegments(recordRoomYears($schedule),$schedule),'team'=>'','splitSeasons'=>false,'splitTeams'=>false,'ageMin'=>null,'ageMax'=>$ageMax,'versus'=>null,'stadium'=>'','opponent'=>'','goldenGlove'=>false,'award'=>false,'mergePositions'=>false,'season'=>'regular'];
     return recordRoomDataset($db,$filter,$pitcher?'pitcher':'batter',$schedule);
 }
 
-/** 기준을 채운 전체 선수의 유사 선수 목록. 크롤러 갱신(revision)이 바뀌면 다시 계산한다. */
-function similarityIndex(PDO $db,array $schedule,bool $pitcher): array {
+/**
+ * 기준을 채운 전체 선수의 유사 선수 목록. 크롤러 갱신(revision)이 바뀌면 다시 계산한다.
+ * $ageMax를 주면 그 나이까지의 누적 기록으로 비교한다. 아직 그 나이가 안 된 현역 선수는 뺀다.
+ */
+function similarityIndex(PDO $db,array $schedule,bool $pitcher,?int $ageMax=null): array {
     $stamp=json_encode([SIMILARITY_VERSION,PROFILE_HISTORY_VERSION,PROFILE_TIEBREAKER_GAMES,profileRankingRevision()]);
-    return recordRoomCached('sim-'.($pitcher?'p':'b'),$stamp,static function()use($db,$schedule,$pitcher){
-        $throws=$pitcher?$db->query('SELECT player_id,`throw` FROM kbo_player_data')->fetchAll(PDO::FETCH_KEY_PAIR):[];
-        $vectors=[];$players=[];
-        foreach(similarityCareerRows($db,$schedule,$pitcher) as $row){
-            if(!similarityQualified($row,$pitcher))continue;
-            $vectors[$row['id']]=similarityVector($row,$pitcher,$throws[$row['id']]??null);
+    return recordRoomCached('sim-'.($pitcher?'p':'b').($ageMax===null?'':'-a'.$ageMax),$stamp,static function()use($db,$schedule,$pitcher,$ageMax){
+        $info=$db->query('SELECT player_id,birth,`throw` FROM kbo_player_data')->fetchAll(PDO::FETCH_UNIQUE|PDO::FETCH_ASSOC);
+        $year=recordRoomCurrentYear();$vectors=[];$players=[];
+        foreach(similarityCareerRows($db,$schedule,$pitcher,$ageMax) as $row){
+            if(!similarityQualified($row,$pitcher,$ageMax!==null))continue;
+            if($ageMax!==null&&$row['active']&&(profileAgeOnJulyFirst($info[$row['id']]['birth']??null,$year)??$ageMax)<$ageMax)continue;
+            $vectors[$row['id']]=similarityVector($row,$pitcher,$info[$row['id']]['throw']??null);
             $players[$row['id']]=['name'=>$row['name'],'team'=>$row['team'],'year'=>$row['year'],'active'=>$row['active']];
         }
         return ['players'=>$players,'top'=>similarityTop($vectors,$pitcher)];
     });
 }
 
+/** 현역 선수의 올해 시즌 나이(같은 나이까지 비교용). 은퇴 선수나 생년월일을 모르면 null. */
+function similarityCurrentAge(array $player): ?int {
+    return (string)($player['IsKbodle']??'')==='0'?null:profileAgeOnJulyFirst($player['Birth']??null,recordRoomCurrentYear());
+}
+
 /** 한 선수의 유사 선수. 등록 포지션 쪽 기록이 기준에 못 미치면 다른 쪽(투수↔타자) 기록으로 찾고, 둘 다 없으면 null. */
-function similarPlayers(PDO $db,int $pid,bool $pitcher,array $schedule): ?array {
+function similarPlayers(PDO $db,int $pid,bool $pitcher,array $schedule,?int $ageMax=null): ?array {
     foreach([$pitcher,!$pitcher] as $kind){
-        $index=similarityIndex($db,$schedule,$kind);
+        $index=similarityIndex($db,$schedule,$kind,$ageMax);
         if(empty($index['top'][$pid]))continue;
         $players=[];
         foreach($index['top'][$pid] as [$id,$score]){
