@@ -29,7 +29,27 @@ function flattenColors(doc, root) {
     });
 }
 
-function prepareClone(doc, root, width) {
+// 팀 로고를 칸 크기에 맞춘 PNG로 미리 그려 둔다. html2canvas는 object-fit을 무시하고,
+// width·height 속성이 없는 SVG(LG 로고 등)는 일부만 잘라 그리기 때문이다.
+function rasterizeLogos(node) {
+    return [...node.querySelectorAll('.compare-head-logo')].map(image => {
+        const box = image.getBoundingClientRect();
+        const { naturalWidth, naturalHeight } = image;
+        if (!box.width || !box.height || !naturalWidth || !naturalHeight) return null;
+        const scale = 4;
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(box.width * scale);
+        canvas.height = Math.round(box.height * scale);
+        const fit = Math.min(canvas.width / naturalWidth, canvas.height / naturalHeight);
+        const width = naturalWidth * fit, height = naturalHeight * fit;
+        try {
+            canvas.getContext('2d').drawImage(image, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+            return canvas.toDataURL('image/png');
+        } catch { return null; }
+    });
+}
+
+function prepareClone(doc, root, width, logos = []) {
 
     root.style.overflow = 'visible';
     root.style.boxSizing = 'border-box';
@@ -52,6 +72,7 @@ function prepareClone(doc, root, width) {
         photo.style.cssText = `display:block;width:100%;height:100%;border-radius:15px;background:#eef2f6 url("${image.currentSrc || image.src}") center top / cover no-repeat;`;
         image.replaceWith(photo);
     });
+    root.querySelectorAll('.compare-head-logo').forEach((image, index) => { if (logos[index]) image.src = logos[index]; });
     root.querySelectorAll('.compare-head strong').forEach(name => { name.style.overflow = 'visible'; name.style.lineHeight = '1.4'; });
     root.querySelectorAll('th, td').forEach(cell => { cell.style.position = 'static'; cell.style.boxShadow = 'none'; cell.style.willChange = 'auto'; });
     root.querySelectorAll('.compare-group th > span').forEach(span => { span.style.position = 'static'; });
@@ -68,6 +89,7 @@ export async function saveCompareImage(node, filename) {
     const width = Math.ceil(table ? table.getBoundingClientRect().width : node.scrollWidth) + PADDING * 2;
     // html2canvas는 글자 기준선을 재려고 본문에 1x1 img를 넣는다. Tailwind base의 img { display: block }이 이를 줄바꿈시켜
     // 글자가 아래로 밀리므로, 렌더링하는 동안만 이 측정용 img를 inline-block으로 둔다.
+    const logos = rasterizeLogos(node);
     const fix = document.createElement('style');
     fix.textContent = 'img[width="1"][height="1"] { display: inline-block !important; }';
     document.head.appendChild(fix);
@@ -80,15 +102,11 @@ export async function saveCompareImage(node, filename) {
         windowWidth: Math.max(window.innerWidth, width),
         scrollX: 0,
         scrollY: 0,
-        onclone: (doc, element) => prepareClone(doc, element, width),
+        onclone: (doc, element) => prepareClone(doc, element, width, logos),
     }); } finally { fix.remove(); }
     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
     if (!blob) throw new Error('이미지를 만들지 못했습니다.');
-    const file = new File([blob], filename, { type: 'image/png' });
-    // 터치 기기에서는 공유 시트(사진에 저장)를 먼저 띄운다. 취소하면 다운로드로 넘어가지 않는다.
-    if (window.matchMedia?.('(pointer: coarse)').matches && navigator.canShare?.({ files: [file] })) {
-        try { await navigator.share({ files: [file] }); return; } catch (error) { if (error?.name === 'AbortError') return; }
-    }
+    // 모바일에서도 공유 창을 띄우지 않고 바로 파일로 내려받는다.
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;

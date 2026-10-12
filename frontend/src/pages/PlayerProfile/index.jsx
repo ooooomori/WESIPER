@@ -8,6 +8,7 @@ import GameLogFilter from './GameLogFilter';
 import ProfileCandleChart from './ProfileCandleChart';
 import PlayerCompare from './PlayerCompare';
 import SimilarPlayers from './SimilarPlayers';
+import { titleholderTypes } from './titleholderTypes';
 import PlayerGroupModal, { alumniSchoolChunks, parseDraft } from './PlayerGroupModal';
 import ProfileLoading from './ProfileLoading';
 import { getCachedProfileData, loadProfileData } from './profileDataCache';
@@ -56,7 +57,6 @@ const nationalTeamLogo = (country, small = false) => {
 };
 const awardOrder = ['MVP', '골든글러브', '수비상', '올스타', '신인왕', '월간 MVP', '우승'];
 const nationalOrder = ['WBC', '올림픽', '프리미어12', '아시안게임', 'APBC'];
-const titleholderTypes = [['타율', '타격왕'], ['안타', '최다안타'], ['홈런', '홈런왕'], ['타점', '타점왕'], ['득점', '득점왕'], ['도루', '도루왕'], ['출루율', '출루왕'], ['장타율', '장타왕'], ['승리타점', '승리타점 1위'], ['다승', '다승왕'], ['평균자책점', '평균자책점왕'], ['탈삼진', '탈삼진왕'], ['세이브', '세이브왕'], ['홀드', '홀드왕'], ['승률', '승률왕'], ['세이브포인트', '세이브포인트 1위']];
 export function TitleholderRecords({ rows = [] }) {
     const titles = titleholderTypes.map(([type, name]) => ({ type, name, rows: rows.filter(row => row.type === type).sort((a, b) => Number(a.year) - Number(b.year)) })).filter(title => title.rows.length);
     if (!titles.length) return null;

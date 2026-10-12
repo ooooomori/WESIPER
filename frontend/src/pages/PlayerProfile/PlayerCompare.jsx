@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { loadProfileData } from './profileDataCache';
+import { titleholderTypes } from './titleholderTypes';
 import { loadYearRecords } from './yearRecordsCache';
 import './player-compare.css';
 import PlayerSilhouette from '../../components/PlayerSilhouette';
@@ -171,12 +172,13 @@ function CompareTable({ scrollRef, entries, mode, kind, switches, onYear, onRemo
         const inScope = row => mode === 'career' || Number(row.year) === year;
         const awards = Object.fromEntries(AWARD_TYPES.map(type => [type, career.filter(row => row.category === 'award' && row.type === type && inScope(row)).length]));
         const national = career.filter(row => row.category === 'national' && inScope(row)).length;
+        const titles = Object.fromEntries(titleholderTypes.map(([type]) => [type, (data.profile?.player?.Titleholders || []).filter(row => row.type === type && inScope(row)).length]));
         const profile = data.profile?.player;
         const retired = profile?.IsKbodle === 0 || profile?.IsKbodle === '0';
         const team = mode === 'season' ? rows.find(row => row.year === year)?.team || profile?.Team : (retired ? profile?.FormerTeam : profile?.Team);
         // 이긴 기록은 그 기록을 가진 선수의 팀 색으로 강조한다.
         const cellStyle = { '--cell-color': getTeamColor(team) || '#3a5f8f' };
-        return { entry, data, stats, awards, national, cellStyle };
+        return { entry, data, stats, awards, national, titles, cellStyle };
     });
     const statDefs = kind === 'pitcher' ? PITCHER_STATS : BATTER_STATS;
     const best = (values, higher) => {
@@ -186,6 +188,8 @@ function CompareTable({ scrollRef, entries, mode, kind, switches, onYear, onRemo
         return valid.every(value => value === target) ? null : target;
     };
     const awardRows = AWARD_TYPES.filter(type => columns.some(column => column.awards[type] > 0));
+    // 타이틀홀더: 기록 탭과 같은 순서로, 한 명이라도 차지한 타이틀만 보여준다.
+    const titleRows = titleholderTypes.filter(([type]) => columns.some(column => column.titles[type] > 0));
     const loading = columns.some(column => column.data.status === 'loading');
     return <div className="profile-compare-scroll" ref={scrollRef} aria-busy={loading}>
         <table className="profile-compare-table" style={{ '--compare-cols': columns.length }}>
@@ -195,7 +199,6 @@ function CompareTable({ scrollRef, entries, mode, kind, switches, onYear, onRemo
                 {columns.map(({ entry, data }, index) => <CompareColumnHead key={entry.id} entry={entry} data={data} kind={kind} mode={mode} onYear={year => onYear(entry.id, year)} onRemove={index === 0 ? null : () => onRemove(entry.id)} getTeamLogo={getTeamLogo} getTeamColor={getTeamColor} />)}
             </tr></thead>
             <tbody>
-                <tr className="compare-group"><th colSpan={columns.length + 1} scope="colgroup"><span>주요 기록</span></th></tr>
                 {statDefs.map(([key, label, higher, format]) => {
                     const values = columns.map(column => numeric(key, column.stats?.[key]));
                     const target = best(values, higher);
@@ -209,6 +212,12 @@ function CompareTable({ scrollRef, entries, mode, kind, switches, onYear, onRemo
                     const target = best(values, true);
                     return <tr key={type}><th scope="row">{type}</th>{columns.map((column, index) => <td key={column.entry.id} style={column.cellStyle} className={target != null && values[index] === target ? 'is-best' : ''}>{values[index] ? (type === '우승' ? `V${values[index]}` : `${values[index]}회`) : '—'}</td>)}</tr>;
                 }) : <tr><th scope="row">수상</th>{columns.map(column => <td key={column.entry.id}>—</td>)}</tr>}
+                {titleRows.length > 0 && <tr className="compare-group"><th colSpan={columns.length + 1} scope="colgroup"><span>타이틀홀더</span></th></tr>}
+                {titleRows.map(([type, name]) => {
+                    const values = columns.map(column => column.titles[type]);
+                    const target = best(values, true);
+                    return <tr key={type}><th scope="row">{name}</th>{columns.map((column, index) => <td key={column.entry.id} style={column.cellStyle} className={target != null && values[index] === target ? 'is-best' : ''}>{values[index] ? `${values[index]}회` : '—'}</td>)}</tr>;
+                })}
                 <tr className="compare-group"><th colSpan={columns.length + 1} scope="colgroup"><span>국가대표</span></th></tr>
                 {(() => {
                     const values = columns.map(column => column.national);
