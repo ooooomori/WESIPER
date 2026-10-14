@@ -5,7 +5,8 @@ import { Spinner } from "flowbite-react";
 import "./main.css";
 import PlayerSilhouette from '../../components/PlayerSilhouette';
 import RandomPlayerButton from '../../components/RandomPlayerButton';
-import { LuAlertCircle, LuX } from 'react-icons/lu';
+import { LuAlertCircle } from 'react-icons/lu';
+import { IoCloseCircle } from 'react-icons/io5';
 import { teamCapByName } from '../../lib/teamAssets';
 import { gameParticipants } from '../../lib/gameParticipants';
 import GameWeather from './GameWeather';
@@ -493,7 +494,7 @@ export default function Main() {
                             }}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 5 5" /></svg>
                             <input ref={searchInput} type="search" aria-label="선수 이름" placeholder="선수 이름을 검색해 보세요!" value={search} onChange={(event) => setSearch(event.target.value)} autoComplete="off" enterKeyHint="search" />
-                            {search && <button type="button" className="main-home-search-clear" aria-label="검색어 지우기" onClick={() => { setSearch(""); searchInput.current.focus(); }}><LuX strokeWidth={3} aria-hidden="true" /></button>}
+                            {search && <button type="button" className="main-home-search-clear" aria-label="검색어 지우기" onClick={() => { setSearch(""); searchInput.current.focus(); }}><IoCloseCircle aria-hidden="true" /></button>}
                             <RandomPlayerButton className="main-home-search-random" />
                         </form>
                     </header>

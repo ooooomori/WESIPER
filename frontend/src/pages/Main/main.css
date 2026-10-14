@@ -212,9 +212,9 @@
 .main-home-search-back { flex: 0 0 44px; width: 44px; height: 44px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 14px; background: transparent; color: #102746; cursor: pointer; transition: background .15s; }
 .main-home-search-back:hover { background: #eff3f8; }
 .main-home-search-back svg { width: 26px; height: 26px; }
-.main-home-search-header .main-home-search-clear { flex: 0 0 26px; width: 26px; height: 26px; display: grid; place-items: center; padding: 0; border: 0; border-radius: 50%; background: #b9c4d3; color: #fff; cursor: pointer; transition: background .15s; }
-.main-home-search-header .main-home-search-clear:hover { background: #8d9bb0; }
-.main-home-search-header .main-home-search-clear svg { width: 12px; height: 12px; color: #fff; }
+.main-home-search-header .main-home-search-clear { flex: 0 0 28px; width: 28px; height: 28px; display: grid; place-items: center; padding: 0; border: 0; background: none; color: #b9c4d3; cursor: pointer; transition: color .15s; }
+.main-home-search-header .main-home-search-clear:hover { color: #8d9bb0; }
+.main-home-search-header .main-home-search-clear svg { width: 22px; height: 22px; color: inherit; }
 
 .main-home-player-results { position: relative; flex: 1; display: flex; flex-direction: column; padding: 6px 0 40px; }
 .main-home-player-results p { padding: 20px 24px; color: #687f9d; font-size: 14px; }
