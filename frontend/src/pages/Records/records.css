@@ -9,10 +9,18 @@
 .record-room-types button { min-width: 68px; padding: 8px 16px; border: 0; border-radius: 999px; background: transparent; color: #7a8798; font: inherit; font-size: 15px; font-weight: 800; line-height: 20px; cursor: pointer; transition: color .25s ease; }
 .record-room-types button:hover { color: #22364f; }
 .record-room-types button[aria-pressed="true"] { color: #fff; }
-.record-room-filter-toggle { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 12px; padding: 10px 14px; border: 1px solid #dde5ef; border-radius: 13px; background: #fff; color: #607a9a; font: inherit; font-size: 13px; font-weight: 700; text-align: left; cursor: pointer; }
+.record-room-filter-bar { display: flex; gap: 8px; margin-bottom: 12px; }
+.record-room-filter-toggle { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; padding: 10px 14px; border: 1px solid #dde5ef; border-radius: 13px; background: #fff; color: #607a9a; font: inherit; font-size: 13px; font-weight: 700; text-align: left; cursor: pointer; }
 .record-room-types button:focus-visible, .record-room-filter-toggle:focus-visible { outline: 2px solid #087aff; outline-offset: 2px; }
 .record-room-filter-toggle:hover { border-color: #b7cbe4; }
-.record-room-filter-toggle strong { min-width: 0; overflow: hidden; color: #102746; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+.record-room-filter-toggle strong { display: flex; min-width: 0; overflow: hidden; color: #102746; font-weight: 800; white-space: nowrap; }
+.record-room-filter-toggle strong span { flex: none; }
+.record-room-filter-toggle strong.is-marquee { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 8px), transparent); mask-image: linear-gradient(90deg, transparent, #000 8px, #000 calc(100% - 8px), transparent); }
+.record-room-filter-toggle strong.is-marquee span { padding-right: 28px; animation: record-room-marquee 12s linear infinite; }
+.record-room-filter-clear { display: grid; place-items: center; flex: none; width: 42px; border: 1px solid #dde5ef; border-radius: 13px; background: #fff; color: #607a9a; cursor: pointer; }
+.record-room-filter-clear:hover:not(:disabled) { border-color: #b7cbe4; color: #102746; }
+.record-room-filter-clear:disabled { opacity: .45; cursor: default; }
+.record-room-filter-clear:focus-visible { outline: 2px solid #087aff; outline-offset: 2px; }
 .record-room-filter-chevron { flex: none; margin-left: auto; transform: rotate(-90deg); }
 .record-room-fields .record-room-number input { width: 96px; }
 .record-room-fields .record-room-age { flex-direction: row; align-items: flex-end; gap: 6px; }
@@ -138,6 +146,7 @@
     .record-room-player a { gap: 4px; }
     .record-room-player img, .record-room-player i { width: 17px; height: 17px; }
     .record-room-heading h2 { font-size: 19px; }
+    .record-room-filter-title { display: none; }
     .record-room-modal-backdrop { place-items: end center; padding: 0; }
     .record-room-modal { width: 100%; max-height: 92svh; border-radius: 20px 20px 0 0; animation-name: record-room-sheet; }
     .record-room-modal-head { padding: 14px 10px 10px 16px; }
@@ -165,4 +174,4 @@
     .record-room-name.is-marquee b { display: inline-block; padding-right: 14px; animation: record-room-marquee 6s linear infinite; }
 }
 @keyframes record-room-sheet { from { transform: translateY(100%); } }
-@media (prefers-reduced-motion: reduce) { .record-room-scope::before { transition: none; } .record-room-modal, .record-room-modal-backdrop, .record-room-name.is-marquee b { animation: none; } .record-room-name.is-marquee b + b { display: none; } .record-room-name.is-marquee { text-overflow: ellipsis; } .record-room-types::before, .record-room-types button, .record-room-filter-chevron { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .record-room-scope::before { transition: none; } .record-room-modal, .record-room-modal-backdrop, .record-room-name.is-marquee b, .record-room-filter-toggle strong.is-marquee span { animation: none; } .record-room-filter-toggle strong.is-marquee span + span { display: none; } .record-room-name.is-marquee b + b { display: none; } .record-room-name.is-marquee { text-overflow: ellipsis; } .record-room-types::before, .record-room-types button, .record-room-filter-chevron { transition: none; } }

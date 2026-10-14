@@ -139,7 +139,7 @@ export function resolveFilter(filter, meta, type) {
     if (filter.mergePositions && type === 'fielding') params.mergePos = 1;
     if (!regular) label = `${label} ${Object.fromEntries(seasonTypes)[filter.seasonType]}`;
     const extras = [params.players && filter.players.map(player => player.name).join(', '), filter.team, params.gg && '골든글러브 후보', params.award && '수비상 후보', filter.active && '현역', filter.foreign && '외국인', filter.prospect && '유망주', params.opp && `vs ${params.opp}`, params.stadium, params.vs && `vs ${filter.vs.map(player => player.name).join(', ')}`].filter(Boolean);
-    return { params, label: [label, ...extras].join(' · ') };
+    return { params, label: [label, ...extras].join(', ') };
 }
 
 let metaRequest = null;

@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigationType } from 'react-router-dom';
 import { Spinner } from 'flowbite-react';
 import '../PlayerProfile/player-profile.css';
 import './records.css';
@@ -18,7 +18,7 @@ const percentKeys = ['bbPct', 'kPct', 'sbPct', 'caughtStealingPct'];
 const minUnit = kind => ({ batter: '타석', pitcher: '이닝', fielding: '경기', versus: '타석' })[kind];
 const teamLogo = (team, year) => { const code = teamCodeByName(team, year); return code ? teamSmallLogoByCode(code) || teamLogoByCode(code) : null; };
 
-// 선수 프로필에 다녀와도 보던 조건이 남도록 탭을 닫을 때까지 보관한다.
+// 선수 프로필에서 뒤로 돌아오면 보던 조건이 남도록 탭을 닫을 때까지 보관한다. 메뉴 등으로 새로 들어오면 처음 조건으로 시작한다.
 function readSaved(meta) {
     let saved = null;
     try { saved = JSON.parse(sessionStorage.getItem(STORAGE_KEY)); } catch { return null; }
@@ -64,12 +64,15 @@ export default function Records() {
     const stickyRef = useStickyTableHead();
     const viewsRef = useRef(null);
     const [indicator, setIndicator] = useState(null);
+    const navigationType = useNavigationType();
+    const labelRef = useRef(null);
+    const [labelOverflow, setLabelOverflow] = useState(false);
 
     useEffect(() => {
         let active = true;
         loadRecordRoomMeta().then(loaded => {
             if (!active) return;
-            const saved = readSaved(loaded);
+            const saved = navigationType === 'POP' ? readSaved(loaded) : null;
             const filter = saved?.filter || defaultFilter(loaded);
             if (saved) {
                 const kind = tableKind(saved.type, filter);
@@ -79,6 +82,8 @@ export default function Records() {
             setDraft(filter); setApplied(filter); setMeta(loaded);
         }).catch(error => { if (active) setMetaError(error.message); });
         return () => { active = false; };
+        // 처음 들어올 때 한 번만 읽는다.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     useEffect(() => {
         if (!meta || !applied) return;
@@ -131,12 +136,30 @@ export default function Records() {
         observer.observe(element);
         return () => observer.disconnect();
     }, [view, kind, meta]);
+    // 조건 글자가 버튼보다 길면 흘려 보여준다.
+    const label = resolved?.label;
+    useLayoutEffect(() => {
+        const element = labelRef.current;
+        if (!element) { setLabelOverflow(false); return undefined; }
+        const measure = () => { const text = element.firstElementChild; setLabelOverflow(text.scrollWidth - parseFloat(getComputedStyle(text).paddingRight) > element.clientWidth + 1); };
+        measure();
+        const observer = new ResizeObserver(measure);
+        observer.observe(element);
+        return () => observer.disconnect();
+    }, [label]);
 
     // 타자·투수·수비 전환은 바로 반영한다. 기록 종류에 딸린 조건(상대 선수·포지션·타석/투구)은 지우고, 수비는 시즌 단위 기록만 있다.
+    const adjustFor = next => filter => ({ ...filter, vs: [], pos: '', hand: '', award: false, min: filter.min === 'utility' ? 100 : filter.min, ...(next === 'fielding' ? { seasonType: 'regular', span: 'full', opp: '', stadium: '', season: Math.max(filter.season, GAME_LOG_FIRST_YEAR), to: Math.max(filter.to, GAME_LOG_FIRST_YEAR) } : {}) });
     const changeType = next => {
         if (next === type) return;
-        const adjust = filter => ({ ...filter, vs: [], pos: '', hand: '', award: false, min: filter.min === 'utility' ? 100 : filter.min, ...(next === 'fielding' ? { seasonType: 'regular', span: 'full', opp: '', stadium: '', season: Math.max(filter.season, GAME_LOG_FIRST_YEAR), to: Math.max(filter.to, GAME_LOG_FIRST_YEAR) } : {}) });
+        const adjust = adjustFor(next);
         setType(next); setView('basic'); setDraft(adjust); setApplied(adjust); setSort(defaultSort(next)); setFormError('');
+    };
+    const initialFilter = () => adjustFor(type)(defaultFilter(meta));
+    const resetApplied = () => {
+        const filter = initialFilter();
+        if (tableKind(type, filter) !== kind) { setView('basic'); setSort(defaultSort(tableKind(type, filter))); }
+        setDraft(filter); setApplied(filter); setFormError('');
     };
     const changeView = next => {
         setView(next);
@@ -208,12 +231,15 @@ export default function Records() {
                 <h2>선수 기록실</h2>
                 <div className="record-room-types" role="group" aria-label="기록 종류 선택" style={{ '--type-index': types.findIndex(([value]) => value === type) }}>{types.map(([value, label]) => <button type="button" key={value} aria-pressed={type === value} onClick={() => changeType(value)}>{label}</button>)}</div>
             </div>
-            <button type="button" className="record-room-filter-toggle" aria-haspopup="dialog" onClick={() => setFilterOpen(true)}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
-                <span>검색 조건</span>
-                {resolved?.label && <strong>{resolved.label}</strong>}
-                <svg className="record-room-filter-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </button>
+            <div className="record-room-filter-bar">
+                <button type="button" className="record-room-filter-toggle" aria-haspopup="dialog" aria-label={label ? `검색 조건: ${label}` : '검색 조건'} onClick={() => setFilterOpen(true)}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
+                    <span className="record-room-filter-title">검색 조건</span>
+                    {label && <strong ref={labelRef} className={labelOverflow ? 'is-marquee' : undefined}><span>{label}</span>{labelOverflow && <span aria-hidden="true">{label}</span>}</strong>}
+                    <svg className="record-room-filter-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </button>
+                <button type="button" className="record-room-filter-clear" aria-label="조건 초기화" title="조건 초기화" disabled={JSON.stringify(applied) === JSON.stringify(initialFilter())} onClick={resetApplied}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
+            </div>
             {filterOpen && <div className="record-room-modal-backdrop" onPointerDown={event => { if (event.target === event.currentTarget) closeFilter(); }}><form id="record-room-filter" className="record-room-modal" role="dialog" aria-modal="true" aria-labelledby="record-room-filter-title" onSubmit={search}>
                 <div className="record-room-modal-head"><strong id="record-room-filter-title">검색 조건</strong><button type="button" aria-label="검색 조건 닫기" onClick={closeFilter}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button></div>
                 <div className="record-room-modal-body">
@@ -281,7 +307,7 @@ export default function Records() {
                     {formError && <p className="record-room-hint is-error" role="alert">{formError}</p>}
                 </div>
                 <div className="record-room-modal-foot">
-                    <button type="button" className="record-room-reset" onClick={() => { setDraft(defaultFilter(meta)); setFormError(''); }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>초기화</button>
+                    <button type="button" className="record-room-reset" onClick={() => { setDraft(initialFilter()); setFormError(''); }}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>초기화</button>
                     <button type="submit" className={`record-room-search${dirty ? ' is-dirty' : ''}`}>검색</button>
                 </div>
             </form></div>}
@@ -290,7 +316,7 @@ export default function Records() {
                 <div className="profile-table-sticky-head" ref={stickyRef} aria-hidden="true"><div><table className={tableClass} style={tableStyle}>{colgroup}<thead>{headRow}</thead></table></div></div>
                 <div className="profile-game-scroll" ref={scrollRef}><table className={`${tableClass}${result.loading ? ' is-loading' : ''}`} aria-busy={result.loading} style={tableStyle}>
                     {colgroup}
-                    <caption className="sr-only">{resolved?.label} {types.find(([value]) => value === type)[1]} 기록 순위</caption>
+                    <caption className="sr-only">{label} {types.find(([value]) => value === type)[1]} 기록 순위</caption>
                     <thead>{headRow}</thead>
                     <tbody>{empty || (result.loading && !result.rows.length)
                         ? <tr aria-hidden="true"><td className={result.loading ? 'profile-year-loading-space' : 'profile-year-empty-space'} colSpan={columnCount} /></tr>

@@ -460,7 +460,7 @@ function recordRoomFieldingMergedStats(array $parts): array {
 function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): array {
     $segments=$filter['segments'];
     $current=recordRoomCurrentYear();$touchesCurrent=(bool)array_filter($segments,static fn($segment)=>$segment[0]>=$current);
-    $name='q8-'.$type[0].'-'.substr(hash('sha256',json_encode($filter)),0,32);
+    $name='q21-'.$type[0].'-'.substr(hash('sha256',json_encode($filter)),0,32);
     return recordRoomCached($name,recordRoomStamp($touchesCurrent),static function()use($db,$filter,$segments,$type,$schedule){
         @set_time_limit(300);
         $pitcher=$type==='pitcher';$fielding=$type==='fielding';
@@ -577,7 +577,8 @@ function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): 
                 // 여러 시즌을 합산할 때는 통산 기준(3,000타석·1,000이닝)을 넘지 않게 한다.
                 if(!$fielding&&count($segments)>1&&!$splitSeasons)$need=min($need,$pitcher?RECORD_ROOM_CAREER_OUTS:RECORD_ROOM_CAREER_PA);
             }
-            $teams=array_values(array_unique($group['teams']));
+            // 표시 팀은 마지막으로 뛴 팀이다(예전 팀으로 돌아왔어도 그 팀).
+            $teams=$group['teams'];
             $rows[]=['id'=>(int)$id,'name'=>(string)($info[$id]['name']??$group['name']??''),'team'=>end($teams)?:null,'teams'=>count(array_unique(array_map('recordRoomFranchise',$teams))),'year'=>max($years),
                 'season'=>$splitSeasons?$years[0]:null,'utility'=>!empty($group['utility']),'active'=>isset($info[$id])&&(string)$info[$id]['is_kbodle']!=='0','foreign'=>(int)($info[$id]['is_foreign']??0)===1,'prospect'=>isset($prospects[(int)$id]),'pos'=>$position,
                 'hand'=>recordRoomHand((string)($info[$id][$pitcher?'throw':'bat']??''),$pitcher),'birth'=>(int)substr((string)($info[$id]['birth']??''),0,4)?:null,'v'=>$value,'need'=>$need,'stats'=>$stats,'sort'=>$sortStats];
