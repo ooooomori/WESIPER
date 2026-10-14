@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './player-profile.css';
 import PlayerSilhouette from '../../components/PlayerSilhouette';
+import RandomPlayerButton from '../../components/RandomPlayerButton';
 import { futuresTeamCodes, legacyTeams, legacyTeamColor, teamCapByCode, eraTeamCode, teamCapLogoByCode, teamLogoByCode, teamSmallLogoByCode } from '../../lib/teamAssets';
 import YearRecords, { allStarSide } from './YearRecords';
 import GameLogFilter from './GameLogFilter';
@@ -441,14 +442,19 @@ export default function PlayerProfile({ pid }) {
         if (player?.Name && String(player.PlayerId) === String(pid)) addRecentPlayer(player);
     }, [pid, player?.PlayerId, player?.Name, player?.Team, player?.FormerTeam]);
     // hero 등장 애니메이션은 선수 페이지에 처음 들어왔을 때 한 번만 재생한다(탭 이동 시 반복 X).
+    // 선수 정보가 들어와 hero가 보일 때 시작하고, 끝나기 전에 정리되면(개발 모드의 이중 실행 등) 다음에 다시 재생한다.
     const [heroIntro, setHeroIntro] = useState(() => !heroIntroPlayed.has(String(pid)));
+    const heroReady = String(player?.PlayerId ?? '') === String(pid);
     useEffect(() => {
-        if (heroIntroPlayed.has(String(pid))) { setHeroIntro(false); return undefined; }
-        heroIntroPlayed.add(String(pid));
+        if (!heroReady) return undefined;
+        const key = String(pid);
+        if (heroIntroPlayed.has(key)) { setHeroIntro(false); return undefined; }
+        heroIntroPlayed.add(key);
         setHeroIntro(true);
-        const timer = window.setTimeout(() => setHeroIntro(false), 2200);
-        return () => window.clearTimeout(timer);
-    }, [pid]);
+        let done = false;
+        const timer = window.setTimeout(() => { done = true; setHeroIntro(false); }, 2200);
+        return () => { window.clearTimeout(timer); if (!done) heroIntroPlayed.delete(key); };
+    }, [pid, heroReady]);
     const contentRef = useRef(null);
     useEffect(() => { setTab(tabFromUrl()); }, [location.search]);
     useEffect(() => { setGameYear(''); setGameSeason(''); setGamePitcher(null); setGameLog({ years: [], games: [] }); }, [pid]);
@@ -625,15 +631,30 @@ export default function PlayerProfile({ pid }) {
     const photo = photoIndex >= photos.length ? <PlayerSilhouette className="profile-photo-fallback" logo={cap?.noLogo ? null : capCode === 'ulsan' ? movementLogo(capTeam) : teamCapLogoByCode(capCode)} cap={cap} /> : <img src={photos[photoIndex]} alt={player.Name} onError={() => setPhotoIndex(i => i + 1)} />;
     const watermark = retiredTheme ? <img className="profile-watermark" src={kboSmallLogo} alt="" /> : <TeamLogo team={teamCode} className="profile-watermark" />;
     const compactWatermark = retiredTheme ? <img className="profile-watermark" src={kboSmallLogo} alt="" /> : <TeamLogo small team={teamCode} className="profile-watermark" />;
-    const tabs = <div className="profile-tabs" style={{ '--active-tab': tab }} role="group" aria-label="선수 정보 보기"><span className="profile-tab-indicator" aria-hidden="true" />{['개요', '기록', '경기', '차트', '비교'].map((name, i) => <button key={name} type="button" aria-pressed={tab === i} className={tab === i ? 'active' : ''} onClick={() => { setTab(i); const params = new URLSearchParams(location.search); if (i === 0) params.delete('tab'); else params.set('tab', tabNames[i]); navigate(`${location.pathname}?${params.toString()}`, { state: location.state }); window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }}>{name}</button>)}</div>;
+    // 탭 이동은 주소만 바꾸고 방문 기록은 쌓지 않는다(뒤로 가기는 선수 페이지에 오기 전 화면으로).
+    const tabs = <div className="profile-tabs" style={{ '--active-tab': tab }} role="group" aria-label="선수 정보 보기"><span className="profile-tab-indicator" aria-hidden="true" />{['개요', '기록', '경기', '차트', '비교'].map((name, i) => <button key={name} type="button" aria-pressed={tab === i} className={tab === i ? 'active' : ''} onClick={() => { setTab(i); const params = new URLSearchParams(location.search); if (i === 0) params.delete('tab'); else params.set('tab', tabNames[i]); navigate(`${location.pathname}?${params.toString()}`, { state: location.state, replace: true }); window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }}>{name}</button>)}</div>;
     return <main className="player-profile" style={{ '--team-primary': team[1], '--team-secondary': team[2], '--team-primary-light': heroPalette.light, '--team-primary-dark': heroPalette.dark, '--heading-primary': retiredTheme ? '#00b5e5' : team[1], '--heading-secondary': retiredTheme ? '#00d1c6' : team[2] }}>
         <section ref={heroRef} className={`profile-hero${heroIntro ? ' is-intro' : ''}`} aria-label="선수 소개">
             {watermark}
             <span className="profile-hero-spot" aria-hidden="true" /><span className="profile-hero-shine" aria-hidden="true" />
-            <Link className="profile-back" to="/?search=1">← 선수 검색</Link>
+            <div className="profile-hero-top">
+                <Link className="profile-back" to="/?search=1">← 선수 검색</Link>
+                <RandomPlayerButton className="profile-hero-random" exclude={player.PlayerId} />
+            </div>
             <div className="profile-identity">
                 <div className="profile-photo">{photo}</div>
-                <div className="profile-bio"><h1>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</h1><p className="profile-hero-tags">{retiredTheme ? <span className="profile-hero-tag">은퇴</span> : <span className="profile-hero-tag is-team"><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{retired || numberRetired ? '은퇴' : team[3]}</span>}{heroPosition && <span className="profile-hero-tag">{heroPosition}</span>}</p>{(handedness || birthday) && <p>{[handedness, birthday && isBirthday ? `${birthday} 🎂` : birthday].filter(Boolean).join(' | ')}</p>}{numberRetired ? <p>{team[3]} 영구결번</p> : retired && formerTeam && <p>前 {formerTeam}</p>}{!retired && !numberRetired && player.Body && <p>{player.Body}</p>}</div>
+                <div className="profile-bio is-compact"><p className="profile-hero-team">{retiredTheme ? '은퇴' : <><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{retired || numberRetired ? '은퇴' : team[3]}</>}</p><div className="profile-hero-name"><h1>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</h1>{heroPosition && <span className="profile-hero-tag">{heroPosition}</span>}</div>{(handedness || birthday) && <p className="profile-hero-meta">{[handedness, birthday && isBirthday ? `${birthday} 🎂` : birthday].filter(Boolean).map(text => <span key={text}>{text}</span>)}</p>}{numberRetired ? <p>{team[3]} 영구결번</p> : retired && formerTeam && <p>前 {formerTeam}</p>}{!retired && !numberRetired && player.Body && <p>{player.Body}</p>}</div>
+                <div className="profile-bio is-wide">
+                    <p className="profile-hero-team">{retiredTheme ? '은퇴' : <><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{retired || numberRetired ? '은퇴' : team[3]}</>}</p>
+                    <h1>{player.Name}{player.BackNo != null && <span>#{player.BackNo}</span>}</h1>
+                    <dl className="profile-hero-facts">
+                        {heroPosition && <div><dt>포지션</dt><dd>{heroPosition}</dd></div>}
+                        {handedness && <div><dt>투타</dt><dd>{handedness}</dd></div>}
+                        {birthday && <div><dt>생년월일</dt><dd>{birthday}{isBirthday && ' 🎂'}</dd></div>}
+                        {numberRetired ? <div><dt>영구결번</dt><dd>{team[3]}</dd></div> : retired && formerTeam && <div><dt>최종 소속</dt><dd>{formerTeam}</dd></div>}
+                        {!retired && !numberRetired && player.Body && <div><dt>신체</dt><dd>{player.Body}</dd></div>}
+                    </dl>
+                </div>
             </div>
             {tabs}
         </section>

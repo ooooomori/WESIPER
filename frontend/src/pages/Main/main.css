@@ -197,6 +197,12 @@
 .main-home-search-header { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 8px; padding: max(14px, env(safe-area-inset-top)) 20px 14px 12px; background: rgba(255,255,255,.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
 .main-home-search-header::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: #e8edf4; }
 .main-home-search-header .main-home-search { flex: 1; min-width: 0; margin: 0; height: 52px; gap: 10px; padding: 0 10px 0 16px; border: 2px solid transparent; border-radius: 16px; background: #eff3f8; box-shadow: none; cursor: text; transition: background .2s, border-color .2s, box-shadow .2s; }
+.main-home-search-random { display: grid; place-items: center; flex: none; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #9aa7b8; cursor: pointer; transition: color .15s; }
+.main-home-search-random:hover { color: #5f6f85; }
+.main-home-search-random:focus-visible { outline: 2px solid #087aff; outline-offset: 1px; }
+.main-home-search-random:disabled { cursor: progress; }
+.main-home-search-random:disabled svg { opacity: .45; }
+.main-home-search-header .main-home-search-random svg { width: 18px; height: 18px; color: inherit; }
 .main-home-search-header .main-home-search:focus-within { background: #fff; border-color: #087aff; box-shadow: 0 0 0 5px rgba(8,122,255,.12); }
 .main-home-search-header .main-home-search > svg { width: 22px; height: 22px; color: #087aff; }
 .main-home-search-header input { flex: 1; width: 100%; min-width: 0; height: 100%; padding: 0; border: 0; outline: 0; box-shadow: none; background: transparent; color: #0b1b30; font: inherit; font-size: 18px; font-weight: 700; letter-spacing: -.02em; }

@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import "./main.css";
 import PlayerSilhouette from '../../components/PlayerSilhouette';
+import RandomPlayerButton from '../../components/RandomPlayerButton';
+import { LuAlertCircle, LuX } from 'react-icons/lu';
 import { teamCapByName } from '../../lib/teamAssets';
 import { gameParticipants } from '../../lib/gameParticipants';
 import GameWeather from './GameWeather';
@@ -87,6 +89,18 @@ function getPlayerPosition(player) {
     const rawPosition = player.MainPos?.trim() || player.Pos || '';
     return player.MainPos?.trim() && player.Pos?.includes('투수') && !rawPosition.endsWith('투수') ? `${rawPosition}투수` : rawPosition;
 }
+const HANGUL_INITIALS = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
+// 초성이 섞인 검색어(ㄱㄷㅇ, 김ㄷㅇ)가 이름 앞부분과 맞으면 맞은 글자 수. 서버의 초성 검색과 같은 규칙.
+function initialMatchLength(name, query) {
+    const chars = [...query.replace(/\s+/g, '')];
+    if (!chars.some(char => HANGUL_INITIALS.includes(char)) || chars.length > name.length) return 0;
+    return chars.every((char, index) => {
+        const code = name.charCodeAt(index) - 0xac00;
+        if (code < 0 || code > 11171) return false;
+        const initial = HANGUL_INITIALS.indexOf(char);
+        return initial >= 0 ? Math.floor(code / 588) === initial : name[index] === char;
+    }) ? chars.length : 0;
+}
 function SearchPlayerRow({ player, keyword = '', rank }) {
     const { active, numberRetired, teamLabel, color, logo, fullLogo } = getPlayerTeamInfo(player);
     const position = getPlayerPosition(player);
@@ -104,7 +118,9 @@ function SearchPlayerRow({ player, keyword = '', rank }) {
     const name = player.Name || '';
     const fragments = [];
     let start = 0, match;
-    while (query && (match = name.toLocaleLowerCase().indexOf(query,start)) !== -1) {
+    const initials = initialMatchLength(name, query);
+    if (initials) { fragments.push(<mark key="initials">{name.slice(0, initials)}</mark>); start = initials; }
+    while (!initials && query && (match = name.toLocaleLowerCase().indexOf(query,start)) !== -1) {
         fragments.push(name.slice(start,match),<mark key={match}>{name.slice(match,match+query.length)}</mark>);start=match+query.length;
     }
     fragments.push(name.slice(start));
@@ -477,7 +493,8 @@ export default function Main() {
                             }}>
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 5 5" /></svg>
                             <input ref={searchInput} type="search" aria-label="선수 이름" placeholder="선수 이름을 검색해 보세요!" value={search} onChange={(event) => setSearch(event.target.value)} autoComplete="off" enterKeyHint="search" />
-                            {search && <button type="button" className="main-home-search-clear" aria-label="검색어 지우기" onClick={() => { setSearch(""); searchInput.current.focus(); }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg></button>}
+                            {search && <button type="button" className="main-home-search-clear" aria-label="검색어 지우기" onClick={() => { setSearch(""); searchInput.current.focus(); }}><LuX strokeWidth={3} aria-hidden="true" /></button>}
+                            <RandomPlayerButton className="main-home-search-random" />
                         </form>
                     </header>
                     <div className="main-home-player-results" aria-busy={playerSearchState === "loading"}>
@@ -517,7 +534,7 @@ export default function Main() {
                             {playerSearchState === "loading" && <div className="main-home-player-loading"><Spinner size="lg" className="fill-blue-600" aria-label="선수 검색 중" /></div>}
                             {playerSearchState === "error" && <p>검색 정보를 불러오지 못했습니다. 잠시 후 다시 입력해 주세요.</p>}
                             {playerSearchState === "ready" && players.length === 0 && <div className="main-home-player-empty">
-                                <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><circle cx="24" cy="24" r="19" /><path d="M24 13v14" strokeLinecap="round" /><circle cx="24" cy="34" r="1.5" fill="currentColor" stroke="none" /></svg>
+                                <LuAlertCircle aria-hidden="true" />
                                 <p>검색 결과가 없습니다.</p>
                             </div>}
                         </div>

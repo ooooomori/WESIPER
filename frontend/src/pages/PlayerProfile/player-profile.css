@@ -207,6 +207,15 @@
 .player-profile .profile-compact-identity::after {
     clip-path: polygon(59% 0, 79% 0, 59% 100%, 39% 100%);
 }
+/* 사선 빛: 딱딱한 도형 대신 오른쪽 위 밝은 곳에서 사선으로 흘러내리는 부드러운 빛줄기. 들어올 때 서서히 밝아지고, 이후 아주 천천히 움직인다. */
+.player-profile .profile-hero::before,
+.player-profile .profile-compact-identity::before { inset: -40px; clip-path: none; opacity: 1; filter: blur(20px); background: linear-gradient(116deg, transparent 38%, color-mix(in srgb, var(--team-primary-light) 34%, transparent) 50%, transparent 62%); animation: profile-hero-light 16s ease-in-out infinite alternate; }
+.player-profile .profile-hero::after,
+.player-profile .profile-compact-identity::after { inset: -40px; clip-path: none; opacity: 1; filter: blur(16px); background: linear-gradient(116deg, transparent 58%, rgba(255,255,255,.08) 64%, transparent 70%); animation: profile-hero-light 16s ease-in-out -8s infinite alternate; }
+.player-profile .profile-hero.is-intro::before, .player-profile .profile-hero.is-intro::after { animation: profile-hero-light-in 1.2s ease-out both, profile-hero-light 16s ease-in-out infinite alternate; }
+@keyframes profile-hero-light { from { transform: translateX(-3%); } to { transform: translateX(3%); } }
+@keyframes profile-hero-light-in { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .player-profile .profile-hero::before, .player-profile .profile-hero::after, .player-profile .profile-compact-identity::before, .player-profile .profile-compact-identity::after { animation: none; } }
 .player-profile .profile-hero .profile-back,
 .player-profile .profile-hero .profile-back:hover,
 .player-profile .profile-hero .profile-bio p,
@@ -675,6 +684,23 @@
 .player-profile .profile-stats-overview > .profile-stat-top-five { border-color: color-mix(in srgb, var(--team-primary) 30%, #e8eef6); }
 .player-profile .profile-stats-overview > .profile-stat-top-five::after { width: 100%; left: 0; border-radius: 0; height: 3px; background: linear-gradient(90deg, var(--team-primary), var(--team-secondary)); }
 .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-header span { color: #22364f; }
+/* 5위 이내 카드는 순위가 들어올 때 한꺼번에 팀 색이 번지고 아래 줄이 펼쳐진다. 그 뒤로 빛이 주기적으로 훑고 지나간다. */
+.player-profile .profile-stats-overview > .profile-stat-top-five { isolation: isolate; background: #fff; animation: profile-top-five-card .7s cubic-bezier(.22,1,.36,1) both; }
+.player-profile .profile-stats-overview > .profile-stat-top-five::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background:
+        linear-gradient(105deg, transparent 38%, rgba(255,255,255,.85) 50%, transparent 62%) -20% 0 / 250% 100% no-repeat,
+        linear-gradient(135deg, color-mix(in srgb, var(--team-primary) 9%, #fff) 0%, color-mix(in srgb, var(--team-primary) 4%, #fff) 48%, color-mix(in srgb, var(--team-secondary) 13%, #fff) 100%);
+    animation: profile-top-five-fill .9s cubic-bezier(.22,1,.36,1) both, profile-top-five-shine 3.5s cubic-bezier(.45,0,.25,1) .55s infinite both;
+}
+.player-profile .profile-stats-overview > .profile-stat-top-five::after { transform-origin: left; animation: profile-top-five-bar .8s cubic-bezier(.22,1,.36,1) .2s both; }
+.player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-rank { animation: profile-top-five-rank .5s ease-out .35s both; }
+@keyframes profile-top-five-card { from { border-color: #e8eef6; } }
+@keyframes profile-top-five-fill { from { opacity: 0; clip-path: circle(0% at 0% 100%); } to { opacity: 1; clip-path: circle(150% at 0% 100%); } }
+@keyframes profile-top-five-shine { from { background-position: 120% 0, 0 0; } 30%, to { background-position: -20% 0, 0 0; } }
+@keyframes profile-top-five-bar { from { transform: scaleX(0); } }
+@keyframes profile-top-five-rank { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .player-profile .profile-stats-overview > .profile-stat-top-five, .player-profile .profile-stats-overview > .profile-stat-top-five::before, .player-profile .profile-stats-overview > .profile-stat-top-five::after, .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-rank { animation: none; } }
 @media (max-width: 600px) {
     .player-profile .profile-stats-overview { gap: 7px; }
     .player-profile .profile-stats-overview > div { padding: 9px 7px 11px 8px; border-radius: 13px; }
@@ -1024,7 +1050,6 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
 .player-profile .profile-compact-identity strong { flex: none; gap: 6px; font-size: 17px; letter-spacing: -.02em; }
 .player-profile .profile-compact-identity strong span { font-size: 12.5px; }
 .player-profile .profile-compact-identity p { min-width: 0; margin: 0; overflow: hidden; color: rgba(255,255,255,.78); font-size: 12.5px; text-overflow: ellipsis; white-space: nowrap; }
-.player-profile .profile-compact-identity p::before { content: '·'; margin-right: 8px; color: rgba(255,255,255,.45); }
 .profile-compact-back { min-height: 34px; }
 @media (max-width: 600px) {
     .player-profile .profile-compact-identity { gap: 9px; padding: 6px 16px; }
@@ -1150,3 +1175,63 @@ a.profile-alumni-row:focus-visible { outline: 2px solid var(--team-primary); out
     .profile-game-log { font-size: 11px; }
     .profile-game-log th, .profile-game-log td { padding-block: 6px; padding-inline: 3px; }
 }
+
+/* 국가대표 경력: 성적 배지는 대회 이름 길이와 상관없이 줄 오른쪽 끝에 맞춘다. */
+.profile-career-list .profile-career-result { margin-left: auto; }
+
+/* ===== hero 정보: 모바일은 기존 배치, 넓은 화면은 팀 → 이름 → 이름표 붙은 기본 정보 줄. ===== */
+.player-profile .profile-hero .profile-bio.is-wide { display: none; }
+@media (min-width: 601px) {
+    .player-profile .profile-hero .profile-bio.is-compact { display: none; }
+    .player-profile .profile-hero .profile-bio.is-wide { display: block; min-width: 0; }
+    .player-profile .profile-hero .profile-identity { gap: 30px; }
+    .player-profile .profile-hero .profile-photo { width: 156px; height: 190px; border-radius: 20px; }
+    .player-profile .profile-hero .profile-hero-team { display: flex; align-items: center; gap: 8px; margin: 0 0 6px !important; color: rgba(255,255,255,.82); font-size: 14px !important; font-weight: 700; letter-spacing: -.01em; }
+    .player-profile .profile-hero .profile-hero-team .profile-hero-tag-logo { width: 22px; height: 22px; }
+    .player-profile .profile-hero .profile-bio.is-wide h1 { gap: 12px; margin: 0 0 20px; font-size: 40px; font-weight: 800; line-height: 1.05; letter-spacing: -.03em; }
+    .player-profile .profile-hero .profile-bio.is-wide h1 span { color: color-mix(in srgb, var(--team-primary-light) 60%, #fff); font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+    .profile-hero-facts { display: flex; flex-wrap: wrap; row-gap: 12px; margin: 0; }
+    .profile-hero-facts > div { min-width: 0; padding: 0 22px; border-left: 1px solid rgba(255,255,255,.18); }
+    .profile-hero-facts > div:first-child { padding-left: 0; border-left: 0; }
+    .profile-hero-facts dt { margin: 0 0 5px; color: rgba(255,255,255,.58); font-size: 12px; font-weight: 600; }
+    .profile-hero-facts dd { margin: 0; color: #fff; font-size: 16px; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; }
+}
+/* 모바일 hero: 배치·높이·배경 로고는 그대로 두고, 팀·포지션을 버튼 같은 칩 대신 한 줄 글자로, 정보 줄의 '|'를 가는 세로선으로 바꿔 이름이 먼저 보이게 한다. */
+@media (max-width: 600px) {
+    .player-profile .profile-hero .profile-bio.is-compact h1 { gap: 6px; margin-bottom: 7px; font-size: 25px; line-height: 1.1; }
+    .player-profile .profile-hero .profile-bio.is-compact h1 span { font-size: 13px; color: rgba(255,255,255,.7); }
+    .player-profile .profile-hero .profile-bio.is-compact > p:not(.profile-hero-tags) { margin: 1px 0; color: rgba(255,255,255,.78); font-size: 12px; line-height: 1.5; }
+    .profile-hero-meta span + span::before { content: ''; display: inline-block; width: 1px; height: .85em; margin: 0 8px; vertical-align: -.08em; background: rgba(255,255,255,.35); }
+}
+/* ===== 모바일 hero 다듬기: 배치는 그대로, 정보 줄은 차분하게. ===== */
+@media (max-width: 600px) {
+    .player-profile .profile-hero { padding-top: 14px; }
+    .player-profile .profile-hero .profile-back { color: rgba(255,255,255,.7); font-size: 12px; font-weight: 600; }
+    .player-profile .profile-hero .profile-identity { gap: 18px; padding: 16px 0 20px; }
+    .player-profile .profile-hero .profile-photo { width: 94px; height: 116px; border-radius: 18px; }
+    .player-profile .profile-hero > .profile-watermark { opacity: .14; }
+    .player-profile .profile-hero .profile-bio.is-compact h1 span { color: color-mix(in srgb, var(--team-primary-light) 55%, #fff); }
+    .player-profile .profile-hero .profile-bio.is-compact > p:not(.profile-hero-tags) { margin: 0; color: rgba(255,255,255,.66); font-size: 12.5px; font-weight: 600; line-height: 1.6; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+    .player-profile .profile-hero .profile-hero-meta span + span::before { background: rgba(255,255,255,.25); }
+    .player-profile .profile-hero .profile-bio.is-compact .profile-hero-team { display: flex; align-items: center; gap: 6px; margin: 0 0 6px !important; color: rgba(255,255,255,.82); font-size: 12.5px !important; font-weight: 700; letter-spacing: -.01em; }
+    .player-profile .profile-hero .profile-bio.is-compact .profile-hero-team .profile-hero-tag-logo { width: 20px; height: 20px; padding: 3px; }
+    .profile-hero-name { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; }
+    .player-profile .profile-hero .profile-bio.is-compact .profile-hero-name h1 { margin: 0; }
+    .player-profile .profile-hero .profile-hero-name > .profile-hero-tag { height: 20px; padding: 0 8px; border: 0; background: rgba(255,255,255,.82); -webkit-backdrop-filter: none; backdrop-filter: none; color: var(--team-primary-dark); font-size: 11.5px; font-weight: 800; letter-spacing: -.02em; }
+}
+/* 활성 탭: 팀 색 바탕 위에서 같은 계열 색 알약은 묻히므로 흰 알약에 팀 색 글자. */
+.player-profile .profile-hero .profile-tab-indicator::before,
+.player-profile .profile-compact-header .profile-tab-indicator::before { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+.player-profile .profile-hero .profile-tabs button.active,
+.player-profile .profile-compact-header .profile-tabs button.active { color: var(--team-primary-dark); }
+.player-profile .profile-hero .profile-tabs button,
+.player-profile .profile-compact-header .profile-tabs button { color: rgba(255,255,255,.78); }
+/* 랜덤 선수 버튼: '선수 검색'과 같은 줄 오른쪽. 버튼이 줄 높이를 늘리지 않도록 위아래 여백을 음수로 둔다. */
+.profile-hero-top { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; }
+.profile-hero-random { display: grid; place-items: center; flex: none; width: 32px; height: 32px; margin: -8px -8px -8px 0; padding: 0; border: 0; border-radius: 8px; background: none; color: rgba(255,255,255,.7); cursor: pointer; transition: color .15s; }
+.profile-hero-random:hover { color: #fff; }
+.profile-hero-random:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.profile-hero-random:disabled { cursor: progress; }
+.profile-hero-random svg { width: 17px; height: 17px; }
+.profile-hero-random:disabled svg { opacity: .45; }
+@media (max-width: 600px) { .profile-hero-random svg { width: 16px; height: 16px; } }
