@@ -17,16 +17,22 @@ export function summarizeBatter(games) {
 }
 
 export function summarizePitcher(games) {
-    const sum = { outs: 0, er: 0, r: 0, h: 0, hr: 0, bb: 0, hbp: 0, so: 0 };
+    const sum = { outs: 0, er: 0, r: 0, h: 0, hr: 0, bb: 0, hbp: 0, so: 0, ab: 0, doubles: 0, triples: 0, sf: 0 };
     for (const game of games) {
         sum.outs += outsOf(game.innings);
-        for (const key of ['er', 'r', 'h', 'hr', 'bb', 'hbp', 'so']) sum[key] += num(game[key]);
+        for (const key of ['er', 'r', 'h', 'hr', 'bb', 'hbp', 'so', 'ab', 'doubles', 'triples', 'sf']) sum[key] += num(game[key]);
     }
     const count = badge => games.filter(game => game.badge === badge).length;
     // QS: 선발로 6이닝 이상 던지고 3자책 이하.
     const qs = games.filter(game => game.isStarter === true && game.er != null && outsOf(game.innings) >= 18 && num(game.er) <= 3).length;
     const innings = `${Math.floor(sum.outs / 3)}${sum.outs % 3 ? `.${sum.outs % 3}` : ''}`;
-    return { era: sum.outs ? sum.er * 27 / sum.outs : null, whip: sum.outs ? (sum.h + sum.bb) * 3 / sum.outs : null, played: sum.outs > 0, sample: sum.outs, totals: { games: games.length, ...sum, innings, wins: count('승리'), losses: count('패전'), holds: count('홀드'), saves: count('세이브'), qs } };
+    // 상대한 타자 기준 피안타율·피OPS(타수 기록이 없는 옛 경기는 계산하지 않는다)
+    const faced = sum.ab > 0;
+    const tb = sum.h + sum.doubles + 2 * sum.triples + 3 * sum.hr;
+    const plate = sum.ab + sum.bb + sum.hbp + sum.sf;
+    const obpAgainst = faced && plate ? (sum.h + sum.bb + sum.hbp) / plate : null;
+    const slgAgainst = faced ? tb / sum.ab : null;
+    return { era: sum.outs ? sum.er * 27 / sum.outs : null, avg: faced ? sum.h / sum.ab : null, obp: obpAgainst, slg: slgAgainst, ops: obpAgainst !== null && slgAgainst !== null ? obpAgainst + slgAgainst : null, whip: sum.outs ? (sum.h + sum.bb) * 3 / sum.outs : null, played: sum.outs > 0, sample: sum.outs, totals: { games: games.length, ...sum, innings, wins: count('승리'), losses: count('패전'), holds: count('홀드'), saves: count('세이브'), qs } };
 }
 
 // 3월은 개막 직후 경기가 적어 4월과 합쳐 보여준다.

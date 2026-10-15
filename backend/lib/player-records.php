@@ -181,7 +181,7 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
             $game=profileGameMeta($row,$stadiums);
             $game+=['text'=>$text,'badge'=>$badge,'role'=>isset($row['order'])?((int)$row['order']===1?'선발':'구원'):null,'innings'=>profileInningText(profileInningOuts($row['inning'])),'r'=>$row['r'],'er'=>$row['er']];
             $game['isStarter']=isset($row['order'])?(int)$row['order']===1:null;
-            foreach(['so','h','hr','bb','hbp'] as $key)$game[$key]=$f?profileSum($f,$key):null;
+            foreach(['so','h','hr','bb','hbp','ab','doubles','triples','sf'] as $key)$game[$key]=$f?profileSum($f,$key):null;
             $game['notes']=profilePitchNote($game,($pitchCounts[$row['game_id'].'|'.profileTeam($row['team'])]??0)===1);
             if(count($recent)<5)$recent[]=$game;
             if(profileIsTiebreakerGame($row['game_id']))continue;

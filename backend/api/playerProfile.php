@@ -50,6 +50,17 @@ try {
             } catch (Throwable $historicalTeamError) { error_log('Historical former team unavailable: ' . $historicalTeamError->getMessage()); }
         }
     }
+    // 은퇴·영구결번 선수의 활동 기간(선수 검색과 같은 기준): 첫·마지막 경기 기록 연도
+    $player['FirstRecordYear'] = null;
+    $player['LastRecordYear'] = null;
+    if ((string)$player['IsKbodle'] === '0') {
+        try {
+            require_once __DIR__ . '/../lib/player-search-stats.php';
+            $recordStats = searchPlayerRecordStats($pdo, [(int)$pid])[(int)$pid] ?? [];
+            $player['FirstRecordYear'] = $recordStats['first_year'] ?? null;
+            $player['LastRecordYear'] = empty($player['Retire']) ? ($recordStats['last_year'] ?? null) : null;
+        } catch (Throwable $recordYearError) { error_log('Profile record years unavailable: ' . $recordYearError->getMessage()); }
+    }
     unset($player['StoredTeam']);
     $career=[];
     if(in_array($part,['profile','all'],true)){
@@ -178,7 +189,7 @@ try {
         // 올해가 들어간 조회(올해·통산)만 크롤러 revision을 따라 갱신한다. 연도 목록은 캐시하지 않고 매번 새로 읽는다.
         $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
         $volatile=$allYears||$year===null||(int)$year>=$currentYear;
-        $cacheKey=[(string)$pid,$type,$allYears?'all':$year,$season,$player['Pos'],(string)$player['IsKbodle'],md5(json_encode($schedule))];
+        $cacheKey=[(string)$pid,$type,$allYears?'all':$year,$season,$player['Pos'],(string)$player['IsKbodle'],md5(json_encode($schedule)),'v2'];
         $computed=json_decode(profileChartCachedJson('games',$cacheKey,$volatile,static function() use ($pdo,$player,$schedule,$allYears,$year,$season,$seasonYears,$gamePitcher,$basePitcher,$pid) {
             $streakRows=null;
             if($allYears) {

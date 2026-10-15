@@ -8,12 +8,12 @@ import SplitModal from './SplitModal';
 const rate = value => value.toFixed(3).replace(/^0\./, '.');
 const metricsByKind = {
     batter: [{ key: 'avg', label: '타율', format: rate }, { key: 'ops', label: 'OPS', format: rate }],
-    pitcher: [{ key: 'era', label: 'ERA', lowerBetter: true, format: value => value.toFixed(2) }, { key: 'whip', label: 'WHIP', lowerBetter: true, format: value => value.toFixed(2) }],
+    pitcher: [{ key: 'era', label: 'ERA', lowerBetter: true, format: value => value.toFixed(2) }, { key: 'avg', label: '피안타율', lowerBetter: true, format: rate }, { key: 'ops', label: '피OPS', lowerBetter: true, format: rate }],
     faced: [{ key: 'avg', label: '피안타율', lowerBetter: true, format: rate }, { key: 'ops', label: '피OPS', lowerBetter: true, format: rate }],
 };
 const splitTabs = {
     batter: [['month', '월별'], ['opponent', '상대별'], ['inning', '이닝별'], ['order', '타순별'], ['venue', '홈/원정']],
-    pitcher: [['month', '월별'], ['opponent', '상대별'], ['oppOrder', '상대 타순별'], ['venue', '홈/원정']],
+    pitcher: [['month', '월별'], ['opponent', '상대별'], ['inning', '이닝별'], ['oppOrder', '상대 타순별'], ['venue', '홈/원정']],
 };
 // 타석 단위 기록이 필요해 따로 불러오는 스플릿. 10회 이후는 연장으로 합쳐서 온다.
 const paSplits = {
@@ -27,49 +27,43 @@ const MIN_BASE = .45;
 const MIN_SPREAD = .1, MAX_SPREAD = 1;
 
 // 막대 길이는 값 그대로(0부터)이고, 세로 점선이 기준(시즌 기록)이다. 기준보다 좋으면 빨강, 나쁘면 파랑이고 기준에서 멀수록 색이 진하다.
-function SplitRows({ rows, metrics, total, baseLabel, animationKey, logoOf, onSelect }) {
+// 오른쪽에는 기준과의 차이를 적는다.
+function SplitRows({ rows, metric, total, baseLabel, animationKey, logoOf, onSelect }) {
     // 표본이 다른 구분의 1/3에도 못 미치면 흐리게 그리고 막대 길이 기준에서도 뺀다.
     const samples = rows.filter(row => !row.section).map(row => row.sample).sort((a, b) => a - b);
     const median = samples.length ? samples[Math.floor(samples.length / 2)] : 0;
     const thin = row => !row.section && row.sample < median / 3;
-    const scales = Object.fromEntries(metrics.map(metric => {
-        const base = total?.[metric.key] ?? null;
-        const top = Math.max(base ?? 0, ...rows.filter(row => !thin(row)).map(row => row[metric.key] ?? 0));
-        const domain = (base ? Math.min(top, base / MIN_BASE) : top) || 1;
-        const gapOf = row => row[metric.key] == null || !base ? 0 : (metric.lowerBetter ? base - row[metric.key] : row[metric.key] - base) / base;
-        // 좋은 쪽과 나쁜 쪽의 진하기를 따로 잡는다. ERA처럼 나쁜 쪽만 크게 벌어져도 좋은 기록의 색이 옅어지지 않는다.
-        const gaps = rows.filter(row => !thin(row)).map(gapOf);
-        const spread = { up: Math.min(Math.max(MIN_SPREAD, ...gaps), MAX_SPREAD), down: Math.min(Math.max(MIN_SPREAD, ...gaps.map(gap => -gap)), MAX_SPREAD) };
-        return [metric.key, { base, domain, gapOf, spread }];
-    }));
-    return <div className="profile-split-chart" key={animationKey} style={{ '--split-metrics': metrics.length }}>
-        <div className="profile-split-head">
+    const base = total?.[metric.key] ?? null;
+    const top = Math.max(base ?? 0, ...rows.filter(row => !thin(row)).map(row => row[metric.key] ?? 0));
+    const domain = (base ? Math.min(top, base / MIN_BASE) : top) || 1;
+    const gapOf = row => row[metric.key] == null || !base ? 0 : (metric.lowerBetter ? base - row[metric.key] : row[metric.key] - base) / base;
+    // 좋은 쪽과 나쁜 쪽의 진하기를 따로 잡는다. ERA처럼 나쁜 쪽만 크게 벌어져도 좋은 기록의 색이 옅어지지 않는다.
+    const gaps = rows.filter(row => !thin(row)).map(gapOf);
+    const spread = { up: Math.min(Math.max(MIN_SPREAD, ...gaps), MAX_SPREAD), down: Math.min(Math.max(MIN_SPREAD, ...gaps.map(gap => -gap)), MAX_SPREAD) };
+    const best = rows.filter(row => !row.section && !thin(row) && row[metric.key] != null).reduce((pick, row) => !pick || gapOf(row) > gapOf(pick) ? row : pick, null);
+    return <div className="profile-split-chart" key={animationKey}>
+        {base != null && <div className="profile-split-head" aria-hidden="true">
             <span />
-            {metrics.map(metric => {
-                const { base, domain } = scales[metric.key];
-                return <span key={metric.key} className="profile-split-cell">
-                    <span className="profile-split-base">{base != null && <small style={{ left: `${base / domain * 100}%` }}>{baseLabel} {metric.format(base)}</small>}</span>
-                </span>;
-            })}
-        </div>
+            <span className="profile-split-base" style={{ '--split-base': `${base / domain * 100}%` }}><small>{baseLabel} {metric.format(base)}</small></span>
+            <span /><span />
+        </div>}
         {rows.map((row, index) => {
             const logo = logoOf?.(row);
             const sectionStart = index > 0 && row.section !== rows[index - 1].section;
-            return <button key={row.key} type="button" className={`profile-split-row${thin(row) ? ' is-thin' : ''}${sectionStart ? ' is-section-start' : ''}`} onClick={() => onSelect?.(row)}
-                aria-label={`${row.label} ${row.games}${row.unit || '경기'}, ${metrics.map(metric => `${metric.label} ${row[metric.key] == null ? '기록 없음' : metric.format(row[metric.key])}`).join(', ')}`}>
+            const value = row[metric.key];
+            const gap = gapOf(row);
+            const width = value == null ? 0 : Math.max(Math.min(value / domain, 1) * 100, 1);
+            const tone = `${Math.round(20 + Math.min(Math.abs(gap) / (gap >= 0 ? spread.up : spread.down), 1) * 80)}%`;
+            const diff = value == null || base == null ? null : value - base;
+            const better = diff == null ? null : metric.lowerBetter ? diff <= 0 : diff >= 0;
+            return <button key={row.key} type="button" className={`profile-split-row${thin(row) ? ' is-thin' : ''}${sectionStart ? ' is-section-start' : ''}${best === row ? ' is-best' : ''}`} onClick={() => onSelect?.(row)}
+                aria-label={`${row.label} ${row.games}${row.unit || '경기'}, ${metric.label} ${value == null ? '기록 없음' : metric.format(value)}`}>
                 <span className="profile-split-name"><b>{logo && <img src={logo} alt="" />}{row.label}</b><small>{row.games}{row.unit || '경기'}</small></span>
-                {metrics.map((metric, slot) => {
-                    const value = row[metric.key], { base, domain, gapOf, spread } = scales[metric.key];
-                    const gap = gapOf(row);
-                    const width = value == null ? 0 : Math.max(Math.min(value / domain, 1) * 100, 1);
-                    const tone = `${Math.round(20 + Math.min(Math.abs(gap) / (gap >= 0 ? spread.up : spread.down), 1) * 80)}%`;
-                    return <span key={metric.key} className="profile-split-cell">
-                        <span className="profile-split-track" style={base != null ? { '--split-base': `${base / domain * 100}%` } : undefined}>
-                            {value != null && <i className={!base ? '' : gap >= 0 ? 'is-up' : 'is-down'} style={{ '--split-tone': tone, width: `${width}%`, animationDelay: `${index * 35 + slot * 60}ms` }} />}
-                            <span className="profile-split-value" style={{ left: `${width}%` }}>{value == null ? '—' : metric.format(value)}</span>
-                        </span>
-                    </span>;
-                })}
+                <span className="profile-split-track" style={base != null ? { '--split-base': `${base / domain * 100}%` } : undefined}>
+                    {value != null && <i className={!base ? '' : gap >= 0 ? 'is-up' : 'is-down'} style={{ '--split-tone': tone, width: `${width}%`, animationDelay: `${index * 35}ms` }} />}
+                    <span className="profile-split-value" style={{ left: `${width}%` }}>{value == null ? '—' : metric.format(value)}</span>
+                </span>
+                <span className={`profile-split-delta${better == null ? '' : better ? ' is-up' : ' is-down'}`}>{diff == null || Math.abs(diff) < 1e-9 ? '' : `${diff > 0 ? '+' : '−'}${metric.format(Math.abs(diff))}`}</span>
                 <svg className="profile-split-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
             </button>;
         })}
@@ -104,9 +98,9 @@ export default function SplitCharts({ pid, pitcher, active = true, getTeamLogo }
         return () => { current = false; };
     }, [pid, kind, selection.year, selection.season, retry]);
 
-    const paSplit = paSplits[split];
+    const paSplit = paSplits[split] ? { ...paSplits[split], side: pitcher && split === 'inning' ? 'pitcher' : paSplits[split].side } : null;
     const [pa, setPa] = useState({ key: '', rows: null, error: false });
-    const paKey = log && paSplit ? `${split}-${pid}-${log.year}-${log.season}` : '';
+    const paKey = log && paSplit ? `${split}-${paSplit.side}-${pid}-${log.year}-${log.season}` : '';
     useEffect(() => {
         if (!paSplit || !log?.year || pa.key === paKey) return undefined;
         let current = true;
@@ -119,8 +113,10 @@ export default function SplitCharts({ pid, pitcher, active = true, getTeamLogo }
     const paLoading = Boolean(paSplit) && pa.key !== paKey;
     const splits = useMemo(() => log ? buildSplits(log.games, pitcher, log.halfStarts) : null, [log, pitcher]);
     // 지표는 한 번에 하나만 그린다.
-    const metricOptions = metricsByKind[split === 'oppOrder' ? 'faced' : kind];
-    const metrics = [metricOptions[metricSlot]];
+    const faced = split === 'oppOrder' || (pitcher && split === 'inning');
+    const metricOptions = metricsByKind[faced ? 'faced' : kind];
+    const activeSlot = Math.min(metricSlot, metricOptions.length - 1);
+    const metric = metricOptions[activeSlot];
     const hasData = splits?.groups.some(group => group.rows.length);
     // 통산은 어느 해든 있는 시즌 종류를 모두 고를 수 있다.
     const availableSeasons = { ...(log?.availableSeasons || {}), all: [...new Set(Object.values(log?.availableSeasons || {}).flat())] };
@@ -137,11 +133,11 @@ export default function SplitCharts({ pid, pitcher, active = true, getTeamLogo }
             : <>
                 <div className="profile-split-toolbar">
                     <div className="profile-split-tabs" role="group" aria-label="스플릿 구분">{splitTabs[kind].map(([id, label]) => <button key={id} type="button" aria-pressed={split === id} onClick={() => setSplit(id)}>{label}</button>)}</div>
-                    <div className="profile-split-tabs is-metric" role="group" aria-label="지표">{metricOptions.map((metric, slot) => <button key={metric.key} type="button" aria-pressed={metricSlot === slot} onClick={() => setMetricSlot(slot)}>{metric.label}</button>)}</div>
+                    <div className="profile-split-tabs is-metric" role="group" aria-label="지표">{metricOptions.map((metric, slot) => <button key={metric.key} type="button" aria-pressed={activeSlot === slot} onClick={() => setMetricSlot(slot)}>{metric.label}</button>)}</div>
                 </div>
                 {paLoading ? <ProfileLoading>기록을 불러오는 중이에요.</ProfileLoading>
                     : paSplit && pa.error ? <p className="profile-games-empty">기록을 불러오지 못했습니다.</p>
-                    : group?.rows.length ? <SplitRows rows={group.rows} metrics={metrics} total={group.total} baseLabel={log?.year === 'all' ? '통산' : '시즌'} animationKey={`${split}-${metricSlot}-${log?.year}-${log?.season}`}
+                    : group?.rows.length ? <SplitRows rows={group.rows} metric={metric} total={group.total} baseLabel={log?.year === 'all' ? '통산' : '시즌'} animationKey={`${split}-${activeSlot}-${log?.year}-${log?.season}`}
                         logoOf={split === 'opponent' && getTeamLogo ? row => getTeamLogo(row.label, log?.year === 'all' ? undefined : log?.year) : undefined} onSelect={row => setPicked({ row, split })} />
                     : <p className="profile-games-empty">표시할 기록이 없습니다.</p>}
             </>}

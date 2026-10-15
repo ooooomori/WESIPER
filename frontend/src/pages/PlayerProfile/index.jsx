@@ -533,7 +533,7 @@ export default function PlayerProfile({ pid }) {
         setError('');
         async function load() {
             try {
-                const result = await loadProfileData(`/api/playerProfile.php?pid=${encodeURIComponent(pid)}&part=profile`, data => !!data.player);
+                const result = await loadProfileData(`/api/playerProfile.php?pid=${encodeURIComponent(pid)}&part=profile&v=2`, data => !!data.player);
                 if (!active) return;
                 setPlayer(previous => ({ ...result.player, FormerTeam: result.player.FormerTeam || previous?.FormerTeam || null, Awards: (result.career || []).filter(row => row.category === 'award'), National: (result.career || []).filter(row => row.category === 'national') }));
                 try {
@@ -575,7 +575,7 @@ export default function PlayerProfile({ pid }) {
     const heroPosition = positionText(mainPosition) || player.Pos;
     const retirementYear = player.Retire || records?.year;
     const formerTeam = player.FormerTeam ? teamFullName(player.FormerTeam) : null;
-    const heroSummary = [retired || numberRetired ? '은퇴' : team[3], heroPosition].filter(Boolean).join(' · ');
+    const heroSummary = [numberRetired ? '영구결번' : retired ? '은퇴' : team[3], heroPosition].filter(Boolean).join(' · ');
     const handedness = [player.Throws, player.Bat].filter(Boolean).join('');
     const birth = player.Birth;
     const birthMatch = birth?.match(/^(\d{4})[-.](\d{2})[-.](\d{2})$/);
@@ -591,6 +591,9 @@ export default function PlayerProfile({ pid }) {
     const national = groupCareer(player.National).sort((a, b) => nationalOrder.indexOf(a.name) - nationalOrder.indexOf(b.name));
     const birthMonthDay = /^\d{4}-\d{2}-\d{2}/.test(String(player.Birth || '')) ? String(player.Birth).slice(5, 10) : null;
     const draftYear = parseDraft(player.Draft)?.year;
+    // 활동 기간: 선수 검색 결과와 같은 규칙(첫 경기 기록 연도 없으면 드래프트 연도, 은퇴 연도 없으면 마지막 기록 연도)
+    const careerYears = retired || numberRetired ? (() => { const debut = Number(player.FirstRecordYear) || draftYear; const last = player.Retire || player.LastRecordYear; return debut || last ? `${debut || '?'}–${last || '?'}` : null; })() : null;
+    const heroTeamLabel = numberRetired ? `${team[3]} 영구결번` : retiredTheme ? (formerTeam ? `前 ${formerTeam}` : '은퇴') : team[3];
     const info = [['이름', Number(player.IsForeign) === 1 ? player.FullName || player.Name : player.Name], ['개명', player.OldName ? `${player.OldName} → ${player.Name}` : null], ['등번호', numberRetired ? null : player.BackNo], ['소속팀', retired || numberRetired ? null : team[3]], ['영구결번', numberRetired ? `${team[3]}${player.BackNo != null ? ` No.${player.BackNo}` : ''}` : null], ['투타', handedness], ['포지션', detailedPosition], ['생년월일', birthday && birthMonthDay ? <span className="profile-fact-action">{birthday}<button type="button" onClick={() => setPlayerGroup({ type: 'birthday', value: birthMonthDay })}>같은 생일<svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg></button></span> : birthday], ['신체', player.Body], ['학력', player.School ? <span className="profile-schools">{String(player.School).split('-').map((part, index) => <span key={index}>{index > 0 && <i aria-hidden="true">-</i>}{alumniSchoolChunks(part).map((chunk, order) => chunk.name ? <button key={order} type="button" className="profile-school-link" title={`${chunk.name} ${/리틀$/.test(chunk.name) ? '출신' : '동문'} 선수 보기`} onClick={() => setPlayerGroup({ type: 'school', value: chunk.name })}>{chunk.text}</button> : chunk.text)}</span>)}</span> : null], ['입단', player.Draft && draftYear ? <span className="profile-fact-action">{player.Draft}<button type="button" onClick={() => setPlayerGroup({ type: 'draft', value: String(draftYear) })}>입단 동기<svg width="11" height="11" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" /></svg></button></span> : player.Draft], ['은퇴', retired && retirementYear ? `${retirementYear}년` : null], ['별명', player.Nicknames?.join(', ')], ['가족', player.Family?.length ? <span className="profile-family">{player.Family.map(member => <Link key={`${member.PlayerId}-${member.Relationship}`} className="profile-family-link" to={`/?pid=${encodeURIComponent(member.PlayerId)}`} onClick={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}><small>{member.Relationship}</small><b>{member.Name}</b><svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg></Link>)}</span> : null]].filter(([, value]) => value !== null && value !== undefined && String(value).trim() !== '');
     const gameLogPitcher = gamePitcher ?? gameLog.pitcher ?? isPitcher;
     const gameColumns = [['날짜','date'],['상대','opponent'],['구장','stadium'],['경기 결과','result'],['선발','isStarter'],...((gameLog.pitcher ?? records?.pitcher) ? (detailedGames ? [['기록','badge'],['이닝','innings'],['실점','r'],['자책','er'],['삼진','so'],['피안타','h'],['피홈런','hr'],['볼넷','bb'],['사구','hbp']] : [['기록','summary']]) : [['포지션','position'],['타순','order'],...(detailedGames ? [['타석','pa'],['타수','ab'],['안타','h'],['2루타','doubles'],['3루타','triples'],['홈런','hr'],['타점','rbi'],['득점','r'],['볼넷','bb'],['사구','hbp'],['삼진','so'],['병살','gdp'],['희플','sf'],['희생번트','sh'],['도루','sb'],['도루실패','cs']] : [['기록','summary']])]),['비고','notes']];
@@ -651,15 +654,15 @@ export default function PlayerProfile({ pid }) {
             </div>
             <div className="profile-identity">
                 <div className="profile-photo">{photo}</div>
-                <div className="profile-bio is-compact"><p className="profile-hero-team">{retiredTheme ? '은퇴' : <><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{retired || numberRetired ? '은퇴' : team[3]}</>}</p><div className="profile-hero-name"><h1>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</h1>{heroPosition && <span className="profile-hero-tag">{heroPosition}</span>}</div>{(handedness || birthday) && <p className="profile-hero-meta">{[handedness, birthday && isBirthday ? `${birthday} 🎂` : birthday].filter(Boolean).map(text => <span key={text}>{text}</span>)}</p>}{numberRetired ? <p>{team[3]} 영구결번</p> : retired && formerTeam && <p>前 {formerTeam}</p>}{!retired && !numberRetired && player.Body && <p>{player.Body}</p>}</div>
+                <div className="profile-bio is-compact"><p className="profile-hero-team">{retiredTheme ? heroTeamLabel : <><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{heroTeamLabel}</>}</p><div className="profile-hero-name"><h1>{player.Name} {player.BackNo != null && <span>#{player.BackNo}</span>}</h1>{heroPosition && <span className="profile-hero-tag">{heroPosition}</span>}</div>{(handedness || birthday) && <p className="profile-hero-meta">{[handedness, birthday && isBirthday ? `${birthday} 🎂` : birthday].filter(Boolean).map(text => <span key={text}>{text}</span>)}</p>}{(retired || numberRetired) && careerYears && <p>{careerYears}</p>}{!retired && !numberRetired && player.Body && <p>{player.Body}</p>}</div>
                 <div className="profile-bio is-wide">
-                    <p className="profile-hero-team">{retiredTheme ? '은퇴' : <><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{retired || numberRetired ? '은퇴' : team[3]}</>}</p>
+                    <p className="profile-hero-team">{retiredTheme ? heroTeamLabel : <><TeamLogo small team={teamCode} className="profile-hero-tag-logo" />{heroTeamLabel}</>}</p>
                     <h1>{player.Name}{player.BackNo != null && <span>#{player.BackNo}</span>}</h1>
                     <dl className="profile-hero-facts">
                         {heroPosition && <div><dt>포지션</dt><dd>{heroPosition}</dd></div>}
                         {handedness && <div><dt>투타</dt><dd>{handedness}</dd></div>}
                         {birthday && <div><dt>생년월일</dt><dd>{birthday}{isBirthday && ' 🎂'}</dd></div>}
-                        {numberRetired ? <div><dt>영구결번</dt><dd>{team[3]}</dd></div> : retired && formerTeam && <div><dt>최종 소속</dt><dd>{formerTeam}</dd></div>}
+                        {(retired || numberRetired) && careerYears && <div><dt>활동 기간</dt><dd>{careerYears}</dd></div>}
                         {!retired && !numberRetired && player.Body && <div><dt>신체</dt><dd>{player.Body}</dd></div>}
                     </dl>
                 </div>

@@ -34,8 +34,8 @@ function pitcherCards(row, fipConstants) {
     const fipConstant = known && weightedOuts ? weighted / weightedOuts : null;
     const fip = outs > 0 && fipConstant != null ? (13 * t.hr + 3 * (t.bb + t.hbp) - 2 * t.so) * 3 / outs + fipConstant : null;
     return {
-        rates: [['ERA', row.era == null ? '—' : row.era.toFixed(2)], relief ? ['홀-세', `${t.holds ?? 0}-${t.saves ?? 0}`] : ['승-패', `${t.wins ?? 0}-${t.losses ?? 0}`], ['삼진', t.so], ['WHIP', row.whip == null ? '—' : row.whip.toFixed(2)]],
-        counts: [['실점(자책)', `${t.r ?? 0}(${t.er ?? 0})`], ['피안타', t.h], ['피홈런', t.hr], ['볼넷', t.bb], ['사구', t.hbp], ['QS', t.qs], ['FIP', fip == null ? '—' : fip.toFixed(2)], ...(relief ? [['승리', t.wins ?? 0], ['패전', t.losses ?? 0]] : [['홀드', t.holds ?? 0], ['세이브', t.saves ?? 0]])],
+        rates: [['ERA', row.era == null ? '—' : row.era.toFixed(2)], ['피안타율', rate(row.avg)], ['피OPS', rate(row.ops)], ['WHIP', row.whip == null ? '—' : row.whip.toFixed(2)]],
+        counts: [relief ? ['홀-세', `${t.holds ?? 0}-${t.saves ?? 0}`] : ['승-패', `${t.wins ?? 0}-${t.losses ?? 0}`], ['삼진', t.so], ['실점(자책)', `${t.r ?? 0}(${t.er ?? 0})`], ['피안타', t.h], ['피홈런', t.hr], ['볼넷', t.bb], ['사구', t.hbp], ['QS', t.qs], ['FIP', fip == null ? '—' : fip.toFixed(2)], ...(relief ? [['승리', t.wins ?? 0], ['패전', t.losses ?? 0]] : [['홀드', t.holds ?? 0], ['세이브', t.saves ?? 0]])],
     };
 }
 function gameLine(game, pitcher) {
@@ -53,32 +53,39 @@ export default function SplitModal({ row, split, pitcher, year, season, fipConst
     const { dialog, expanded, close, justDragged, handlers } = useSheetDrag();
     // 이닝·타순별은 투수여도 타석 기록이라 타격 지표로 보여준다.
     const pitching = pitcher && !['inning', 'order', 'oppOrder'].includes(split);
-    const { rates, counts } = pitching ? pitcherCards(row, fipConstants) : batterCards(row, split === 'oppOrder');
+    // 투수가 상대한 타석(상대 타순별, 투수의 이닝별)은 피안타 기준으로 적는다.
+    const faced = pitcher && ['inning', 'oppOrder'].includes(split);
+    const { rates, counts } = pitching ? pitcherCards(row, fipConstants) : batterCards(row, faced);
     const games = row.list || [];
     const totals = row.totals || {};
     const summary = pitching ? `${totals.games ?? row.games}경기 · ${totals.innings ?? '0'}이닝`
         : totals.games != null ? `${totals.games}경기 · ${totals.pa ?? 0}타석` : `${totals.pa ?? row.games}타석`;
-    const titleLabel = split === 'opponent' ? `vs ${row.label}` : split === 'inning' ? `${row.label} 타석` : split === 'order' ? `${row.label} 타순` : split === 'oppOrder' ? `상대 ${row.label} 타순` : row.label;
+    const titleLabel = split === 'opponent' ? `vs ${row.label}` : split === 'inning' ? (pitcher ? `${row.label} 상대 타석` : `${row.label} 타석`) : split === 'order' ? `${row.label} 타순` : split === 'oppOrder' ? `상대 ${row.label} 타순` : row.label;
+    const ordered = [...games].sort((a, b) => String(a.date).localeCompare(String(b.date)));
     return <dialog ref={dialog} className={`profile-career-modal profile-split-modal${expanded ? ' is-expanded' : ''}`} aria-labelledby="profile-split-title" onClose={onClose}
         onClick={event => { if (event.target !== event.currentTarget || justDragged.current) return; const box = event.currentTarget.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) close(); }}>
         <header className="profile-career-modal-head profile-split-modal-head" {...handlers}>
-            <div className="profile-career-title">
+            <div className="profile-split-sheet-title">
                 <small>{[year === 'all' ? '통산' : year, seasonLabels[season]].filter(Boolean).join(' ')}</small>
-                <h2 id="profile-split-title">{titleLabel}<span>{summary}</span></h2>
+                <h2 id="profile-split-title">{titleLabel}</h2>
+                <p>{summary}</p>
             </div>
             <button type="button" className="profile-career-close" aria-label="닫기" onClick={close}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg></button>
-            <div className="profile-split-modal-rates">{rates.map(([label, value]) => <div key={label}><span>{label}</span><strong>{value ?? '—'}</strong></div>)}</div>
         </header>
         <div className="profile-split-modal-body">
-            <dl className={`profile-split-modal-counts${pitching ? ' is-three' : ''}`}>{counts.filter(([, value]) => value != null).map(([label, value]) => <div key={label}><span>{label}</span><strong>{value}</strong></div>)}</dl>
-            {games.length > 0 && <>
+            <dl className="profile-split-sheet-hero">{rates.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value ?? '—'}</dd></div>)}</dl>
+            <section>
+                <h3>상세 기록</h3>
+                <dl className="profile-split-sheet-detail">{counts.filter(([, value]) => value != null).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
+            </section>
+            {ordered.length > 0 && <section>
                 <h3>경기별 기록</h3>
-                <ul className="profile-split-modal-games">{[...games].sort((a, b) => String(a.date).localeCompare(String(b.date))).map(game => <li key={game.gameId || game.date}>
+                <ul className="profile-split-sheet-games">{ordered.map(game => <li key={game.gameId || game.date}>
                     <time dateTime={game.date}>{String(game.date).slice(5).replace('-', '.')}</time>
                     <b>{game.opponent ? `${game.isAway ? '@' : 'vs'} ${game.opponent}` : '—'}</b>
-                    <span className={`profile-split-modal-line${!pitcher && Number(game.hr) > 0 ? ' is-good' : ''}`}>{gameLine(game, pitcher)}{pitcher && game.badge ? <span className={`profile-game-badge ${badgeTone(game.badge)}`}>{game.badge}</span> : null}</span>
+                    <span className={Number(game.hr) > 0 && !pitcher ? 'is-good' : undefined}>{gameLine(game, pitcher)}{pitcher && game.badge ? <span className={`profile-game-badge ${badgeTone(game.badge)}`}>{game.badge}</span> : null}</span>
                 </li>)}</ul>
-            </>}
+            </section>}
         </div>
     </dialog>;
 }
