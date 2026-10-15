@@ -54,3 +54,7 @@ export const legacyTeams = {
 };
 export const legacyTeamCode = team => legacyTeams[team]?.[0] || null;
 export const legacyTeamColor = team => legacyTeams[team]?.[1] || null;
+
+// 팀 대표 색: 현재 구단은 구단 색, 옛 팀명은 legacyTeams의 색
+const currentTeamColors = { KIA: '#ea0029', LG: '#c30452', SSG: '#ce0e2d', 두산: '#131d40', 삼성: '#074ca1', 롯데: '#041e42', KT: '#202020', 한화: '#f37321', NC: '#315288', 키움: '#820024', 울산: '#c90000', '울산 웨일즈': '#c90000' };
+export const teamColorByName = name => { const team = String(name || '').trim(); return currentTeamColors[team] || currentTeamColors[team.toUpperCase()] || legacyTeamColor(team) || null; };

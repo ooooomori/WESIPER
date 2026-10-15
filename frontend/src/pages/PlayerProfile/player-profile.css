@@ -535,18 +535,6 @@
 @media (prefers-reduced-motion: reduce) { .profile-career-modal[open] { animation: none; } }
 
 /* ===== 타이틀홀더 ===== */
-.profile-titles { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-.profile-title-card { position: relative; padding: 16px 16px 14px; overflow: hidden; border: 1px solid #f1e4bd; border-radius: 18px; background: linear-gradient(160deg, #fffaea 0%, #fff 55%); }
-.profile-title-card::after { content: ''; position: absolute; right: -30px; top: -30px; width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle, rgba(246,196,63,.22), transparent 70%); pointer-events: none; }
-.profile-title-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-.profile-title-icon { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 12px; background: linear-gradient(140deg, #ffd85c, #e9a800); color: #fff; box-shadow: 0 4px 10px rgba(233,168,0,.3); }
-.profile-title-icon svg { width: 20px; height: 20px; }
-.profile-title-head h3 { flex: 1; min-width: 0; margin: 0; color: #102746; font-size: 17px; font-weight: 900; letter-spacing: -.03em; }
-.profile-title-count { flex: none; padding: 3px 10px; border-radius: 999px; background: #102746; color: #fff; font-size: 12.5px; font-weight: 800; font-variant-numeric: tabular-nums; }
-.profile-title-years { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.profile-title-years li { display: inline-flex; align-items: baseline; gap: 6px; padding: 5px 10px; border: 1px solid #ece3c8; border-radius: 10px; background: #fff; }
-.profile-title-years span { color: #8a7a4a; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.profile-title-years strong { color: #102746; font-size: 14px; font-weight: 900; font-variant-numeric: tabular-nums; }
 
 /* ===== 연속 경기 기록 ===== */
 .profile-streak-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0; }
@@ -568,17 +556,6 @@
 .profile-streak-period time { white-space: nowrap; }
 @media (max-width: 760px) { .profile-streak-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) {
-    .profile-titles { grid-template-columns: 1fr; gap: 10px; }
-    .profile-title-card { padding: 14px 14px 12px; border-radius: 16px; }
-    .profile-title-head { gap: 8px; margin-bottom: 10px; }
-    .profile-title-head h3 { font-size: 15px; }
-    .profile-title-icon { width: 32px; height: 32px; border-radius: 10px; }
-    .profile-title-icon svg { width: 18px; height: 18px; }
-    .profile-title-count { padding: 2px 9px; font-size: 11.5px; }
-    .profile-title-years { gap: 5px; }
-    .profile-title-years li { gap: 5px; padding: 4px 8px; border-radius: 9px; }
-    .profile-title-years span { font-size: 11px; }
-    .profile-title-years strong { font-size: 12.5px; }
     .profile-streak-cards { gap: 8px; }
     .profile-streak-card { padding: 12px 12px 11px; border-radius: 16px; }
     .profile-streak-label { font-size: 14px; }
@@ -936,6 +913,7 @@ button.profile-honor:focus-visible { outline: 2px solid var(--team-primary); out
 .profile-year-legend i { width: 10px; height: 10px; border-radius: 3px; }
 .profile-year-legend .is-league-best i { background: linear-gradient(180deg, #fff3cf, #ffe7a3); box-shadow: inset 0 0 0 1px #e9c35a; }
 .profile-year-legend .is-career-high i { background: var(--team-primary); }
+.profile-year-legend .is-triple-crown-legend i { background: #ffe36e; }
 @media (max-width: 600px) {
     .profile-year-team-logo img { width: 18px; height: 18px; }
     .profile-year-legend { gap: 10px; font-size: 10.5px; }
@@ -1235,3 +1213,41 @@ a.profile-alumni-row:focus-visible { outline: 2px solid var(--team-primary); out
 .profile-hero-random svg { width: 17px; height: 17px; }
 .profile-hero-random:disabled svg { opacity: .45; }
 @media (max-width: 600px) { .profile-hero-random svg { width: 16px; height: 16px; } }
+
+/* 타이틀홀더: 종목별 카드 */
+/* 타이틀홀더: 카드 없이 종목별 한 줄 */
+.profile-titles { border-top: 1px solid #e6edf5; }
+.profile-title-row { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 10px; align-items: center; padding: 11px 2px; border-bottom: 1px solid #edf1f6; }
+.profile-title-name { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.profile-title-name h3 { position: relative; display: inline-flex; align-items: center; gap: 4px; height: 22px; margin: 0; padding: 0 9px 0 7px; border-radius: 999px; background: linear-gradient(135deg, color-mix(in srgb, var(--team-primary) 74%, #fff) 0%, var(--team-primary) 62%, color-mix(in srgb, var(--team-primary) 82%, #000) 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.38), inset 0 -1px 0 rgba(0,0,0,.14), 0 4px 8px -6px color-mix(in srgb, var(--team-primary) 75%, transparent); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; text-shadow: 0 1px 1px rgba(0,0,0,.2); }
+.profile-title-name h3::before { content: ''; flex: none; width: 11px; height: 11px; background: #ffe08a; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8.5 7.5 12 12 5l4.5 7L21 8.5 19.2 18H4.8L3 8.5Z'/%3E%3Crect x='4.8' y='19.2' width='14.4' height='2' rx='1'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8.5 7.5 12 12 5l4.5 7L21 8.5 19.2 18H4.8L3 8.5Z'/%3E%3Crect x='4.8' y='19.2' width='14.4' height='2' rx='1'/%3E%3C/svg%3E") center / contain no-repeat; }
+.profile-title-name span { flex: none; color: #8794a7; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.profile-title-years { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0; padding: 0; list-style: none; }
+.profile-title-years li { display: inline-flex; align-items: baseline; gap: 6px; }
+.profile-title-years li span { color: #8794a7; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.profile-title-years li strong { color: #102746; font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+    .profile-title-row { grid-template-columns: 1fr; gap: 4px; padding: 10px 2px; }
+    .profile-title-years { gap: 2px 14px; }
+    .profile-title-years li { gap: 4px; }
+    .profile-title-years li span { font-size: 10.5px; }
+    .profile-title-years li strong { font-size: 12.5px; }
+    .profile-title-name span { font-size: 11px; }
+}
+
+/* PC에서는 타이틀 배지를 조금 더 크게 */
+@media (min-width: 601px) {
+    .profile-title-row { grid-template-columns: 156px minmax(0, 1fr); gap: 22px; }
+    .profile-title-name { gap: 8px; }
+    .profile-title-name h3 { gap: 5px; height: 26px; padding: 0 12px 0 9px; font-size: 13px; }
+    .profile-title-name h3::before { width: 12px; height: 12px; }
+    .profile-title-name span { font-size: 12px; }
+}
+
+/* 트리플크라운을 달성한 해의 해당 기록: 형광펜으로 그은 듯한 강조(해마다 색이 조금씩 다르다) */
+.profile-title-years li.is-triple-crown { --crown-mark: #ffe36e; background: linear-gradient(transparent 55%, var(--crown-mark) 55%); border-radius: 2px; }
+.profile-title-years li.is-triple-crown strong { color: #102746; }
+.profile-title-years li.is-triple-crown.tone-1 { --crown-mark: #ffd27a; }
+.profile-title-years li.is-triple-crown.tone-2 { --crown-mark: #f4ea7a; }
+.profile-title-years li.is-triple-crown.tone-3 { --crown-mark: #ffc98a; }
+.profile-title-years li.is-triple-crown.tone-4 { --crown-mark: #e8de88; }

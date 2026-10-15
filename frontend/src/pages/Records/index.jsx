@@ -3,6 +3,7 @@ import { Link, useNavigationType } from 'react-router-dom';
 import { Spinner } from 'flowbite-react';
 import '../PlayerProfile/player-profile.css';
 import './records.css';
+import HofRecords from './HofRecords';
 import useTableDrag from '../PlayerProfile/useTableDrag';
 import useStickyTableHead from '../PlayerProfile/useStickyTableHead';
 import { recordColumnWidth } from '../PlayerProfile/recordTableLayout';
@@ -12,6 +13,7 @@ import { GAME_LOG_FIRST_YEAR, MAX_OPPONENTS, customMinInnings, customMinText, de
 
 const STORAGE_KEY = 'wesiper-record-room-v6';
 const types = [['batter', '타자'], ['pitcher', '투수'], ['fielding', '수비']];
+const headerTypes = [...types, ['hof', 'HOF']];
 const viewTabs = kind => kind === 'batter' || kind === 'pitcher' ? [['basic', '기본'], ['advanced', '심화'], ['special', kind === 'pitcher' ? '이닝' : '주루']] : [];
 const kindColumns = (kind, view) => kind === 'fielding' ? yearRecordColumns.batter.fielding : kind === 'versus' ? versusColumns : yearRecordColumns[kind][view] || yearRecordColumns[kind].basic;
 const percentKeys = ['bbPct', 'kPct', 'sbPct', 'caughtStealingPct'];
@@ -49,7 +51,7 @@ function OpponentPicker({ label, value, onChange }) {
     </div>;
 }
 
-export default function Records() {
+function RecordRoom({ hofActive, onHof, onLeaveHof }) {
     const [meta, setMeta] = useState(null);
     const [metaError, setMetaError] = useState('');
     const [type, setType] = useState('batter');
@@ -229,8 +231,9 @@ export default function Records() {
         <div className="record-room-card">
             <div className="profile-heading record-room-heading">
                 <h2>선수 기록실</h2>
-                <div className="record-room-types" role="group" aria-label="기록 종류 선택" style={{ '--type-index': types.findIndex(([value]) => value === type) }}>{types.map(([value, label]) => <button type="button" key={value} aria-pressed={type === value} onClick={() => changeType(value)}>{label}</button>)}</div>
+                <div className="record-room-types" role="group" aria-label="기록 종류 선택" style={{ '--type-index': hofActive ? headerTypes.length - 1 : types.findIndex(([value]) => value === type), '--type-count': headerTypes.length }}>{headerTypes.map(([value, label]) => <button type="button" key={value} aria-pressed={value === 'hof' ? hofActive : !hofActive && type === value} onClick={() => { if (value === 'hof') onHof(); else { onLeaveHof(); changeType(value); } }}>{label}</button>)}</div>
             </div>
+            {hofActive ? <HofRecords /> : <>
             <div className="record-room-filter-bar">
                 <button type="button" className="record-room-filter-toggle" aria-haspopup="dialog" aria-label={label ? `검색 조건: ${label}` : '검색 조건'} onClick={() => setFilterOpen(true)}>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
@@ -333,6 +336,12 @@ export default function Records() {
                 {empty && <p className="profile-games-empty profile-year-empty-message">{result.error || '조건에 맞는 기록이 없습니다.'}</p>}
             </div>
             {!result.loading && result.rows.length < result.total && <button type="button" className="record-room-more" disabled={result.loadingMore} onClick={loadMore}>{result.loadingMore ? '불러오는 중…' : `더 보기 (${result.rows.length.toLocaleString()} / ${result.total.toLocaleString()})`}</button>}
+            </>}
         </div>
     </main>;
+}
+
+export default function Records() {
+    const [hof, setHof] = useState(false);
+    return <RecordRoom hofActive={hof} onHof={() => setHof(true)} onLeaveHof={() => setHof(false)} />;
 }

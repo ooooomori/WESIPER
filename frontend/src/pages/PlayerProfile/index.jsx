@@ -70,16 +70,24 @@ export function TitleholderRecords({ rows = [] }) {
         const units = { 안타: '안타', 홈런: '홈런', 타점: '타점', 득점: '득점', 도루: '도루', 승리타점: '타점', 다승: '승', 탈삼진: '탈삼진', 세이브: '세이브', 홀드: '홀드', 세이브포인트: 'SP' };
         return `${value}${units[type] || ''}`;
     };
+    // 트리플크라운: 타자는 타율, 홈런, 타점 1위, 투수는 다승, 평균자책점과 탈삼진 1위(1991년까지는 승률 1위)를 같은 해에 모두 차지한 시즌.
+    const crown = new Map();
+    const yearTypes = new Map();
+    rows.forEach(row => { const year = Number(row.year); if (!yearTypes.has(year)) yearTypes.set(year, new Set()); yearTypes.get(year).add(row.type); });
+    yearTypes.forEach((types, year) => {
+        const sets = [['타율', '홈런', '타점'], ['다승', '평균자책점', year >= 1992 ? '탈삼진' : '승률']];
+        const hit = sets.find(set => set.every(type => types.has(type)));
+        if (hit) crown.set(year, new Set(hit));
+    });
+    // 트리플크라운을 여러 번 한 선수는 해마다 금색 톤을 조금씩 달리한다.
+    const crownYears = [...crown.keys()].sort((a, b) => a - b);
     const total = titles.reduce((sum, title) => sum + title.rows.length, 0);
     return <section><div className="profile-heading"><h2>타이틀홀더</h2><small className="profile-season-caption">통산 {total}회</small></div>
-        <div className="profile-titles">{titles.map(title => <article className="profile-title-card" key={title.type}>
-            <div className="profile-title-head">
-                <span className="profile-title-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 8.5 7.5 12 12 5l4.5 7L21 8.5 19.2 18H4.8L3 8.5Z" /><rect x="4.8" y="19.2" width="14.4" height="2" rx="1" /></svg></span>
-                <h3>{title.name}</h3>
-                <span className="profile-title-count">{title.rows.length}회</span>
-            </div>
-            <ul className="profile-title-years" aria-label={`${title.name} 연도별 기록`}>{title.rows.map(row => <li key={row.year}><span>{row.year}</span><strong>{formatRecord(title.type, row.record)}</strong></li>)}</ul>
-        </article>)}</div>
+        <div className="profile-titles">{titles.map(title => <div className="profile-title-row" key={title.type}>
+            <div className="profile-title-name"><h3>{title.name}</h3><span>{title.rows.length}회</span></div>
+            <ul className="profile-title-years" aria-label={`${title.name} 연도별 기록`}>{title.rows.map(row => <li key={row.year} className={crown.get(Number(row.year))?.has(title.type) ? `is-triple-crown tone-${crownYears.indexOf(Number(row.year)) % 5}` : undefined} title={crown.get(Number(row.year))?.has(title.type) ? `${row.year} 트리플크라운` : undefined}><span>{row.year}</span><strong>{formatRecord(title.type, row.record)}</strong></li>)}</ul>
+        </div>)}</div>
+        {crown.size > 0 && <p className="profile-year-legend"><span className="is-triple-crown-legend"><i aria-hidden="true" />트리플크라운</span></p>}
     </section>;
 }
 function GameBadge({ value }) { return value ? <span className={`profile-game-badge ${value === '패전' ? 'loss' : value === '홀드' ? 'hold' : value === '세이브' ? 'save' : ''}`}>{value}</span> : null; }

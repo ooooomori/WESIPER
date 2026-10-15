@@ -4,8 +4,8 @@
 .record-room-booting { display: grid; place-items: center; min-height: 320px; }
 
 .record-room-heading { gap: 12px; }
-.record-room-types { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); flex: none; isolation: isolate; }
-.record-room-types::before { content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; width: calc(100% / 3); border-radius: 999px; background: var(--team-primary); box-shadow: 0 4px 12px rgba(11,95,199,.28); transform: translateX(calc(var(--type-index, 0) * 100%)); transition: transform .3s cubic-bezier(.22,.68,0,1); }
+.record-room-types { position: relative; display: grid; grid-template-columns: repeat(var(--type-count, 3), 1fr); flex: none; isolation: isolate; }
+.record-room-types::before { content: ''; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; width: calc(100% / var(--type-count, 3)); border-radius: 999px; background: var(--team-primary); box-shadow: 0 4px 12px rgba(11,95,199,.28); transform: translateX(calc(var(--type-index, 0) * 100%)); transition: transform .3s cubic-bezier(.22,.68,0,1); }
 .record-room-types button { min-width: 68px; padding: 8px 16px; border: 0; border-radius: 999px; background: transparent; color: #7a8798; font: inherit; font-size: 15px; font-weight: 800; line-height: 20px; cursor: pointer; transition: color .25s ease; }
 .record-room-types button:hover { color: #22364f; }
 .record-room-types button[aria-pressed="true"] { color: #fff; }
@@ -175,3 +175,56 @@
 }
 @keyframes record-room-sheet { from { transform: translateY(100%); } }
 @media (prefers-reduced-motion: reduce) { .record-room-scope::before { transition: none; } .record-room-modal, .record-room-modal-backdrop, .record-room-name.is-marquee b, .record-room-filter-toggle strong.is-marquee span { animation: none; } .record-room-filter-toggle strong.is-marquee span + span { display: none; } .record-room-name.is-marquee b + b { display: none; } .record-room-name.is-marquee { text-overflow: ellipsis; } .record-room-types::before, .record-room-types button, .record-room-filter-chevron { transition: none; } }
+
+/* HOF 탭 */
+.record-room-hof-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.record-room-table tbody tr.is-active-player td { background: color-mix(in srgb, var(--hof-color, var(--team-primary)) 7%, #fff); }
+.record-room-table tbody tr.is-active-player td.is-sorted { background: color-mix(in srgb, var(--hof-color, var(--team-primary)) 13%, #fff); }
+.record-room-table tbody tr.is-active-player td:first-child { box-shadow: inset 3px 0 0 var(--hof-color, var(--team-primary)); }
+@media (max-width: 600px) {
+    .record-room-heading h2 { font-size: 17px; white-space: nowrap; }
+    .record-room-types button { padding: 7px 9px; }
+}
+/* HOF 표: 열이 적어서 PC에서는 가로를 채우고, 순위·선수 열만 고정 폭으로 둔다. */
+.profile-year-records.record-room-hof-table { width: 100%; min-width: var(--record-table-width); }
+.record-room-hof-table col:nth-child(n+3) { width: auto; }
+@media (max-width: 600px) {
+    .profile-year-records.record-room-hof-table { min-width: var(--record-table-mobile-width); }
+    .record-room-hof-table col:nth-child(n+3) { width: var(--record-column-mobile-width); }
+}
+/* 기록 설명 */
+.record-room-hof-note { margin-top: 16px; }
+.record-room-hof-note-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; height: 44px; padding: 0 16px; border: 1px solid #dde5ef; border-radius: 13px; background: #fff; color: #22364f; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s; }
+.record-room-hof-note-toggle:hover { background: #f7f9fc; }
+.record-room-hof-note-toggle:focus-visible { outline: 2px solid #087aff; outline-offset: 2px; }
+.record-room-hof-note-toggle svg { color: #7a8798; transition: transform .2s ease; }
+.record-room-hof-note.is-open .record-room-hof-note-toggle svg { transform: rotate(180deg); }
+.record-room-hof-note-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; animation: record-room-fade .18s ease-out; }
+.record-room-hof-note-grid article { padding: 16px 16px 14px; border-radius: 16px; background: #f5f8fc; }
+.record-room-hof-note-grid h3 { margin: 0 0 6px; color: #102746; font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+.record-room-hof-note-grid p { margin: 0; color: #4b5c73; font-size: 13px; line-height: 1.6; }
+.record-room-hof-note-grid dl { display: grid; gap: 8px; margin: 12px 0 0; padding-top: 12px; border-top: 1px solid #e3eaf3; }
+.record-room-hof-note-grid dl > div { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 8px; align-items: start; }
+.record-room-hof-note-grid dt { padding-top: 3px; color: #4b5c73; font-size: 12.5px; font-weight: 800; }
+.record-room-hof-note-grid dd { margin: 0; color: #3a4c64; font-size: 12.5px; line-height: 1.6; word-break: keep-all; }
+.record-room-hof-note-grid dd ul { display: flex; flex-wrap: wrap; gap: 6px 10px; margin: 0; padding: 0; list-style: none; }
+.record-room-hof-note-grid dd li { display: inline-flex; align-items: center; gap: 6px; min-height: 24px; color: #22364f; font-weight: 600; }
+.record-room-hof-note-grid dd li b { padding: 1px 8px; border-radius: 999px; background: #e3edfb; color: #0b5fc7; font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; }
+@media (max-width: 600px) {
+    .record-room-hof-note-grid { grid-template-columns: 1fr; gap: 10px; }
+    .record-room-hof-note-grid article { padding: 13px 13px 12px; }
+    .record-room-hof-note-grid h3 { margin-bottom: 4px; font-size: 13.5px; }
+    .record-room-hof-note-grid p { font-size: 11.5px; line-height: 1.55; }
+    .record-room-hof-note-grid dl { gap: 6px; margin-top: 10px; padding-top: 10px; }
+    .record-room-hof-note-grid dl > div { grid-template-columns: 46px minmax(0, 1fr); gap: 6px; }
+    .record-room-hof-note-grid dt { padding-top: 2px; font-size: 11px; }
+    .record-room-hof-note-grid dd { font-size: 11px; line-height: 1.55; }
+    .record-room-hof-note-grid dd ul { gap: 4px 8px; }
+    .record-room-hof-note-grid dd li { min-height: 20px; gap: 4px; }
+    .record-room-hof-note-grid dd li b { padding: 0 6px; font-size: 10.5px; }
+    .record-room-hof-note-toggle { height: 40px; font-size: 13px; }
+}
+@media (max-width: 600px) {
+    .record-room-hof-period { display: none; }
+    .record-room-hof-table col:last-child { display: none; }
+}

@@ -467,7 +467,7 @@ export default function Main() {
     const isActiveKboPlayer = (player) => player.IsActive ?? (player.Team !== '은퇴');
     const playerGroups = [
         { id: "active", title: "현역 선수", list: players.filter(isActiveKboPlayer) },
-        { id: "other", title: "은퇴", list: players.filter((player) => !isActiveKboPlayer(player)) },
+        { id: "other", title: "은퇴 선수", list: players.filter((player) => !isActiveKboPlayer(player)) },
     ];
 
     return (
