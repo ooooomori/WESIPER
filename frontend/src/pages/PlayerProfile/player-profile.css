@@ -31,8 +31,7 @@
 .player-profile { isolation: isolate; }
 .player-profile-shell > .site-navbar { position: sticky; top: 0; z-index: 40; background: #fff; }
 @media(max-width:799.98px) {
-    .player-profile-shell > .site-navbar { position: static; top: auto; }
-    .player-profile-shell .profile-compact-header { top: 0; }
+    .player-profile-shell .profile-compact-header { top: var(--profile-nav-height, var(--site-nav-height)); }
 }
 .profile-hero { position: sticky; top: var(--profile-nav-height, 60px); z-index: 0; opacity: var(--hero-opacity, 1); filter: blur(var(--hero-blur, 0px)); }
 .profile-content { z-index: 1; min-height: 100svh; box-shadow: 0 -12px 30px #10274612; }
@@ -443,7 +442,7 @@
 
 .profile-movements { position: relative; margin: 0; padding: 0; list-style: none; }
 .profile-movements li { --dot: #8a97a8; --chip-bg: #eef2f7; --chip: #4d5d72; position: relative; display: flex; align-items: flex-start; gap: 14px; padding: 0 0 16px; }
-.profile-movements li::before { content: ''; position: absolute; left: 18px; top: 40px; bottom: 2px; width: 2px; border-radius: 2px; background: #e3e9f2; }
+.profile-movements li::before { content: ''; position: absolute; left: 15px; top: 37px; bottom: 2px; width: 2px; border-radius: 2px; background: #e3e9f2; }
 .profile-movements li:last-child::before { display: none; }
 .profile-movements li:last-child { padding-bottom: 0; }
 .profile-movements li.is-move { --dot: #087aff; --chip-bg: #e8f2ff; --chip: #0b5fc7; }
@@ -451,9 +450,9 @@
 .profile-movements li.is-injury { --dot: #f08c00; --chip-bg: #fff3e0; --chip: #b35f00; }
 .profile-movements li.is-military { --dot: #2f9e44; --chip-bg: #e9f7ec; --chip: #237a35; }
 .profile-movements li.is-number { --dot: #7048e8; --chip-bg: #f1edff; --chip: #5835c4; }
-.profile-movement-marker { position: relative; z-index: 1; display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2.5px var(--dot), 0 2px 6px rgba(16,39,70,.08); }
-.profile-movement-marker-logo { width: 24px; height: 24px; object-fit: contain; }
-.profile-movement-marker b { color: #5b6d84; font-size: 11px; font-weight: 800; letter-spacing: -.03em; }
+.profile-movement-marker { position: relative; z-index: 1; display: grid; place-items: center; flex: none; width: 32px; height: 32px; margin-top: 3px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2.5px var(--dot), 0 2px 6px rgba(16,39,70,.08); }
+.profile-movement-marker-logo { width: 20px; height: 20px; object-fit: contain; }
+.profile-movement-marker b { color: #5b6d84; font-size: 10px; font-weight: 800; letter-spacing: -.03em; }
 .profile-movement-body { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; padding-top: 1px; }
 .profile-movements time { color: #6a7d95; font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .profile-movement-line { display: flex; align-items: center; flex-wrap: nowrap; gap: 10px; min-width: 0; min-height: 24px; }
@@ -471,9 +470,9 @@
 @media (max-width: 600px) {
     .profile-movements-heading .profile-movement-filters { width: 100%; }
     .profile-movements li { gap: 12px; padding-bottom: 14px; }
-    .profile-movements li::before { left: 16px; top: 36px; }
-    .profile-movement-marker { width: 34px; height: 34px; }
-    .profile-movement-marker-logo { width: 21px; height: 21px; }
+    .profile-movements li::before { left: 13.5px; top: 33.5px; }
+    .profile-movement-marker { width: 29px; height: 29px; margin-top: 2.5px; }
+    .profile-movement-marker-logo { width: 18px; height: 18px; }
     .profile-movements time { font-size: 11.5px; }
     .profile-movement-line { gap: 8px; }
     .profile-movement-type { padding: 3px 7px; font-size: 12px; }
@@ -661,23 +660,27 @@
 .player-profile .profile-stats-overview > .profile-stat-top-five { border-color: color-mix(in srgb, var(--team-primary) 30%, #e8eef6); }
 .player-profile .profile-stats-overview > .profile-stat-top-five::after { width: 100%; left: 0; border-radius: 0; height: 3px; background: linear-gradient(90deg, var(--team-primary), var(--team-secondary)); }
 .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-header span { color: #22364f; }
-/* 5위 이내 카드는 순위가 들어올 때 한꺼번에 팀 색이 번지고 아래 줄이 펼쳐진다. 그 뒤로 빛이 주기적으로 훑고 지나간다. */
-.player-profile .profile-stats-overview > .profile-stat-top-five { isolation: isolate; background: #fff; animation: profile-top-five-card .7s cubic-bezier(.22,1,.36,1) both; }
+/* 5위 이내 카드는 순위가 들어올 때 한꺼번에 팀 색이 번지고 아래 줄이 펼쳐진다. 그 뒤로 배경 그라데이션과 같은 135deg 축을 따라 빛이 주기적으로 훑고, 테두리에는 빛이 시계 방향으로 계속 돈다. */
+@property --tf-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@property --tf-s { syntax: '<percentage>'; inherits: false; initial-value: -20%; }
+.player-profile .profile-stats-overview > .profile-stat-top-five { --tf-angle: 135deg; --tf-edge: color-mix(in srgb, var(--team-primary) 30%, #e8eef6); isolation: isolate; border-color: transparent;
+    background: linear-gradient(#fff, #fff) padding-box, conic-gradient(from var(--tf-a), var(--tf-edge) 0 58%, color-mix(in srgb, var(--team-primary) 85%, #fff) 97%, var(--tf-edge) 100%) border-box;
+    animation: profile-top-five-orbit 4.5s linear infinite; }
 .player-profile .profile-stats-overview > .profile-stat-top-five::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
     background:
-        linear-gradient(105deg, transparent 38%, rgba(255,255,255,.85) 50%, transparent 62%) -20% 0 / 250% 100% no-repeat,
-        linear-gradient(135deg, color-mix(in srgb, var(--team-primary) 9%, #fff) 0%, color-mix(in srgb, var(--team-primary) 4%, #fff) 48%, color-mix(in srgb, var(--team-secondary) 13%, #fff) 100%);
+        linear-gradient(var(--tf-angle), transparent calc(var(--tf-s) - 14%), rgba(255,255,255,.85) var(--tf-s), transparent calc(var(--tf-s) + 14%)),
+        linear-gradient(var(--tf-angle), color-mix(in srgb, var(--team-primary) 9%, #fff) 0%, color-mix(in srgb, var(--team-primary) 4%, #fff) 48%, color-mix(in srgb, var(--team-secondary) 13%, #fff) 100%);
     animation: profile-top-five-fill .9s cubic-bezier(.22,1,.36,1) both, profile-top-five-shine 3.5s cubic-bezier(.45,0,.25,1) .55s infinite both;
 }
 .player-profile .profile-stats-overview > .profile-stat-top-five::after { transform-origin: left; animation: profile-top-five-bar .8s cubic-bezier(.22,1,.36,1) .2s both; }
 .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-rank { animation: profile-top-five-rank .5s ease-out .35s both; }
-@keyframes profile-top-five-card { from { border-color: #e8eef6; } }
+@keyframes profile-top-five-orbit { to { --tf-a: 360deg; } }
 @keyframes profile-top-five-fill { from { opacity: 0; clip-path: circle(0% at 0% 100%); } to { opacity: 1; clip-path: circle(150% at 0% 100%); } }
-@keyframes profile-top-five-shine { from { background-position: 120% 0, 0 0; } 30%, to { background-position: -20% 0, 0 0; } }
+@keyframes profile-top-five-shine { from { --tf-s: -20%; } 30%, to { --tf-s: 120%; } }
 @keyframes profile-top-five-bar { from { transform: scaleX(0); } }
 @keyframes profile-top-five-rank { from { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .player-profile .profile-stats-overview > .profile-stat-top-five, .player-profile .profile-stats-overview > .profile-stat-top-five::before, .player-profile .profile-stats-overview > .profile-stat-top-five::after, .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-rank { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .player-profile .profile-stats-overview > .profile-stat-top-five { background: #fff; border-color: var(--tf-edge); } .player-profile .profile-stats-overview > .profile-stat-top-five, .player-profile .profile-stats-overview > .profile-stat-top-five::before, .player-profile .profile-stats-overview > .profile-stat-top-five::after, .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-rank { animation: none; } }
 @media (max-width: 600px) {
     .player-profile .profile-stats-overview { gap: 7px; }
     .player-profile .profile-stats-overview > div { padding: 9px 7px 11px 8px; border-radius: 13px; }
@@ -1216,11 +1219,14 @@ a.profile-alumni-row:focus-visible { outline: 2px solid var(--team-primary); out
 
 /* 타이틀홀더: 종목별 카드 */
 /* 타이틀홀더: 카드 없이 종목별 한 줄 */
-.profile-titles { border-top: 1px solid #e6edf5; }
-.profile-title-row { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 10px; align-items: center; padding: 11px 2px; border-bottom: 1px solid #edf1f6; }
+.profile-title-row { display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: 10px; align-items: center; padding: 11px 2px; }
 .profile-title-name { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
 .profile-title-name h3 { position: relative; display: inline-flex; align-items: center; gap: 4px; height: 22px; margin: 0; padding: 0 9px 0 7px; border-radius: 999px; background: linear-gradient(135deg, #1f4aa8 0%, #002063 58%, #00123d 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(0,0,0,.2), 0 4px 8px -6px rgba(0,32,99,.8); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; text-shadow: 0 1px 1px rgba(0,0,0,.2); }
 .profile-title-name h3::before { content: ''; flex: none; width: 11px; height: 11px; background: #ffe08a; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8.5 7.5 12 12 5l4.5 7L21 8.5 19.2 18H4.8L3 8.5Z'/%3E%3Crect x='4.8' y='19.2' width='14.4' height='2' rx='1'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8.5 7.5 12 12 5l4.5 7L21 8.5 19.2 18H4.8L3 8.5Z'/%3E%3Crect x='4.8' y='19.2' width='14.4' height='2' rx='1'/%3E%3C/svg%3E") center / contain no-repeat; }
+/* 타이틀 배지 테두리를 금색 빛이 시계 방향으로 돈다(--tf-a, profile-top-five-orbit은 주요기록 카드와 공유)*/
+.profile-title-name h3::after { content: ''; position: absolute; inset: 0; padding: 1.5px; border-radius: inherit; pointer-events: none; background: conic-gradient(from var(--tf-a), transparent 0 55%, rgba(255,224,138,.9) 97%, transparent 100%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); animation: profile-top-five-orbit 4.5s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .profile-title-name h3::after { animation: none; display: none; } }
 .profile-title-name span { flex: none; color: #8794a7; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .profile-title-years { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 0; padding: 0; list-style: none; }
 .profile-title-years li { display: inline-flex; align-items: baseline; gap: 6px; }

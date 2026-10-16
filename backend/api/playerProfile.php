@@ -25,7 +25,7 @@ try {
     $player = $stmt->fetch(PDO::FETCH_ASSOC);
     if (!$player) { http_response_code(404); echo json_encode(['error'=>'선수를 찾을 수 없습니다.'], JSON_UNESCAPED_UNICODE); exit; }
     foreach (['Body','Birth','School','BackNo','Bat','Throws','Draft','MainPos','SubPos'] as $field) {
-        if (is_string($player[$field])) $player[$field] = trim($player[$field]) ?: null;
+        if (is_string($player[$field])) { $trimmed = trim($player[$field]); $player[$field] = $trimmed === '' ? null : $trimmed; } // "0"(등번호 0)은 남긴다
     }
     if ($player['Body'] === 'cm, kg') $player['Body'] = null;
     $player['NumberRetiredTeam'] = (int)$player['IsNumberRetired'] === 1 ? profileTeam(trim((string)$player['StoredTeam']) ?: null) : null;
@@ -72,10 +72,12 @@ try {
     $player['Titleholders'] = $titles->fetchAll(PDO::FETCH_ASSOC);
     // 선수 이동 현황(KBO 공시 + 조사로 보강한 계약). 최신이 위로 오고, 같은 날은 공시 원문 순서를 따른다.
     try {
-        $movementColumns = 'COALESCE(CAST(event_date AS CHAR), CAST(year AS CHAR)) AS date, event_type AS type, team, note, old_back_no AS oldBackNo, new_back_no AS newBackNo';
-        $contractColumns = ', contract_years AS contractYears, contract_term AS contractTerm, contract_total_amount AS contractTotal,
-            contract_registered_amount AS contractRegistered, contract_currency AS contractCurrency, contract_details AS contractDetails, contract_source_url AS contractSources';
-        $movementSql = static fn(string $columns) => "SELECT $columns FROM kbo_player_movements WHERE player_id=? ORDER BY COALESCE(event_date, CONCAT(year, '-01-01')) DESC, source_page, source_row, id";
+        // 날짜 없이 연도만 있는 트레이드(웨이버)는 같은 해 웨이버 공시 바로 위에, 공시가 없으면 연말에 둔다. 다른 연도 전용 줄은 연초 기준이다.
+        $sortDate = "COALESCE(m.event_date, IF(m.event_type='트레이드(웨이버)', COALESCE((SELECT MAX(w.event_date) FROM kbo_player_movements w WHERE w.player_id=m.player_id AND w.year=m.year AND w.event_type='웨이버'), CONCAT(m.year, '-12-31')), CONCAT(m.year, '-01-01')))";
+        $movementColumns = "COALESCE(CAST(m.event_date AS CHAR), CAST(m.year AS CHAR)) AS date, m.event_type AS type, m.team, m.note, m.old_back_no AS oldBackNo, m.new_back_no AS newBackNo, $sortDate AS sortDate";
+        $contractColumns = ', m.contract_years AS contractYears, m.contract_term AS contractTerm, m.contract_total_amount AS contractTotal,
+            m.contract_registered_amount AS contractRegistered, m.contract_currency AS contractCurrency, m.contract_details AS contractDetails, m.contract_source_url AS contractSources';
+        $movementSql = static fn(string $columns) => "SELECT $columns FROM kbo_player_movements m WHERE m.player_id=? ORDER BY $sortDate DESC, (m.event_date IS NULL AND m.event_type='트레이드(웨이버)') DESC, m.source_page, m.source_row, m.id";
         try {
             $movements = $pdo->prepare($movementSql($movementColumns . $contractColumns));
             $movements->execute([$pid]);
@@ -93,6 +95,8 @@ try {
     try {
         require_once __DIR__ . '/../lib/player-trades.php';
         $player['Movements'] = profileAttachTrades($pdo, (string)$pid, $player['Movements']);
+        foreach ($player['Movements'] as &$movementRow) unset($movementRow['sortDate']);
+        unset($movementRow);
     } catch (Throwable $tradeError) { error_log('Player trades unavailable: ' . $tradeError->getMessage()); }
     // 입단(kbo_player_data.draft, 예: "22 KIA 1차")도 가장 오래된 이동 내역으로 붙인다.
     if (preg_match('/^(\d{2})\s+(\S+)(?:\s+(.+))?$/u', (string)$player['Draft'], $draft)) {

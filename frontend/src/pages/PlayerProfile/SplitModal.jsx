@@ -58,8 +58,8 @@ export default function SplitModal({ row, split, pitcher, year, season, fipConst
     const { rates, counts } = pitching ? pitcherCards(row, fipConstants) : batterCards(row, faced);
     const games = row.list || [];
     const totals = row.totals || {};
-    const summary = pitching ? `${totals.games ?? row.games}경기 · ${totals.innings ?? '0'}이닝`
-        : totals.games != null ? `${totals.games}경기 · ${totals.pa ?? 0}타석` : `${totals.pa ?? row.games}타석`;
+    const summary = pitching ? [`${totals.games ?? row.games}경기`, `${totals.innings ?? '0'}이닝`]
+        : totals.games != null ? [`${totals.games}경기`, `${totals.pa ?? 0}타석`] : [`${totals.pa ?? row.games}타석`];
     const titleLabel = split === 'opponent' ? `vs ${row.label}` : split === 'inning' ? (pitcher ? `${row.label} 상대 타석` : `${row.label} 타석`) : split === 'order' ? `${row.label} 타순` : split === 'oppOrder' ? `상대 ${row.label} 타순` : row.label;
     const ordered = [...games].sort((a, b) => String(a.date).localeCompare(String(b.date)));
     return <dialog ref={dialog} className={`profile-career-modal profile-split-modal${expanded ? ' is-expanded' : ''}`} aria-labelledby="profile-split-title" onClose={onClose}
@@ -67,8 +67,7 @@ export default function SplitModal({ row, split, pitcher, year, season, fipConst
         <header className="profile-career-modal-head profile-split-modal-head" {...handlers}>
             <div className="profile-split-sheet-title">
                 <small>{[year === 'all' ? '통산' : year, seasonLabels[season]].filter(Boolean).join(' ')}</small>
-                <h2 id="profile-split-title">{titleLabel}</h2>
-                <p>{summary}</p>
+                <div className="profile-split-sheet-line"><h2 id="profile-split-title">{titleLabel}</h2><p>{summary.map(text => <span key={text}>{text}</span>)}</p></div>
             </div>
             <button type="button" className="profile-career-close" aria-label="닫기" onClick={close}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17" /></svg></button>
         </header>

@@ -365,7 +365,9 @@
 .profile-split-sheet-title { flex: 1; min-width: 0; }
 .profile-split-sheet-title small { display: block; color: var(--team-primary, #0b5fc7); font-size: 12.5px; font-weight: 800; }
 .profile-split-modal .profile-split-sheet-title h2 { display: block; margin: 2px 0 2px; color: #102746; font-size: 24px; font-weight: 900; letter-spacing: -.03em; }
-.profile-split-sheet-title p { display: block; margin: 0; color: #8793a3; font-size: 13px; font-weight: 600; }
+.profile-split-sheet-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.profile-split-sheet-line h2 { min-width: 0; }
+.profile-split-sheet-title p { display: flex; flex: none; gap: 8px; margin: 0; color: #8793a3; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .profile-split-modal-body { padding: 4px 20px 24px; }
 .player-profile .profile-split-modal .profile-split-modal-body section { margin: 20px 0 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
 .profile-split-sheet-hero { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; padding: 12px 0; border-bottom: 1px solid #edf1f6; }

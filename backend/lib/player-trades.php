@@ -63,7 +63,7 @@ function profileAttachTrades(PDO $db, string $pid, array $movements): array {
             'oldBackNo' => null, 'newBackNo' => null, 'trade' => $details[$id]];
     }
     // 새로 넣은 줄이 제자리에 오도록 날짜 내림차순으로 다시 정렬한다(같은 날은 원래 순서 유지).
-    $sortKey = static fn(array $movement): string => strlen((string)$movement['date']) === 4 ? $movement['date'] . '-01-01' : (string)$movement['date'];
+    $sortKey = static fn(array $movement): string => (string)($movement['sortDate'] ?? (strlen((string)$movement['date']) === 4 ? $movement['date'] . '-01-01' : $movement['date']));
     foreach ($movements as $index => &$movement) $movement['_order'] = $index;
     unset($movement);
     usort($movements, static fn($a, $b) => strcmp($sortKey($b), $sortKey($a)) ?: ($a['_order'] <=> $b['_order']));

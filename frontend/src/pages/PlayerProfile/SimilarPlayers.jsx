@@ -42,7 +42,7 @@ export default function SimilarPlayers({ pid }) {
     const toTop = () => window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     // 나이 기준 목록은 그 나이였던 시즌과 당시 팀을 적는다.
     const teamText = player => !player.Team ? '' : showAge && byAge ? `${player.Year} ${player.Team}` : player.IsActive ? player.Team : `前 ${player.Team}`;
-    return <section><div className="profile-heading"><h2>비슷한 선수</h2>
+    return <section><div className="profile-heading"><h2>성적이 비슷한 선수</h2>
         {age !== null && careerPlayers.length > 0 && <div className={`profile-game-switch ${ageMode ? 'is-detailed' : ''}`} role="group" aria-label="비교 기준">{['통산', `${age}세까지`].map((label, i) => <button key={label} type="button" className={ageMode === Boolean(i) ? 'active' : ''} aria-pressed={ageMode === Boolean(i)} onClick={() => setAgeMode(Boolean(i))}>{label}</button>)}</div>}
         {showAge && !careerPlayers.length && <small className="profile-season-caption">{age}세까지</small>}
     </div>

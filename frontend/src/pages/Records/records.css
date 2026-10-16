@@ -1,5 +1,5 @@
 /* 선수 기록실: 표는 선수 프로필의 연도별 기록 스타일(player-profile.css)을 그대로 쓴다. */
-.record-room { --team-primary: #0b5fc7; --heading-primary: #00b5e5; --heading-secondary: #00d1c6; --profile-nav-height: 0px; --profile-compact-height: 0px; min-height: calc(100vh - 56px); padding: 20px 16px 48px; background: radial-gradient(ellipse at 85% 0%, #deebfe 0, transparent 38%), #f0f5fa; color: #102746; }
+.record-room { --team-primary: #0b5fc7; --heading-primary: #00b5e5; --heading-secondary: #00d1c6; --profile-nav-height: var(--site-nav-height); --profile-compact-height: 0px; min-height: calc(100vh - 56px); padding: 20px 16px 48px; background: radial-gradient(ellipse at 85% 0%, #deebfe 0, transparent 38%), #f0f5fa; color: #102746; }
 .record-room-card { width: min(100%, 1180px); margin: 0 auto; padding: 28px; border: 1px solid #e7eef7; border-radius: 30px; background: #fff; box-shadow: 0 1px 2px rgba(16,39,70,.04), 0 10px 30px rgba(16,39,70,.05); }
 .record-room-booting { display: grid; place-items: center; min-height: 320px; }
 
@@ -125,6 +125,7 @@
 .record-room-table th.is-sorted { color: var(--team-primary); background: #e9f1fb; }
 .record-room-table tbody td.is-sorted { background: #f3f8fe; color: #0b3f86; font-weight: 800; }
 .record-room-table tbody tr:hover td.is-sorted { background-color: #e9f2fd; }
+.record-room-table tbody { transition: opacity .15s; }
 .record-room-table.is-loading tbody { opacity: .45; }
 /* 표가 길어도 불러오는 중 표시가 화면 안에 보이도록, 표 가운데가 아니라 화면 가운데를 따라다니게 한다. */
 .record-room .profile-year-table-loading { display: block; inset: 0; padding-top: 70px; text-align: center; }
@@ -228,3 +229,4 @@
     .record-room-hof-period { display: none; }
     .record-room-hof-table col:last-child { display: none; }
 }
+@media (prefers-reduced-motion: reduce) { .record-room-table tbody { transition: none; } }

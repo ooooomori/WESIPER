@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useSheetDrag from './useSheetDrag';
+import { hasBackNo } from './backNo';
 
 const schoolLevels = { 초: '초등학교', 중: '중학교', 고: '고등학교', 대: '대학교' };
 const isAlumniName = name => /^[\p{L}\p{N} .]{2,30}(초|중|고|대|리틀)$/u.test(name);
@@ -144,7 +145,7 @@ export default function PlayerGroupModal({ group, currentPid, getLogo, onClose }
         const meta = type === 'draft' ? [player.draft?.pick ? `${player.draft.pick}순위` : null, team, player.BasePos || player.Pos] : [team, player.Pos, player.Birth ? `${String(player.Birth).slice(0, 4)}년생` : null];
         const content = <>
             <span className="profile-alumni-logo">{logo ? <img src={logo} alt="" /> : <b>{(logoTeam || '—').slice(0, 2)}</b>}</span>
-            <span className="profile-alumni-name"><strong>{player.Name}</strong>{player.BackNo && <small>#{player.BackNo}</small>}{self && <em>현재 선수</em>}</span>
+            <span className="profile-alumni-name"><strong>{player.Name}</strong>{hasBackNo(player.BackNo) && <small>#{player.BackNo}</small>}{self && <em>현재 선수</em>}</span>
             <span className="profile-alumni-meta">{meta.filter(Boolean).join(' · ')}</span>
             {!self && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
         </>;

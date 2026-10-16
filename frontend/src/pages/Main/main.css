@@ -5,7 +5,6 @@
 .main-home-search-hero { position: relative; isolation: isolate; overflow: hidden; margin-inline: -24px; padding: 0 48px 56px; }
 .main-home-hero-banner { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; min-height: clamp(240px, 48vw, 350px); margin-inline: -48px; padding: 32px 48px; }
 .main-home-hero-title { width: 48%; transform: translateY(12px); }
-.main-home-hero-favicon { display: block; width: 36px; height: 36px; object-fit: contain; margin-bottom: 8px; }
 .main-home-search-hero .main-home-hero-title h1 { width: 100%; }
 .main-home-search-hero::before {
     content: "";
@@ -64,11 +63,6 @@
 @media (hover: hover) {
     .main-home-ranking-table tbody tr:hover > * { background-color: #edf4ff; }
 }
-.main-home-recent-results { display: inline-flex; gap: 3px; }
-.main-home-recent-results > span { display: inline-grid; place-items: center; width: 21px; height: 24px; border-radius: 5px; font-weight: 800; }
-.main-home-recent-results .is-win { color: #d32f3b; background: #fff0f1; }
-.main-home-recent-results .is-loss { color: #2468cf; background: #edf4ff; }
-.main-home-recent-results .is-draw { color: #748093; background: #f0f2f5; }
 .main-home-rank-remark { display: inline-block; padding: 4px 7px; border-radius: 6px; font-size: 11px; font-weight: 700; }
 .main-home-rank-remark.is-secured { color: #087f68; background: #e9f8f2; }
 .main-home-rank-remark.is-out { color: #7a8290; background: #f0f2f5; }
@@ -95,7 +89,6 @@
 .main-home-player-role.is-starter { color: #c8eaa0; }
 .main-home-player-divider { flex: 0 0 1px; height: 10px; background: rgba(255,255,255,.45); }
 .main-home-player-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; color: #f8fafc; }
-.main-home-ranking-table:not(.is-autumn) tr > :last-child { padding-inline: 10px; }
 .main-home-team-home { text-align: right; }
 .main-home-game-center { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
 .main-home-score { display: flex; align-items: center; justify-content: center; gap: 17px; font-size: 24px; line-height: 1.2; font-variant-numeric: tabular-nums; }
@@ -147,6 +140,8 @@
     .main-home-section { padding: 18px 12px; border-radius: 22px; margin-bottom: 16px; }
     .main-home-search-hero { margin-inline: -12px; padding: 0 24px 50px; }
     .main-home-hero-banner { margin-inline: -24px; padding-inline: 24px; }
+    /* 모바일에서는 배경 사진을 위로 올려 선수 머리가 위쪽 메뉴에 가까워지게 한다. */
+    .main-home-search-hero::before { background-position: center, center calc(58% - 64px); }
     .main-home-search { height: 46px; padding: 0 17px; gap: 12px; border-radius: 18px; }
     .main-home-search > span { font-size: 16px; }
     .main-home-search-header { gap: 4px; padding-inline: 12px; }
@@ -325,9 +320,6 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
 
 /* KBO 순위: 가을야구권 강조 */
 .main-home-rank-num { display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 4px; border-radius: 7px; font-weight: 800; }
-.main-home-ranking-table tr.is-postseason .main-home-rank-num { background: #e8f2ff; color: #0b5fc7; }
-.main-home-ranking-table tbody tr:first-child.is-postseason .main-home-rank-num { background: #087aff; color: #fff; }
-.main-home-ranking-table tr.is-postseason th div { font-weight: 800; }
 
 /* 미니게임: 화살표 움직임 */
 .main-home-mini-go { transition: transform .2s ease; }
@@ -360,9 +352,6 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
     .main-home-section-heading h2 { gap: 8px; }
     .main-home-ranking-table { min-width: 480px; font-size: 12px; }
     .main-home-ranking-table th, .main-home-ranking-table td { padding-inline: 3px; }
-    .main-home-ranking-table tr > :nth-child(3) { padding-left: 12px; }
-    .main-home-recent-results { gap: 2px; }
-    .main-home-recent-results > span { width: 19px; height: 22px; font-size: 11px; }
     /* 미니게임: 가로형 카드로 높이를 줄인다 */
     .main-home-mini-card { display: grid; grid-template-columns: minmax(0, 1fr) 116px; grid-template-areas: "title art" "desc art"; align-items: center; column-gap: 14px; padding: 14px 16px; min-height: 84px; }
     .main-home-mini-card .main-home-mini-art { grid-area: art; height: auto; }
@@ -588,3 +577,97 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
 .main-home-notice p { margin: 8px 0 18px; color: #607a9a; font-size: 14px; }
 .main-home-notice button { width: 100%; padding: 11px; border: 0; border-radius: 12px; background: #087aff; color: #fff; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }
 .main-home-notice button:hover { background: #0866e0; }
+
+/* 오늘의 경기: 경기가 없을 때는 글자만 */
+.main-home-game-empty { margin: 0; padding: 14px 0 6px; color: #7a8798; font-size: 14px; text-align: center; }
+
+/* KBO 순위표 */
+.main-home-ranking-table { --team-pl: 8px; }
+.main-home-ranking-table:not(.is-autumn) { table-layout: fixed; min-width: 582px; }
+.main-home-ranking-table col.is-rank { width: 36px; }
+.main-home-ranking-table col.is-team { width: 88px; }
+.main-home-ranking-table col.is-games { width: 42px; }
+.main-home-ranking-table col.is-wins, .main-home-ranking-table col.is-losses { width: 36px; }
+.main-home-ranking-table col.is-draws { width: 32px; }
+.main-home-ranking-table col.is-pct { width: 58px; }
+.main-home-ranking-table col.is-gb { width: 50px; }
+.main-home-ranking-table col.is-streak { width: 56px; }
+.main-home-ranking-table col.is-recent { width: 148px; }
+.main-home-ranking-table tr > :first-child { width: 36px; min-width: 36px; max-width: 36px; }
+.main-home-ranking-table tr > :nth-child(2) { left: 36px; width: 88px; min-width: 88px; max-width: 88px; padding-left: var(--team-pl); border-right: 0; }
+.main-home-ranking-table:not(.is-autumn) thead th { height: 34px; padding: 0 2px; border-bottom: 1px solid #dde4ee; background: none; color: #475569; font-size: 12px; font-weight: 600; }
+.main-home-ranking-table:not(.is-autumn) thead tr > :nth-child(2) { text-align: left; padding-left: var(--team-pl); }
+.main-home-ranking-table tbody tr, .main-home-ranking-table tbody th, .main-home-ranking-table tbody td { height: 42px; }
+.main-home-ranking-table tbody th, .main-home-ranking-table tbody td { padding-block: 0; border-bottom: 1px solid #eef1f6; }
+.main-home-ranking-table tbody tr > :first-child { box-shadow: inset 3px 0 0 var(--team-color, transparent); }
+.main-home-ranking-table tbody tr > :nth-child(2) { text-align: left; }
+.main-home-ranking-table .main-home-rank-num { min-width: 0; height: auto; padding: 0; border-radius: 0; background: none; color: #64748b; font-size: 14px; font-weight: 800; }
+.main-home-ranking-table tr.is-postseason .main-home-rank-num, .main-home-ranking-table tbody tr:first-child.is-postseason .main-home-rank-num { background: none; color: #102746; }
+.main-home-ranking-table tbody tr.is-postseason:nth-child(5) > * { border-bottom: 2px solid #c3d0e2; }
+.main-home-ranking-table tbody th div { gap: 6px; color: #334155; font-size: 14px; font-weight: 700; }
+.main-home-ranking-table tr.is-postseason th div { color: #0f1f3a; font-weight: 800; }
+.main-home-ranking-table .main-home-team-logo { width: 24px; height: 24px; flex: none; }
+.main-home-ranking-table:not(.is-autumn) tbody td { padding-inline: 2px; color: #334155; font-size: 13px; }
+.main-home-streak { font-size: 12px; font-weight: 700; }
+.main-home-streak.is-win { color: #d92d3a; }
+.main-home-streak.is-loss { color: #1d5fd1; }
+.main-home-ranking-table:not(.is-autumn) tr > :last-child { padding-inline: 4px; }
+.main-home-recent-results { display: inline-flex; align-items: center; }
+.main-home-recent-results > .main-home-recent-dots { display: inline-flex; align-items: center; gap: 4px; }
+.main-home-recent-dots i { box-sizing: border-box; width: 10px; height: 10px; border-radius: 50%; }
+.main-home-recent-dots .is-win { background: #e5484d; }
+.main-home-recent-dots .is-loss { background: #2f6fe4; }
+.main-home-recent-dots .is-draw { border: 2px solid #94a3b8; background: #fff; }
+@media (max-width: 600px) {
+    .main-home-ranking-table { --team-pl: 4px; }
+    .main-home-ranking-table col.is-rank { width: 30px; }
+    .main-home-ranking-table col.is-team { width: 70px; }
+    .main-home-ranking-table col.is-games { width: 36px; }
+    .main-home-ranking-table col.is-wins, .main-home-ranking-table col.is-losses, .main-home-ranking-table col.is-draws { width: 28px; }
+    .main-home-ranking-table col.is-pct { width: 46px; }
+    .main-home-ranking-table col.is-gb { width: 44px; }
+    .main-home-ranking-table col.is-streak { width: 48px; }
+    .main-home-ranking-table col.is-recent { width: 96px; }
+    .main-home-ranking-table tr > :first-child { width: 30px; min-width: 30px; max-width: 30px; }
+    .main-home-ranking-table tr > :nth-child(2) { left: 30px; width: 70px; min-width: 70px; max-width: 70px; }
+    .main-home-ranking-table:not(.is-autumn) { min-width: 454px; }
+    .main-home-ranking-table:not(.is-autumn) thead th { height: 30px; font-size: 10.5px; }
+    .main-home-ranking-table tbody tr, .main-home-ranking-table tbody th, .main-home-ranking-table tbody td { height: 38px; }
+    .main-home-ranking-table .main-home-rank-num { font-size: 12.5px; }
+    .main-home-ranking-table tbody th div { gap: 4px; font-size: 12px; }
+    .main-home-ranking-table .main-home-team-logo { width: 19px; height: 19px; }
+    .main-home-ranking-table:not(.is-autumn) tbody td { font-size: 11.5px; }
+    .main-home-streak { font-size: 11px; }
+    .main-home-recent-dots i { width: 7px; height: 7px; }
+    .main-home-recent-results > .main-home-recent-dots { gap: 2px; }
+}
+
+/* 포스트시즌 대진표: 아래 한 줄의 5개 팀이 라운드마다 한 칸씩 위로 합쳐지는 계단식 트리 */
+.main-home-bracket-scroll { overflow-x: auto; max-width: 100%; overscroll-behavior-x: contain; }
+.main-home-bracket { position: relative; margin: 6px 0 26px; }
+.main-home-bracket > svg { position: absolute; inset: 0; overflow: visible; fill: none; }
+.main-home-bracket > svg path { stroke: #cdd5df; stroke-width: 1.5; }
+.main-home-bracket > svg path.is-on { stroke: #102746; }
+.main-home-bracket-team { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.main-home-bracket-team .main-home-team-logo { width: var(--logo); height: var(--logo); }
+.main-home-bracket-team strong { color: #22364f; font-size: 13px; font-weight: 600; line-height: 14px; white-space: nowrap; }
+.main-home-bracket-team.is-out { opacity: .4; }
+.main-home-bracket-team.is-champion strong { color: #102746; font-weight: 800; }
+.main-home-bracket-pill { position: absolute; box-sizing: border-box; padding: 0 12px; border: 1px solid #cdd5df; border-radius: 999px; background: #fff; color: #334155; font-size: 12px; font-weight: 600; line-height: 22px; white-space: nowrap; transform: translate(-50%, -50%); }
+.main-home-bracket-pill.is-done { border-color: #102746; }
+.main-home-bracket-games { position: absolute; transform: translateX(-50%); }
+.main-home-bracket-games p { display: flex; align-items: center; justify-content: center; gap: 4px; margin: 0; color: #475569; font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.main-home-bracket-games p span { margin-right: 4px; }
+.main-home-bracket-games p.is-scheduled { color: #94a3b8; }
+.main-home-bracket-games p b { min-width: 7px; color: #94a3b8; font-weight: 500; text-align: center; }
+.main-home-bracket-games p b.is-win { color: #0f1f3a; font-weight: 800; }
+.main-home-bracket-games p i { font-style: normal; }
+.main-home-bracket.is-compact .main-home-bracket-team strong { font-size: 10.5px; }
+.main-home-bracket.is-compact .main-home-bracket-pill { padding: 0 6px; font-size: 10.5px; line-height: 18px; }
+.main-home-bracket.is-compact .main-home-bracket-games p { gap: 3px; font-size: 10.5px; }
+.main-home-bracket.is-compact .main-home-bracket-games p span { margin-right: 2px; }
+
+/* 옆으로 밀렸을 때만 고정된 팀 칸 경계에 얇은 그림자를 둔다 */
+.main-home-ranking-table-wrap.is-scrolled .main-home-ranking-table:not(.is-autumn) tr > :nth-child(2) { box-shadow: 5px 0 5px -5px rgba(15, 31, 58, .16); }
+.main-home-ranking-table:not(.is-autumn) thead tr > :nth-child(-n+2) { background: #fff; }
+

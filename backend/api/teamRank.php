@@ -14,8 +14,8 @@ try {
     $year = (int) (new DateTimeImmutable('now', new DateTimeZone('Asia/Seoul')))->format('Y');
     [$start,$end] = getKBOSchedule()[$year]['regular'] ?? [null,null];
     if (!$start || !$end) throw new RuntimeException('Missing regular season dates');
-    $query = $db->prepare('SELECT * FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL AND home_score IS NOT NULL AND game_code NOT IN (\'66661031KTSS02021\',\'66661001SKKT02024\') ORDER BY game_date, game_code'); // 순위 결정전(타이브레이커)은 정규시즌 성적에서 제외
-    $query->execute([$start,$end]);
+    $query = $db->prepare('SELECT * FROM kbo_schedule WHERE league_level=1 AND game_date BETWEEN ? AND ? AND game_code LIKE ? AND away_score IS NOT NULL AND home_score IS NOT NULL AND game_code NOT IN (\'66661031KTSS02021\',\'66661001SKKT02024\') ORDER BY game_date, game_code'); // 순위 결정전(타이브레이커)과 포스트시즌은 코드가 날짜로 시작하지 않아 정규시즌 성적에서 제외
+    $query->execute([$start,$end,$year.'%']);
     $games=$query->fetchAll(PDO::FETCH_ASSOC);
     // 크롤러(매일 02:00)가 아직 저장하지 않은 종료 경기를 더한다. 오늘 경기 목록은 todayGames와 같은 캐시를 쓴다.
     // KBO 조회나 보관 파일에 문제가 있어도 저장된 결과만으로 순위를 낸다.

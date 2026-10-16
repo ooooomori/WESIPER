@@ -129,6 +129,13 @@ function predictionSeasonForms(PDO $pdo, int $year, array $ids): array {
     return array_map('predictionSeasonForm', $games);
 }
 
+/** 오늘(Asia/Seoul)이 해당 연도 정규시즌 기간(시작일과 마지막 경기일 포함) 안인지. 일정이 없으면 false. */
+function predictionRankingInRegularSeason(DateTimeImmutable $today, array $schedule): bool {
+    [$start, $end] = $schedule[$today->format('Y')]['regular'] ?? ['', ''];
+    $day = $today->format('Y-m-d');
+    return $start !== '' && $end !== '' && $day >= $start && $day <= $end;
+}
+
 if (PHP_SAPI === 'cli') return; // 테스트에서 함수만 불러 쓴다.
 
 try {
@@ -142,11 +149,16 @@ try {
     }
     $today = new DateTimeImmutable('now', new DateTimeZone('Asia/Seoul'));
     $year = (int)$today->format('Y');
+    // 다음 경기 예측은 정규시즌 중에만 낸다. 시즌 밖에는 DB도 읽지 않고 숨김 신호만 보낸다.
+    if (!predictionRankingInRegularSeason($today, getKBOSchedule())) {
+        echo json_encode(['available' => false, 'regularSeason' => false], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
     $stmt = $pdo->prepare("SELECT MAX(as_of_date) FROM kbo_player_predictions WHERE season_year=? AND season_type='regular' AND model_version=?");
     $stmt->execute([$year, PREDICTION_MODEL_VERSION]);
     $asOf = $stmt->fetchColumn();
     if (!$asOf || $asOf < $today->modify('-' . PREDICTION_FRESH_DAYS . ' days')->format('Y-m-d')) {
-        echo json_encode(['available' => false, 'asOf' => $asOf ?: null], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['available' => false, 'regularSeason' => true, 'asOf' => $asOf ?: null], JSON_UNESCAPED_UNICODE);
         exit;
     }
     $stmt = $pdo->prepare("SELECT p.player_id, p.payload, pl.name, pl.team
@@ -160,7 +172,7 @@ try {
         $forms = predictionSeasonForms($pdo, $year, array_column($matches, 'PlayerId'));
         foreach ($matches as &$match) $match += $forms[$match['PlayerId']] ?? predictionSeasonForm([]);
         unset($match);
-        echo json_encode(['available' => true, 'asOf' => $asOf, 'activeDays' => PREDICTION_ACTIVE_DAYS, 'players' => count($players), 'query' => $query, 'matches' => $matches], JSON_UNESCAPED_UNICODE);
+        echo json_encode(['available' => true, 'regularSeason' => true, 'asOf' => $asOf, 'activeDays' => PREDICTION_ACTIVE_DAYS, 'players' => count($players), 'query' => $query, 'matches' => $matches], JSON_UNESCAPED_UNICODE);
         exit;
     }
     $rankings = ['hit' => predictionRankingTop($players, 'hit', $limit), 'homeRun' => predictionRankingTop($players, 'home_run', $limit)];
@@ -170,7 +182,7 @@ try {
     foreach ($rankings as &$rows) foreach ($rows as &$row) $row += $forms[$row['PlayerId']] ?? predictionSeasonForm([]);
     unset($rows, $row);
 
-    echo json_encode(['available' => true, 'asOf' => $asOf, 'activeDays' => PREDICTION_ACTIVE_DAYS, 'players' => count($players), 'rankings' => $rankings], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['available' => true, 'regularSeason' => true, 'asOf' => $asOf, 'activeDays' => PREDICTION_ACTIVE_DAYS, 'players' => count($players), 'rankings' => $rankings], JSON_UNESCAPED_UNICODE);
 } catch (Throwable $error) {
     error_log('Prediction ranking unavailable: ' . $error->getMessage());
     http_response_code(500);

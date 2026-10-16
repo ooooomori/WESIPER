@@ -79,7 +79,7 @@ function calculateStandings(array $games): array {
             $team['wins'], $team['losses'], $team['draws'], number_format($team['rate'], 3, '.', ''),
             $gap == 0 ? '-' : number_format($gap, 1, '.', ''),
             $streak === 0 ? '-' : ($streak > 0 ? '🔥 ' : '❄️ ') . abs($streak),
-            implode('', array_slice($team['results'], -5)) ?: '-'];
+            implode('', array_slice($team['results'], -10)) ?: '-'];
         $values = array_merge($values, autumnNumbers($team, $teams));
         $rows[] = ['row' => array_map(fn($value) => ['Text' => (string)$value], $values)];
     }

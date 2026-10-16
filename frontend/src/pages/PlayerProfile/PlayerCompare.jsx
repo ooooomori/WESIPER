@@ -85,13 +85,17 @@ function PlayerSearch({ onSelect, open, setOpen }) {
     </div>;
 }
 
+// 시즌 중 팀을 옮긴 해는 '2팀' 대신 팀들을 시간순으로 하이픈으로 잇고, 색과 로고는 마지막 팀을 쓴다.
+const seasonTeams = row => (row?.teams || []).map(item => item.team).filter(Boolean);
+const finalTeam = (row, fallback) => seasonTeams(row).at(-1) || row?.team || fallback;
 function CompareColumnHead({ entry, data, kind, mode, onYear, onRemove, getTeamLogo, getTeamColor }) {
     const profile = data.profile?.player;
     const rows = data.records?.[kind]?.rows?.filter(row => Number(row.stats?.games) > 0) || [];
     const years = [...new Set(rows.map(row => row.year))].sort((a, b) => b - a);
     const year = entry.year ?? years[0] ?? null;
     const season = rows.find(row => row.year === year);
-    const team = mode === 'season' ? season?.team || profile?.Team : (profile?.IsKbodle === 0 || profile?.IsKbodle === '0' ? profile?.FormerTeam : profile?.Team);
+    const team = mode === 'season' ? finalTeam(season, profile?.Team) : (profile?.IsKbodle === 0 || profile?.IsKbodle === '0' ? profile?.FormerTeam : profile?.Team);
+    const teamLabel = mode === 'season' && seasonTeams(season).length > 1 ? seasonTeams(season).join('-') : team;
     // 시즌 비교는 그 연도의 로고·모자를, 통산은 은퇴 연도 기준을 쓴다(2000~2005년 SK는 그때 로고).
     const teamYear = mode === 'season' ? year : Number(profile?.Retire) || undefined;
     const logo = team ? getTeamLogo(team, teamYear) : null;
@@ -100,7 +104,7 @@ function CompareColumnHead({ entry, data, kind, mode, onYear, onRemove, getTeamL
             {onRemove && <button type="button" className="compare-remove" aria-label={`${profile?.Name || '선수'} 비교에서 빼기`} onClick={onRemove}>×</button>}
             <span className="compare-head-photo"><PlayerPhoto pid={entry.pid} team={team} year={teamYear} />{logo && <img className="compare-head-logo" src={logo} alt="" />}</span>
             <strong>{profile?.Name || '…'}</strong>
-            <small>{team || (data.status === 'error' ? '불러오기 실패' : '')}</small>
+            <small>{teamLabel || (data.status === 'error' ? '불러오기 실패' : '')}</small>
             {mode === 'season' && <select value={year ?? ''} onChange={event => onYear(Number(event.target.value))} aria-label={`${profile?.Name || '선수'} 비교 연도`} disabled={!years.length}>
                 {years.length ? years.map(value => <option key={value} value={value}>{value}년</option>) : <option value="">기록 없음</option>}
             </select>}
@@ -175,7 +179,7 @@ function CompareTable({ scrollRef, entries, mode, kind, switches, onYear, onRemo
         const titles = Object.fromEntries(titleholderTypes.map(([type]) => [type, (data.profile?.player?.Titleholders || []).filter(row => row.type === type && inScope(row)).length]));
         const profile = data.profile?.player;
         const retired = profile?.IsKbodle === 0 || profile?.IsKbodle === '0';
-        const team = mode === 'season' ? rows.find(row => row.year === year)?.team || profile?.Team : (retired ? profile?.FormerTeam : profile?.Team);
+        const team = mode === 'season' ? finalTeam(rows.find(row => row.year === year), profile?.Team) : (retired ? profile?.FormerTeam : profile?.Team);
         // 이긴 기록은 그 기록을 가진 선수의 팀 색으로 강조한다.
         const cellStyle = { '--cell-color': getTeamColor(team) || '#3a5f8f' };
         return { entry, data, stats, awards, national, titles, cellStyle };
@@ -218,8 +222,8 @@ function CompareTable({ scrollRef, entries, mode, kind, switches, onYear, onRemo
                     const target = best(values, true);
                     return <tr key={type}><th scope="row">{name}</th>{columns.map((column, index) => <td key={column.entry.id} style={column.cellStyle} className={target != null && values[index] === target ? 'is-best' : ''}>{values[index] ? `${values[index]}회` : '—'}</td>)}</tr>;
                 })}
-                <tr className="compare-group"><th colSpan={columns.length + 1} scope="colgroup"><span>국가대표</span></th></tr>
-                {(() => {
+                {columns.some(column => column.national > 0) && <tr className="compare-group"><th colSpan={columns.length + 1} scope="colgroup"><span>국가대표</span></th></tr>}
+                {columns.some(column => column.national > 0) && (() => {
                     const values = columns.map(column => column.national);
                     const target = best(values, true);
                     return <tr><th scope="row">선발 횟수</th>{columns.map((column, index) => <td key={column.entry.id} style={column.cellStyle} className={target != null && values[index] === target ? 'is-best' : ''}>{values[index] ? `${values[index]}회` : '—'}</td>)}</tr>;

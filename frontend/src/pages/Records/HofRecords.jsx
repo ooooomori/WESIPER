@@ -1,10 +1,11 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Spinner } from 'flowbite-react';
 import { teamCodeByName, teamColorByName, teamLogoByCode, teamSmallLogoByCode } from '../../lib/teamAssets';
 import useTableDrag from '../PlayerProfile/useTableDrag';
 import useStickyTableHead from '../PlayerProfile/useStickyTableHead';
 import { recordColumnWidth } from '../PlayerProfile/recordTableLayout';
+import useRowMotion from './useRowMotion';
 
 const metrics = [['blackInk', '블랙잉크'], ['grayInk', '그레이잉크'], ['standard', 'HOF 스탠다드'], ['monitor', 'HOF 모니터']];
 const roles = [['batter', '타자'], ['pitcher', '투수']];
@@ -80,9 +81,6 @@ function loadAll(role) {
     return cache.get(role);
 }
 
-const FADE_MS = 200;
-const MOVE_MS = 320;
-
 // 좁은 화면에서만 짧은 열 이름을 쓴다(머리글 안에 따로 요소를 넣으면 정렬 화살표 스타일이 적용되므로 글자만 바꾼다).
 function useCompact() {
     const query = '(max-width: 600px)';
@@ -104,15 +102,10 @@ export default function HofRecords() {
     const [activeOnly, setActiveOnly] = useState(false);
     const [data, setData] = useState(() => resolved.has('batter') ? { key: 'batter', rows: resolved.get('batter'), loading: false, error: '' } : { key: '', rows: [], loading: true, error: '' });
     const [limit, setLimit] = useState(PAGE);
-    const [rendered, setRendered] = useState([]);
-    const [entering, setEntering] = useState(() => new Set());
     const [notesOpen, setNotesOpen] = useState(false);
     const scrollRef = useTableDrag();
     const stickyRef = useStickyTableHead();
-    const timer = useRef(0);
     const bodyRef = useRef(null);
-    const renderedRef = useRef([]);
-    const tops = useRef(null);
 
     useEffect(() => {
         let active = true;
@@ -141,48 +134,8 @@ export default function HofRecords() {
     }, [data.rows, metric, activeOnly]);
     const visible = useMemo(() => target.slice(0, limit), [target, limit]);
 
-    // 목록이 바뀌면 빠지는 줄이 먼저 흐려지고, 그다음 목록을 바꾸면서 남는 줄이 제 자리로 미끄러진다.
-    useEffect(() => {
-        window.clearTimeout(timer.current);
-        const previous = renderedRef.current;
-        const visibleIds = new Set(visible.map(row => row.id));
-        const previousIds = new Set(previous.map(item => item.row.id));
-        const commit = () => {
-            const body = bodyRef.current;
-            if (body && previous.length) tops.current = new Map([...body.querySelectorAll('tr[data-id]')].map(row => [row.dataset.id, row.getBoundingClientRect().top]));
-            setEntering(previous.length && data.key ? new Set(visible.filter(row => !previousIds.has(row.id)).map(row => row.id)) : new Set());
-            setRendered(visible.map(row => ({ row, leaving: false })));
-        };
-        const leavingIds = previous.filter(item => !visibleIds.has(item.row.id)).map(item => item.row.id);
-        if (!data.key || !previous.length || !leavingIds.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) commit();
-        else {
-            setRendered(previous.map(item => ({ row: item.row, leaving: !visibleIds.has(item.row.id) })));
-            timer.current = window.setTimeout(commit, FADE_MS);
-        }
-        return () => window.clearTimeout(timer.current);
-    }, [visible, data.key]);
-
-    useLayoutEffect(() => {
-        renderedRef.current = rendered;
-        const body = bodyRef.current;
-        if (!body) return;
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const rows = [...body.querySelectorAll('tr[data-id]')];
-        // 빠지는 줄: 흐려진다.
-        if (!reduce) rows.filter(row => row.classList.contains('is-leaving') && !row.dataset.motion).forEach(row => {
-            row.dataset.motion = '1';
-            row.animate([{ opacity: 1 }, { opacity: 0 }], { duration: FADE_MS, easing: 'ease-out', fill: 'forwards' });
-        });
-        const before = tops.current;
-        tops.current = null;
-        if (!before || reduce) return;
-        // 남는 줄: 이전 자리에서 새 자리로 미끄러지고, 새로 생기는 줄은 흐릿하게 나타난다.
-        const moves = rows.map(row => [row, before.get(row.dataset.id), row.getBoundingClientRect().top]);
-        moves.forEach(([row, from, to]) => {
-            if (from === undefined) row.animate([{ opacity: 0 }, { opacity: 1 }], { duration: MOVE_MS, easing: 'ease-out' });
-            else if (Math.abs(from - to) > 1) row.animate([{ transform: `translateY(${from - to}px)` }, { transform: 'translateY(0)' }], { duration: MOVE_MS, easing: 'cubic-bezier(.4,0,.2,1)' });
-        });
-    }, [rendered]);
+    // 목록이 바뀌면 바로 남는 줄은 새 자리로 미끄러지고 새 줄은 흐릿하게 나타난다.
+    useRowMotion(bodyRef, visible);
 
     const loadMore = () => setLimit(value => value + PAGE);
 
@@ -217,12 +170,11 @@ const shortLabels = { standard: '스탠다드', monitor: '모니터' };
                 {colgroup}
                 <caption className="sr-only">{metrics.find(([key]) => key === metric)[1]} {roles.find(([key]) => key === role)[1]} 순위</caption>
                 <thead>{headRow}</thead>
-                <tbody ref={bodyRef}>{empty || (data.loading && !rendered.length)
+                <tbody ref={bodyRef}>{empty || (data.loading && !visible.length)
                     ? <tr aria-hidden="true"><td className={data.loading ? 'profile-year-loading-space' : 'profile-year-empty-space'} colSpan={widths.length} /></tr>
-                    : rendered.map(({ row, leaving }) => {
+                    : visible.map(row => {
                         const logo = teamLogo(row.team);
-                        const className = [row.active ? 'is-active-player' : '', leaving ? 'is-leaving' : ''].filter(Boolean).join(' ') || undefined;
-                        return <tr key={row.id} data-id={row.id} className={className} style={row.active && teamColorByName(row.team) ? { '--hof-color': teamColorByName(row.team) } : undefined} aria-hidden={leaving || undefined}>
+                        return <tr key={row.id} data-id={row.id} className={row.active ? 'is-active-player' : undefined} style={row.active && teamColorByName(row.team) ? { '--hof-color': teamColorByName(row.team) } : undefined}>
                             <td className="profile-year-cell record-room-rank">{row.rank}</td>
                             <td className="profile-year-team-cell record-room-player"><Link to={`/?pid=${row.id}`} title={[row.name, row.team, row.active ? '현역' : ''].filter(Boolean).join(' ')}>{logo ? <img src={logo} alt="" /> : <i aria-hidden="true" />}<span className={`record-room-name${[...row.name].length >= 5 ? ' is-marquee' : ''}`}><b>{row.name}</b><b aria-hidden="true">{row.name}</b></span></Link></td>
                             {metrics.map(([key]) => <td key={key} className={metric === key ? 'is-sorted' : undefined}>{row.scores[key] > 0 ? scoreText(row.scores[key]) : ''}</td>)}

@@ -10,6 +10,7 @@ import { IoCloseCircle } from 'react-icons/io5';
 import { teamCapByName } from '../../lib/teamAssets';
 import { gameParticipants } from '../../lib/gameParticipants';
 import GameWeather from './GameWeather';
+import Postseason from './Postseason';
 import ulsanLogo from '../../assets/images/logos/ulsan-logo.png';
 
 // 오늘의 경기는 일정·결과만 보여주고 서버도 KBO에 하루 몇 번만 묻는다. 화면은 5분마다 확인하면 충분하다.
@@ -142,7 +143,7 @@ function pickPopularPlayer(list, name) {
     return candidates.sort((a, b) => score(b) - score(a))[0] || null;
 }
 
-// 다음 출전 경기에서 안타·홈런을 칠 확률 순위. 예측이 없거나 오래됐으면(시즌 종료 등) 영역을 숨긴다.
+// 다음 출전 경기에서 안타·홈런을 칠 확률 순위. 정규시즌이 아니거나 예측이 없거나 오래됐으면 영역을 숨긴다.
 // season: 이름 옆에 두는 시즌 기록, form: 이름 아래에 두는 최근 흐름
 const PREDICTION_TABS = [
     { key: 'hit', label: '안타',
@@ -183,7 +184,7 @@ function PredictionRanking() {
         const controller = new AbortController();
         fetch('/api/predictionRanking.php?limit=10', { signal: controller.signal })
             .then((response) => response.ok ? response.json() : null)
-            .then((result) => { if (result?.available) setData(result); })
+            .then((result) => { if (result?.available && result.regularSeason !== false) setData(result); })
             .catch(() => {});
         return () => controller.abort();
     }, []);
@@ -318,18 +319,28 @@ export default function Main() {
     }, [recentList]);
     const rememberPlayer = (player) => setRecentPlayers((previous) => addRecentPlayer(player, previous));
     const forgetPlayer = (playerId) => setRecentPlayers((previous) => removeRecentPlayer(playerId, previous));
+    // 검색 화면은 ?search=1 기록으로 연다. 뒤로 가기나 검색 화면의 뒤로 버튼은 검색을 열기 전 화면으로 돌아간다.
+    const searchParam = new URLSearchParams(location.search).get('search') === '1';
     const openSearch = () => {
         if (!searchDialog.current.open) searchDialog.current.showModal();
         searchInput.current.focus();
         setSearchOpen(true);
+        if (!searchParam) navigate('/?search=1');
     };
     useEffect(() => {
-        if (new URLSearchParams(location.search).get('search') === '1') {
-            if (!searchDialog.current.open) searchDialog.current.showModal();
+        const dialog = searchDialog.current;
+        if (searchParam) {
+            if (!dialog.open) dialog.showModal();
             searchInput.current.focus();
             setSearchOpen(true);
-        }
-    }, [location.search]);
+        } else if (dialog.open) dialog.close();
+    }, [searchParam]);
+    const closeSearch = () => {
+        setSearchOpen(false);
+        if (!new URLSearchParams(window.location.search).get('search')) return;
+        if (location.key === 'default') navigate('/', { replace: true });
+        else navigate(-1);
+    };
     useEffect(() => {
         const keyword = search.trim();
         setPlayers([]);
@@ -479,7 +490,7 @@ export default function Main() {
                     <button type="button" autoFocus onClick={() => setTeamRecordsNotice(false)}>확인</button>
                 </div>
             </div>}
-            <dialog ref={searchDialog} className="main-home-search-screen" aria-label="선수 검색" onClose={() => setSearchOpen(false)}>
+            <dialog ref={searchDialog} className="main-home-search-screen" aria-label="선수 검색" onClose={closeSearch}>
                 <div className="main-home-search-screen-inner">
                     <header className="main-home-search-header">
                         <button type="button" className="main-home-search-back" aria-label="검색 닫기" onClick={() => searchDialog.current.close()}>
@@ -554,7 +565,6 @@ export default function Main() {
                 <section className="main-home-search-hero" aria-labelledby="preview-search-title">
                     <div className="main-home-hero-banner">
                         <div className="main-home-hero-title">
-                            <img className="main-home-hero-favicon" src="/wesiper-favicon.png" alt="" />
                             <h1 id="preview-search-title"><span>KBO</span> 선수 도감</h1>
                         </div>
                     </div>
@@ -598,10 +608,7 @@ export default function Main() {
                             <p>경기 정보를 불러오지 못했습니다.</p>
                             <button type="button" onClick={retryGames}>다시 시도</button>
                         </div>}
-                        {gameState === "ready" && games.length === 0 && <div className="main-home-game-message" role="status">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M5.5 6.5c2.5 2 2.5 9 0 11M18.5 6.5c-2.5 2-2.5 9 0 11" /></svg>
-                            <p>오늘 예정된 {league === "futures" ? "퓨처스리그" : "KBO"} 경기가 없습니다.</p>
-                        </div>}
+                        {gameState === "ready" && games.length === 0 && <p className="main-home-game-empty" role="status">오늘 예정된 {league === "futures" ? "퓨처스리그" : "KBO"} 경기가 없습니다.</p>}
                         {gameState === "ready" && games.map((game, index) => {
                             const away = getTeamStyle(game.away);
                             const home = getTeamStyle(game.home);
@@ -632,29 +639,31 @@ export default function Main() {
                         </div>
                     } />
                     <>
+                        {rankingTab === 1 && ranking.state === 'ready' && ranking.rows.length > 0 && ranking.rows.every((row) => Number(row[2]) >= 144) ? <Postseason rows={ranking.rows} TeamLogo={TeamLogo} getTeamStyle={getTeamStyle} /> : <>
                         {ranking.state === 'error' && <p role="status">팀 순위를 불러오지 못했습니다.</p>}
-                        {(ranking.state === 'loading' || ranking.state === 'ready') && (ranking.state === 'loading' || ranking.rows.length ? <div className="main-home-ranking-table-wrap"><table className={`main-home-ranking-table ${rankingTab === 1 ? 'is-autumn' : ''}`} aria-busy={ranking.state === 'loading'}>
+                        {(ranking.state === 'loading' || ranking.state === 'ready') && (ranking.state === 'loading' || ranking.rows.length ? <div className="main-home-ranking-table-wrap" onScroll={(e) => e.currentTarget.classList.toggle('is-scrolled', e.currentTarget.scrollLeft > 0)}><table className={`main-home-ranking-table ${rankingTab === 1 ? 'is-autumn' : ''}`} aria-busy={ranking.state === 'loading'}>
                             <caption className="sr-only">KBO {rankingTab === 0 ? '팀 순위' : '가을야구'} {ranking.title}</caption>
-                            <colgroup><col style={{ width: 36 }} /><col style={{ width: 68 }} />{(rankingTab === 0 ? [null, null, null, null, null, 46, 44, 117] : [null, null, null]).map((width, index) => <col key={index} style={width ? { width } : undefined} />)}</colgroup>
-                            <thead><tr>{(rankingTab === 0 ? ['순위', '팀', '경기', '승', '패', '무', '승률', '게임차', '연속', '최근 5경기'] : ['순위', '팀', '남은\n경기', '1위\n매직넘버', '가을야구\n매직 · 트래직 넘버']).map((label) => <th scope="col" key={label}>{label}</th>)}</tr></thead>
+                            <colgroup><col className="is-rank" /><col className="is-team" />{(rankingTab === 0 ? ['is-games', 'is-wins', 'is-losses', 'is-draws', 'is-pct', 'is-gb', 'is-streak', 'is-recent'] : [undefined, undefined, undefined]).map((name, index) => <col key={index} className={name} />)}</colgroup>
+                            <thead><tr>{(rankingTab === 0 ? ['순위', '팀', '경기', '승', '패', '무', '승률', '게임차', '연속', '최근 10경기'] : ['순위', '팀', '남은\n경기', '1위\n매직넘버', '가을야구\n매직 트래직 넘버']).map((label) => <th scope="col" key={label}>{label}</th>)}</tr></thead>
                             <tbody>{ranking.state === 'loading' ? Array.from({ length: 10 }, (_, rowIndex) => <tr key={rowIndex} aria-hidden="true">
                                 <td>{rowIndex + 1}</td>
                                 <th scope="row"><span className="main-home-ranking-placeholder is-team" /></th>
                                 <td colSpan={rankingTab === 0 ? 8 : 3}><span className="main-home-ranking-placeholder is-row" /></td>
-                            </tr>) : ranking.rows.map((row) => <tr key={row[1]} className={rankingTab === 0 && Number(row[0]) <= 5 ? 'is-postseason' : undefined}>
+                            </tr>) : ranking.rows.map((row) => <tr key={row[1]} className={rankingTab === 0 && Number(row[0]) <= 5 ? 'is-postseason' : undefined} style={{ '--team-color': getTeamStyle(row[1]).color }}>
                                 <td><span className="main-home-rank-num">{row[0]}</span></td><th scope="row"><div><TeamLogo name={row[1]} logo={getTeamStyle(row[1]).logo} />{row[1]}</div></th>
-                                {rankingTab === 0 ? row.slice(2, 10).map((value, index) => <td key={index}>{index === 7 ? <span className="main-home-recent-results" aria-label={`최근 5경기 ${value}`}>
-                                    {[...value].map((result, i) => <span key={i} className={result === '승' ? 'is-win' : result === '패' ? 'is-loss' : 'is-draw'}>{result}</span>)}
+                                {rankingTab === 0 ? row.slice(2, 10).map((value, index) => <td key={index}>{index === 6 ? (/[0-9]/.test(value) ? <span className={`main-home-streak ${value.includes('🔥') ? 'is-win' : 'is-loss'}`}>{value.replace(/\D/g, '')}{value.includes('🔥') ? '연승' : '연패'}</span> : value) : index === 7 ? <span className="main-home-recent-results" aria-label={`최근 10경기 ${value}`}>
+                                    <span className="main-home-recent-dots" aria-hidden="true">{[...value].map((result, i) => <i key={i} className={result === '승' ? 'is-win' : result === '패' ? 'is-loss' : 'is-draw'} />)}</span>
                                 </span> : value}</td>) : <>
                                     <td>{row[10]}</td>
                                     {row[14] === '가을야구 불가' ? <td colSpan={2}><span className="main-home-rank-remark is-out">가을야구 탈락</span></td> : <>
                                         <td>{row[11] === 'X' && row[14]?.endsWith('위 불가') ? <span className="main-home-rank-remark is-unreachable">{row[14]}</span> : row[11] === 'X' ? '-' : `${row[11]}승`}</td>
                                         <td>{row[14]?.endsWith('확보') ? <span className="main-home-rank-remark is-secured">{row[14]}</span>
-                                            : [row[12] !== 'X' ? `${row[12]}승` : null, row[13] !== 'X' ? `${row[13]}패` : null].filter(Boolean).join(' · ') || '-'}</td>
+                                            : [row[12] !== 'X' ? `${row[12]}승` : null, row[13] !== 'X' ? `${row[13]}패` : null].filter(Boolean).join(' ') || '-'}</td>
                                     </>}
                                 </>}
                             </tr>)}</tbody>
                         </table></div> : <p>표시할 팀 순위가 없습니다.</p>)}
+                    </>}
                     </>
                 </section>
 

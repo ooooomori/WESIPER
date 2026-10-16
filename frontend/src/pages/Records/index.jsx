@@ -4,6 +4,7 @@ import { Spinner } from 'flowbite-react';
 import '../PlayerProfile/player-profile.css';
 import './records.css';
 import HofRecords from './HofRecords';
+import useRowMotion from './useRowMotion';
 import useTableDrag from '../PlayerProfile/useTableDrag';
 import useStickyTableHead from '../PlayerProfile/useStickyTableHead';
 import { recordColumnWidth } from '../PlayerProfile/recordTableLayout';
@@ -68,6 +69,7 @@ function RecordRoom({ hofActive, onHof, onLeaveHof }) {
     const [indicator, setIndicator] = useState(null);
     const navigationType = useNavigationType();
     const labelRef = useRef(null);
+    const bodyRef = useRef(null);
     const [labelOverflow, setLabelOverflow] = useState(false);
 
     useEffect(() => {
@@ -124,6 +126,8 @@ function RecordRoom({ hofActive, onHof, onLeaveHof }) {
         document.body.style.overflow = 'hidden';
         return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = overflow; };
     }, [filterOpen, applied]);
+    // 정렬·종류가 바뀌어 목록이 바뀌면 HOF 탭과 같은 움직임으로 바꾼다.
+    useRowMotion(bodyRef, result.rows);
     const tabs = viewTabs(kind);
     const columns = kindColumns(kind, view);
     useLayoutEffect(() => {
@@ -321,11 +325,12 @@ function RecordRoom({ hofActive, onHof, onLeaveHof }) {
                     {colgroup}
                     <caption className="sr-only">{label} {types.find(([value]) => value === type)[1]} 기록 순위</caption>
                     <thead>{headRow}</thead>
-                    <tbody>{empty || (result.loading && !result.rows.length)
+                    <tbody ref={bodyRef}>{empty || (result.loading && !result.rows.length)
                         ? <tr aria-hidden="true"><td className={result.loading ? 'profile-year-loading-space' : 'profile-year-empty-space'} colSpan={columnCount} /></tr>
                         : result.rows.map(row => {
                             const logo = teamLogo(row.team, row.year);
-                            return <tr key={`${row.id}|${row.season}|${row.team}|${row.stats?.position}`}>
+                            const rowKey = `${row.id}|${row.season}|${row.team}|${row.stats?.position}`;
+                            return <tr key={rowKey} data-id={rowKey}>
                                 <td className="profile-year-cell record-room-rank">{row.rank}</td>
                                 <td className="profile-year-team-cell record-room-player"><Link to={`/?pid=${row.id}`} title={[row.name, row.team, row.teams > 1 ? `외 ${row.teams - 1}팀` : ''].filter(Boolean).join(' ')}>{logo ? <img src={logo} alt="" /> : <i aria-hidden="true" />}{row.season && <small>&rsquo;{String(row.season).slice(-2)}</small>}<span className={`record-room-name${[...row.name].length >= (row.season ? 4 : 5) ? ' is-marquee' : ''}`}><b>{row.name}</b><b aria-hidden="true">{row.name}</b></span>{showPosition && row.pos && <em>{row.pos}</em>}</Link></td>
                                 {columns.map(([, key]) => <td key={key} className={key === 'position' ? 'profile-year-position-cell' : sort.key === key ? 'is-sorted' : undefined}>{cellText(key, row.stats?.[key])}</td>)}
