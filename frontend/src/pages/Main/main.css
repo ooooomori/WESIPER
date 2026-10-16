@@ -141,7 +141,7 @@
     .main-home-search-hero { margin-inline: -12px; padding: 0 24px 50px; }
     .main-home-hero-banner { margin-inline: -24px; padding-inline: 24px; }
     /* 모바일에서는 배경 사진을 위로 올려 선수 머리가 위쪽 메뉴에 가까워지게 한다. */
-    .main-home-search-hero::before { background-position: center, center calc(58% - 64px); }
+    .main-home-search-hero::before { background-position: center, center calc(58% - 69px); }
     .main-home-search { height: 46px; padding: 0 17px; gap: 12px; border-radius: 18px; }
     .main-home-search > span { font-size: 16px; }
     .main-home-search-header { gap: 4px; padding-inline: 12px; }
@@ -644,7 +644,7 @@ a.main-home-hero-chip { padding: 0 13px 0 3px; }
 
 /* 포스트시즌 대진표: 아래 한 줄의 5개 팀이 라운드마다 한 칸씩 위로 합쳐지는 계단식 트리 */
 .main-home-bracket-scroll { overflow-x: auto; max-width: 100%; overscroll-behavior-x: contain; }
-.main-home-bracket { position: relative; margin: 6px 0 26px; }
+.main-home-bracket { position: relative; margin: 6px 0 0; }
 .main-home-bracket > svg { position: absolute; inset: 0; overflow: visible; fill: none; }
 .main-home-bracket > svg path { stroke: #cdd5df; stroke-width: 1.5; }
 .main-home-bracket > svg path.is-on { stroke: #102746; }

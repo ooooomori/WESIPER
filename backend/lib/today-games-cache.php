@@ -46,6 +46,14 @@ function todayGamesCacheDirectory(): string {
     return getenv('WESIPER_GAMES_CACHE_DIR') ?: sys_get_temp_dir() . '/wesiper-today-games-' . (function_exists('posix_geteuid') ? posix_geteuid() : 'php');
 }
 
+// 이미 보관된 오늘의 경기만 읽는다. 만료돼도 KBO를 새로 묻지 않고, 오늘 것이 없으면 null.
+function readCachedTodayGames(string $key, ?int $now = null, ?string $directory = null): ?array {
+    $day = (new DateTimeImmutable('@' . ($now ?? time())))->setTimezone(new DateTimeZone('Asia/Seoul'))->format('Ymd');
+    $path = ($directory ?? todayGamesCacheDirectory()) . '/' . hash('sha256', $key) . '.json';
+    $cached = is_file($path) ? json_decode((string)@file_get_contents($path), true) : null;
+    return is_array($cached) && ($cached['day'] ?? '') === $day && is_array($cached['games'] ?? null) ? $cached : null;
+}
+
 function cachedTodayGames(string $key, callable $fetch, ?int $now = null, ?string $directory = null): array {
     $now = $now ?? time();
     $day = (new DateTimeImmutable('@' . $now))->setTimezone(new DateTimeZone('Asia/Seoul'))->format('Ymd');
