@@ -77,7 +77,7 @@ const paRates = t => {
 // 서버가 이닝·타순별로 합쳐 보낸 타석 기록에서 타율과 OPS를 계산한다. 기준선은 그 타석들의 합계다.
 export function buildPaRows(rows, labelOf) {
     const list = (rows || []).map(row => {
-        const totals = Object.fromEntries(paKeys.map(key => [key, num(row[key])]));
+        const totals = Object.fromEntries([...paKeys, ...['sb', 'cs'].filter(key => row[key] != null)].map(key => [key, num(row[key])]));
         return { key: String(row.key), label: labelOf(Number(row.key)), games: totals.pa, unit: '타석', ...paRates(totals), totals };
     }).filter(row => row.played);
     return { rows: list, total: paRates(Object.fromEntries(paKeys.map(key => [key, list.reduce((sum, row) => sum + row.totals[key], 0)]))) };

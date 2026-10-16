@@ -498,10 +498,11 @@
 .profile-career-title p { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; }
 .profile-career-title p > * { padding: 2px 9px; border-radius: 999px; background: rgba(255,255,255,.16); color: #fff; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .profile-career-title p strong { background: #fff; color: var(--team-secondary, #17283d); font-weight: 900; }
-.profile-career-close { position: relative; z-index: 1; display: grid; place-items: center; flex: none; align-self: flex-start; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; background: rgba(255,255,255,.16); color: #fff; cursor: pointer; transition: background .15s; }
-.profile-career-close:hover { background: rgba(255,255,255,.28); }
+.profile-career-close { position: relative; z-index: 1; display: grid; place-items: center; flex: none; align-self: flex-start; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 8px; background: none; color: #fff; opacity: .8; cursor: pointer; transition: opacity .15s; }
+.profile-career-close:hover { opacity: 1; }
+.profile-career-close:active { opacity: .55; }
 .profile-career-close:focus { outline: none; }
-.profile-career-close:focus-visible { box-shadow: 0 0 0 2px rgba(255,255,255,.75); }
+.profile-career-close:focus-visible { outline: 2px solid rgba(255,255,255,.75); outline-offset: 0; }
 .profile-career-close svg { width: 16px; height: 16px; }
 .profile-career-list { flex: 1; min-height: 0; margin: 0; padding: 8px 20px 20px; overflow-y: auto; list-style: none; overscroll-behavior: contain; }
 .profile-career-list li { position: relative; display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 14px; min-height: 48px; padding: 8px 0; border-bottom: 1px solid #eef2f7; }
@@ -671,7 +672,7 @@
     background:
         linear-gradient(var(--tf-angle), transparent calc(var(--tf-s) - 14%), rgba(255,255,255,.85) var(--tf-s), transparent calc(var(--tf-s) + 14%)),
         linear-gradient(var(--tf-angle), color-mix(in srgb, var(--team-primary) 9%, #fff) 0%, color-mix(in srgb, var(--team-primary) 4%, #fff) 48%, color-mix(in srgb, var(--team-secondary) 13%, #fff) 100%);
-    animation: profile-top-five-fill .9s cubic-bezier(.22,1,.36,1) both, profile-top-five-shine 3.5s cubic-bezier(.45,0,.25,1) .55s infinite both;
+    animation: profile-top-five-fill .9s cubic-bezier(.22,1,.36,1) both, profile-top-five-shine 4.5s cubic-bezier(.45,0,.25,1) infinite both;
 }
 .player-profile .profile-stats-overview > .profile-stat-top-five::after { transform-origin: left; animation: profile-top-five-bar .8s cubic-bezier(.22,1,.36,1) .2s both; }
 .player-profile .profile-stats-overview > .profile-stat-top-five .profile-stat-rank { animation: profile-top-five-rank .5s ease-out .35s both; }

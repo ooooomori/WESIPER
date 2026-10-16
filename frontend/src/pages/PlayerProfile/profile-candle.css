@@ -360,12 +360,13 @@
 /* 스플릿 시트: 상자 없이 글자 위계와 구분선만으로 구성 */
 .profile-split-modal .profile-career-modal-head { align-items: flex-start; padding: 22px 20px 16px; background: #fff; color: #102746; border-bottom: 1px solid #edf1f6; }
 .profile-split-modal .profile-career-modal-head::after { display: none; }
-.profile-split-modal .profile-career-close { background: #f1f4f8; color: #5b6d84; }
-.profile-split-modal .profile-career-close:hover { background: #e6ebf2; }
+.profile-split-modal .profile-career-close { color: #5b6d84; opacity: .85; }
+.profile-split-modal .profile-career-close:hover { color: #102746; opacity: 1; }
+.profile-split-modal .profile-career-close:focus-visible { outline-color: var(--team-primary, #0b5fc7); }
 .profile-split-sheet-title { flex: 1; min-width: 0; }
 .profile-split-sheet-title small { display: block; color: var(--team-primary, #0b5fc7); font-size: 12.5px; font-weight: 800; }
 .profile-split-modal .profile-split-sheet-title h2 { display: block; margin: 2px 0 2px; color: #102746; font-size: 24px; font-weight: 900; letter-spacing: -.03em; }
-.profile-split-sheet-line { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.profile-split-sheet-line { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 9px; row-gap: 0; }
 .profile-split-sheet-line h2 { min-width: 0; }
 .profile-split-sheet-title p { display: flex; flex: none; gap: 8px; margin: 0; color: #8793a3; font-size: 13px; font-weight: 600; white-space: nowrap; }
 .profile-split-modal-body { padding: 4px 20px 24px; }

@@ -250,7 +250,7 @@ try {
         require_once __DIR__.'/../lib/player-chart-cache.php';
         $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
         $volatile=$allYears||(int)$year>=$currentYear;
-        echo profileChartCachedJson('innings',[(string)$pid,$allYears?'all':(int)$year,$season,md5(json_encode($schedule)),$by,$side,'v2'],$volatile,static function() use ($pdo,$pid,$year,$season,$leagueLevel,$rangeSql,$ranges,$allYears,$by,$side) {
+        echo profileChartCachedJson('innings',[(string)$pid,$allYears?'all':(int)$year,$season,md5(json_encode($schedule)),$by,$side,'v3'],$volatile,static function() use ($pdo,$pid,$year,$season,$leagueLevel,$rangeSql,$ranges,$allYears,$by,$side) {
             $params=[$pid,...($allYears&&$season==='futures'?[]:array_merge(...$ranges))];
             $where='league_level='.$leagueLevel.' AND player_id=?'.$rangeSql;
             if($side==='pitcher') {
@@ -263,16 +263,18 @@ try {
                 $params=[$pid,...$gameIds];
             }
             // 타점(rbi)은 타석이 아니라 경기 단위로 적혀 있어 타석 스플릿에는 쓰지 않는다.
-            $q=$pdo->prepare('SELECT '.($by==='order'?'`order`':'inning').' AS split_key,pa_result FROM kbo_season_records WHERE '.$where.($by==='order'?' AND `order` BETWEEN 1 AND 9':' AND inning>0').profileNotTiebreakerSql());
+            $q=$pdo->prepare('SELECT '.($by==='order'?'`order`':'inning').' AS split_key,pa_result'.($by==='order'&&$side==='batter'?',sb,cs':'').' FROM kbo_season_records WHERE '.$where.($by==='order'?' AND `order` BETWEEN 1 AND 9':' AND inning>0').profileNotTiebreakerSql());
             $q->execute($params);
+            // 도루·도루자는 타순별(타자)에서만 돌려준다. 타석 없이 주루만 한 기록에도 붙어 있어 타석이 없어도 센다.
+            $steals=$by==='order'&&$side==='batter';
             $rows=[];
             while($row=$q->fetch(PDO::FETCH_ASSOC)) {
                 $event=profileBatEvent($row);
-                if(!$event['pa'])continue;
+                if(!$event['pa']&&!($steals&&($event['sb']||$event['cs'])))continue;
                 $key=$by==='order'?(int)$row['split_key']:min((int)$row['split_key'],10);
-                $rows[$key]??=['key'=>$key,'pa'=>0,'ab'=>0,'h'=>0,'tb'=>0,'bb'=>0,'hbp'=>0,'sf'=>0,'doubles'=>0,'triples'=>0,'hr'=>0,'so'=>0];
-                $rows[$key]['pa']++;
-                foreach(['ab','h','tb','bb','hbp','sf','doubles','triples','hr','so'] as $stat)$rows[$key][$stat]+=(int)$event[$stat];
+                $rows[$key]??=['key'=>$key,'pa'=>0,'ab'=>0,'h'=>0,'tb'=>0,'bb'=>0,'hbp'=>0,'sf'=>0,'doubles'=>0,'triples'=>0,'hr'=>0,'so'=>0]+($steals?['sb'=>0,'cs'=>0]:[]);
+                $rows[$key]['pa']+=$event['pa'];
+                foreach(['ab','h','tb','bb','hbp','sf','doubles','triples','hr','so',...($steals?['sb','cs']:[])] as $stat)$rows[$key][$stat]+=(int)$event[$stat];
             }
             ksort($rows);
             return ['year'=>$year,'season'=>$season,'rows'=>array_values($rows)];
