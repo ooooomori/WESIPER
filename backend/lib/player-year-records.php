@@ -5,6 +5,7 @@ require_once __DIR__.'/player-rankings.php';
 require_once __DIR__.'/player-year-metrics.php';
 require_once __DIR__.'/player-year-league.php';
 require_once __DIR__.'/player-season-totals.php';
+require_once __DIR__.'/player-fielding-records.php';
 
 function profileYearTotals(array $rows, bool $pitcher, array $faced, array $league, array $pitchContext=[]): array {
     $games=[];$starts=[];$knownStarts=[];
@@ -53,7 +54,8 @@ function profileYearTotals(array $rows, bool $pitcher, array $faced, array $leag
     return profileBatterAdvancedStats($parsed,$s);
 }
 
-function profileYearPosition(array $rows): ?string {
+// $fielding: 그 시즌(팀)의 수비 기록 행(profileFieldingPositionRows). 있으면 수비 이닝으로 주 포지션을 고른다(profileSeasonMainPosition).
+function profileYearPosition(array $rows, array $fielding=[]): ?string {
     // Count each fielded position once per game, not once per plate appearance.
     $codes=['2'=>'C','3'=>'1B','4'=>'2B','5'=>'3B','6'=>'SS','7'=>'LF','8'=>'CF','9'=>'RF','D'=>'DH','지'=>'DH','포'=>'C','一'=>'1B','二'=>'2B','三'=>'3B','유'=>'SS','좌'=>'LF','중'=>'CF','우'=>'RF'];
     $games=[];
@@ -64,9 +66,7 @@ function profileYearPosition(array $rows): ?string {
         foreach($tokens as $token)if(isset($codes[$token]))$games[$row['game_id']][$codes[$token]]=true;
     }
     $counts=[];foreach($games as $positions)foreach($positions as $position=>$_)$counts[$position]=($counts[$position]??0)+1;
-    if(!$counts)return null;
-    arsort($counts,SORT_NUMERIC);
-    return array_key_first($counts);
+    return profileSeasonMainPosition($fielding,$counts);
 }
 
 function profileYearRecordsSchedule(array $schedule, string $seasonType): array {
@@ -87,9 +87,11 @@ function profileYearRecordsInputKey(PDO $db, string $pid, bool $pitcher, int $le
     $q=$db->prepare("SELECT COUNT(*) n,COALESCE(SUM(`$pk`),0) s,MAX(game_date) d FROM `$table` FORCE INDEX (idx_search_league_player_game) WHERE league_level=? AND player_id=?");
     $q->execute([$leagueLevel,$pid]);$rows=$q->fetch(PDO::FETCH_ASSOC)?:[];
     $bio=$db->prepare('SELECT mainPos,birth FROM kbo_player_data WHERE player_id=? LIMIT 1');$bio->execute([$pid]);
+    // 시즌 주 포지션이 수비 기록(kbo_fielding_records)의 이닝으로 정해지므로, 수비 기록이 바뀌면 다시 계산한다.
+    $fielding=$db->prepare("SELECT CONCAT(COUNT(*),'@',COALESCE(MAX(updated_at),'')) FROM kbo_fielding_records WHERE player_id=?");$fielding->execute([$pid]);
     $currentYear=(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y');
     $active=isset($rows['d'])&&(int)substr((string)$rows['d'],0,4)>=$currentYear;
-    return hash('sha256',json_encode([PROFILE_HISTORY_VERSION,PROFILE_TIEBREAKER_GAMES,$currentYear,(int)($rows['n']??0),(string)($rows['s']??'0'),$rows['d']??null,$bio->fetch(PDO::FETCH_ASSOC)?:null,$active?$revision:null],JSON_THROW_ON_ERROR));
+    return hash('sha256',json_encode([PROFILE_HISTORY_VERSION,PROFILE_TIEBREAKER_GAMES,$currentYear,(int)($rows['n']??0),(string)($rows['s']??'0'),$rows['d']??null,$bio->fetch(PDO::FETCH_ASSOC)?:null,$fielding->fetchColumn(),$active?$revision:null],JSON_THROW_ON_ERROR));
 }
 
 function profileYearRecords(PDO $db, string $pid, bool $pitcher, array $schedule, string $seasonType='regular'): array {
@@ -152,6 +154,8 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
     if(!$all)return ['rows'=>[],'career'=>null];
     $years=[];foreach($all as $row)$years[(int)substr($row['game_date'],0,4)][]=$row;ksort($years);
     $bioQuery=$db->prepare('SELECT birth FROM kbo_player_data WHERE player_id=? LIMIT 1');$bioQuery->execute([$pid]);$bio=$bioQuery->fetch(PDO::FETCH_ASSOC)?:[];
+    // 정규시즌 타자의 시즌 주 포지션은 수비 이닝으로 정한다(2001년~, 수비 기록이 있는 해).
+    $fieldingByYear=!$pitcher&&$leagueLevel===1&&$seasonType==='regular'?profileFieldingPositionRows($db,$pid):[];
     $faced=[];
     $pitchContext=[];$leaguePitch=[];
     if($pitcher){$ids=array_values(array_unique(array_column($all,'game_id')));$q=$db->prepare('SELECT game_id,pa_result,sb,cs,run_out,rbi,r FROM kbo_season_records WHERE league_level='.$leagueLevel.' AND pitcher_id=? AND game_id IN ('.implode(',',array_fill(0,count($ids),'?')).')');$q->execute([$pid,...$ids]);while($e=$q->fetch(PDO::FETCH_ASSOC))$faced[$e['game_id']][]=profileAdvancedBatEvent($e);$pitchContext=profilePitcherGameContexts($db,$all,$leagueLevel);$leaguePitch=profileLeaguePitchingContexts($db,$schedule,$leagueLevel);}
@@ -162,8 +166,8 @@ function profileComputeGameYearRecords(PDO $db, string $pid, bool $pitcher, arra
         if(!$pitcher){$league['battingYears']=[$year=>$battingYears[$year]??null];$leagueAll['battingYears'][$year]=$battingYears[$year]??null;}
         $league['pitchingYears']=$leaguePitch;$age=profileAgeOnJulyFirst($bio['birth']??null,$year);
         $teams=[];foreach($rows as $row)$teams[trim((string)$row['team'])?:'소속 미확인'][]=$row;
-        $children=[];foreach($teams as $team=>$events)$children[]=['year'=>$year,'team'=>$team,'age'=>$age,'position'=>$pitcher?null:profileYearPosition($events),'stats'=>profileYearTotals($events,$pitcher,$faced,$league,$pitchContext)];
-        $out[]=['year'=>$year,'team'=>count($teams)>1?count($teams).'팀':array_key_first($teams),'age'=>$age,'position'=>$pitcher?null:profileYearPosition($rows),'teams'=>count($teams)>1?$children:[],'stats'=>profileYearTotals($rows,$pitcher,$faced,$league,$pitchContext)];
+        $children=[];foreach($teams as $team=>$events)$children[]=['year'=>$year,'team'=>$team,'age'=>$age,'position'=>$pitcher?null:profileYearPosition($events,array_values(array_filter($fieldingByYear[$year]??[],static fn($f)=>$f['team']===profileFieldingTeamIdentity($team)))),'stats'=>profileYearTotals($events,$pitcher,$faced,$league,$pitchContext)];
+        $out[]=['year'=>$year,'team'=>count($teams)>1?count($teams).'팀':array_key_first($teams),'age'=>$age,'position'=>$pitcher?null:profileYearPosition($rows,$fieldingByYear[$year]??[]),'teams'=>count($teams)>1?$children:[],'stats'=>profileYearTotals($rows,$pitcher,$faced,$league,$pitchContext)];
     }
     $leagueAll['pitchingYears']=$leaguePitch;
     $career=profileYearTotals($all,$pitcher,$faced,$leagueAll,$pitchContext);

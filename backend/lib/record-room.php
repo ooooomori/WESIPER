@@ -143,8 +143,10 @@ function recordRoomGameIdSql(PDO $db,array $ids): string { return 'game_id IN ('
 /*
  * 구간 자료의 모양: ['maxTg'=>그 구간 최다 팀 경기 수, 'players'=>[선수 ID=>['n'=>이름, 'parts'=>[...]]]]
  * part = ['team'=>팀 이름, 'tg'=>그 팀 경기 수, 's'=>원시 합계, 'pos'=>[포지션 코드=>경기 수](타자만)] — 시즌 중 이적하면 팀마다 하나씩, 뛴 순서대로.
+ * $fieldingYear: 정규시즌 전체 구간이면 그 연도. 이때 part에 'spos'(그 시즌 주 포지션 하나=>그 팀 출장 경기 수)를 더한다.
+ *   주 포지션은 수비 이닝 1위, 그 포지션 경기 수가 지명타자 경기 수보다 적으면 지명타자(profileSeasonMainPosition). 한 시즌만 보는 줄의 'pos'가 이 값이고, 여러 시즌 합산은 기존대로 pos(경기마다 센 포지션)를 쓴다.
  */
-function recordRoomModernBatters(PDO $db,string $start,string $end,?array $vsPitchers=null,?array $subset=null): array {
+function recordRoomModernBatters(PDO $db,string $start,string $end,?array $vsPitchers=null,?array $subset=null,?int $fieldingYear=null): array {
     [$where,$range]=recordRoomRange($start,$end,$db);
     if($subset!==null){
         if(!$subset['ids'])return ['maxTg'=>0,'players'=>[]];
@@ -190,6 +192,15 @@ function recordRoomModernBatters(PDO $db,string $start,string $end,?array $vsPit
         }
     }
     unset($seen);
+    $seasonPosition=[];
+    if($fieldingYear!==null){
+        $q=$db->prepare('SELECT player_id,position,games,innings_outs FROM kbo_fielding_records WHERE year=?');$q->execute([$fieldingYear]);$fielded=[];
+        while($row=$q->fetch(PDO::FETCH_ASSOC))$fielded[(int)$row['player_id']][]=['position'=>$row['position'],'games'=>(int)$row['games'],'outs'=>(int)$row['innings_outs']];
+        foreach($positions as $id=>$byTeam){
+            $counts=[];foreach($byTeam as $codes)foreach($codes as $code=>$games)$counts[$code]=($counts[$code]??0)+$games;
+            $seasonPosition[$id]=profileSeasonMainPosition($fielded[$id]??[],$counts);
+        }
+    }
     $players=[];
     foreach($appearances as $id=>$rows){
         usort($rows,static fn($a,$b)=>[$a['first_date'],$a['last_date']]<=>[$b['first_date'],$b['last_date']]);$parts=[];
@@ -199,7 +210,7 @@ function recordRoomModernBatters(PDO $db,string $start,string $end,?array $vsPit
             foreach($missing[$id][$team]??[] as $key=>$_)$s[$key]=null;
             if($s['sb']===null||$s['cs']===null)foreach(['eab','eh','etb','eob'] as $key)$s[$key]=null;
             $s['games']=(int)$row['g'];$s['starts']=(int)$row['gs_unknown']>0?null:(int)$row['gs'];
-            $parts[]=['team'=>$team,'tg'=>$teamGames[(string)profileTeam($team)]??$maxGames,'s'=>$s,'pos'=>$positions[$id][$team]??[]];
+            $parts[]=['team'=>$team,'tg'=>$teamGames[(string)profileTeam($team)]??$maxGames,'s'=>$s,'pos'=>$positions[$id][$team]??[]]+(isset($seasonPosition[$id])?['spos'=>[$seasonPosition[$id]=>max(1,(int)$row['g'])]]:[]);
         }
         if($parts)$players[$id]=['n'=>(string)end($rows)['name'],'parts'=>$parts];
     }
@@ -369,7 +380,7 @@ function recordRoomSegmentData(PDO $db,array $segment,string $type,array $schedu
         return $full&&!$special?recordRoomCached('y-'.$year.'-'.$type[0].'-'.substr(hash('sha256',$season.'|'.$start.'|'.$end),0,12),recordRoomStamp($year>=recordRoomCurrentYear()),$compute):$compute();
     }
     $compute=static fn()=>$type==='fielding'?recordRoomFielding($db,$year,$start,$end)
-        :($year<=2000?recordRoomHistorical($db,$year,$pitcher):($pitcher?recordRoomModernPitchers($db,$year,$start,$end,$schedule):recordRoomModernBatters($db,$start,$end)));
+        :($year<=2000?recordRoomHistorical($db,$year,$pitcher):($pitcher?recordRoomModernPitchers($db,$year,$start,$end,$schedule):recordRoomModernBatters($db,$start,$end,null,null,$full&&$season==='regular'&&$year>=PROFILE_FIELDING_FIRST_YEAR?$year:null)));
     if(!$full)return $compute();
     return recordRoomCached('y-'.$year.'-'.$type[0].'-'.substr(hash('sha256',($season==='regular'?'':$season.'|').$start.'|'.$end),0,12),recordRoomStamp($year>=recordRoomCurrentYear()),$compute);
 }
@@ -498,7 +509,7 @@ function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): 
                     $franchise=recordRoomFranchise($part['team'],$year);
                     if($team!==''&&$franchise!==$team)continue;
                     $key=$id.($splitSeasons?'|'.$year:'').($splitTeams?'|'.$franchise:'').($fielding&&!$mergePositions?'|'.$part['fpos']:'');
-                    $groups[$key]??=['id'=>$id,'name'=>$player['n'],'parts'=>[],'teams'=>[],'years'=>[],'pos'=>[],'fpos'=>$part['fpos']??null];
+                    $groups[$key]??=['id'=>$id,'name'=>$player['n'],'parts'=>[],'teams'=>[],'years'=>[],'pos'=>[],'spos'=>[],'fpos'=>$part['fpos']??null];
                     $group=&$groups[$key];
                     $group['parts'][]=$part['s'];$group['teams'][]=$part['team'];
                     // 그 시즌의 규정 기준은 (이 줄에 들어온) 마지막 소속팀 경기 수로 본다.
@@ -521,6 +532,7 @@ function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): 
                         }
                     }
                     foreach($part['pos']??[] as $code=>$games)$group['pos'][$code]=($group['pos'][$code]??0)+$games;
+                    foreach($part['spos']??[] as $code=>$games)$group['spos'][$code]=($group['spos'][$code]??0)+$games;
                     if($player['n'])$group['name']=$player['n'];
                     unset($group);
                 }
@@ -554,7 +566,9 @@ function recordRoomDataset(PDO $db,array $filter,string $type,array $schedule): 
                 $contexts=[];foreach($years as $year)$contexts[$year]=$leagueYears[$year]??null;
                 $stats=recordRoomBatterStats($s,$contexts,min($years)<=2000,count($segments)===1&&$segments[0][0]<=1985);$value=(int)($s['pa']??0);
                 // 주 포지션: 가장 많은 경기에 선 포지션(경기 기록이 있는 2001년 이후)
-                if($group['pos']){arsort($group['pos'],SORT_NUMERIC);$position=(string)array_key_first($group['pos']);}
+                // 한 시즌만 보는 줄은 그 시즌 주 포지션(수비 이닝 기준), 여러 시즌을 합친 줄은 경기마다 센 포지션
+                $counted=count($years)===1&&$group['spos']?$group['spos']:$group['pos'];
+                if($counted){arsort($counted,SORT_NUMERIC);$position=(string)array_key_first($counted);}
             }
             if($value<=0&&(int)($s['games']??0)<=0)continue;
             // 비율 기록은 표시보다 한 자리 더 계산해 정렬에 쓴다(같은 값으로 보이는 동점자를 가리기 위해).

@@ -8,6 +8,65 @@ const PROFILE_FIELDING_FIRST_YEAR = 2001;
 const PROFILE_FIELDING_COUNTS = ['errors'=>'errors','pickoffs'=>'pickoffs','putouts'=>'putouts','assists'=>'assists','doublePlays'=>'double_plays',
     'passedBalls'=>'passed_balls','stolenBases'=>'stolen_bases','caughtStealing'=>'caught_stealing'];
 
+// 타자의 시즌 주 포지션 후보(수비 기록의 포지션 이름 => 코드). 투수는 후보가 아니다. 순서는 이닝·경기 수가 같을 때의 우선순위다.
+const PROFILE_FIELDING_POSITION_CODES = ['포수'=>'C','1루수'=>'1B','2루수'=>'2B','3루수'=>'3B','유격수'=>'SS','좌익수'=>'LF','중견수'=>'CF','우익수'=>'RF'];
+
+/*
+ * 타자의 시즌 주 포지션(2001년~). 그 시즌 수비 이닝이 가장 많은 포지션이다.
+ * 이닝이 같으면 경기 수가 많은 쪽, 그것도 같으면 PROFILE_FIELDING_POSITION_CODES 순서가 앞선 쪽.
+ * 그 포지션의 출장 경기 수가 지명타자 출장 경기 수보다 적으면 지명타자다(같으면 그 포지션).
+ * $fielding: 수비 기록 행 [['position'=>포지션 이름,'games'=>경기 수,'outs'=>수비 아웃 수],...] (시즌 또는 시즌·팀 범위)
+ * $gameCounts: 타석 기록으로 센 포지션 코드=>출장 경기 수(지명타자는 'DH', 지명타자 경기 수의 출처도 이 값이다)
+ * 수비 이닝이 없으면(수비 기록이 없는 해, 순수 지명타자·대타) 타석 기록의 경기 수가 가장 많은 포지션을 쓴다.
+ */
+function profileSeasonMainPosition(array $fielding, array $gameCounts): ?string {
+    $byCode=[];
+    foreach($fielding as $row){
+        $code=PROFILE_FIELDING_POSITION_CODES[trim((string)($row['position']??''))]??null;
+        if($code===null)continue;
+        $byCode[$code]['outs']=($byCode[$code]['outs']??0)+(int)($row['outs']??0);
+        $byCode[$code]['games']=($byCode[$code]['games']??0)+(int)($row['games']??0);
+    }
+    $byCode=array_filter($byCode,static fn($item)=>$item['outs']>0);
+    if($byCode){
+        $order=array_flip(array_values(PROFILE_FIELDING_POSITION_CODES));
+        uksort($byCode,static fn($a,$b)=>[$byCode[$b]['outs'],$byCode[$b]['games'],$order[$a]]<=>[$byCode[$a]['outs'],$byCode[$a]['games'],$order[$b]]);
+        $main=(string)array_key_first($byCode);
+        return $byCode[$main]['games']<(int)($gameCounts['DH']??0)?'DH':$main;
+    }
+    if(!$gameCounts)return null;
+    arsort($gameCounts,SORT_NUMERIC);
+    return (string)array_key_first($gameCounts);
+}
+
+// 선수의 시즌별 수비 기록(팀 이름은 구단 계보로 통일): [연도 => [['team','position','games','outs'],...]]. 2001년 이후 자료다.
+function profileFieldingPositionRows(PDO $db, string $pid): array {
+    $q=$db->prepare('SELECT year,team,position,games,innings_outs FROM kbo_fielding_records WHERE player_id=?');$q->execute([$pid]);
+    $out=[];foreach($q->fetchAll(PDO::FETCH_ASSOC) as $row)$out[(int)$row['year']][]=['team'=>profileFieldingTeamIdentity(trim((string)$row['team'])),'position'=>trim((string)$row['position']),'games'=>(int)$row['games'],'outs'=>(int)$row['innings_outs']];
+    return $out;
+}
+
+/*
+ * 시즌(팀)의 포지션 행 순서: 지명타자를 뺀 포지션은 수비 이닝 많은 순(같으면 경기 수, 그것도 같으면 포수·1루수·…·우익수·투수 순).
+ * 이닝이 없는 시즌(2001년 이전의 위치별 출장수)은 경기 수 순이다.
+ * 지명타자는 경기 수보다 경기 수가 적은 첫 포지션 바로 앞에 둔다(없으면 맨 뒤, 같으면 포지션이 앞).
+ */
+function profileSortFieldingPositions(array $positions): array {
+    $dh=[];$others=[];foreach($positions as $stats){if(in_array($stats['position']??null,['지명타자','지명','DH','D'],true))$dh[]=$stats;else $others[]=$stats;}
+    $order=array_flip([...array_keys(PROFILE_FIELDING_POSITION_CODES),'투수']);$hasInnings=(bool)array_filter($others,static fn($stats)=>$stats['innings']!==null);
+    $key=static fn($stats)=>[$hasInnings&&$stats['innings']!==null?profileInningOuts($stats['innings']):0,(int)$stats['games'],$order[$stats['position']??'']??99];
+    usort($others,static fn($a,$b)=>[$key($b)[0],$key($b)[1],$key($a)[2]]<=>[$key($a)[0],$key($a)[1],$key($b)[2]]);
+    if(!$dh)return $others;
+    $games=(int)$dh[0]['games'];$at=count($others);
+    foreach($others as $i=>$stats)if((int)$stats['games']<$games){$at=$i;break;}
+    array_splice($others,$at,0,$dh);
+    return $others;
+}
+function profileSortFieldingRows(array $fielding): array {
+    foreach($fielding['rows'] as $i=>$row)$fielding['rows'][$i]['positions']=profileSortFieldingPositions($row['positions']);
+    return $fielding;
+}
+
 function profileFieldingEmptyStats(?string $position): array {
     return ['games'=>null,'starts'=>null,'position'=>$position,'innings'=>null]+array_fill_keys(array_keys(PROFILE_FIELDING_COUNTS),null)+['fieldingPct'=>null,'caughtStealingPct'=>null];
 }
@@ -149,8 +208,8 @@ function profileComputeFieldingRecords(PDO $db, string $pid, array $schedule): a
     $query->execute([$pid]);
     $fielding=profileAddPositionGamesRecords($db,$pid,profileFormatFieldingRecords($query->fetchAll(PDO::FETCH_ASSOC)));
     $bounds=[];foreach($schedule as $year=>$season){if((int)$year<PROFILE_FIELDING_FIRST_YEAR)continue;[$start,$end]=$season['regular'];if($start&&$end)$bounds[]='(game_date BETWEEN '.$db->quote($start).' AND '.$db->quote($end).')';}
-    if(!$bounds)return $fielding;
+    if(!$bounds)return profileSortFieldingRows($fielding);
     $query=$db->prepare("SELECT game_id,game_date,team,pos,is_gs FROM kbo_season_records WHERE league_level=1 AND player_id=? AND (".implode(' OR ',$bounds).")".profileNotTiebreakerSql()." AND (pos LIKE '%지%' OR pos LIKE '%D%') ORDER BY game_date,game_id,PK");
     $query->execute([$pid]);
-    return profileAddDesignatedHitterRecords($fielding,$query->fetchAll(PDO::FETCH_ASSOC),$schedule);
+    return profileSortFieldingRows(profileAddDesignatedHitterRecords($fielding,$query->fetchAll(PDO::FETCH_ASSOC),$schedule));
 }

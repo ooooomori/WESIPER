@@ -91,6 +91,24 @@ export function TitleholderRecords({ rows = [] }) {
         {crown.size > 0 && <p className="profile-year-legend"><span className="is-triple-crown-legend"><i aria-hidden="true" />트리플크라운</span></p>}
     </section>;
 }
+// 테두리 빛줄기의 머리(97%)가 카드 왼쪽 위 모서리를 지나는 순간 배경 빛(shine) 주기가 시작되도록 카드별 지연을 맞춘다.
+const topFiveObservers = new WeakMap();
+function syncTopFiveOrbit(grid) {
+    if (!grid || topFiveObservers.has(grid)) return;
+    const apply = () => grid.querySelectorAll('.profile-stat-top-five').forEach(card => {
+        const { width, height } = card.getBoundingClientRect();
+        if (!width || !height) return;
+        const corner = 360 - Math.atan(width / height) * 180 / Math.PI;
+        const phase = (((corner - 349.2) % 360) + 360) % 360;
+        card.style.setProperty('--tf-delay', `${(-phase / 80).toFixed(4)}s`);
+    });
+    const observer = new ResizeObserver(apply);
+    observer.observe(grid);
+    new MutationObserver(apply).observe(grid, { attributes: true, attributeFilter: ['class'], childList: true, subtree: true });
+    topFiveObservers.set(grid, observer);
+    apply();
+}
+
 function GameBadge({ value }) { return value ? <span className={`profile-game-badge ${value === '패전' ? 'loss' : value === '홀드' ? 'hold' : value === '세이브' ? 'save' : ''}`}>{value}</span> : null; }
 export function overviewLeagueCaption(records, currentYear) {
     return records?.leagueLevel === 2 ? (records.year === currentYear ? '퓨처스리그' : `${records.year} 시즌 퓨처스리그`) : '';
@@ -681,7 +699,7 @@ export default function PlayerProfile({ pid }) {
             {tab === 1 && <YearRecords key={`year-records-${pid}`} pid={pid} position={player.Pos} teams={teams} titles={player.Titleholders} awards={player.Awards} awardImages={awardImages} getTeamLogo={movementLogo} />}
             {tab === 1 && <TitleholderRecords rows={player.Titleholders} />}
             {tab === 1 && <SimilarPlayers key={`similar-${pid}`} pid={pid} />}
-            {records && tab === 0 && <section style={retiredTheme ? { '--team-primary': '#002561', '--team-secondary': '#286fcc' } : undefined}><div className="profile-heading"><h2>{records.career ? '통산 주요 기록' : `${records.year} 시즌 주요 기록`}</h2>{futuresCaption && <small className="profile-season-caption">{records.career ? '퓨처스리그' : futuresCaption}</small>}</div><div className={`profile-stats ${`profile-stats-ranked${tab === 0 ? ' profile-stats-overview' : ''}`}`}>{records.stats.map(([label, value]) => {
+            {records && tab === 0 && <section style={retiredTheme ? { '--team-primary': '#002561', '--team-secondary': '#286fcc' } : undefined}><div className="profile-heading"><h2>{records.career ? '통산 주요 기록' : `${records.year} 시즌 주요 기록`}</h2>{futuresCaption && <small className="profile-season-caption">{records.career ? '퓨처스리그' : futuresCaption}</small>}</div><div ref={tab === 0 ? syncTopFiveOrbit : undefined} className={`profile-stats ${`profile-stats-ranked${tab === 0 ? ' profile-stats-overview' : ''}`}`}>{records.stats.map(([label, value]) => {
                 const rank = value != null && Number(value) !== 0 ? ranks[label] : null;
                 return <div key={label} className={rank >= 1 && rank <= 5 ? 'profile-stat-top-five' : undefined}>{tab === 0 ? <><div className="profile-stat-header"><span>{label}</span>{rank != null && <small className={`profile-stat-rank ${rank === 1 ? 'is-gold' : rank === 2 ? 'is-silver' : rank === 3 ? 'is-bronze' : rank <= 5 ? 'is-top' : ''}${rank >= 100 ? ' is-long' : ''}`}>{rank}위</small>}</div><strong style={{ '--value-chars': String(value ?? '—').length }}>{value ?? '—'}</strong></> : <><span>{label}</span><strong>{value ?? '—'}</strong>{<small>{rank != null ? `${rank}위` : ''}</small>}</>}</div>;
             })}</div></section>}

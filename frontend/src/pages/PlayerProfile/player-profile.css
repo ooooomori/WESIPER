@@ -666,7 +666,7 @@
 @property --tf-s { syntax: '<percentage>'; inherits: false; initial-value: -20%; }
 .player-profile .profile-stats-overview > .profile-stat-top-five { --tf-angle: 135deg; --tf-edge: color-mix(in srgb, var(--team-primary) 30%, #e8eef6); isolation: isolate; border-color: transparent;
     background: linear-gradient(#fff, #fff) padding-box, conic-gradient(from var(--tf-a), var(--tf-edge) 0 58%, color-mix(in srgb, var(--team-primary) 85%, #fff) 97%, var(--tf-edge) 100%) border-box;
-    animation: profile-top-five-orbit 4.5s linear infinite; }
+    animation: profile-top-five-orbit 4.5s linear var(--tf-delay, 0s) infinite; }
 .player-profile .profile-stats-overview > .profile-stat-top-five::before {
     content: ''; position: absolute; inset: 0; z-index: -1;
     background:

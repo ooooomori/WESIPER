@@ -36,3 +36,24 @@ if($c['fieldingPct']!=='0.980'||$c['passedBalls']!==null||$c['caughtStealingPct'
 $catchers=profileFormatFieldingRecords([$row(2004,'LG','포수',30,['stolen_bases'=>8,'caught_stealing'=>3,'caught_stealing_pct'=>'27.3']),$row(2005,'LG','포수',30,['stolen_bases'=>2,'caught_stealing'=>7,'caught_stealing_pct'=>'77.8'])]);
 if($catchers['careerPositions'][0]['caughtStealingPct']!=='50.0'||$catchers['careerPositions'][0]['stolenBases']!==10)throw new RuntimeException('Career caught-stealing rate mismatch');
 echo "PASS: DH season range, game deduplication, team aliases, starting positions, per-position careers and career rates\n";
+
+$field=static fn($position,$games,$outs)=>['position'=>$position,'games'=>$games,'outs'=>$outs];
+// 이닝 1위가 주 포지션: 경기 수가 더 많은 포지션이 있어도 이닝이 많은 쪽이다.
+if(profileSeasonMainPosition([$field('1루수',60,300),$field('좌익수',30,900)],['1B'=>60,'LF'=>30])!=='LF')throw new RuntimeException('Main position must be the innings leader');
+// 이닝 동률은 경기 수, 그것도 같으면 포수·1루수·…·우익수 순서.
+if(profileSeasonMainPosition([$field('2루수',10,90),$field('3루수',12,90)],[])!=='3B'||profileSeasonMainPosition([$field('우익수',10,90),$field('좌익수',10,90)],[])!=='LF')throw new RuntimeException('Innings tie-break mismatch');
+// 주 포지션 경기 수가 지명타자 경기 수보다 적으면 지명타자, 같으면 그 포지션.
+if(profileSeasonMainPosition([$field('1루수',40,300)],['DH'=>41])!=='DH'||profileSeasonMainPosition([$field('1루수',40,300)],['DH'=>40])!=='1B')throw new RuntimeException('DH override mismatch');
+// 투수 이닝은 후보가 아니고, 이닝이 없으면 타석 기록의 최다 경기 포지션으로 돌아간다.
+if(profileSeasonMainPosition([$field('투수',5,300)],['SS'=>3,'DH'=>9])!=='DH'||profileSeasonMainPosition([$field('포수',3,0)],['C'=>3])!=='C'||profileSeasonMainPosition([],[])!==null)throw new RuntimeException('Fallback mismatch');
+echo "PASS: season main position by fielding innings, ties, DH override, fallback\n";
+
+$stat=static fn($position,$games,$innings)=>['position'=>$position,'games'=>$games,'innings'=>$innings];
+$names=static fn($list)=>implode('-',array_column(profileSortFieldingPositions($list),'position'));
+// 유격수 4경기 10이닝, 2루수 2경기 8이닝, 지명타자 3경기 → 유격수-지명타자-2루수
+if($names([$stat('지명타자',3,null),$stat('2루수',2,'8'),$stat('유격수',4,'10')])!=='유격수-지명타자-2루수')throw new RuntimeException('DH must sit before the first position with fewer games');
+// 경기 수가 같으면 포지션이 지명타자보다 앞, 모두 많으면 지명타자는 맨 뒤
+if($names([$stat('지명타자',4,null),$stat('유격수',4,'10'),$stat('2루수',2,'8')])!=='유격수-지명타자-2루수'||$names([$stat('지명타자',1,null),$stat('1루수',2,'3')])!=='1루수-지명타자')throw new RuntimeException('DH tie or last placement mismatch');
+// 이닝 동률은 경기 수, 그 다음 고정 순서. 이닝이 없는 시즌은 경기 수 순.
+if($names([$stat('2루수',5,'9'),$stat('3루수',6,'9'),$stat('유격수',6,'9')])!=='3루수-유격수-2루수'||$names([$stat('1루수',10,null),$stat('지명타자',20,null),$stat('포수',30,null)])!=='포수-지명타자-1루수')throw new RuntimeException('Sort tie-break or games fallback mismatch');
+echo "PASS: fielding position rows sorted by innings with DH placed by games\n";
