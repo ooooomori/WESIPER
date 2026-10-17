@@ -220,7 +220,9 @@ try {
             try { $halfStarts=profileHalfStarts($pdo,$schedule,$allYears?$seasonYears:($year!==null?[$year]:[])); }
             catch (Throwable $halfError) { error_log('Half-season boundaries unavailable: '.$halfError->getMessage()); }
         }
-        echo json_encode(['fipConstant'=>$computed['fipConstant']??null,'fipConstants'=>(object)($computed['fipConstants']??[]),'halfStarts'=>(object)$halfStarts,'years'=>$years,'year'=>$allYears?'all':$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$computed['games']??[],'pitcher'=>$gamePitcher,'currentSeasonStreaks'=>$computed['currentSeasonStreaks']??null],JSON_UNESCAPED_UNICODE);exit;
+        // 연속 경기 기록은 정규시즌 중에만 낸다(캐시에는 날짜가 없어 응답할 때 거른다).
+        $regularSeason=kboInRegularSeason(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')),$schedule);
+        echo json_encode(['fipConstant'=>$computed['fipConstant']??null,'fipConstants'=>(object)($computed['fipConstants']??[]),'halfStarts'=>(object)$halfStarts,'years'=>$years,'year'=>$allYears?'all':$year,'season'=>$season,'availableSeasons'=>(object)$availableSeasons,'games'=>$computed['games']??[],'pitcher'=>$gamePitcher,'regularSeason'=>$regularSeason,'currentSeasonStreaks'=>$regularSeason?($computed['currentSeasonStreaks']??null):null],JSON_UNESCAPED_UNICODE);exit;
     }
     if($part==='innings') {
         // 타석 단위 스플릿: 타석 기록(kbo_season_records)을 이닝별(by=inning, 10회 이후는 연장으로 합침) 또는 타순별(by=order)로 묶어 돌려준다.

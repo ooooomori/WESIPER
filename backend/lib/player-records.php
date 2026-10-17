@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__.'/player-season-totals.php';
+require_once __DIR__.'/regular-season.php';
 
 function profileBatEvent(array $row): array {
     $text = trim((string)($row['pa_result'] ?? ''));
@@ -26,7 +27,7 @@ const PROFILE_TIEBREAKER_GAMES = ['66661031KTSS02021', '66661001SKKT02024'];
  * 크롤러 revision과 무관하게 이 값이 같으면 계속 재사용한다.
  * 지난 시즌 기록을 백필·보정하거나 계산 방식이 바뀌면 이 값을 바꿔 다시 계산하게 한다.
  */
-const PROFILE_HISTORY_VERSION = '2026-10-18.2';
+const PROFILE_HISTORY_VERSION = '2026-10-18.4';
 function profileIsTiebreakerGame(?string $id): bool { return $id !== null && in_array($id, PROFILE_TIEBREAKER_GAMES, true); }
 function profileNotTiebreakerSql(string $column = 'game_id'): string {
     return ' AND '.$column.' NOT IN (\''.implode('\',\'', PROFILE_TIEBREAKER_GAMES).'\')';
@@ -65,13 +66,58 @@ function profileOpponent(string $game, ?string $team): ?string {
     return $team===$away ? $home : ($team===$home ? $away : null);
 }
 function profileTeam(?string $team): ?string { return match(strtoupper($team??'')) {'KT'=>'KT','SK','SSG'=>'SSG','HT','KIA'=>'KIA','OB'=>'두산','SS'=>'삼성','LT'=>'롯데','HH'=>'한화','WO','넥센','히어로즈'=>'키움',default=>$team}; }
+/** kbo_schedule의 game_code: 날짜로 시작하는 경기는 앞 13자, 포스트시즌 등 날짜로 시작하지 않는 경기는 game_id 전체. */
+function profileScheduleCode(string $id): string { return preg_match('/^(?:19|20)\d{6}/',$id)===1 ? substr($id,0,13) : $id; }
+/**
+ * 최근 경기용 행: 날짜 범위 없이 1군 전체(시범경기, 포스트시즌, 순위 결정전 포함)에서 최근 $limit경기를 찾는다.
+ * 돌려주는 값은 [최근 경기 game_id(최신순), 이미 가진 경기($known)를 뺀 나머지 경기의 행].
+ */
+function profileRecentGameRows(PDO $db, string $table, string $playerId, array $known, int $limit=5): array {
+    $q=$db->prepare("SELECT DISTINCT game_date,game_id FROM `$table` WHERE league_level=1 AND player_id=? ORDER BY game_date DESC,game_id DESC LIMIT $limit");
+    $q->execute([$playerId]);
+    $ids=array_column($q->fetchAll(PDO::FETCH_ASSOC),'game_id');
+    $missing=array_values(array_filter($ids,static fn($id)=>!isset($known[$id])));
+    if(!$missing)return [$ids,[]];
+    $q=$db->prepare("SELECT * FROM `$table` WHERE league_level=1 AND player_id=? AND game_id IN (".implode(',',array_fill(0,count($missing),'?')).') ORDER BY game_date DESC,game_id DESC');
+    $q->execute([$playerId,...$missing]);
+    return [$ids,$q->fetchAll(PDO::FETCH_ASSOC)];
+}
+/**
+ * 최근 경기 구분 표시: 시범경기는 '시범경기', 포스트시즌은 시리즈 약어와 그 시리즈 안의 경기 번호(WC1, 준PO3, PO2, KS6),
+ * 순위 결정전은 '순위결정전', 정규시즌은 null. 포스트시즌 game_id는 날짜가 아닌 시리즈 코드로 시작한다(4444 WC, 3333 준PO, 5555 PO, 7777 KS, 6666 순위 결정전).
+ * 경기 번호는 kbo_schedule에서 같은 시리즈 코드와 같은 해의 결과가 있는 경기를 날짜순으로 센 순번이다.
+ */
+function profileGameLabels(PDO $db, array $schedule, array $games): array {
+    $series=['4444'=>'WC','3333'=>'준PO','5555'=>'PO','7777'=>'KS'];
+    $numbers=[];
+    foreach($games as $id=>$game) {
+        $prefix=substr((string)$id,0,4); $year=substr((string)$game['date'],0,4);
+        if(!isset($series[$prefix])||isset($numbers[$prefix.$year]))continue;
+        $q=$db->prepare('SELECT game_code FROM kbo_schedule WHERE league_level=1 AND game_code LIKE ? AND game_date BETWEEN ? AND ? AND away_score IS NOT NULL ORDER BY game_date,game_code');
+        $q->execute([$prefix.'%',$year.'-01-01',$year.'-12-31']);
+        $numbers[$prefix.$year]=array_flip($q->fetchAll(PDO::FETCH_COLUMN));
+    }
+    $labels=[];
+    foreach($games as $id=>$game) {
+        $id=(string)$id; $prefix=substr($id,0,4); $date=(string)$game['date'];
+        if(profileIsTiebreakerGame($id)||$prefix==='6666')$labels[$id]='순위결정전';
+        elseif(isset($series[$prefix])) {
+            $number=$numbers[$prefix.substr($date,0,4)][$id]??null;
+            $labels[$id]=$series[$prefix].($number===null?'':$number+1);
+        } else {
+            [$start,$end]=$schedule[substr($date,0,4)]['preseason']??['',''];
+            $labels[$id]=$start&&$end&&$date>=$start&&$date<=$end?'시범경기':null;
+        }
+    }
+    return $labels;
+}
 function profileGameMeta(array $row, array $stadiums): array {
     $id=$row['game_id']; $opponent=profileOpponent($id,$row['team']);
     $homeCode=substr($id,10,2);
     $codes=['HT'=>'KIA','LG'=>'LG','SK'=>'SSG','OB'=>'두산','SS'=>'삼성','LT'=>'롯데','KT'=>'KT','HH'=>'한화','NC'=>'NC','WO'=>'키움'];
     $home=$codes[$homeCode]??null; $team=profileTeam($row['team']);
     $isAway=$home && $team && $opponent ? $team!==$home : null;
-    $schedule=$stadiums[substr($id,0,13)]??null;
+    $schedule=$stadiums[profileScheduleCode($id)]??null;
     if(is_array($schedule)&&isset($schedule['away_team'],$schedule['home_team'])) {
         $away=profileTeam($schedule['away_team']);$home=profileTeam($schedule['home_team']);
         if($team===$away||$team===$home){$isAway=$team===$away;$opponent=$isAway?$home:$away;}
@@ -104,7 +150,12 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
     $rowsAll=$retired ? $all : array_values(array_filter($all,static fn($row)=>(int)substr($row['game_date'],0,4)===$year));
     // 순위 결정전은 최근 5경기에만 보여주고 시즌 기록·경기 일지·최근 n일 성적에서는 뺀다.
     $rows=array_values(array_filter($rowsAll,static fn($row)=>!profileIsTiebreakerGame($row['game_id'])));
-    $groupsAll=[]; foreach ($rowsAll as $row) $groupsAll[$row['game_id']][]=$row;
+    // 개요의 최근 5경기는 시범경기와 포스트시즌까지 포함한 1군 최근 경기다. 시즌 기록과 경기 일지는 정규시즌 범위의 $rowsAll만 쓴다.
+    $inSeason=array_fill_keys(array_column($rowsAll,'game_id'),true);
+    $extraRows=[]; $recentIds=array_slice(array_keys($inSeason),0,5);
+    if($selectedYear===null&&!$gamesOnly&&$leagueLevel===1&&!$retired)[$recentIds,$extraRows]=profileRecentGameRows($db,$table,(string)$player['PlayerId'],$inSeason);
+    $recentIds=array_flip($recentIds); $recentGames=[];
+    $groupsAll=[]; foreach (array_merge($rowsAll,$extraRows) as $row) $groupsAll[$row['game_id']][]=$row;
     $streakRows=null;
     if($gamesOnly&&!$pitcher&&$seasonType==='regular'&&$selectedYear===(int)(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')))->format('Y'))$streakRows=$rows;
     $groups=[]; foreach ($rows as $row) $groups[$row['game_id']][]=$row;
@@ -114,7 +165,7 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
     $leagueSchedule=$schedule;
     if($leagueLevel===2)foreach($leagueSchedule as $y=>&$season)$season['regular']=[$y.'-01-01',$y.'-12-31'];
     unset($season);
-    $codes=array_map(static fn($id)=>substr($id,0,13),array_keys($groupsAll));
+    $codes=array_values(array_unique(array_map('profileScheduleCode',array_keys($groupsAll))));
     $ms=$db->prepare('SELECT game_code,stadium,away_team,home_team,away_score,home_score FROM kbo_schedule WHERE league_level='.$leagueLevel.' AND game_code IN ('.implode(',',array_fill(0,count($codes),'?')).')');$ms->execute($codes);$stadiums=[];foreach($ms->fetchAll(PDO::FETCH_ASSOC) as $scheduled)$stadiums[$scheduled['game_code']]=$scheduled;
     if (!$pitcher) {
         $league=[];$stats=[];
@@ -143,8 +194,8 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
             $starts=array_values(array_filter(array_column($events,'is_gs'),static fn($value)=>$value!==null));
             $game['isStarter']=$starts ? in_array(1,array_map('intval',$starts),true) : null;
             $game['position']=profilePosition($events,$game['isStarter']);
-            if(count($recent)<5)$recent[]=$game;
-            if(profileIsTiebreakerGame($id))continue;
+            if(isset($recentIds[$id]))$recentGames[$id]=$game;
+            if(profileIsTiebreakerGame($id)||!isset($inSeason[$id]))continue;
             if((int)substr($game['date'],0,4)===$year) {
                 foreach(['pa','ab','h','doubles','triples','hr','rbi','r','bb','hbp','so','sf','sh','sb','cs','gdp'] as $key)$game[$key]=profileSum($parsed,$key);
                 $notes=[];if($game['h']-$game['doubles']-$game['triples']-$game['hr']>0&&$game['doubles']>0&&$game['triples']>0&&$game['hr']>0)$notes[]='사이클링 히트';
@@ -172,7 +223,7 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
         require_once __DIR__.'/player-year-league.php';
         $eraPlus=$gamesOnly?null:profileOverviewEraPlus($rows,profileLeaguePitchingContexts($db,$leagueSchedule,$leagueLevel));
         $stats=[['ERA',$outs&&$erKnown?number_format($er*27/$outs,2):null],['승리',$wins],['홀드',$holds],['세이브',$saves],['이닝',profileInningText($outs)],['삼진',$facedKnown?$so:null],['WHIP',$outs&&$facedKnown?number_format(($h+$bb)*3/$outs,2):null],['ERA+',$eraPlus]];
-        foreach($rowsAll as $row) {
+        foreach(array_merge($rowsAll,$extraRows) as $row) {
             $f=$faced[$row['game_id']]??[];
             $r=$row['r']; $text=profileInningText(profileInningOuts($row['inning'])).'이닝 '.($r??'—').'실점';
             if($r!==null && (int)$r!==0 && (!isset($row['er']) || (int)$r!==(int)$row['er'])) $text.='('.($row['er']??'—').'자책)';
@@ -183,19 +234,26 @@ function profileRecords(PDO $db, array $player, array $schedule, ?int $selectedY
             $game['isStarter']=isset($row['order'])?(int)$row['order']===1:null;
             foreach(['so','h','hr','bb','hbp','ab','doubles','triples','sf'] as $key)$game[$key]=$f?profileSum($f,$key):null;
             $game['notes']=profilePitchNote($game,($pitchCounts[$row['game_id'].'|'.profileTeam($row['team'])]??0)===1);
-            if(count($recent)<5)$recent[]=$game;
-            if(profileIsTiebreakerGame($row['game_id']))continue;
+            if(isset($recentIds[$row['game_id']]))$recentGames[$row['game_id']]=$game;
+            if(profileIsTiebreakerGame($row['game_id'])||!isset($inSeason[$row['game_id']]))continue;
             $summaries[]=$game;
             if((int)substr($game['date'],0,4)===$year)$box[]=$game;
         }
         if(!$gamesOnly)foreach([7,15,30] as $count){$start=$anchor->modify('-'.($count-1).' days')->format('Y-m-d');$window=array_values(array_filter($summaries,static fn($game)=>$game['date']>=$start&&$game['date']<=$anchor->format('Y-m-d')));$summary=profilePitchWindow($window,$count);$summary['games']=count($window);$summary['startDate']=$start;$summary['endDate']=$anchor->format('Y-m-d');$rolling[]=$summary;}
     }
+    // 최근 경기 순서(최신순)로 정리한다.
+    if($leagueLevel===1&&$recentGames) {
+        $labels=profileGameLabels($db,$schedule,$recentGames);
+        foreach($recentGames as $id=>&$recentGame)$recentGame['gameLabel']=$labels[$id]??null;
+        unset($recentGame);
+    }
+    foreach(array_keys($recentIds) as $id)if(isset($recentGames[$id]))$recent[]=$recentGames[$id];
     $historicalIncluded=false;
     if(!$gamesOnly&&$retired&&$leagueLevel===1&&profileHistoricalRows($db,(string)$player['PlayerId'],$pitcher)){
         require_once __DIR__.'/player-year-records.php';$totals=profileYearRecords($db,(string)$player['PlayerId'],$pitcher,$schedule);
         $stats=profileSeasonDisplayStats($totals['career'],$pitcher);$historicalIncluded=true;
     }
-    return ['year'=>$year,'career'=>$retired,'leagueLevel'=>$leagueLevel,'season'=>$seasonType,'pitcher'=>$pitcher,'stats'=>$stats,'recent'=>$recent,'games'=>$box,'rolling'=>$rolling,'historicalSeasonTotalsIncluded'=>$historicalIncluded];
+    return ['year'=>$year,'career'=>$retired,'leagueLevel'=>$leagueLevel,'season'=>$seasonType,'pitcher'=>$pitcher,'stats'=>$stats,'recent'=>$recent,'regularSeason'=>kboInRegularSeason(new DateTimeImmutable('now',new DateTimeZone('Asia/Seoul')),$schedule),'games'=>$box,'rolling'=>$rolling,'historicalSeasonTotalsIncluded'=>$historicalIncluded];
 }
 
 function profilePosition(array $events, ?bool $starter): ?string {

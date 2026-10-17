@@ -5,6 +5,8 @@ header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: public, max-age=300');
 header_register_callback(static function (): void { if (http_response_code() >= 400) header('Cache-Control: no-store'); });
 
+require_once __DIR__ . '/../lib/regular-season.php';
+
 const PREDICTION_MODEL_VERSION = 'batting-distribution-v2-events';
 // 기준일(마지막 반영 경기일)로부터 이 일수 안에 출전 기록이 없는 선수는 순위에서 뺀다.
 const PREDICTION_ACTIVE_DAYS = 30;
@@ -129,13 +131,6 @@ function predictionSeasonForms(PDO $pdo, int $year, array $ids): array {
     return array_map('predictionSeasonForm', $games);
 }
 
-/** 오늘(Asia/Seoul)이 해당 연도 정규시즌 기간(시작일과 마지막 경기일 포함) 안인지. 일정이 없으면 false. */
-function predictionRankingInRegularSeason(DateTimeImmutable $today, array $schedule): bool {
-    [$start, $end] = $schedule[$today->format('Y')]['regular'] ?? ['', ''];
-    $day = $today->format('Y-m-d');
-    return $start !== '' && $end !== '' && $day >= $start && $day <= $end;
-}
-
 if (PHP_SAPI === 'cli') return; // 테스트에서 함수만 불러 쓴다.
 
 try {
@@ -150,7 +145,7 @@ try {
     $today = new DateTimeImmutable('now', new DateTimeZone('Asia/Seoul'));
     $year = (int)$today->format('Y');
     // 다음 경기 예측은 정규시즌 중에만 낸다. 시즌 밖에는 DB도 읽지 않고 숨김 신호만 보낸다.
-    if (!predictionRankingInRegularSeason($today, getKBOSchedule())) {
+    if (!kboInRegularSeason($today, getKBOSchedule())) {
         echo json_encode(['available' => false, 'regularSeason' => false], JSON_UNESCAPED_UNICODE);
         exit;
     }

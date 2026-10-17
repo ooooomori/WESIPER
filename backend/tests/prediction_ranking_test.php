@@ -83,4 +83,9 @@ predictionTestAssert(predictionSeasonForm([$game(4, 0), $game(3, 2), $game(4, 1,
     === ['homeRuns' => 1, 'hitStreak' => 0, 'hitGamesAgo' => 2, 'homeRunStreak' => 0, 'homeRunGamesAgo' => 3], 'Last hit and home run distance mismatch');
 predictionTestAssert(predictionSeasonForm([$game(4, 0), $game(0, 0), $game(3, 0)])['hitGamesAgo'] === null, 'No hit this season must give null');
 predictionTestAssert(predictionSeasonForm([$game(4, 1), $game(4, 1)])['homeRunGamesAgo'] === null, 'No home run this season must give null');
+// 정규시즌 판정(시작일과 마지막 경기일 포함, 일정이 없으면 false)
+$seasonSchedule = ['2026' => ['regular' => ['2026-03-28', '2026-10-12']]];
+$inSeason = static fn(string $day): bool => kboInRegularSeason(new DateTimeImmutable($day, new DateTimeZone('Asia/Seoul')), $seasonSchedule);
+predictionTestAssert($inSeason('2026-03-28') && $inSeason('2026-10-12') && $inSeason('2026-07-01'), 'Regular season days must be inside');
+predictionTestAssert(!$inSeason('2026-03-27') && !$inSeason('2026-10-13') && !$inSeason('2027-04-01'), 'Days outside the season must be outside');
 echo "PASS: season form (hit streak, home run streak, games since last home run)\n";
