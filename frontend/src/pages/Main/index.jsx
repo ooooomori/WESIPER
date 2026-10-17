@@ -3,6 +3,7 @@ import { addRecentPlayer, readRecentPlayers, removeRecentPlayer } from '../../li
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import "./main.css";
+import "./search-screen.css";
 import PlayerSilhouette from '../../components/PlayerSilhouette';
 import RandomPlayerButton from '../../components/RandomPlayerButton';
 import { LuAlertCircle } from 'react-icons/lu';
@@ -12,6 +13,7 @@ import { gameParticipants } from '../../lib/gameParticipants';
 import GameWeather from './GameWeather';
 import Postseason from './Postseason';
 import ulsanLogo from '../../assets/images/logos/ulsan-logo.png';
+import heroImage from '../../assets/images/home-search-background.jpg';
 
 // 오늘의 경기는 일정·결과만 보여주고 서버도 KBO에 하루 몇 번만 묻는다. 화면은 5분마다 확인하면 충분하다.
 const REFRESH_INTERVAL = 300_000;
@@ -53,6 +55,13 @@ function GameParticipant({ text, home = false }) {
         <span className="main-home-player-divider" aria-hidden="true" />
         <span className="main-home-player-name" title={name}>{name}</span>
     </span>;
+}
+
+// 경기는 예정(시작 시각)·종료(최종 점수)·취소 세 가지로만 보여준다.
+function gameScoreState(game) {
+    const cancelled = game.GAME_STATE_SC === "4" || /취소/.test(game.status || "");
+    const hasScore = game.isGameFinished && !cancelled && (game.away_score !== "" || game.home_score !== "");
+    return { cancelled, hasScore };
 }
 
 function SectionTitle({ title, action }) {
@@ -561,137 +570,167 @@ export default function Main() {
                     </div>
                 </div>
             </dialog>
-            <div className="main-home-inner">
-                <section className="main-home-search-hero" aria-labelledby="preview-search-title">
-                    <div className="main-home-hero-banner">
-                        <div className="main-home-hero-title">
-                            <h1 id="preview-search-title"><span>KBO</span> 선수 도감</h1>
-                        </div>
-                    </div>
-                    <button type="button" className="main-home-search main-home-hero-search" onClick={openSearch} aria-haspopup="dialog" aria-label="선수 검색 화면 열기">
-                        <span className="main-home-hero-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.6 15.6 4.4 4.4" /></svg></span>
-                        <span className="main-home-hero-search-text">{search || "선수 이름을 검색해 보세요!"}</span>
-                        <span className="main-home-hero-search-cta" aria-hidden="true">검색</span>
-                    </button>
-                    {heroPopular.list.length > 0 && <div className="main-home-hero-popular">
-                        <span className="main-home-hero-chips-label" role="img" aria-label="인기 급상승"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg></span>
-                        <div className="main-home-hero-chips" aria-label="인기 선수 바로가기">
-                        {heroPopular.ranked
-                            ? heroPopular.list.map((player) => <Link key={player.PlayerId} className="main-home-hero-chip" to={`/?pid=${encodeURIComponent(player.PlayerId)}`} state={{ player }} onClick={() => rememberPlayer(player)}><span className="main-home-hero-chip-photo"><SearchPlayerPhoto player={player} /></span>{player.Name}</Link>)
-                            : heroPopular.list.map((name) => <button key={name} type="button" className="main-home-hero-chip" onClick={() => openSearchWith(name)}>{name}</button>)}
-                        </div>
-                    </div>}
-                    <div className="main-home-records-row">
-                        <Link className="main-home-records-link" to="/records">
-                            <span className="main-home-records-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 20V10M12 20V4M19 20v-7" /></svg></span>
-                            <span className="main-home-records-text"><strong>선수 기록실</strong></span>
-                            <svg className="main-home-records-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                        </Link>
-                        <button type="button" className="main-home-records-link" onClick={() => setTeamRecordsNotice(true)} aria-haspopup="dialog">
-                            <span className="main-home-records-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V6l-8-3Z" /></svg></span>
-                            <span className="main-home-records-text"><strong>팀 기록실</strong></span>
-                            <svg className="main-home-records-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <section className="main-home-hero" aria-labelledby="preview-search-title">
+                <div className="main-home-hero-visual" aria-hidden="true"><img src={heroImage} alt="" /></div>
+                {gameState === "ready" && gameLists.kbo.length > 0 && <div className="main-home-hero-fixtures" aria-hidden="true">
+                    {gameLists.kbo.slice(0, 2).map((game, index) => {
+                        const { hasScore } = gameScoreState(game);
+                        const away = getTeamStyle(game.away);
+                        const home = getTeamStyle(game.home);
+                        return <div className="main-home-hero-fixture" key={`${game.away}-${game.home}-${index}`}>
+                            <TeamLogo name={game.away} logo={away.logo} />
+                            <strong className="main-home-hero-fixture-team">{game.away}</strong>
+                            <div className="main-home-hero-fixture-center">
+                                {hasScore ? <b className="main-home-hero-fixture-score">{game.away_score || 0} : {game.home_score || 0}</b> : <b className="main-home-hero-fixture-time">{game.status || "경기 예정"}</b>}
+                                <small>{game.stadium}</small>
+                            </div>
+                            <strong className="main-home-hero-fixture-team">{game.home}</strong>
+                            <TeamLogo name={game.home} logo={home.logo} />
+                        </div>;
+                    })}
+                </div>}
+                <div className="main-home-hero-inner">
+                    <div className="main-home-hero-copy">
+                        <a className="main-home-hero-eyebrow" href="#today-games" onClick={(event) => {
+                            // 오늘의 경기로 부드럽게 내려간다(움직임 줄이기 설정이면 바로 이동).
+                            event.preventDefault();
+                            document.getElementById('today-games')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+                        }}>
+                            <span className="main-home-hero-eyebrow-dot" aria-hidden="true" />
+                            <span>{todayLabel}</span>
+                            {gameState === "ready" && gameLists.kbo.length > 0 && <><span className="main-home-hero-eyebrow-divider" aria-hidden="true" /><span>KBO {gameLists.kbo.length}경기</span></>}
+                        </a>
+                        <h1 id="preview-search-title"><span>KBO</span> 선수 도감</h1>
+                        <button type="button" className="main-home-hero-search" onClick={openSearch} aria-haspopup="dialog" aria-label="선수 검색 화면 열기">
+                            <span className="main-home-hero-search-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round"><circle cx="10.8" cy="10.8" r="6.3" /><path d="m15.6 15.6 4.4 4.4" /></svg></span>
+                            <span className="main-home-hero-search-text">{search || "선수 이름을 검색해 보세요!"}</span>
+                            <span className="main-home-hero-search-cta" aria-hidden="true">검색</span>
                         </button>
-                    </div>
-                </section>
-                <section className="main-home-section main-home-match-section" aria-labelledby="preview-games-title">
-                    <SectionTitle title={<><span id="preview-games-title">오늘의 KBO</span><small className="main-home-section-date">{todayLabel}</small></>} action={
-                        <div className={`main-home-league-switch ${league === "futures" ? "is-futures" : ""}`} role="group" aria-label="리그 선택">
-                            <button type="button" className={league === "kbo" ? "active" : ""} aria-pressed={league === "kbo"} onClick={() => setLeague("kbo")}>KBO 1군</button>
-                            <button type="button" className={league === "futures" ? "active" : ""} aria-pressed={league === "futures"} onClick={() => setLeague("futures")}>퓨처스리그</button>
-                        </div>
-                    } />
-                    <div className="main-home-game-grid">
-                        {gameState === "loading" && <div className="main-home-game-skeletons" role="status" aria-label="오늘의 경기 정보를 불러오는 중">{Array.from({ length: 3 }, (_, i) => <div key={i} className="main-home-game-skeleton" />)}</div>}
-                        {gameState === "error" && <div className="main-home-game-message main-home-game-error" role="status">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M12 8v5M12 16.5v.01" /><circle cx="12" cy="12" r="9" /></svg>
-                            <p>경기 정보를 불러오지 못했습니다.</p>
-                            <button type="button" onClick={retryGames}>다시 시도</button>
+                        {heroPopular.list.length > 0 && <div className="main-home-hero-popular">
+                            <span className="main-home-hero-chips-label" role="img" aria-label="인기 급상승"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m3 17 6-6 4 4 8-8" /><path d="M15 7h6v6" /></svg></span>
+                            <div className="main-home-hero-chips" aria-label="인기 선수 바로가기">
+                            {heroPopular.ranked
+                                ? heroPopular.list.map((player) => <Link key={player.PlayerId} className="main-home-hero-chip" to={`/?pid=${encodeURIComponent(player.PlayerId)}`} state={{ player }} onClick={() => rememberPlayer(player)}><span className="main-home-hero-chip-photo"><SearchPlayerPhoto player={player} /></span>{player.Name}</Link>)
+                                : heroPopular.list.map((name) => <button key={name} type="button" className="main-home-hero-chip" onClick={() => openSearchWith(name)}>{name}</button>)}
+                            </div>
                         </div>}
-                        {gameState === "ready" && games.length === 0 && <p className="main-home-game-empty" role="status">오늘 예정된 {league === "futures" ? "퓨처스리그" : "KBO"} 경기가 없습니다.</p>}
-                        {gameState === "ready" && games.map((game, index) => {
-                            const away = getTeamStyle(game.away);
-                            const home = getTeamStyle(game.home);
-                            const participants = gameParticipants(game);
-                            // 경기는 예정(시작 시각)·종료(최종 점수)·취소 세 가지로만 보여준다.
-                            const cancelled = game.GAME_STATE_SC === "4" || /취소/.test(game.status || "");
-                            const hasScore = game.isGameFinished && !cancelled && (game.away_score !== "" || game.home_score !== "");
-                            return (
-                                <article className="main-home-game-card" key={`${game.away}-${game.home}-${index}`} style={{ "--away-color": away.color, "--home-color": home.color }}>
-                                    <TeamLogo name={game.away} logo={away.logo} />
-                                    <div className="main-home-team-info"><strong className="main-home-team-name">{game.away}</strong><GameParticipant text={participants.awayPlayer} /></div>
-                                    <div className="main-home-game-center">
-                                        {hasScore ? <strong className="main-home-score"><b className={Number(game.away_score) > Number(game.home_score) ? "is-leading" : ""}>{game.away_score || 0}</b><span>:</span><b className={Number(game.home_score) > Number(game.away_score) ? "is-leading" : ""}>{game.home_score || 0}</b></strong> : <strong className="main-home-game-time">{game.status || "경기 예정"}</strong>}
-                                        <span className="main-home-game-status">{hasScore && <b className="main-home-game-final">종료</b>}{game.stadium}{!hasScore && !cancelled && <GameWeather weather={game.weather} />}</span>
-                                    </div>
-                                    <div className="main-home-team-info main-home-team-home"><strong className="main-home-team-name">{game.home}</strong><GameParticipant text={participants.homePlayer} home /></div>
-                                    <TeamLogo name={game.home} logo={home.logo} />
-                                </article>
-                            );
-                        })}
-                    </div>
-                </section>
-
-                <section className="main-home-section main-home-records-section" aria-labelledby="preview-records-title">
-                    <SectionTitle title={<span id="preview-records-title">KBO 순위</span>} action={
-                        <div className="main-home-league-switch main-home-ranking-switch" style={{ '--tab-index': rankingTab }} role="group" aria-label="순위 선택">
-                            {['팀 순위', '가을야구'].map((label, index) => <button key={label} type="button" className={rankingTab === index ? 'active' : ''} aria-pressed={rankingTab === index} onClick={() => setRankingTab(index)}>{label}</button>)}
+                        <div className="main-home-records-row">
+                            <Link className="main-home-records-link" to="/records">
+                                <span className="main-home-records-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 20V10M12 20V4M19 20v-7" /></svg></span>
+                                <span className="main-home-records-text"><strong>선수 기록실</strong></span>
+                                <svg className="main-home-records-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </Link>
+                            <button type="button" className="main-home-records-link" onClick={() => setTeamRecordsNotice(true)} aria-haspopup="dialog">
+                                <span className="main-home-records-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3 4 6v6c0 4.5 3.2 7.6 8 9 4.8-1.4 8-4.5 8-9V6l-8-3Z" /></svg></span>
+                                <span className="main-home-records-text"><strong>팀 기록실</strong></span>
+                                <svg className="main-home-records-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 5 7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                            </button>
                         </div>
-                    } />
-                    <>
-                        {rankingTab === 1 && ranking.state === 'ready' && ranking.rows.length > 0 && ranking.rows.every((row) => Number(row[2]) >= 144) ? <Postseason rows={ranking.rows} TeamLogo={TeamLogo} getTeamStyle={getTeamStyle} /> : <>
-                        {ranking.state === 'error' && <p role="status">팀 순위를 불러오지 못했습니다.</p>}
-                        {(ranking.state === 'loading' || ranking.state === 'ready') && (ranking.state === 'loading' || ranking.rows.length ? <div className="main-home-ranking-table-wrap" onScroll={(e) => e.currentTarget.classList.toggle('is-scrolled', e.currentTarget.scrollLeft > 0)}><table className={`main-home-ranking-table ${rankingTab === 1 ? 'is-autumn' : ''}`} aria-busy={ranking.state === 'loading'}>
-                            <caption className="sr-only">KBO {rankingTab === 0 ? '팀 순위' : '가을야구'} {ranking.title}</caption>
-                            <colgroup><col className="is-rank" /><col className="is-team" />{(rankingTab === 0 ? ['is-games', 'is-wins', 'is-losses', 'is-draws', 'is-pct', 'is-gb', 'is-streak', 'is-recent'] : [undefined, undefined, undefined]).map((name, index) => <col key={index} className={name} />)}</colgroup>
-                            <thead><tr>{(rankingTab === 0 ? ['순위', '팀', '경기', '승', '패', '무', '승률', '게임차', '연속', '최근 10경기'] : ['순위', '팀', '남은\n경기', '1위\n매직넘버', '가을야구\n매직 트래직 넘버']).map((label) => <th scope="col" key={label}>{label}</th>)}</tr></thead>
-                            <tbody>{ranking.state === 'loading' ? Array.from({ length: 10 }, (_, rowIndex) => <tr key={rowIndex} aria-hidden="true">
-                                <td>{rowIndex + 1}</td>
-                                <th scope="row"><span className="main-home-ranking-placeholder is-team" /></th>
-                                <td colSpan={rankingTab === 0 ? 8 : 3}><span className="main-home-ranking-placeholder is-row" /></td>
-                            </tr>) : ranking.rows.map((row) => <tr key={row[1]} className={rankingTab === 0 && Number(row[0]) <= 5 ? 'is-postseason' : undefined} style={{ '--team-color': getTeamStyle(row[1]).color }}>
-                                <td><span className="main-home-rank-num">{row[0]}</span></td><th scope="row"><div><TeamLogo name={row[1]} logo={getTeamStyle(row[1]).logo} />{row[1]}</div></th>
-                                {rankingTab === 0 ? row.slice(2, 10).map((value, index) => <td key={index}>{index === 6 ? (/[0-9]/.test(value) ? <span className={`main-home-streak ${value.includes('🔥') ? 'is-win' : 'is-loss'}`}>{value.replace(/\D/g, '')}{value.includes('🔥') ? '연승' : '연패'}</span> : value) : index === 7 ? <span className="main-home-recent-results" aria-label={`최근 10경기 ${value}`}>
-                                    <span className="main-home-recent-dots" aria-hidden="true">{[...value].map((result, i) => <i key={i} className={result === '승' ? 'is-win' : result === '패' ? 'is-loss' : 'is-draw'} />)}</span>
-                                </span> : value}</td>) : <>
-                                    <td>{row[10]}</td>
-                                    {row[14] === '가을야구 불가' ? <td colSpan={2}><span className="main-home-rank-remark is-out">가을야구 탈락</span></td> : <>
-                                        <td>{row[11] === 'X' && row[14]?.endsWith('위 불가') ? <span className="main-home-rank-remark is-unreachable">{row[14]}</span> : row[11] === 'X' ? '-' : `${row[11]}승`}</td>
-                                        <td>{row[14]?.endsWith('확보') ? <span className="main-home-rank-remark is-secured">{row[14]}</span>
-                                            : [row[12] !== 'X' ? `${row[12]}승` : null, row[13] !== 'X' ? `${row[13]}패` : null].filter(Boolean).join(' ') || '-'}</td>
-                                    </>}
-                                </>}
-                            </tr>)}</tbody>
-                        </table></div> : <p>표시할 팀 순위가 없습니다.</p>)}
-                    </>}
-                    </>
-                </section>
-
-                <PredictionRanking />
-
-                <section className="main-home-section main-home-games-section" aria-labelledby="preview-mini-title">
-                    <SectionTitle title={<span id="preview-mini-title">미니게임</span>} />
-                    <div className="main-home-mini-grid">
-                        <Link className="main-home-mini-card main-home-kbodle-card" to="/kbodle">
-                            <div className="main-home-mini-art" aria-hidden="true">
-                                <div className="main-home-kbodle-tiles">{Array.from({ length: 7 }, (_, i) => <span key={i} className={i < 2 ? 'is-match' : i === 4 || i === 5 ? 'is-close' : ''}>?</span>)}</div>
-                            </div>
-                            <strong className="font-family-kbo">KBODLE: 크보들</strong><small>단서를 조합해 오늘의 선수를 맞혀보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
-                        </Link>
-                        <Link className="main-home-mini-card main-home-bingo-card" to="/bingo">
-                            <div className="main-home-mini-art" aria-hidden="true">
-                                <div className="main-home-bingo-board">{Array.from({ length: 9 }, (_, i) => <span key={i} className={i % 4 === 0 ? 'is-filled' : ''}>{i % 4 === 0 ? '✓' : ''}</span>)}</div>
-                            </div>
-                            <strong className="font-family-kbo">KBO BINGO</strong><small>야구 지식으로 아홉 칸을 채워보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
-                        </Link>
-                        <Link className="main-home-mini-card main-home-lineup-card" to="/lineup">
-                            <div className="main-home-mini-art" aria-hidden="true">
-                                <div className="main-home-lineup-rows">{[1, 2, 3].map(order => <span key={order} className={order === 2 ? 'is-open' : ''}><b>{order}</b><i /></span>)}</div>
-                            </div>
-                            <strong className="font-family-kbo">라인업 맞추기</strong><small>그날의 선발 타순을 1번부터 9번까지 맞혀보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
-                        </Link>
                     </div>
-                </section>
+                </div>
+            </section>
+            <div className="main-home-inner">
+                <div className="main-home-team-strip" aria-hidden="true">
+                    {['KIA', '삼성', 'LG', '두산', 'KT', 'SSG', '롯데', '한화', 'NC', '키움'].map((name) => <img key={name} src={getTeamStyle(name).logo} alt="" />)}
+                </div>
+                <div className="main-home-bento">
+                    <section className="main-home-section main-home-match-section" id="today-games" aria-labelledby="preview-games-title">
+                        <SectionTitle title={<><span id="preview-games-title">오늘의 KBO</span><small className="main-home-section-date">{todayLabel}</small></>} action={
+                            <div className={`main-home-league-switch ${league === "futures" ? "is-futures" : ""}`} role="group" aria-label="리그 선택">
+                                <button type="button" className={league === "kbo" ? "active" : ""} aria-pressed={league === "kbo"} onClick={() => setLeague("kbo")}>KBO 1군</button>
+                                <button type="button" className={league === "futures" ? "active" : ""} aria-pressed={league === "futures"} onClick={() => setLeague("futures")}>퓨처스리그</button>
+                            </div>
+                        } />
+                        <div className="main-home-game-grid">
+                            {gameState === "loading" && <div className="main-home-game-skeletons" role="status" aria-label="오늘의 경기 정보를 불러오는 중">{Array.from({ length: 3 }, (_, i) => <div key={i} className="main-home-game-skeleton" />)}</div>}
+                            {gameState === "error" && <div className="main-home-game-message main-home-game-error" role="status">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M12 8v5M12 16.5v.01" /><circle cx="12" cy="12" r="9" /></svg>
+                                <p>경기 정보를 불러오지 못했습니다.</p>
+                                <button type="button" onClick={retryGames}>다시 시도</button>
+                            </div>}
+                            {gameState === "ready" && games.length === 0 && <p className="main-home-game-empty" role="status">오늘 예정된 {league === "futures" ? "퓨처스리그" : "KBO"} 경기가 없습니다.</p>}
+                            {gameState === "ready" && games.map((game, index) => {
+                                const away = getTeamStyle(game.away);
+                                const home = getTeamStyle(game.home);
+                                const participants = gameParticipants(game);
+                                    const { cancelled, hasScore } = gameScoreState(game);
+                                return (
+                                    <article className="main-home-game-card" key={`${game.away}-${game.home}-${index}`} style={{ "--away-color": away.color, "--home-color": home.color }}>
+                                        <TeamLogo name={game.away} logo={away.logo} />
+                                        <div className="main-home-team-info"><strong className="main-home-team-name">{game.away}</strong><GameParticipant text={participants.awayPlayer} /></div>
+                                        <div className="main-home-game-center">
+                                            {hasScore ? <strong className="main-home-score"><b className={Number(game.away_score) > Number(game.home_score) ? "is-leading" : ""}>{game.away_score || 0}</b><span>:</span><b className={Number(game.home_score) > Number(game.away_score) ? "is-leading" : ""}>{game.home_score || 0}</b></strong> : <strong className="main-home-game-time">{game.status || "경기 예정"}</strong>}
+                                            <span className="main-home-game-status">{hasScore && <b className="main-home-game-final">종료</b>}{game.stadium}{!hasScore && !cancelled && <GameWeather weather={game.weather} />}</span>
+                                        </div>
+                                        <div className="main-home-team-info main-home-team-home"><strong className="main-home-team-name">{game.home}</strong><GameParticipant text={participants.homePlayer} home /></div>
+                                        <TeamLogo name={game.home} logo={home.logo} />
+                                    </article>
+                                );
+                            })}
+                        </div>
+                    </section>
+
+                    <section className="main-home-section main-home-records-section" aria-labelledby="preview-records-title">
+                        <SectionTitle title={<span id="preview-records-title">KBO 순위</span>} action={
+                            <div className="main-home-league-switch main-home-ranking-switch" style={{ '--tab-index': rankingTab }} role="group" aria-label="순위 선택">
+                                {['팀 순위', '가을야구'].map((label, index) => <button key={label} type="button" className={rankingTab === index ? 'active' : ''} aria-pressed={rankingTab === index} onClick={() => setRankingTab(index)}>{label}</button>)}
+                            </div>
+                        } />
+                        <>
+                            {rankingTab === 1 && ranking.state === 'ready' && ranking.rows.length > 0 && ranking.rows.every((row) => Number(row[2]) >= 144) ? <Postseason rows={ranking.rows} TeamLogo={TeamLogo} getTeamStyle={getTeamStyle} /> : <>
+                            {ranking.state === 'error' && <p role="status">팀 순위를 불러오지 못했습니다.</p>}
+                            {(ranking.state === 'loading' || ranking.state === 'ready') && (ranking.state === 'loading' || ranking.rows.length ? <div className="main-home-ranking-table-wrap" onScroll={(e) => e.currentTarget.classList.toggle('is-scrolled', e.currentTarget.scrollLeft > 0)}><table className={`main-home-ranking-table ${rankingTab === 1 ? 'is-autumn' : ''}`} aria-busy={ranking.state === 'loading'}>
+                                <caption className="sr-only">KBO {rankingTab === 0 ? '팀 순위' : '가을야구'} {ranking.title}</caption>
+                                <colgroup><col className="is-rank" /><col className="is-team" />{(rankingTab === 0 ? ['is-games', 'is-wins', 'is-losses', 'is-draws', 'is-pct', 'is-gb', 'is-streak', 'is-recent'] : [undefined, undefined, undefined]).map((name, index) => <col key={index} className={name} />)}</colgroup>
+                                <thead><tr>{(rankingTab === 0 ? ['순위', '팀', '경기', '승', '패', '무', '승률', '게임차', '연속', '최근 10경기'] : ['순위', '팀', '남은\n경기', '1위\n매직넘버', '가을야구\n매직 트래직 넘버']).map((label) => <th scope="col" key={label}>{label}</th>)}</tr></thead>
+                                <tbody>{ranking.state === 'loading' ? Array.from({ length: 10 }, (_, rowIndex) => <tr key={rowIndex} aria-hidden="true">
+                                    <td>{rowIndex + 1}</td>
+                                    <th scope="row"><span className="main-home-ranking-placeholder is-team" /></th>
+                                    <td colSpan={rankingTab === 0 ? 8 : 3}><span className="main-home-ranking-placeholder is-row" /></td>
+                                </tr>) : ranking.rows.map((row) => <tr key={row[1]} className={rankingTab === 0 && Number(row[0]) <= 5 ? 'is-postseason' : undefined} style={{ '--team-color': getTeamStyle(row[1]).color }}>
+                                    <td><span className="main-home-rank-num">{row[0]}</span></td><th scope="row"><div><TeamLogo name={row[1]} logo={getTeamStyle(row[1]).logo} />{row[1]}</div></th>
+                                    {rankingTab === 0 ? row.slice(2, 10).map((value, index) => <td key={index}>{index === 6 ? (/[0-9]/.test(value) ? <span className={`main-home-streak ${value.includes('🔥') ? 'is-win' : 'is-loss'}`}>{value.replace(/\D/g, '')}{value.includes('🔥') ? '연승' : '연패'}</span> : value) : index === 7 ? <span className="main-home-recent-results" aria-label={`최근 10경기 ${value}`}>
+                                        <span className="main-home-recent-dots" aria-hidden="true">{[...value].map((result, i) => <i key={i} className={result === '승' ? 'is-win' : result === '패' ? 'is-loss' : 'is-draw'} />)}</span>
+                                    </span> : value}</td>) : <>
+                                        <td>{row[10]}</td>
+                                        {row[14] === '가을야구 불가' ? <td colSpan={2}><span className="main-home-rank-remark is-out">가을야구 탈락</span></td> : <>
+                                            <td>{row[11] === 'X' && row[14]?.endsWith('위 불가') ? <span className="main-home-rank-remark is-unreachable">{row[14]}</span> : row[11] === 'X' ? '-' : `${row[11]}승`}</td>
+                                            <td>{row[14]?.endsWith('확보') ? <span className="main-home-rank-remark is-secured">{row[14]}</span>
+                                                : [row[12] !== 'X' ? `${row[12]}승` : null, row[13] !== 'X' ? `${row[13]}패` : null].filter(Boolean).join(' ') || '-'}</td>
+                                        </>}
+                                    </>}
+                                </tr>)}</tbody>
+                            </table></div> : <p>표시할 팀 순위가 없습니다.</p>)}
+                        </>}
+                        </>
+                    </section>
+
+                    <PredictionRanking />
+
+                    <section className="main-home-section main-home-games-section" aria-labelledby="preview-mini-title">
+                        <SectionTitle title={<span id="preview-mini-title">미니게임</span>} />
+                        <div className="main-home-mini-grid">
+                            <Link className="main-home-mini-card main-home-kbodle-card" to="/kbodle">
+                                <div className="main-home-mini-art" aria-hidden="true">
+                                    <div className="main-home-kbodle-tiles">{Array.from({ length: 7 }, (_, i) => <span key={i} className={i < 2 ? 'is-match' : i === 4 || i === 5 ? 'is-close' : ''}>?</span>)}</div>
+                                </div>
+                                <strong className="font-family-kbo">KBODLE: 크보들</strong><small>단서를 조합해 오늘의 선수를 맞혀보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
+                            </Link>
+                            <Link className="main-home-mini-card main-home-bingo-card" to="/bingo">
+                                <div className="main-home-mini-art" aria-hidden="true">
+                                    <div className="main-home-bingo-board">{Array.from({ length: 9 }, (_, i) => <span key={i} className={i % 4 === 0 ? 'is-filled' : ''}>{i % 4 === 0 ? '✓' : ''}</span>)}</div>
+                                </div>
+                                <strong className="font-family-kbo">KBO BINGO</strong><small>야구 지식으로 아홉 칸을 채워보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
+                            </Link>
+                            <Link className="main-home-mini-card main-home-lineup-card" to="/lineup">
+                                <div className="main-home-mini-art" aria-hidden="true">
+                                    <div className="main-home-lineup-rows">{[1, 2, 3].map(order => <span key={order} className={order === 2 ? 'is-open' : ''}><b>{order}</b><i /></span>)}</div>
+                                </div>
+                                <strong className="font-family-kbo">라인업 맞추기</strong><small>그날의 선발 타순을 1번부터 9번까지 맞혀보세요</small><span className="main-home-mini-go" aria-hidden="true">↗</span>
+                            </Link>
+                        </div>
+                    </section>
+                </div>
             </div>
         </main>
     );
