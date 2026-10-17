@@ -114,6 +114,9 @@ try {
     $db->exec('ALTER TABLE kbo_player_titleholder AUTO_INCREMENT=1');
     $db->beginTransaction();
     try {
+        // 현재 소속팀 '고양'은 2019년 이후 키움 히어로즈 퓨처스 팀이므로 키움으로 저장한다.
+        foreach ([&$roster,&$overseas] as &$rows) foreach ($rows as &$r) if (($r['team']??null)==='고양') $r['team']='키움';
+        unset($rows,$r);
         $insert=$db->prepare('INSERT INTO kbo_player_data (player_id,name,team,is_kbodle,pos,birth,backNo,bat,`throw`,body,school,draft) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
         $update=$db->prepare('UPDATE kbo_player_data SET name=?,oldname=?,team=?,is_kbodle=?,birth=? WHERE player_id=?');
         foreach ($roster as $row) {
